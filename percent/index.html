@@ -76,7 +76,6 @@ footer{margin-top:34px;color:var(--muted);font-size:.8rem;text-align:center;line
 @keyframes pop{0%{transform:scale(.96)}60%{transform:scale(1.02)}100%{transform:scale(1)}}
 .pop{animation:pop .22s ease-out}
 </style>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
 <main class="wrap">
@@ -140,9 +139,11 @@ footer{margin-top:34px;color:var(--muted);font-size:.8rem;text-align:center;line
 เปิดไฟล์นี้ซ้ำได้ทุกวัน สถิติที่ดีที่สุดถูกเก็บไว้ในเครื่องนี้</footer>
 </main>
 
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
 try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); } } catch (e) { }
-
+</script>
+<script>
 "use strict";
 /* ---------- helpers ---------- */
 const $ = id => document.getElementById(id);
