@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tense Game — จับ time marker ให้ทัน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+--ink:#1a1c1e;--muted:#5b6167;--line:#dfe3e8;--bg:#fbfbfa;--card:#fff;--soft:#f4f6f8;
+--accent:#1f6feb;--accent-bg:#eaf2ff;--warn:#b25000;--warn-bg:#fff4e8;--ok:#136c39;--ok-bg:#e8f6ee;
+--bad:#b3261e;--bad-bg:#fdecea;--vio:#6b46e0}
+@media (prefers-color-scheme:dark){:root{
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#333a42;--bg:#16181b;--card:#1e2126;--soft:#262a30;
+--accent:#69a4ff;--accent-bg:#1a2740;--warn:#f0a163;--warn-bg:#33240f;--ok:#6fd39a;--ok-bg:#13301f;
+--bad:#ff8a80;--bad-bg:#3a1a17;--vio:#a68cff}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:"Sarabun","Noto Sans Thai",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+font-size:17px;line-height:1.75;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:680px;margin:0 auto;padding:22px 16px calc(60px + env(safe-area-inset-bottom))}
+h1{font-size:1.45rem;margin:0 0 6px;line-height:1.35}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.hidden{display:none !important}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+.lv{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);
+border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:11px;transition:.12s}
+.lv:active{border-color:var(--accent)}
+.lv b{font-size:1.06rem}
+.lv .d{color:var(--muted);font-size:.87rem;line-height:1.6}
+.lv .best{float:right;font-size:.8rem;color:var(--ok);font-weight:700}
+.hud{display:flex;gap:10px;margin-bottom:14px}
+.pill{flex:1;background:var(--soft);border:1px solid var(--line);border-radius:11px;padding:7px 4px;text-align:center;line-height:1.3}
+.pill .n{font-size:1.28rem;font-weight:700;font-family:"IBM Plex Mono",monospace}
+.pill .l{font-size:.72rem;color:var(--muted)}
+.bar{height:9px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;width:100%;background:var(--accent);transition:width .25s linear}
+.bar i.low{background:var(--bad)}
+.q{font-size:1.12rem;font-weight:600;text-align:left;margin:12px 0 6px;line-height:1.8}
+.q.marker{font-size:1.7rem;text-align:center;font-family:"IBM Plex Mono","Sarabun",monospace;margin:22px 0 10px}
+.q .blank{display:inline-block;min-width:2.6em;border-bottom:2px solid var(--accent);color:var(--accent);text-align:center;font-family:"IBM Plex Mono",monospace;font-weight:700;padding:0 4px}
+.q u{text-decoration:none;border-bottom:2px solid var(--vio);padding-bottom:1px}
+.q u b{color:var(--vio);font-size:.8em;margin-right:2px}
+.q .th{display:block;font-size:.84rem;font-weight:400;color:var(--muted);margin-top:4px}
+.choices{display:grid;gap:9px;margin:14px 0 4px}
+.choices.grid2{grid-template-columns:1fr 1fr}
+.ch{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;text-align:left;color:var(--ink);line-height:1.55;font-size:1rem}
+.choices.grid2 .ch{text-align:center;font-weight:600;padding:13px 6px;font-size:.95rem}
+.ch:active{border-color:var(--accent);background:var(--accent-bg)}
+.ch b{color:var(--accent);margin-right:7px}
+.fb{min-height:62px;border-radius:12px;padding:11px 14px;font-size:.94rem;line-height:1.65;margin-top:6px}
+.fb.ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);color:var(--bad);border:1px solid var(--bad)}
+.fb.idle{background:var(--soft);color:var(--muted)}
+.tagline{display:inline-block;font-size:.76rem;background:var(--soft);border:1px solid var(--line);border-radius:99px;padding:0 9px;color:var(--muted);margin-top:6px}
+.pop{animation:pop .25s}
+@keyframes pop{0%{transform:scale(.97)}60%{transform:scale(1.02)}100%{transform:scale(1)}}
+.btnrow{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap}
+.btnrow button{flex:1;padding:11px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:600}
+.btnrow button.pri{background:var(--accent);color:#fff;border-color:var(--accent)}
+.big{font-size:2.4rem;font-weight:700;text-align:center;font-family:"IBM Plex Mono",monospace}
+.grade{text-align:center;font-weight:700;margin:4px 0 14px;line-height:1.6}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--soft);font-weight:600;width:38%}
+.tip{background:var(--warn-bg);border:1px solid var(--warn);color:var(--warn);border-radius:12px;padding:10px 14px;font-size:.9rem;line-height:1.65}
+kbd{font-family:"IBM Plex Mono",monospace;background:var(--soft);border:1px solid var(--line);border-radius:5px;padding:0 5px;font-size:.85em}
+footer{margin-top:28px;color:var(--muted);font-size:.78rem;text-align:center;line-height:1.6}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<section id="menu">
+  <h1>⏱️ Tense Game</h1>
+  <p class="sub">ระบบกาล (tense system) — ข้อสอบสามเสนเปิดชุดด้วย 5 ข้อนี้ทุกปี · เด็ก EP "ฟังออก" แต่ต้องฝึกให้ "เห็น time marker แล้วเลือกได้" โดยไม่มีเสียงช่วย</p>
+
+  <button class="lv" data-lv="1"><span class="best" id="b1"></span><b>ด่าน 1 · จับ time marker</b>
+    <div class="d">เห็นคำบอกเวลา → เลือก tense ให้ทันใน 60 วินาที · เป้า 14 คำ</div></button>
+  <button class="lv" data-lv="2"><span class="best" id="b2"></span><b>ด่าน 2 · เติมช่องเดียว</b>
+    <div class="d">ประโยคละ 1 ช่อง 90 วินาที · เป้า 12 ข้อ</div></button>
+  <button class="lv" data-lv="3"><span class="best" id="b3"></span><b>ด่าน 3 · สองช่อง — ตรวจทั้งคู่</b>
+    <div class="d">10 ข้อแบบสามเสน (2 ช่องในประโยคเดียว) ไม่จับเวลา · ตัวลวง "ช่องแรกถูก ช่องสองผิด" · เป้า 8/10</div></button>
+  <button class="lv" data-lv="4"><span class="best" id="b4"></span><b>ด่าน 4 · กับดักของน้อง</b>
+    <div class="d">10 ข้อสร้างจากที่พลาดจริงในชุดอังกฤษ 01 (will/going to สลับด้าน · recently · while · if…would · One of… · adverb) · เป้า 8/10</div></button>
+
+  <p class="tip">💡 กฎเดียวก่อนเล่น: <b>หา time marker ของ "แต่ละช่อง" แยกกัน</b> แล้วค่อยเลือก — ช่องแรกถูกยังไม่ได้คะแนน ต้องถูกทั้งคู่<br>
+  ⌨️ กดเลข <kbd>1</kbd>–<kbd>4</kbd> เลือกช้อยส์ได้</p>
+</section>
+
+<section id="play" class="hidden">
+  <div class="hud">
+    <div class="pill"><div class="n" id="hScore">0</div><div class="l">คะแนน</div></div>
+    <div class="pill"><div class="n" id="hStreak">0</div><div class="l">ถูกติดกัน</div></div>
+    <div class="pill"><div class="n" id="hTime">60</div><div class="l" id="hTimeL">วินาที</div></div>
+  </div>
+  <div class="bar"><i id="barFill"></i></div>
+  <div class="card">
+    <div class="q" id="qText">—</div>
+    <div class="choices" id="choices"></div>
+    <div class="fb idle" id="fb"></div>
+  </div>
+  <div class="btnrow"><button id="quit">⏹ หยุดกลับเมนู</button></div>
+</section>
+
+<section id="over" class="hidden">
+  <div class="card">
+    <div class="big" id="oScore">—</div>
+    <div class="grade" id="oGrade">—</div>
+    <table id="oStats"></table>
+    <div id="oWrong"></div>
+  </div>
+  <div class="btnrow">
+    <button class="pri" id="again">🔁 เล่นด่านนี้อีกครั้ง</button>
+    <button id="back">📋 เลือกด่านใหม่</button>
+  </div>
+</section>
+
+<footer>Road to Yothin · เกมประกอบชุดฝึก Tense System (ชุดอังกฤษ 01–02)<br>
+ประโยคในเกมไม่ซ้ำกับชุดฝึก · สถิติที่ดีที่สุดเก็บไว้ในเครื่องนี้</footer>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); } } catch (e) { }
+</script>
+
+<!-- ============ POOL + DRAW (ไม่แตะ DOM — ทดสอบด้วย Node ได้) ============ -->
+<script id="gen">
+"use strict";
+/* ทุกข้อประกาศ wrong ของตัวเอง → การันตีคำตอบถูกตัวเดียวโดยโครงสร้าง (แบบเดียวกับเกมวิทย์ 01)
+   ข้อไวยากรณ์ตรวจซ้ำด้วยการคำนวณไม่ได้ → ทุก wrong ต้องไล่แล้วว่าผิดจริง ไม่ใช่แค่ "ไม่ใช่ตัวที่ตั้งใจ" */
+
+const T = { ps: 'Present Simple', pc: 'Present Continuous', pa: 'Past Simple', pac: 'Past Continuous', pp: 'Present Perfect', ppf: 'Past Perfect', fw: 'Future — will', fg: 'Future — going to' };
+
+/* ---------- ด่าน 1: time marker → tense ---------- */
+const MARKERS = [
+  { m: 'every day', a: T.ps, wrong: [T.pc, T.pa, T.pp], why: 'กิจวัตร/นิสัย → present simple' },
+  { m: 'usually', a: T.ps, wrong: [T.pc, T.pp, T.pa], why: 'ความถี่ (usually/always/often) → present simple' },
+  { m: 'once a week', a: T.ps, wrong: [T.pc, T.pp, T.pa], why: 'ความถี่ → present simple' },
+  { m: 'always (นิสัย)', a: T.ps, wrong: [T.pc, T.pp, T.pac], why: 'นิสัยประจำ → present simple' },
+  { m: 'at the moment', a: T.pc, wrong: [T.ps, T.pp, T.pac], why: 'กำลังเกิดตอนนี้ → present continuous' },
+  { m: 'right now', a: T.pc, wrong: [T.ps, T.pa, T.pp], why: 'ตอนนี้เลย → present continuous' },
+  { m: 'Look! …', a: T.pc, wrong: [T.ps, T.fw, T.pa], why: '"Look! / Listen!" ชี้สิ่งที่กำลังเกิด → present continuous' },
+  { m: 'yesterday', a: T.pa, wrong: [T.pp, T.ppf, T.ps], why: 'เวลาอดีตชัดเจน จบแล้ว → past simple' },
+  { m: 'two days ago', a: T.pa, wrong: [T.pp, T.ppf, T.pac], why: '"ago" = เวลาอดีตชัดเจน → past simple (ห้าม present perfect)' },
+  { m: 'last month', a: T.pa, wrong: [T.pp, T.ppf, T.ps], why: '"last …" → past simple' },
+  { m: 'in 1990', a: T.pa, wrong: [T.pp, T.ppf, T.ps], why: 'ปีในอดีต → past simple' },
+  { m: 'since 2019', a: T.pp, wrong: [T.pa, T.ps, T.pc], why: '"since + จุดเริ่ม" ต่อเนื่องถึงตอนนี้ → present perfect' },
+  { m: 'for three years (ยังอยู่)', a: T.pp, wrong: [T.pa, T.pc, T.ps], why: '"for + ช่วงเวลา" และยังต่อเนื่อง → present perfect' },
+  { m: 'ever since', a: T.pp, wrong: [T.pa, T.pc, T.ps], why: '"ever since" = ตั้งแต่นั้นจนถึงตอนนี้ → present perfect' },
+  { m: 'already / yet', a: T.pp, wrong: [T.pa, T.ps, T.ppf], why: 'already / yet / just (ผลถึงปัจจุบัน) → present perfect' },
+  { m: 'so far', a: T.pp, wrong: [T.pa, T.ps, T.fw], why: '"so far" = จนถึงตอนนี้ → present perfect' },
+  { m: 'never … before (จนถึงตอนนี้)', a: T.pp, wrong: [T.pa, T.ps, T.pc], why: 'ประสบการณ์จนถึงตอนนี้ → present perfect' },
+  { m: 'How long … ? (ยังทำอยู่)', a: T.pp, wrong: [T.pa, T.ps, T.pc], why: 'ถามระยะเวลาที่ต่อเนื่องถึงตอนนี้ → present perfect' },
+  { m: 'recently', a: T.pp, wrong: [T.pa, T.ps, T.pc], why: '"recently" (เมื่อไม่นานมานี้ ไม่ระบุเวลาชัด) → present perfect ★ น้องเคยพลาดข้อนี้' },
+  { m: 'while … (เหตุการณ์ยาวในอดีต)', a: T.pac, wrong: [T.pa, T.pc, T.ppf], why: '"while" + เหตุการณ์ที่กำลังดำเนิน → past continuous' },
+  { m: 'at 8 o\'clock last night (กำลังทำอยู่)', a: T.pac, wrong: [T.pa, T.pc, T.ppf], why: 'กำลังทำ ณ เวลาหนึ่งในอดีต → past continuous' },
+  { m: 'when … (เหตุการณ์สั้นที่แทรก)', a: T.pa, wrong: [T.pac, T.pp, T.ppf], why: 'เหตุการณ์สั้นที่แทรกเข้ามา → past simple (ตัวยาวเป็น past continuous)' },
+  { m: 'by the time … (เกิดก่อนอีกเหตุการณ์ในอดีต)', a: T.ppf, wrong: [T.pa, T.pp, T.pac], why: 'เกิดก่อนเหตุการณ์อดีตอีกอัน → past perfect (had + V3)' },
+  { m: 'before I arrived, she …', a: T.ppf, wrong: [T.pa, T.pp, T.pac], why: 'ก่อนเหตุการณ์อดีตอีกอัน → past perfect' },
+  { m: 'I promise I … tomorrow', a: T.fw, wrong: [T.pp, T.pa, T.ps], why: 'สัญญา/ตัดสินใจตอนพูด → will' },
+  { m: 'Look at those clouds! It …', a: T.fg, wrong: [T.fw, T.pp, T.pa], why: 'มี "หลักฐาน" ตรงหน้า → going to (ไม่ใช่ will) ★ น้องเคยพลาด' },
+  { m: 'next week (วางแผนไว้แล้ว)', a: T.fg, wrong: [T.pp, T.pa, T.ps], why: 'แผนที่ตัดสินใจไว้ก่อนแล้ว → going to' },
+  { m: 'The phone is ringing. — OK, I … get it.', a: T.fw, wrong: [T.fg, T.pp, T.pa], why: 'ตัดสินใจเดี๋ยวนั้น → will (going to ใช้กับแผนที่คิดไว้ก่อน)' },
+];
+
+/* ---------- ด่าน 2: ช่องเดียว ---------- */
+const SINGLE = [
+  { s: 'Water ___ at 100 °C.', a: 'boils', wrong: ['is boiling', 'boiled', 'has boiled'], why: 'ความจริงทั่วไป → present simple' },
+  { s: 'Be quiet! The baby ___.', a: 'is sleeping', wrong: ['sleeps', 'slept', 'has slept'], why: '"Be quiet!" = กำลังเกิดตอนนี้ → present continuous' },
+  { s: 'We ___ to Chiang Mai last April.', a: 'went', wrong: ['have gone', 'go', 'had gone'], why: '"last April" เวลาอดีตชัด → past simple' },
+  { s: 'She ___ in Bangkok since 2020.', a: 'has lived', wrong: ['lived', 'lives', 'is living'], why: '"since 2020" → present perfect' },
+  { s: 'My dad ___ coffee every morning.', a: 'drinks', wrong: ['is drinking', 'drank', 'has drunk'], why: '"every morning" → present simple' },
+  { s: 'While we ___ dinner, the lights went out.', a: 'were having', wrong: ['had', 'have', 'have had'], why: '"while" + เหตุการณ์ยาว → past continuous · ไฟดับ = ตัวสั้น past simple' },
+  { s: 'When the teacher came in, everyone ___ talking.', a: 'stopped', wrong: ['was stopping', 'stops', 'has stopped'], why: 'เหตุการณ์สั้นที่เกิดตอนครูเข้ามา → past simple' },
+  { s: 'I ___ that movie three times so far.', a: 'have seen', wrong: ['saw', 'see', 'am seeing'], why: '"so far" → present perfect' },
+  { s: 'Look at the sky! It ___ rain.', a: 'is going to', wrong: ['will', 'is', 'has'], why: 'มีหลักฐาน (ท้องฟ้า) → going to' },
+  { s: 'The phone is ringing. — OK, I ___ answer it.', a: 'will', wrong: ['am going to', 'am', 'have'], why: 'ตัดสินใจเดี๋ยวนั้น → will' },
+  { s: 'By the time we got home, the movie ___.', a: 'had ended', wrong: ['ended', 'has ended', 'was ending'], why: '"by the time + past" → เหตุการณ์ที่จบก่อน = past perfect' },
+  { s: 'At 5 p.m. yesterday he ___ tennis, so he didn\'t hear the phone.', a: 'was playing', wrong: ['plays', 'has played', 'is playing'], why: 'กำลังทำ ณ เวลาหนึ่งในอดีต → past continuous' },
+  { s: 'Nan ___ English for six years and she is still learning.', a: 'has been studying', wrong: ['studied', 'studies', 'is studying'], why: '"for six years" + ยังทำอยู่ → present perfect (continuous)' },
+  { s: 'Columbus ___ America in 1492.', a: 'discovered', wrong: ['has discovered', 'discovers', 'had discovered'], why: 'ปีในอดีต → past simple' },
+  { s: 'I have never ___ sushi before.', a: 'eaten', wrong: ['eat', 'ate', 'eating'], why: 'have never + V3 (past participle)' },
+  { s: 'Hurry up! The bus ___.', a: 'is leaving', wrong: ['leaves', 'left', 'has left'], why: '"Hurry up!" = กำลังจะออกตอนนี้ → present continuous' },
+  { s: 'The train ___ at 9.15 every morning.', a: 'leaves', wrong: ['is leaving', 'left', 'has left'], why: 'ตารางเวลา + every morning → present simple' },
+  { s: 'She ___ her homework yet.', a: 'hasn\'t finished', wrong: ['didn\'t finish', 'doesn\'t finish', 'isn\'t finishing'], why: '"yet" → present perfect (ปฏิเสธ)' },
+  { s: 'Tom ___ to the gym twice a week.', a: 'goes', wrong: ['is going', 'went', 'has gone'], why: '"twice a week" ความถี่ → present simple' },
+  { s: 'I ___ you as soon as I arrive.', a: 'will call', wrong: ['call', 'called', 'am calling'], why: 'ประโยคหลักของ time clause ใช้ will · "as soon as I arrive" ใช้ present simple' },
+  { s: 'When I ___ young, I lived in a small village.', a: 'was', wrong: ['am', 'have been', 'had been'], why: 'อดีตที่จบแล้ว คู่กับ lived → past simple' },
+  { s: 'We ___ here since 7 o\'clock and you are only arriving now!', a: 'have been waiting', wrong: ['wait', 'are waiting', 'waited'], why: '"since 7 o\'clock" + ยังรออยู่ → present perfect (continuous)' },
+  { s: 'My sister ___ born in 2014.', a: 'was', wrong: ['is', 'has been', 'had been'], why: '"born" ใช้ was/were + born · ปีอดีต → was' },
+  { s: 'The sun ___ in the east.', a: 'rises', wrong: ['is rising', 'rose', 'has risen'], why: 'ความจริงทั่วไป → present simple' },
+  { s: 'They ___ the new bridge in 2023 and it still looks great.', a: 'built', wrong: ['have built', 'build', 'had built'], why: '"in 2023" เวลาอดีตชัด → past simple (แม้ผลยังอยู่)' },
+  { s: 'It ___ since this morning — the streets are all wet.', a: 'has been raining', wrong: ['rains', 'rained', 'is raining'], why: '"since this morning" → present perfect (continuous)' },
+  { s: 'Listen! Someone ___ at the door.', a: 'is knocking', wrong: ['knocks', 'knocked', 'has knocked'], why: '"Listen!" = กำลังเกิด → present continuous' },
+  { s: 'Last night I ___ a strange noise while I was reading.', a: 'heard', wrong: ['was hearing', 'have heard', 'hear'], why: 'เหตุการณ์สั้นแทรกตัวยาว (was reading) → past simple' },
+  { s: 'If it rains tomorrow, we ___ at home.', a: 'will stay', wrong: ['stay', 'stayed', 'would stay'], why: 'First conditional: if + present, will + V' },
+  { s: 'If I ___ a bird, I would fly to school.', a: 'were', wrong: ['am', 'will be', 'have been'], why: 'Second conditional (เป็นไปไม่ได้): if + past (were), would + V' },
+];
+
+/* ---------- ด่าน 3: สองช่อง — ตัวลวงส่วนใหญ่ "ช่องแรกถูก ช่องสองผิด" ---------- */
+const PAIRED = [
+  { s: 'Dad ___ to work by car every day, but right now he ___ the train because the car is broken.', a: 'drives / is taking', wrong: ['drives / takes', 'is driving / is taking', 'drives / took'], why: 'every day → drives · right now → is taking' },
+  { s: 'My aunt ___ to Japan in 2018 and she ___ there ever since.', a: 'moved / has lived', wrong: ['moved / lived', 'has moved / has lived', 'moved / lives'], why: 'in 2018 → moved · ever since → has lived' },
+  { s: 'I ___ my leg while I ___ football last Saturday.', a: 'broke / was playing', wrong: ['broke / played', 'was breaking / was playing', 'broke / have played'], why: 'ตัวสั้น (broke) แทรกตัวยาว (was playing)' },
+  { s: 'Watch out! You ___ off that ladder! — Don\'t worry, I ___ down now.', a: 'are going to fall / will come', wrong: ['are going to fall / am going to come', 'will fall / will come', 'fall / come'], why: 'หลักฐานตรงหน้า → going to · ตัดสินใจเดี๋ยวนั้น → will' },
+  { s: 'If we ___ the early bus, we ___ school on time.', a: 'catch / will reach', wrong: ['catch / would reach', 'will catch / will reach', 'caught / will reach'], why: 'First conditional: if + present simple, will + V' },
+  { s: 'If I ___ taller, I ___ the basketball team. But I\'m short.', a: 'were / would join', wrong: ['were / will join', 'am / would join', 'am / will join'], why: 'เป็นไปไม่ได้ตอนนี้ (But I\'m short) → second conditional: were … would' },
+  { s: 'Ploy ___ Chinese for five years, so she ___ very well now.', a: 'has been learning / speaks', wrong: ['has been learning / is speaking', 'is learning / speaks', 'learned / speaks'], why: 'for five years + now → present perfect · ความสามารถทั่วไป → speaks' },
+  { s: 'By the time the guests ___, we ___ everything.', a: 'arrived / had prepared', wrong: ['arrived / prepared', 'arrived / have prepared', 'had arrived / prepared'], why: 'by the time + past simple → อีกเหตุการณ์ที่จบก่อน = past perfect' },
+  { s: 'This temple ___ 300 years ago, and thousands of people ___ it every year.', a: 'was built / visit', wrong: ['was built / are visiting', 'built / visit', 'has been built / visit'], why: 'ago → past simple (passive: was built) · every year → visit' },
+  { s: 'I ___ you an email as soon as I ___ the results.', a: 'will send / get', wrong: ['will send / will get', 'send / get', 'will send / got'], why: 'ประโยคหลัก will · time clause (as soon as) ใช้ present simple' },
+  { s: 'She said, "I am practising the piano now." → She said that she ___ the piano ___.', a: 'was practising / then', wrong: ['was practising / now', 'is practising / then', 'practised / then'], why: 'Reported speech: am practising → was practising · now → then' },
+  { s: 'Grandpa ___ up at five every morning, but this week he ___ until nine because he\'s ill.', a: 'gets / is sleeping', wrong: ['gets / sleeps', 'is getting / is sleeping', 'gets / slept'], why: 'every morning → gets · this week (ชั่วคราว) → is sleeping' },
+  { s: 'Somchai ___ his homework at 8 p.m. yesterday; that\'s why he ___ the phone.', a: 'was doing / didn\'t hear', wrong: ['was doing / wasn\'t hearing', 'did / didn\'t hear', 'was doing / hasn\'t heard'], why: 'กำลังทำ ณ เวลาอดีต → past continuous · hear เป็น stative → didn\'t hear' },
+  { s: 'Anna ___ a new phone last week and she ___ it every day since then.', a: 'bought / has used', wrong: ['bought / used', 'has bought / has used', 'bought / uses'], why: 'last week → bought · since then → has used' },
+  { s: 'Look! The kids ___ in the garden — they ___ there every afternoon.', a: 'are playing / play', wrong: ['are playing / are playing', 'play / play', 'play / are playing'], why: 'Look! → are playing · every afternoon → play' },
+  { s: 'By 9 p.m. last night I ___ my project, so I ___ TV.', a: 'had finished / watched', wrong: ['finished / watched', 'had finished / had watched', 'have finished / watched'], why: 'เสร็จก่อน 9 p.m. → past perfect · แล้วดูทีวี → past simple' },
+  { s: 'Whenever it ___ heavily, our street ___ flooded.', a: 'rains / gets', wrong: ['rains / is getting', 'is raining / gets', 'rained / gets'], why: 'whenever = ทุกครั้ง → present simple ทั้งสองช่อง' },
+];
+
+/* ---------- ด่าน 4: กับดักของน้อง (สร้างจาก error pattern จริง ชุดอังกฤษ 01) ---------- */
+const TRAPS = [
+  { tag: 'time marker แยกช่อง', s: 'Recently my cousin ___ a new job, and she ___ work last Monday.', a: 'has found / started', wrong: ['found / started', 'has found / has started', 'finds / started'], why: 'recently → present perfect · last Monday → past simple — คนละช่อง คนละ marker' },
+  { tag: 'time marker แยกช่อง', s: 'I ___ this book last week and I ___ it twice already.', a: 'read / have read', wrong: ['have read / read', 'read / read', 'have read / have read'], why: 'last week → past simple · already → present perfect' },
+  { tag: 'ตัวสั้นแทรกตัวยาว', s: 'While the students ___ the exam, the fire alarm ___.', a: 'were taking / rang', wrong: ['were taking / was ringing', 'took / rang', 'took / was ringing'], why: 'while + ตัวยาว (were taking) · ตัวสั้นที่แทรก (rang) = past simple' },
+  { tag: 'ตัวสั้นแทรกตัวยาว', s: 'The guests ___ while we ___ the table.', a: 'arrived / were setting', wrong: ['were arriving / were setting', 'arrived / set', 'have arrived / were setting'], why: 'มาถึง = ตัวสั้น past simple · กำลังจัดโต๊ะ = ตัวยาว past continuous' },
+  { tag: 'will / going to สลับด้าน', s: 'I\'ve already decided: I ___ a doctor. — Oh, then I ___ you my old biology books.', a: 'am going to be / will give', wrong: ['will be / am going to give', 'am going to be / am going to give', 'will be / will give'], why: 'ตัดสินใจไว้แล้ว → going to · เสนอเดี๋ยวนั้น → will (น้องเคยตอบสลับด้านพอดี)' },
+  { tag: 'will / going to สลับด้าน', s: 'Look at the time! We ___ late. — Don\'t worry, I ___ Dad to drive us.', a: 'are going to be / will ask', wrong: ['will be / am going to ask', 'are going to be / are going to ask', 'will be / will ask'], why: 'หลักฐาน (ดูเวลา) → going to · ตัดสินใจเดี๋ยวนั้น → will' },
+  { tag: 'if … would (คู่ conditional)', s: 'If I ___ you, I ___ the truth.', a: 'were / would tell', wrong: ['were / will tell', 'am / would tell', 'was / will tell'], why: 'If I were you = สมมติ → would (ไม่ใช่ will) — ช่องแรกถูกยังไม่พอ' },
+  { tag: 'if … would (คู่ conditional)', s: 'If Nok ___ harder, she ___ the test. But she never studies.', a: 'studied / would pass', wrong: ['studied / will pass', 'studies / would pass', 'studies / will pass'], why: '"But she never studies" = สมมติที่ไม่จริง → studied … would pass' },
+  { tag: 'gerund / infinitive', s: 'We decided ___ the trip because Mom was too busy ___ with us.', a: 'to postpone / to come', wrong: ['postponing / to come', 'to postpone / coming', 'postponing / coming'], why: 'decide + to V · too busy + to V' },
+  { tag: 'gerund / infinitive', s: 'I enjoy ___ badminton, but I can\'t afford ___ a new racket.', a: 'playing / to buy', wrong: ['to play / to buy', 'playing / buying', 'to play / buying'], why: 'enjoy + V-ing · afford + to V (ท่องลิสต์วันละ 2 นาที)' },
+  { tag: 'ประธานจริงอยู่หน้า of', err: true, s: 'One of my <u><b>1</b>best</u> friends <u><b>2</b>live</u> near the <u><b>3</b>oldest</u> temple <u><b>4</b>in</u> town.', a: '2 — live → lives', wrong: ['1 — best', '3 — oldest', '4 — in'], why: 'ประธานคือ One (เอกพจน์) ไม่ใช่ friends → lives · best/oldest เป็น superlative ถูกแล้ว · in town ถูก' },
+  { tag: 'ประธานจริงอยู่หน้า of', err: true, s: 'The box of <u><b>1</b>chocolates</u> <u><b>2</b>were</u> <u><b>3</b>on</u> the table <u><b>4</b>this</u> morning.', a: '2 — were → was', wrong: ['1 — chocolates', '3 — on', '4 — this'], why: 'ประธานคือ The box (เอกพจน์) ไม่ใช่ chocolates → was' },
+  { tag: 'adverb ขยายกริยา', err: true, s: 'The children <u><b>1</b>ran</u> <u><b>2</b>very</u> <u><b>3</b>quick</u> to the <u><b>4</b>bus stop</u>.', a: '3 — quick → quickly', wrong: ['1 — ran', '2 — very', '4 — bus stop'], why: 'ขยายกริยา ran ต้องเป็น adverb → quickly (กับดัก FORM อันดับ 2 ของทุกโรงเรียน)' },
+  { tag: 'adverb ขยายกริยา', err: true, s: 'She <u><b>1</b>sings</u> <u><b>2</b>beautiful</u>, and everyone <u><b>3</b>listens</u> <u><b>4</b>carefully</u>.', a: '2 — beautiful → beautifully', wrong: ['1 — sings', '3 — listens', '4 — carefully'], why: 'ขยายกริยา sings → beautifully · carefully ถูกแล้ว (ขยาย listens)' },
+  { tag: 'ตรวจทั้งสองช่อง', s: 'Every weekend we ___ to the beach, but this weekend we ___ at home because of the storm.', a: 'go / are staying', wrong: ['go / stay', 'are going / are staying', 'go / stayed'], why: 'every weekend → go · this weekend (ชั่วคราว, แผน) → are staying — ช้อยส์ "go / stay" คือกับดักช่องแรกถูก ช่องสองผิด' },
+];
+
+const POOLS = { 1: MARKERS, 2: SINGLE, 3: PAIRED, 4: TRAPS };
+function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+/* deck: สุ่มลำดับ ไม่ซ้ำจนกว่าจะหมด pool แล้วค่อยสับใหม่ */
+const decks = {};
+function draw(lv) {
+  if (!decks[lv] || !decks[lv].length) decks[lv] = shuffle(POOLS[lv]);
+  const it = decks[lv].pop();
+  const ch = shuffle([{ t: it.a, ok: true }].concat(it.wrong.map(w => ({ t: w, ok: false }))));
+  return { item: it, ch, text: it.m !== undefined ? it.m : it.s, why: it.why, tag: it.tag || '' };
+}
+function resetDecks() { for (const k in decks) delete decks[k]; }
+
+const LEVELS = {
+  1: { name: 'ด่าน 1 จับ time marker', sec: 60, goal: 14, mode: 'tap', grid: true },
+  2: { name: 'ด่าน 2 เติมช่องเดียว', sec: 90, goal: 12, mode: 'tap', grid: true },
+  3: { name: 'ด่าน 3 สองช่อง', sec: 0, goal: 8, total: 10, mode: 'quiz' },
+  4: { name: 'ด่าน 4 กับดักของน้อง', sec: 0, goal: 8, total: 10, mode: 'quiz' }
+};
+if (typeof module !== 'undefined') module.exports = { T, MARKERS, SINGLE, PAIRED, TRAPS, POOLS, draw, resetDecks, LEVELS };
+</script>
+
+<!-- ============ UI ============ -->
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+let S = null, tick = null;
+const KEY = 'tense-best-';
+function best(lv) { try { return +(localStorage.getItem(KEY + lv) || 0); } catch (e) { return 0; } }
+function setBest(lv, v) { try { localStorage.setItem(KEY + lv, String(v)); } catch (e) { } }
+function paintBests() { for (let i = 1; i <= 4; i++) { const b = best(i); $('b' + i).textContent = b ? (LEVELS[i].mode === 'quiz' ? 'สถิติ ' + b + '/10' : 'สถิติ ' + b + ' ข้อ') : ''; } }
+function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function renderSentence(q) {
+  const it = q.item;
+  if (it.m !== undefined) return '<span>' + esc(it.m) + '</span>';
+  if (it.err) return it.s;                                   // มี markup <u><b>n</b>…</u> อยู่แล้ว (เขียนเองใน pool)
+  let i = 0; return esc(it.s).replace(/___/g, () => '<span class="blank">' + (++i) + '</span>');
+}
+function start(lv) {
+  const cfg = LEVELS[lv];
+  S = { lv, cfg, score: 0, streak: 0, asked: 0, wrong: [], t0: Date.now(), q: null, locked: false };
+  resetDecks();
+  $('menu').classList.add('hidden'); $('over').classList.add('hidden'); $('play').classList.remove('hidden');
+  $('hScore').textContent = '0'; $('hStreak').textContent = '0';
+  $('choices').classList.toggle('grid2', !!cfg.grid);
+  $('hTimeL').textContent = cfg.mode === 'quiz' ? 'ข้อที่' : 'วินาที';
+  clearInterval(tick); tick = setInterval(step, cfg.mode === 'quiz' ? 1000 : 100);
+  next();
+}
+function step() {
+  if (!S) return;
+  if (S.cfg.mode === 'quiz') { $('hTime').textContent = Math.min(S.asked + 1, S.cfg.total); return; }
+  const left = S.cfg.sec - (Date.now() - S.t0) / 1000;
+  if (left <= 0) { finish(); return; }
+  $('hTime').textContent = Math.ceil(left);
+  const p = left / S.cfg.sec * 100; const f = $('barFill'); f.style.width = p + '%'; f.classList.toggle('low', p < 25);
+}
+function next() {
+  S.locked = false; $('fb').className = 'fb idle'; $('fb').textContent = '';
+  if (S.cfg.mode === 'quiz' && S.asked >= S.cfg.total) { finish(); return; }
+  const q = draw(S.lv); S.q = q;
+  const qt = $('qText');
+  qt.className = 'q' + (S.lv === 1 ? ' marker' : '');
+  qt.innerHTML = (S.cfg.mode === 'quiz' ? '<span class="th">ข้อ ' + (S.asked + 1) + (q.item.err ? ' · ส่วนไหนผิด?' : ' · เติมช่อง 1 / 2') + '</span>' : '') + renderSentence(q)
+    + (S.lv === 1 ? '<span class="th">time marker นี้ใช้กับ tense ไหน?</span>' : '');
+  const box = $('choices'); box.innerHTML = '';
+  q.ch.forEach((c, i) => {
+    const b = document.createElement('button'); b.className = 'ch';
+    b.innerHTML = '<b>' + (i + 1) + '.</b> ' + esc(c.t);
+    b.onclick = () => answerChoice(i); box.appendChild(b);
+  });
+  if (S.cfg.mode === 'quiz') { $('hTime').textContent = S.asked + 1; $('barFill').style.width = (S.asked / S.cfg.total * 100) + '%'; }
+}
+function flash(ok, html) {
+  const f = $('fb'); f.className = 'fb ' + (ok ? 'ok' : 'bad'); f.innerHTML = html;
+  $('qText').classList.remove('pop'); void $('qText').offsetWidth; $('qText').classList.add('pop');
+}
+function answerChoice(i) {
+  if (!S || S.locked) return;
+  S.locked = true; S.asked++;
+  const c = S.q.ch[i], right = S.q.ch.find(x => x.ok);
+  const tag = S.q.tag ? '<br><span class="tagline">กับดัก: ' + esc(S.q.tag) + '</span>' : '';
+  const quiz = S.cfg.mode === 'quiz';
+  if (c.ok) { S.score++; S.streak++; flash(true, '✓ ถูกต้อง! ' + (quiz || S.lv === 1 ? esc(S.q.why) : '') + tag); }
+  else {
+    S.streak = 0;
+    S.wrong.push({ q: S.q.text.replace(/<[^>]+>/g, ''), your: c.t, ans: right.t, why: S.q.why });
+    flash(false, '✗ ที่ถูกคือ <b>' + esc(right.t) + '</b><br>' + esc(S.q.why) + tag);
+  }
+  $('hScore').textContent = S.score; $('hStreak').textContent = S.streak;
+  setTimeout(() => { if (S) next(); }, c.ok ? (quiz ? 1500 : 450) : (quiz ? 4200 : 2000));
+}
+function finish() {
+  clearInterval(tick);
+  const lv = S.lv, cfg = S.cfg, secs = (Date.now() - S.t0) / 1000, per = S.asked ? secs / S.asked : 0;
+  $('play').classList.add('hidden'); $('over').classList.remove('hidden');
+  const quiz = cfg.mode === 'quiz';
+  $('oScore').textContent = quiz ? (S.score + ' / ' + cfg.total) : (S.score + ' ข้อ');
+  const passed = S.score >= cfg.goal;
+  $('oGrade').innerHTML = passed ? '🟢 ผ่านเป้าแล้ว! (เป้า ' + cfg.goal + ') เก่งมาก 🎉'
+    : (S.score >= cfg.goal * 0.6 ? '🟡 ใกล้แล้ว! เป้าคือ ' + cfg.goal + ' — ลองอีกรอบเดียวน่าจะถึง'
+      : '🔴 ยังไม่ถึงเป้า ' + cfg.goal + ' — อ่านข้อที่พลาดด้านล่างก่อน แล้วลองใหม่');
+  const b = best(lv); if (S.score > b) setBest(lv, S.score);
+  $('oStats').innerHTML = '<tr><th>ตอบไปทั้งหมด</th><td>' + S.asked + ' ข้อ</td></tr>' +
+    '<tr><th>ถูก</th><td>' + S.score + ' ข้อ' + (S.wrong.length ? ' · ผิด ' + S.wrong.length + ' ข้อ' : '') + '</td></tr>' +
+    '<tr><th>เฉลี่ยต่อข้อ</th><td>' + per.toFixed(1) + ' วินาที' + (lv === 2 || lv === 3 ? ' (เป้าข้อสอบจริง ≤ 36 วินาที)' : '') + '</td></tr>' +
+    '<tr><th>สถิติดีที่สุด</th><td>' + Math.max(b, S.score) + (quiz ? ' / 10' : ' ข้อ') + (S.score > b ? ' 🆕 ทำลายสถิติ!' : '') + '</td></tr>';
+  $('oWrong').innerHTML = S.wrong.length
+    ? '<h3 style="font-size:1rem;margin:18px 0 6px">ข้อที่พลาด — อ่านสักนิดก่อนเล่นรอบหน้า</h3><table><tr><th>โจทย์</th><th>ตอบไป</th><th>ที่ถูก</th></tr>' +
+      S.wrong.map(w => '<tr><td>' + esc(w.q) + '<br><span style="color:var(--muted)">' + esc(w.why) + '</span></td><td>' + esc(w.your) + '</td><td><b>' + esc(w.ans) + '</b></td></tr>').join('') + '</table>'
+    : '<p style="text-align:center;color:var(--ok);font-weight:700;margin-top:16px">ไม่ผิดเลยสักข้อ! 🏆</p>';
+  paintBests();
+}
+function toMenu() { clearInterval(tick); S = null; $('play').classList.add('hidden'); $('over').classList.add('hidden'); $('menu').classList.remove('hidden'); paintBests(); }
+document.querySelectorAll('.lv').forEach(b => b.onclick = () => start(+b.dataset.lv));
+$('quit').onclick = () => { if (S) finish(); };
+$('again').onclick = () => start(S ? S.lv : 1);
+$('back').onclick = toMenu;
+document.addEventListener('keydown', e => { if (!S || S.locked) return; const n = +e.key; if (n >= 1 && n <= 4) answerChoice(n - 1); });
+paintBests();
+</script>
+</body>
+</html>

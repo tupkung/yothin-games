@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>เกมวิทย์ บทที่ 1 — สถานะของสสาร</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+--ink:#1a1c1e;--muted:#5b6167;--line:#dfe3e8;--bg:#fbfbfa;--card:#fff;--soft:#f4f6f8;
+--accent:#1f6feb;--accent-bg:#eaf2ff;--warn:#b25000;--warn-bg:#fff4e8;--ok:#136c39;--ok-bg:#e8f6ee;
+--bad:#b3261e;--bad-bg:#fdecea;--vio:#6b46e0}
+@media (prefers-color-scheme:dark){:root{
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#333a42;--bg:#16181b;--card:#1e2126;--soft:#262a30;
+--accent:#69a4ff;--accent-bg:#1a2740;--warn:#f0a163;--warn-bg:#33240f;--ok:#6fd39a;--ok-bg:#13301f;
+--bad:#ff8a80;--bad-bg:#3a1a17;--vio:#a68cff}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:"Sarabun","Noto Sans Thai",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+font-size:17px;line-height:1.75}
+.wrap{max-width:680px;margin:0 auto;padding:26px 18px 70px}
+h1{font-size:1.5rem;margin:0 0 6px;line-height:1.35}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.hidden{display:none !important}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+.lv{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);
+border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:11px;transition:.12s}
+.lv:hover{border-color:var(--accent);transform:translateY(-1px)}
+.lv b{font-size:1.06rem}
+.lv .d{color:var(--muted);font-size:.87rem;line-height:1.6}
+.lv .best{float:right;font-size:.8rem;color:var(--ok);font-weight:700}
+.hud{display:flex;gap:10px;margin-bottom:14px}
+.pill{flex:1;background:var(--soft);border:1px solid var(--line);border-radius:11px;
+padding:7px 4px;text-align:center;line-height:1.3}
+.pill .n{font-size:1.28rem;font-weight:700;font-family:"IBM Plex Mono",monospace}
+.pill .l{font-size:.72rem;color:var(--muted)}
+.bar{height:9px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+.qwords{font-size:1.12rem;font-weight:600;text-align:left;line-height:1.75;margin:20px 0 4px}
+.qtag{display:inline-block;font-size:.76rem;font-weight:700;color:var(--vio);
+background:var(--soft);border-radius:99px;padding:2px 10px;margin-bottom:10px}
+.choices{display:grid;gap:9px;margin:16px 0 4px}
+.ch{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;
+text-align:left;color:var(--ink);line-height:1.6}
+.ch:hover{border-color:var(--accent);background:var(--accent-bg)}
+.ch b{color:var(--accent);margin-right:7px}
+.ch:disabled{opacity:.55}
+.ch.right{border-color:var(--ok);background:var(--ok-bg)}
+.ch.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.fb{min-height:62px;border-radius:12px;padding:11px 14px;font-size:.94rem;line-height:1.65;margin-top:10px}
+.fb.ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok)}
+.fb.no{background:var(--bad-bg);color:var(--bad);border:1px solid var(--bad)}
+.fb .how{display:block;margin-top:6px;color:var(--ink);font-weight:600}
+.next{background:var(--accent);color:#fff;border:0;border-radius:12px;padding:11px 22px;
+font-weight:700;margin-top:12px;width:100%}
+.res{text-align:center}
+.res .big{font-size:3rem;font-weight:700;font-family:"IBM Plex Mono",monospace;margin:8px 0}
+.res .tier{font-size:1.15rem;font-weight:700;margin-bottom:10px}
+.back{background:var(--soft);color:var(--ink);border:1px solid var(--line);border-radius:12px;
+padding:10px 18px;font-weight:600;margin-top:10px;width:100%}
+.note{font-size:.86rem;color:var(--muted);margin-top:18px;line-height:1.7}
+.wrongs{text-align:left;margin-top:16px;font-size:.9rem;line-height:1.7}
+.wrongs li{margin-bottom:9px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div id="menu">
+  <h1>🧪 เกมวิทย์ บทที่ 1</h1>
+  <p class="sub">สถานะของสสาร &amp; การเปลี่ยนสถานะ · 3 ด่าน ด่านละ 10 ข้อ · <b>ไม่จับเวลา</b> คิดให้เต็มที่ได้เลย</p>
+  <button class="lv" data-lv="1"><span class="best" id="b1"></span><b>ด่าน 1 · จับคู่ชื่อ</b><div class="d">เหตุการณ์จริง → เรียกชื่อการเปลี่ยนสถานะให้ถูก</div></button>
+  <button class="lv" data-lv="2"><span class="best" id="b2"></span><b>ด่าน 2 · ดูดหรือคาย</b><div class="d">ใช้กฎเหล็ก: ห่างขึ้น = ดูด · ชิดขึ้น = คาย</div></button>
+  <button class="lv" data-lv="3"><span class="best" id="b3"></span><b>ด่าน 3 · ด่านกับดัก ⛔</b><div class="d">melt หรือ dissolve · เคมีหรือกายภาพ · กับดักจากข้อสอบจริง</div></button>
+  <p class="note">เกมนี้ไม่มีนาฬิกากดดัน เพราะวิทย์เราเน้น <b>เข้าใจว่าทำไม</b> ไม่ใช่ความเร็ว<br>
+  ทุกข้อตอบแล้วจะมีบรรทัด <b>"คิดยังไง"</b> บอกทางคิดสั้น ๆ ให้เสมอ</p>
+</div>
+
+<div id="play" class="hidden">
+  <div class="hud">
+    <div class="pill"><div class="n" id="hq">1</div><div class="l">ข้อที่</div></div>
+    <div class="pill"><div class="n" id="hs">0</div><div class="l">ถูก</div></div>
+    <div class="pill"><div class="n" id="hl">1</div><div class="l">ด่าน</div></div>
+  </div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card">
+    <div class="qtag" id="qtag"></div>
+    <div class="qwords" id="q"></div>
+    <div class="choices" id="ch"></div>
+    <div class="fb hidden" id="fb"></div>
+    <button class="next hidden" id="next">ข้อต่อไป →</button>
+  </div>
+</div>
+
+<div id="done" class="hidden">
+  <div class="card res">
+    <div class="sub" id="dlv"></div>
+    <div class="big" id="dscore"></div>
+    <div class="tier" id="dtier"></div>
+    <div id="dmsg" class="sub"></div>
+    <ul class="wrongs" id="dwrongs"></ul>
+    <button class="next" id="again">เล่นด่านนี้อีกครั้ง</button>
+    <button class="back" id="tomenu">← กลับหน้าเลือกด่าน</button>
+  </div>
+</div>
+
+</div>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); } } catch (e) { }
+</script>
+<script>
+/* ---------------- ข้อมูลโจทย์ (concept pool) ----------------
+   ทุกข้อระบุ wrong ของตัวเอง → การันตีว่ามีคำตอบถูกตัวเดียวเสมอ
+   how = บรรทัด "คิดยังไง" ผูกกับทางลัดใน §9 ของบทเรียน            */
+
+var NAMES = ['หลอมเหลว', 'แข็งตัว', 'ระเหย', 'เดือด', 'ควบแน่น', 'ระเหิด', 'ระเหิดกลับ'];
+
+var L1 = [
+  { q: 'วางลูกเหม็นไว้ในตู้เสื้อผ้า ผ่านไปเป็นเดือนลูกเหม็นเล็กลงจนหมด (ไม่เคยเห็นเป็นของเหลวเลย)',
+    a: 'ระเหิด', wrong: ['หลอมเหลว', 'ระเหย', 'ควบแน่น', 'แข็งตัว'],
+    how: 'ของแข็ง → แก๊ส โดยข้ามของเหลว = ระเหิด (sublimation)' },
+  { q: 'วางแก้วน้ำเย็นบนโต๊ะ สักพักมีหยดน้ำเกาะรอบนอกแก้ว',
+    a: 'ควบแน่น', wrong: ['ระเหย', 'หลอมเหลว', 'ระเหิด', 'เดือด'],
+    how: 'ไอน้ำในอากาศ (แก๊ส) → หยดน้ำ = ควบแน่น · ไม่ใช่น้ำซึมออกมานะ' },
+  { q: 'เอาน้ำใส่ถาดไปแช่ช่องแช่แข็ง ตอนเช้ากลายเป็นน้ำแข็ง',
+    a: 'แข็งตัว', wrong: ['หลอมเหลว', 'ควบแน่น', 'ระเหิดกลับ', 'ระเหย'],
+    how: 'ของเหลว → ของแข็ง = แข็งตัว (freezing) · ชิดขึ้น = คายความร้อน' },
+  { q: 'ตากผ้ากลางแดด ผ่านไป 2 ชั่วโมงผ้าแห้ง (ไม่มีฟอง ไม่ร้อนถึงจุดเดือด)',
+    a: 'ระเหย', wrong: ['เดือด', 'ระเหิด', 'ควบแน่น', 'หลอมเหลว'],
+    how: 'ของเหลว → แก๊ส ที่ผิวหน้า อุณหภูมิใดก็ได้ = ระเหย · เดือดต้องมีฟองทั่วก้อน' },
+  { q: 'ต้มน้ำในกาจนมีฟองผุดขึ้นทั่วทั้งหม้อที่ 100 °C',
+    a: 'เดือด', wrong: ['ระเหิด', 'ควบแน่น', 'หลอมเหลว', 'แข็งตัว'],
+    how: 'ฟองทั่วทั้งก้อน + ถึงจุดเดือด = เดือด (boiling)' },
+  { q: 'เอาช็อกโกแลตแท่งไปวางในรถที่ตากแดด กลายเป็นของเหลวเหนียว',
+    a: 'หลอมเหลว', wrong: ['ระเหย', 'ระเหิด', 'ควบแน่น', 'เดือด'],
+    how: 'ของแข็ง → ของเหลว = หลอมเหลว (melting) · ห่างขึ้น = ดูดความร้อน' },
+  { q: 'เช้าที่อากาศหนาวจัด มีเกล็ดน้ำค้างแข็งเกาะบนใบหญ้า โดยไอน้ำกลายเป็นเกล็ดแข็งเลย',
+    a: 'ระเหิดกลับ', wrong: ['ควบแน่น', 'แข็งตัว', 'ระเหิด', 'หลอมเหลว'],
+    how: 'แก๊ส → ของแข็ง โดยข้ามของเหลว = ระเหิดกลับ (deposition)' },
+  { q: 'ก้อนน้ำแข็งในแก้วน้ำหวานค่อย ๆ เล็กลงและน้ำในแก้วเพิ่มขึ้น',
+    a: 'หลอมเหลว', wrong: ['ระเหิด', 'ควบแน่น', 'แข็งตัว', 'เดือด'],
+    how: 'ของแข็ง → ของเหลว = หลอมเหลว · ภาษาไทยเรียก "ละลาย" แต่เป็น melt' },
+  { q: 'เทียนไขที่จุดอยู่ มีน้ำตาเทียนไหลลงมาข้างแท่ง',
+    a: 'หลอมเหลว', wrong: ['ระเหย', 'ควบแน่น', 'ระเหิด', 'ระเหิดกลับ'],
+    how: 'เทียนของแข็ง → ของเหลว = หลอมเหลว (ส่วนไส้เทียนที่ไหม้เป็นเรื่องเคมีแยกกัน)' },
+  { q: 'เปิดฝากล่องน้ำแข็งแห้ง (dry ice) แล้วแก๊ส CO₂ ออกมาจากก้อนแข็งโดยตรง',
+    a: 'ระเหิด', wrong: ['ระเหย', 'หลอมเหลว', 'เดือด', 'ควบแน่น'],
+    how: 'น้ำแข็งแห้งเป็นของแข็ง → แก๊สเลย = ระเหิด · ควันขาวที่เห็นเป็นไอน้ำควบแน่นคนละเรื่อง' },
+  { q: 'ไอน้ำจากหวดนึ่งลอยไปโดนฝาหม้อที่เย็น แล้วเกิดหยดน้ำเกาะใต้ฝา',
+    a: 'ควบแน่น', wrong: ['ระเหย', 'เดือด', 'ระเหิดกลับ', 'หลอมเหลว'],
+    how: 'แก๊ส → ของเหลว = ควบแน่น · เสียความร้อนให้ฝาที่เย็น' },
+  { q: 'หยดแอลกอฮอล์ล้างมือบนฝ่ามือ แล้วรู้สึกเย็น สักพักแอลกอฮอล์หายไปหมด',
+    a: 'ระเหย', wrong: ['ระเหิด', 'ควบแน่น', 'หลอมเหลว', 'แข็งตัว'],
+    how: 'ของเหลว → แก๊ส ที่ผิวหน้า = ระเหย · รู้สึกเย็นเพราะมันดูดความร้อนจากมือเรา' }
+];
+
+var L2 = [
+  { q: 'หลอมเหลว (melting) — ของแข็ง → ของเหลว', a: 'ดูดความร้อน', how: 'ไปทางห่างขึ้น = ดูด' },
+  { q: 'แข็งตัว (freezing) — ของเหลว → ของแข็ง', a: 'คายความร้อน', how: 'ไปทางชิดขึ้น = คาย' },
+  { q: 'ระเหย (evaporation) — ของเหลว → แก๊ส', a: 'ดูดความร้อน', how: 'ไปทางห่างขึ้น = ดูด' },
+  { q: 'ควบแน่น (condensation) — แก๊ส → ของเหลว', a: 'คายความร้อน', how: 'ไปทางชิดขึ้น = คาย' },
+  { q: 'ระเหิด (sublimation) — ของแข็ง → แก๊ส', a: 'ดูดความร้อน', how: 'ห่างขึ้นสุด ๆ = ดูด' },
+  { q: 'ระเหิดกลับ (deposition) — แก๊ส → ของแข็ง', a: 'คายความร้อน', how: 'ชิดขึ้นสุด ๆ = คาย' },
+  { q: 'เดือด (boiling) — ของเหลว → แก๊ส ทั่วทั้งก้อน', a: 'ดูดความร้อน', how: 'ต้องเติมความร้อนต่อเนื่อง = ดูด' },
+  { q: 'หยดน้ำเกาะข้างแก้วน้ำเย็น', a: 'คายความร้อน', how: 'นี่คือควบแน่น (แก๊ส → ของเหลว) = คาย' },
+  { q: 'ลูกเหม็นในตู้เสื้อผ้าเล็กลงเรื่อย ๆ', a: 'ดูดความร้อน', how: 'นี่คือระเหิด (ของแข็ง → แก๊ส) = ดูด' },
+  { q: 'น้ำในถาดกลายเป็นน้ำแข็งในช่องแช่แข็ง', a: 'คายความร้อน', how: 'นี่คือแข็งตัว (ของเหลว → ของแข็ง) = คาย' },
+  { q: 'เหงื่อบนตัวเราแห้งไป แล้วเรารู้สึกเย็นลง', a: 'ดูดความร้อน', how: 'เหงื่อระเหย = ดูดความร้อนจากตัวเรา จึงรู้สึกเย็น' },
+  { q: 'ช็อกโกแลตในมือเริ่มเหลว', a: 'ดูดความร้อน', how: 'นี่คือหลอมเหลว (ของแข็ง → ของเหลว) = ดูด' }
+];
+
+var L3 = [
+  { q: 'ใส่เกลือลงในน้ำ คนจนเม็ดเกลือหายไป ได้ของเหลวใสไม่มีสี — เป็นการเปลี่ยนสถานะหรือไม่',
+    a: 'ไม่ใช่ เพราะเป็นการละลาย (dissolve)',
+    wrong: ['ใช่ เพราะเกลือเปลี่ยนจากของแข็งเป็นของเหลว', 'ใช่ เพราะเกลือหลอมเหลวในน้ำ', 'ไม่ใช่ เพราะเกิดสารใหม่ขึ้น'],
+    how: '"หายไป" ไม่เท่ากับเปลี่ยนสถานะ! เกลือยังเป็นของแข็ง แค่กระจายแทรกอยู่ในน้ำ → ตากแดดให้น้ำระเหย เกลือกลับมาเหมือนเดิม (O-NET ปี 65 ข้อ 5)' },
+  { q: 'น้ำแข็งในแก้วละลายกลายเป็นน้ำ — คำว่า "ละลาย" ตรงนี้ตรงกับคำอังกฤษคำไหน',
+    a: 'melt (หลอมเหลว) — เป็นการเปลี่ยนสถานะ',
+    wrong: ['dissolve (การละลาย) — ไม่ใช่การเปลี่ยนสถานะ', 'sublime (ระเหิด) — ข้ามของเหลว', 'condense (ควบแน่น) — แก๊สเป็นของเหลว'],
+    how: 'ภาษาไทยใช้คำ "ละลาย" ทั้ง melt และ dissolve! น้ำแข็ง → น้ำ คือ melt · เกลือในน้ำคือ dissolve' },
+  { q: 'เปิดกล่องน้ำแข็งแห้ง เห็นควันสีขาวลอยออกมา — ควันขาวนั้นคืออะไร',
+    a: 'ไอน้ำในอากาศที่ควบแน่นเพราะโดนความเย็นจัด',
+    wrong: ['แก๊สคาร์บอนไดออกไซด์ที่ระเหิดออกมา', 'ไอของน้ำแข็งแห้งที่กลายเป็นของแข็ง', 'ควันจากการทำปฏิกิริยาของน้ำแข็งแห้งกับอากาศ'],
+    how: 'CO₂ มองไม่เห็น! ที่เห็นเป็นสีขาวคือไอน้ำในอากาศควบแน่น (สามเสน ปี 69 ข้อ 49)' },
+  { q: 'จุดเทียนแล้วไส้เทียนหายไป เกิดควันดำและแก๊สลอยขึ้น — เป็นการเปลี่ยนแปลงแบบใด',
+    a: 'ทางเคมี เพราะเกิดสารใหม่',
+    wrong: ['ทางเคมี เพราะมีการเปลี่ยนสถานะของสาร', 'ทางกายภาพ เพราะเป็นการหลอมเหลวของเทียน', 'ทางกายภาพ เพราะเทียนยังมีรูปร่างเดิม'],
+    how: 'ควันดำไม่ใช่เทียนอีกแล้ว = สารใหม่ = เคมี · ระวังช้อยส์ "เคมีเพราะเปลี่ยนสถานะ" — เปลี่ยนสถานะเป็นกายภาพเสมอ!' },
+  { q: 'นำหม้อใส่น้ำแข็งวางไว้ 5 นาที พบละอองน้ำเกาะรอบนอกหม้อ ทั้งที่ก่อนหน้านี้ไม่มี',
+    a: 'ไอน้ำในอากาศควบแน่นเป็นหยดน้ำเกาะรอบหม้อ',
+    wrong: ['น้ำแข็งที่ละลายในหม้อซึมผ่านออกมารอบหม้อ', 'น้ำแข็งเกิดการระเหิดเป็นไอน้ำเกาะรอบหม้อ', 'น้ำแข็งที่ละลายเกิดปฏิกิริยากลายเป็นหยดน้ำ'],
+    how: 'ถ้าซึมออกมาได้จริง หม้อก็รั่ว! น้ำมาจากอากาศ ไม่ได้มาจากในหม้อ (สามเสน ปี 69 ข้อ 45)' },
+  { q: 'เอาน้ำเกลือไปตากแดดจนน้ำหมด เหลือผลึกขาวที่ก้นภาชนะ — ผลึกขาวนั้นคืออะไร',
+    a: 'เกลือตัวเดิมที่ตกผลึกกลับมา ไม่ใช่สารใหม่',
+    wrong: ['สารใหม่ที่เกิดจากปฏิกิริยาระหว่างเกลือกับน้ำ', 'น้ำที่แข็งตัวเป็นผลึกเพราะความร้อน', 'เกลือที่ระเหิดแล้วกลับมาเป็นของแข็ง'],
+    how: 'เกลือไม่เคยหายไป แค่ละลายอยู่ · น้ำระเหยไป เกลือจึงโผล่กลับมา = การระเหยแห้ง (evaporation to dryness)' },
+  { q: 'ข้อใด "ไม่ใช่" การเปลี่ยนแปลงทางกายภาพ',
+    a: 'เหล็กเป็นสนิม',
+    wrong: ['น้ำแข็งละลายเป็นน้ำ', 'เทียนไขหลอมเหลว', 'ไอน้ำควบแน่นเป็นหยดน้ำ'],
+    how: 'สนิมเป็นสารใหม่ เอากลับเป็นเหล็กเงา ๆ ไม่ได้ = เคมี · อีก 3 ข้อเป็นการเปลี่ยนสถานะ = กายภาพทั้งหมด' },
+  { q: 'น้ำตาลก้อนใส่ในชาร้อนแล้วหายไป กับ เนยแข็งใส่ในกระทะร้อนแล้วเหลว — สองอย่างนี้ต่างกันอย่างไร',
+    a: 'น้ำตาลคือ dissolve (ไม่เปลี่ยนสถานะ) · เนยคือ melt (เปลี่ยนสถานะ)',
+    wrong: ['ทั้งคู่เป็นการหลอมเหลวเหมือนกัน', 'ทั้งคู่เป็นการละลายเหมือนกัน', 'น้ำตาลคือ melt · เนยคือ dissolve'],
+    how: 'ตัวชี้ขาด: มี "ตัวทำละลาย" ไหม · ชามีน้ำเป็นตัวทำละลาย = dissolve · เนยโดนความร้อนเปล่า ๆ = melt' },
+  { q: 'ผ้าเปียกตากในร่มที่ไม่มีแดด ผ่านไปครึ่งวันก็แห้ง — เรียกว่าอะไร',
+    a: 'ระเหย เพราะเกิดที่ผิวหน้าและเกิดได้ทุกอุณหภูมิ',
+    wrong: ['เดือด เพราะน้ำกลายเป็นแก๊ส', 'ระเหิด เพราะน้ำหายไปเลย', 'ควบแน่น เพราะน้ำออกจากผ้า'],
+    how: 'ระเหยไม่ต้องมีแดดและไม่ต้องถึงจุดเดือด · เดือดต้องมีฟองทั่วก้อน' },
+  { q: 'ข้อใดกล่าว "ถูกต้อง" เกี่ยวกับการเปลี่ยนสถานะ',
+    a: 'สารยังเป็นสารเดิม จึงผันกลับได้',
+    wrong: ['เกิดสารใหม่ทุกครั้งที่เปลี่ยนสถานะ', 'เป็นการเปลี่ยนแปลงทางเคมีเพราะสถานะเปลี่ยน', 'ผันกลับไม่ได้เพราะความร้อนหายไปแล้ว'],
+    how: 'น้ำแข็ง/น้ำ/ไอน้ำ คือ H₂O เหมือนกันหมด → กายภาพ + ผันกลับได้ เสมอ' },
+  { q: 'วางการบูรไว้ 24 ชั่วโมงหายไปเกือบหมด · น้ำตาลก้อนวางไว้ 24 ชั่วโมงรูปร่างเหมือนเดิม — สรุปได้ว่าอะไร',
+    a: 'การบูรระเหิด ส่วนน้ำตาลก้อนไม่ระเหิด',
+    wrong: ['การบูรและน้ำตาลก้อนเปลี่ยนแปลงแบบเดียวกัน', 'น้ำตาลก้อนระเหิดช้ากว่าการบูร', 'การบูรเกิดปฏิกิริยาเคมีกับอากาศ'],
+    how: 'น้ำตาลก้อน "ไม่เปลี่ยนเลย" ไม่ใช่ "เปลี่ยนช้า" — อ่านตารางตามที่เห็น ห้ามเติมความรู้นอกตาราง (สามเสน ปี 69 ข้อ 46)' },
+  { q: 'สสารหนึ่ง "รูปร่างเปลี่ยนตามภาชนะ แต่ปริมาตรคงตัว" เปลี่ยนไปเป็น "รูปร่างและปริมาตรเปลี่ยนตามภาชนะ" — คือกระบวนการใด',
+    a: 'การระเหย — เช่น น้ำเปลี่ยนเป็นไอน้ำ',
+    wrong: ['การระเหย — เช่น น้ำแข็งเปลี่ยนเป็นน้ำ', 'การควบแน่น — เช่น น้ำเปลี่ยนเป็นไอน้ำ', 'การควบแน่น — เช่น น้ำแข็งเปลี่ยนเป็นน้ำ'],
+    how: 'แปลรหัสก่อน: รูปร่างเปลี่ยน+ปริมาตรคงที่ = ของเหลว · เปลี่ยนทั้งคู่ = แก๊ส → ของเหลวไปแก๊ส = ระเหย (สามเสน ปี 69 ข้อ 52)' }
+];
+
+/* ---------------- generator (ทดสอบด้วย Node ได้) ---------------- */
+function shuffle(a, rnd) {
+  rnd = rnd || Math.random;
+  var r = a.slice();
+  for (var i = r.length - 1; i > 0; i--) {
+    var j = Math.floor(rnd() * (i + 1));
+    var t = r[i]; r[i] = r[j]; r[j] = t;
+  }
+  return r;
+}
+
+function buildQ(lv, item, rnd) {
+  var correct, opts;
+  if (lv === 2) {
+    correct = item.a;
+    opts = shuffle(['ดูดความร้อน', 'คายความร้อน'], rnd);
+  } else {
+    correct = item.a;
+    var picks = shuffle(item.wrong, rnd).slice(0, 3);
+    opts = shuffle([correct].concat(picks), rnd);
+  }
+  return { text: item.q, opts: opts, correct: opts.indexOf(correct), how: item.how, answer: correct };
+}
+
+function buildRound(lv, rnd) {
+  var pool = lv === 1 ? L1 : lv === 2 ? L2 : L3;
+  return shuffle(pool, rnd).slice(0, 10).map(function (it) { return buildQ(lv, it, rnd); });
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { L1: L1, L2: L2, L3: L3, buildQ: buildQ, buildRound: buildRound, shuffle: shuffle, NAMES: NAMES };
+}
+
+/* ---------------- UI ---------------- */
+if (typeof document !== 'undefined') (function () {
+  var TAG = { 1: 'ด่าน 1 · จับคู่ชื่อ', 2: 'ด่าน 2 · ดูดหรือคาย', 3: 'ด่าน 3 · ด่านกับดัก ⛔' };
+  var menu = document.getElementById('menu'), play = document.getElementById('play'), done = document.getElementById('done');
+  var st = null;
+
+  function best(lv) { try { return +(localStorage.getItem('sci01-best-' + lv) || 0); } catch (e) { return 0; } }
+  function setBest(lv, v) { try { localStorage.setItem('sci01-best-' + lv, String(v)); } catch (e) { } }
+  function paintBest() {
+    for (var i = 1; i <= 3; i++) {
+      var b = best(i), el = document.getElementById('b' + i);
+      if (el) el.textContent = b ? 'สูงสุด ' + b + '/10' : '';
+    }
+  }
+
+  function show(el) {
+    [menu, play, done].forEach(function (x) { x.classList.add('hidden'); });
+    el.classList.remove('hidden');
+  }
+
+  function start(lv) {
+    st = { lv: lv, i: 0, score: 0, qs: buildRound(lv), wrongs: [] };
+    document.getElementById('hl').textContent = lv;
+    show(play);
+    render();
+  }
+
+  function render() {
+    var q = st.qs[st.i];
+    document.getElementById('qtag').textContent = TAG[st.lv];
+    document.getElementById('q').textContent = q.text;
+    document.getElementById('hq').textContent = (st.i + 1);
+    document.getElementById('hs').textContent = st.score;
+    document.getElementById('prog').style.width = (st.i / st.qs.length * 100) + '%';
+    var fb = document.getElementById('fb');
+    fb.className = 'fb hidden';
+    fb.innerHTML = '';
+    document.getElementById('next').classList.add('hidden');
+    var box = document.getElementById('ch');
+    box.innerHTML = '';
+    q.opts.forEach(function (o, k) {
+      var b = document.createElement('button');
+      b.className = 'ch';
+      b.innerHTML = '<b>' + 'กขคง'[k] + '.</b>' + o;
+      b.onclick = function () { answer(k); };
+      box.appendChild(b);
+    });
+  }
+
+  function answer(k) {
+    var q = st.qs[st.i];
+    var btns = document.getElementById('ch').querySelectorAll('.ch');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].disabled = true;
+      if (i === q.correct) btns[i].classList.add('right');
+      else if (i === k) btns[i].classList.add('wrong');
+    }
+    var ok = k === q.correct;
+    if (ok) st.score++;
+    else st.wrongs.push(q);
+    var fb = document.getElementById('fb');
+    fb.className = 'fb ' + (ok ? 'ok' : 'no');
+    fb.innerHTML = (ok ? '✅ ถูกต้อง!' : '❌ ยังไม่ใช่ — คำตอบคือ <b>' + q.answer + '</b>')
+      + '<span class="how">💡 คิดยังไง: ' + q.how + '</span>';
+    var nx = document.getElementById('next');
+    nx.classList.remove('hidden');
+    nx.textContent = (st.i + 1 >= st.qs.length) ? 'ดูผลรวม →' : 'ข้อต่อไป →';
+  }
+
+  document.getElementById('next').onclick = function () {
+    st.i++;
+    if (st.i >= st.qs.length) finish(); else render();
+  };
+
+  function finish() {
+    var s = st.score, lv = st.lv;
+    if (s > best(lv)) setBest(lv, s);
+    document.getElementById('dlv').textContent = TAG[lv];
+    document.getElementById('dscore').textContent = s + '/10';
+    var tier, msg;
+    if (s >= 8) { tier = '🟢 ผ่านเกณฑ์!'; msg = 'แม่นมาก ด่านนี้ผ่านแล้ว ไปด่านต่อไปได้เลย'; }
+    else if (s >= 5) { tier = '🟡 กำลังดี'; msg = 'เข้าใจแล้ว เหลือเก็บรายละเอียด ลองอีกรอบให้ถึง 8'; }
+    else { tier = '🔴 ต้องซ้อมอีกนิด'; msg = 'ไม่เป็นไรเลย กลับไปอ่านการ์ดสรุป §8 แล้วมาเล่นอีกรอบ เดี๋ยวก็ขึ้น'; }
+    document.getElementById('dtier').textContent = tier;
+    document.getElementById('dmsg').textContent = msg;
+    var ul = document.getElementById('dwrongs');
+    ul.innerHTML = '';
+    if (st.wrongs.length) {
+      var h = document.createElement('li');
+      h.innerHTML = '<b>ข้อที่ยังพลาด — อ่านซ้ำรอบเดียวพอ:</b>';
+      h.style.listStyle = 'none';
+      ul.appendChild(h);
+      st.wrongs.forEach(function (q) {
+        var li = document.createElement('li');
+        li.innerHTML = '<b>' + q.answer + '</b> — ' + q.how;
+        ul.appendChild(li);
+      });
+    }
+    show(done);
+  }
+
+  document.getElementById('again').onclick = function () { start(st.lv); };
+  document.getElementById('tomenu').onclick = function () { paintBest(); show(menu); };
+  var lvs = document.querySelectorAll('.lv');
+  for (var i = 0; i < lvs.length; i++) {
+    lvs[i].onclick = (function (n) { return function () { start(n); }; })(+lvs[i].getAttribute('data-lv'));
+  }
+  paintBest();
+})();
+</script>
+</body>
+</html>
