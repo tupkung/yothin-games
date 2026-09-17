@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>สแกน Error ID + tag + NOT — นิสัยก่อนตอบ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+--ink:#1a1c1e;--muted:#5b6167;--line:#dfe3e8;--bg:#fbfbfa;--card:#fff;--soft:#f4f6f8;
+--accent:#1f6feb;--accent-bg:#eaf2ff;--warn:#b25000;--warn-bg:#fff4e8;--ok:#136c39;--ok-bg:#e8f6ee;
+--bad:#b3261e;--bad-bg:#fdecea;--vio:#6b46e0;--vio-bg:#efeaff}
+@media (prefers-color-scheme:dark){:root{
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#333a42;--bg:#16181b;--card:#1e2126;--soft:#262a30;
+--accent:#69a4ff;--accent-bg:#1a2740;--warn:#f0a163;--warn-bg:#33240f;--ok:#6fd39a;--ok-bg:#13301f;
+--bad:#ff8a80;--bad-bg:#3a1a17;--vio:#a68cff;--vio-bg:#2a2140}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:"Sarabun","Noto Sans Thai",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+font-size:17px;line-height:1.75;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:680px;margin:0 auto;padding:22px 16px calc(60px + env(safe-area-inset-bottom))}
+h1{font-size:1.45rem;margin:0 0 6px;line-height:1.35}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.hidden{display:none !important}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+.lv{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);
+border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:11px;transition:.12s}
+.lv:active{border-color:var(--accent)}
+.lv b{font-size:1.06rem}
+.lv .d{color:var(--muted);font-size:.87rem;line-height:1.6}
+.lv .best{float:right;font-size:.8rem;color:var(--ok);font-weight:700}
+.hud{display:flex;gap:10px;margin-bottom:14px}
+.pill{flex:1;background:var(--soft);border:1px solid var(--line);border-radius:11px;padding:7px 4px;text-align:center;line-height:1.3}
+.pill .n{font-size:1.28rem;font-weight:700;font-family:"IBM Plex Mono",monospace}
+.pill .l{font-size:.72rem;color:var(--muted)}
+.bar{height:9px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s linear}
+.q{font-size:1.1rem;font-weight:600;text-align:left;margin:12px 0 6px;line-height:1.85}
+.q .blank{display:inline-block;min-width:2.6em;border-bottom:2px solid var(--accent);color:var(--accent);text-align:center;font-family:"IBM Plex Mono",monospace;font-weight:700;padding:0 4px}
+.q u{text-decoration:none;border-bottom:2px solid var(--vio);padding-bottom:1px}
+.q u b{color:var(--vio);font-size:.8em;margin-right:2px}
+.q .th{display:block;font-size:.84rem;font-weight:400;color:var(--muted);margin-top:4px}
+.q .pass{display:block;font-weight:400;font-size:1rem;background:var(--soft);border-radius:10px;padding:8px 12px;margin:4px 0 8px;line-height:1.7}
+.q .ask{display:block;color:var(--accent)}
+.q .ask mark{background:var(--warn-bg);color:var(--warn);padding:0 4px;border-radius:4px}
+.step{background:var(--vio-bg);border:1px solid var(--vio);color:var(--vio);border-radius:12px;padding:9px 13px;font-weight:700;font-size:1rem;line-height:1.6;margin:10px 0 6px}
+.choices{display:grid;gap:9px;margin:14px 0 4px}
+.choices.grid2{grid-template-columns:1fr 1fr}
+.ch{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;text-align:left;color:var(--ink);line-height:1.55;font-size:1rem}
+.choices.grid2 .ch{text-align:center;font-weight:600;padding:13px 6px;font-size:.95rem}
+.ch:active{border-color:var(--accent);background:var(--accent-bg)}
+.ch b{color:var(--accent);margin-right:7px}
+.fb{min-height:62px;border-radius:12px;padding:11px 14px;font-size:.94rem;line-height:1.65;margin-top:6px}
+.fb.ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);color:var(--bad);border:1px solid var(--bad)}
+.fb.idle{background:var(--soft);color:var(--muted)}
+.pop{animation:pop .25s}
+@keyframes pop{0%{transform:scale(.97)}60%{transform:scale(1.02)}100%{transform:scale(1)}}
+.btnrow{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap}
+.btnrow button{flex:1;padding:11px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:600}
+.btnrow button.pri{background:var(--accent);color:#fff;border-color:var(--accent)}
+.big{font-size:2.4rem;font-weight:700;text-align:center;font-family:"IBM Plex Mono",monospace}
+.grade{text-align:center;font-weight:700;margin:4px 0 14px;line-height:1.6}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--soft);font-weight:600;width:38%}
+.tip{background:var(--warn-bg);border:1px solid var(--warn);color:var(--warn);border-radius:12px;padding:10px 14px;font-size:.9rem;line-height:1.65}
+kbd{font-family:"IBM Plex Mono",monospace;background:var(--soft);border:1px solid var(--line);border-radius:5px;padding:0 5px;font-size:.85em}
+footer{margin-top:28px;color:var(--muted);font-size:.78rem;text-align:center;line-height:1.6}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<section id="menu">
+  <h1>🔍 สแกน Error ID + tag + NOT</h1>
+  <p class="sub">3 เรื่องที่ไม่ใช่ไวยากรณ์ยาก แต่เป็น<b>นิสัยก่อนตอบ</b>: สแกน 6 จุดตามลำดับ · เช็ก tag 2 อย่าง · วงคำว่า NOT ก่อนอ่านช้อยส์ — ทุกข้อ 2 ขั้น ขั้นแรกคือ "ทำนิสัย" ขั้นสองค่อยตอบ ถูกทั้งสองขั้นถึงได้คะแนน</p>
+
+  <button class="lv" data-lv="1"><span class="best" id="b1"></span><b>ด่าน 1 · Error ID — สแกน 6 จุด</b>
+    <div class="d">ขั้น 1 บอกว่าจุดสแกนไหนที่ผิด (ประธาน–กริยา · tense · adj/adv · -ed/-ing · tag · เปรียบเทียบ) · ขั้น 2 ชี้ส่วนที่ผิดพร้อมวิธีแก้ — 10 ข้อ เป้า 8</div></button>
+  <button class="lv" data-lv="2"><span class="best" id="b2"></span><b>ด่าน 2 · Question tag — เช็ก 2 อย่าง</b>
+    <div class="d">ขั้น 1 ขั้ว (บวก↔ลบ หรือกรณีพิเศษ I am / Let's / There is) · ขั้น 2 เลือก tag ที่กริยาช่วยตรงกับประโยคหน้า — 10 ข้อ เป้า 8</div></button>
+  <button class="lv" data-lv="3"><span class="best" id="b3"></span><b>ด่าน 3 · NOT / EXCEPT / INCORRECT — วงก่อนอ่าน</b>
+    <div class="d">ขั้น 1 บอกว่าคำถามให้หา "ข้อที่ไม่ตรง" หรือ "ข้อที่ตรง" (มีข้อปกติปนอยู่ ต้องอ่านจริง) · ขั้น 2 ติ๊ก ✔ ข้อจริงทีละข้อ แล้วตอบ — 8 ข้อ เป้า 7</div></button>
+
+  <p class="tip">💡 กฎเดียวก่อนเล่น: <b>ข้อสอบพวกนี้ตอบผิดเพราะ "ข้ามนิสัย" ไม่ใช่เพราะไม่รู้</b> — ขั้น 1 ของทุกข้อคือนิสัยที่ต้องทำในห้องสอบจริง (ในกระดาษจริงให้ขีด/วงด้วยดินสอ)<br>
+  ⌨️ กดเลข <kbd>1</kbd>–<kbd>4</kbd> เลือกช้อยส์ได้</p>
+</section>
+
+<section id="play" class="hidden">
+  <div class="hud">
+    <div class="pill"><div class="n" id="hScore">0</div><div class="l">ถูกทั้ง 2 ขั้น</div></div>
+    <div class="pill"><div class="n" id="hStep">1/2</div><div class="l">ขั้นที่</div></div>
+    <div class="pill"><div class="n" id="hItem">1</div><div class="l">ข้อที่</div></div>
+  </div>
+  <div class="bar"><i id="barFill"></i></div>
+  <div class="card">
+    <div class="q" id="qText">—</div>
+    <div class="step" id="step">—</div>
+    <div class="choices" id="choices"></div>
+    <div class="fb idle" id="fb"></div>
+  </div>
+  <div class="btnrow"><button id="quit">⏹ หยุดกลับเมนู</button></div>
+</section>
+
+<section id="over" class="hidden">
+  <div class="card">
+    <div class="big" id="oScore">—</div>
+    <div class="grade" id="oGrade">—</div>
+    <table id="oStats"></table>
+    <div id="oWrong"></div>
+  </div>
+  <div class="btnrow">
+    <button class="pri" id="again">🔁 เล่นด่านนี้อีกครั้ง</button>
+    <button id="back">📋 เลือกด่านใหม่</button>
+  </div>
+</section>
+
+<footer>Road to Yothin · เกมซ้อมนิสัย Error ID / question tag / NOT (ก่อนวัดซ้ำชุดอังกฤษ 01 ข้อ 7–10)<br>
+ประโยคในเกมไม่ซ้ำกับชุดฝึกและการ์ดทบทวน · สถิติที่ดีที่สุดเก็บไว้ในเครื่องนี้</footer>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); } } catch (e) { }
+</script>
+
+<!-- ============ POOL + DRAW (ไม่แตะ DOM — ทดสอบด้วย Node ได้) ============ -->
+<script id="gen">
+"use strict";
+/* ---------- ด่าน 1: Error ID — จุดสแกน 6 จุด (ลำดับตาม itembank 01 § Computation) ---------- */
+const SCAN = ['ประธาน–กริยา (ปิดวลี of… ก่อน)', 'รูปกริยา / tense', 'adjective หรือ adverb', '-ed / -ing ในคำคุณศัพท์', 'question tag', 'เปรียบเทียบ / โครงสร้างขนาน'];
+const ERR = [
+  { cat: 0, s: 'The price of these shoes <u><b>1</b>are</u> <u><b>2</b>too</u> <u><b>3</b>high</u> for <u><b>4</b>me</u>.', a: '1 — are → is', wrong: ['2 — too (ถูกแล้ว)', '3 — high (ถูกแล้ว)', '4 — me (ถูกแล้ว)'], why: 'ปิดวลี "of these shoes" → ประธานคือ The price (เอกพจน์) → is' },
+  { cat: 0, s: 'Each of the students <u><b>1</b>have</u> <u><b>2</b>to</u> bring <u><b>3</b>their</u> own <u><b>4</b>lunch</u>.', a: '1 — have → has', wrong: ['2 — to (ถูกแล้ว)', '3 — their (ถูกแล้ว)', '4 — lunch (ถูกแล้ว)'], why: 'ปิด "of the students" → ประธานคือ Each (เอกพจน์) → has' },
+  { cat: 2, s: 'Grace speaks English <u><b>1</b>very</u> <u><b>2</b>fluent</u>, so she <u><b>3</b>rarely</u> <u><b>4</b>makes</u> mistakes.', a: '2 — fluent → fluently', wrong: ['1 — very (ถูกแล้ว)', '3 — rarely (ถูกแล้ว)', '4 — makes (ถูกแล้ว)'], why: 'ขยายกริยา speaks → adverb fluently · rarely ขยาย makes ถูกแล้ว' },
+  { cat: 2, s: 'It was a <u><b>1</b>terribly</u> storm, and the wind <u><b>2</b>blew</u> <u><b>3</b>strongly</u> all <u><b>4</b>night</u>.', a: '1 — terribly → terrible', wrong: ['2 — blew (ถูกแล้ว)', '3 — strongly (ถูกแล้ว)', '4 — night (ถูกแล้ว)'], why: 'ขยายคำนาม storm → adjective terrible (กับดักกลับด้าน) · strongly ขยาย blew ถูกแล้ว' },
+  { cat: 1, s: 'Last night we <u><b>1</b>watch</u> a movie <u><b>2</b>that</u> <u><b>3</b>was</u> really <u><b>4</b>exciting</u>.', a: '1 — watch → watched', wrong: ['2 — that (ถูกแล้ว)', '3 — was (ถูกแล้ว)', '4 — exciting (ถูกแล้ว)'], why: 'Last night → past simple watched · exciting (หนังทำให้ตื่นเต้น) ถูกแล้ว' },
+  { cat: 1, s: 'My brother <u><b>1</b>has visited</u> Japan <u><b>2</b>in</u> 2022 <u><b>3</b>with</u> <u><b>4</b>his</u> class.', a: '1 — has visited → visited', wrong: ['2 — in (ถูกแล้ว)', '3 — with (ถูกแล้ว)', '4 — his (ถูกแล้ว)'], why: 'in 2022 = เวลาอดีตชัด → past simple ห้าม present perfect' },
+  { cat: 3, s: 'I was very <u><b>1</b>exciting</u> <u><b>2</b>about</u> the trip, so I <u><b>3</b>packed</u> my bag <u><b>4</b>early</u>.', a: '1 — exciting → excited', wrong: ['2 — about (ถูกแล้ว)', '3 — packed (ถูกแล้ว)', '4 — early (ถูกแล้ว)'], why: 'คน "รู้สึก" → -ed (excited) · สิ่งที่ทำให้รู้สึก → -ing' },
+  { cat: 3, s: 'The movie was <u><b>1</b>really</u> <u><b>2</b>bored</u>, so we <u><b>3</b>left</u> <u><b>4</b>before</u> the end.', a: '2 — bored → boring', wrong: ['1 — really (ถูกแล้ว)', '3 — left (ถูกแล้ว)', '4 — before (ถูกแล้ว)'], why: 'หนังเป็นสิ่งที่ทำให้เบื่อ → boring · คนที่รู้สึกเบื่อ → bored' },
+  { cat: 4, s: 'Your parents <u><b>1</b>have</u> <u><b>2</b>lived</u> here for years, <u><b>3</b>didn\'t</u> <u><b>4</b>they</u>?', a: '3 — didn\'t → haven\'t', wrong: ['1 — have (ถูกแล้ว)', '2 — lived (ถูกแล้ว)', '4 — they (ถูกแล้ว)'], why: 'กริยาช่วยของ tag ต้องตรงกับประโยคหน้า (have) → haven\'t they' },
+  { cat: 4, s: 'Nobody <u><b>1</b>called</u> <u><b>2</b>while</u> I was <u><b>3</b>out</u>, <u><b>4</b>didn\'t they</u>?', a: '4 — didn\'t they → did they', wrong: ['1 — called (ถูกแล้ว)', '2 — while (ถูกแล้ว)', '3 — out (ถูกแล้ว)'], why: 'Nobody = ประโยคลบ → tag ต้องเป็นบวก did they' },
+  { cat: 5, s: '<u><b>1</b>This</u> exam was <u><b>2</b>more easier</u> <u><b>3</b>than</u> the <u><b>4</b>last</u> one.', a: '2 — more easier → easier', wrong: ['1 — This (ถูกแล้ว)', '3 — than (ถูกแล้ว)', '4 — last (ถูกแล้ว)'], why: 'easy สั้น → easier อย่างเดียว ห้ามใส่ more ซ้อน' },
+  { cat: 5, s: 'Tom likes <u><b>1</b>swimming</u>, <u><b>2</b>running</u>, and <u><b>3</b>to ride</u> <u><b>4</b>his</u> bike.', a: '3 — to ride → riding', wrong: ['1 — swimming (ถูกแล้ว)', '2 — running (ถูกแล้ว)', '4 — his (ถูกแล้ว)'], why: 'โครงสร้างขนาน: รายการเดียวกันต้องรูปเดียวกัน (-ing ทั้งหมด)' },
+];
+
+/* ---------- ด่าน 2: question tag — ขั้ว + กริยาช่วย ---------- */
+const POS = 'ประโยคหน้าบวก → tag ลบ', NEG = 'ประโยคหน้าลบ (not / never / nobody) → tag บวก', SPC = 'กรณีพิเศษ (I am → aren\'t I · Let\'s → shall we · There is → isn\'t there)';
+const TAG = [
+  { s: 'Your brother plays football, ___?', pol: POS, a: 'doesn\'t he', wrong: ['does he', 'isn\'t he', 'didn\'t he'], why: 'บวก → ลบ · ไม่มีกริยาช่วย + plays → doesn\'t' },
+  { s: 'They weren\'t at school yesterday, ___?', pol: NEG, a: 'were they', wrong: ['weren\'t they', 'did they', 'are they'], why: 'ลบ → บวก · กริยาช่วย were' },
+  { s: 'I\'m late again, ___?', pol: SPC, a: 'aren\'t I', wrong: ['amn\'t I', 'am I', 'isn\'t I'], why: 'I am … → aren\'t I (ไม่มีคำว่า amn\'t)' },
+  { s: 'Let\'s order pizza tonight, ___?', pol: SPC, a: 'shall we', wrong: ['don\'t we', 'will we', 'do we'], why: 'Let\'s … → shall we เสมอ' },
+  { s: 'There is a test tomorrow, ___?', pol: SPC, a: 'isn\'t there', wrong: ['isn\'t it', 'is there', 'doesn\'t there'], why: 'ประธานคือ there → isn\'t there (ไม่ใช่ it)' },
+  { s: 'She has never been to Japan, ___?', pol: NEG, a: 'has she', wrong: ['hasn\'t she', 'does she', 'is she'], why: 'never = ลบ → tag บวก · กริยาช่วย has' },
+  { s: 'You can\'t swim, ___?', pol: NEG, a: 'can you', wrong: ['can\'t you', 'do you', 'are you'], why: 'ลบ → บวก · กริยาช่วย can' },
+  { s: 'We should leave now, ___?', pol: POS, a: 'shouldn\'t we', wrong: ['should we', 'don\'t we', 'will we'], why: 'บวก → ลบ · กริยาช่วย should' },
+  { s: 'Grandma made this cake, ___?', pol: POS, a: 'didn\'t she', wrong: ['did she', 'doesn\'t she', 'wasn\'t she'], why: 'บวก → ลบ · made (past) ไม่มีกริยาช่วย → didn\'t' },
+  { s: 'Nobody knows the answer, ___?', pol: NEG, a: 'do they', wrong: ['don\'t they', 'does he', 'doesn\'t he'], why: 'Nobody = ลบ → บวก · nobody ใช้สรรพนาม they' },
+  { s: 'It will be sunny tomorrow, ___?', pol: POS, a: 'won\'t it', wrong: ['will it', 'isn\'t it', 'doesn\'t it'], why: 'บวก → ลบ · กริยาช่วย will → won\'t' },
+  { s: 'You have to wear a uniform, ___?', pol: POS, a: 'don\'t you', wrong: ['haven\'t you', 'do you', 'have you'], why: 'have to เป็นกริยาแท้ (ไม่ใช่กริยาช่วย) → don\'t you' },
+];
+
+/* ---------- ด่าน 3: NOT / EXCEPT / INCORRECT — วงก่อนอ่านช้อยส์ ---------- */
+const FIND_NOT = 'หา "ข้อที่ไม่ตรง" (NOT / EXCEPT / INCORRECT) → ติ๊ก ✔ ข้อจริงทีละข้อ ข้อที่เหลือคือคำตอบ', FIND_TRUE = 'หา "ข้อที่ตรงกับเรื่อง" (คำถามปกติ)';
+const NOTQ = [
+  { p: 'Mint gets up at six every day except Sunday. On Sundays she sleeps until nine and has a big breakfast with her family.', q: 'Which sentence is NOT true?', neg: true, a: 'Mint gets up at six on Sundays.', wrong: ['Mint usually gets up at six.', 'Mint sleeps late on Sundays.', 'Mint has breakfast with her family on Sundays.'], why: 'วันอาทิตย์นอนถึงเก้าโมง — ข้ออื่นจริงหมด' },
+  { p: 'The school bus leaves at 7.15. Students who are late must take the public bus, which costs 15 baht.', q: 'All of the following are true EXCEPT ___.', neg: true, a: 'The public bus is free.', wrong: ['The school bus leaves at 7.15.', 'Late students take the public bus.', 'The public bus costs 15 baht.'], why: 'รถเมล์สาธารณะ 15 บาท ไม่ฟรี — ข้ออื่นจริงหมด' },
+  { p: 'Pim\'s cat is black with white paws. It sleeps on her bed and likes fish, but it hates water.', q: 'Which sentence is TRUE?', neg: false, a: 'The cat does not like water.', wrong: ['The cat is completely black.', 'The cat sleeps in the kitchen.', 'The cat hates fish.'], why: 'คำถามปกติ — หาข้อที่ตรง: hates water = does not like water' },
+  { p: 'Our science club meets on Wednesdays after school. New members are welcome, but they must bring a notebook.', q: 'Which statement is INCORRECT?', neg: true, a: 'The club meets before school.', wrong: ['The club meets on Wednesdays.', 'New members can join.', 'Members need a notebook.'], why: 'after school ไม่ใช่ before — ข้ออื่นจริงหมด' },
+  { p: 'Dad cooks on weekdays, and Mom cooks at the weekend. On Fridays the family orders food from a restaurant.', q: 'Which is NOT correct?', neg: true, a: 'Mom cooks on Fridays.', wrong: ['Dad cooks on Mondays.', 'The family orders food on Fridays.', 'Mom cooks on Saturdays.'], why: 'ศุกร์สั่งอาหาร ไม่มีใครทำ — ข้ออื่นจริงหมด' },
+  { p: 'The museum is free for children under 12. Adults pay 100 baht, and students with a card pay half price.', q: 'According to the text, which is NOT true?', neg: true, a: 'Students with a card pay 100 baht.', wrong: ['Children under 12 do not pay.', 'Adults pay 100 baht.', 'Students with a card pay 50 baht.'], why: 'half price = 50 บาท — ข้ออื่นจริงหมด' },
+  { p: 'Ton wants to be a pilot. He studies English every night and plays football at weekends to stay fit.', q: 'What does Ton do at weekends?', neg: false, a: 'He plays football.', wrong: ['He studies English.', 'He flies planes.', 'He sleeps late.'], why: 'คำถามปกติ — at weekends → plays football (English คือทุกคืน)' },
+  { p: 'It rained all week, so the sports day was moved to next Monday. The art show will still be on Friday as planned.', q: 'Which sentence is NOT true?', neg: true, a: 'The art show was moved to Monday.', wrong: ['It rained all week.', 'Sports day is now on Monday.', 'The art show is on Friday.'], why: 'ที่ย้ายคือ sports day ไม่ใช่ art show — ข้ออื่นจริงหมด' },
+];
+
+function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const opts = (a, wrong) => shuffle([{ t: a, ok: true }].concat(wrong.map(w => ({ t: w, ok: false }))));
+function build(lv, it) {
+  if (lv === 1) {
+    const others = shuffle(SCAN.filter((_, i) => i !== it.cat)).slice(0, 3);
+    return { html: it.s, steps: [{ prompt: 'ขั้น 1 — สแกน 6 จุดตามลำดับ: ประโยคนี้ผิดที่จุดไหน', ch: opts(SCAN[it.cat], others), why: 'จุดที่ผิดคือ "' + SCAN[it.cat] + '" — ' + it.why }, { prompt: 'ขั้น 2 — ส่วนไหนผิด และแก้เป็นอะไร', ch: opts(it.a, it.wrong), why: it.why }], why: it.why, tag: 'สแกน: ' + SCAN[it.cat] };
+  }
+  if (lv === 2) {
+    const pols = [POS, NEG, SPC].filter(p => p !== it.pol);
+    return { text: it.s, steps: [{ prompt: 'ขั้น 1 — ขั้ว: ประโยคหน้าเป็นแบบไหน', ch: opts(it.pol, pols), why: it.pol + ' — ' + it.why }, { prompt: 'ขั้น 2 — กริยาช่วยต้องตรงกับประโยคหน้า: tag คือ?', ch: opts(it.a, it.wrong), why: it.why }], why: it.why, tag: 'tag: ขั้ว + กริยาช่วย' };
+  }
+  return { pass: it.p, ask: it.q, steps: [{ prompt: 'ขั้น 1 — อ่านคำถามก่อน: ให้หาข้ออะไร', ch: opts(it.neg ? FIND_NOT : FIND_TRUE, [it.neg ? FIND_TRUE : FIND_NOT]), why: it.neg ? 'มีคำว่า NOT / EXCEPT / INCORRECT → วงไว้ แล้วติ๊ก ✔ ข้อจริงทีละข้อ' : 'ไม่มีคำว่า NOT — คำถามปกติ หาข้อที่ตรงกับเรื่อง' }, { prompt: it.neg ? 'ขั้น 2 — ติ๊ก ✔ ข้อที่จริงทีละข้อ → ข้อที่เหลือคือคำตอบ' : 'ขั้น 2 — เลือกข้อที่ตรงกับเรื่อง', ch: opts(it.a, it.wrong), why: it.why }], why: it.why, tag: it.neg ? 'NOT: วงก่อนอ่านช้อยส์' : 'คำถามปกติ (ต้องอ่านจริง)' };
+}
+const POOLS = { 1: ERR, 2: TAG, 3: NOTQ };
+const decks = {};
+function draw(lv) { if (!decks[lv] || !decks[lv].length) decks[lv] = shuffle(POOLS[lv]); return build(lv, decks[lv].pop()); }
+function resetDecks() { for (const k in decks) delete decks[k]; }
+const LEVELS = {
+  1: { name: 'ด่าน 1 Error ID สแกน 6 จุด', total: 10, goal: 8 },
+  2: { name: 'ด่าน 2 question tag 2 เช็ก', total: 10, goal: 8 },
+  3: { name: 'ด่าน 3 NOT วงก่อนอ่าน', total: 8, goal: 7 }
+};
+if (typeof module !== 'undefined') module.exports = { SCAN, ERR, TAG, NOTQ, POOLS, build, draw, resetDecks, LEVELS };
+</script>
+
+<!-- ============ UI ============ -->
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+let S = null;
+const KEY = 'scan-best-';
+function best(lv) { try { return +(localStorage.getItem(KEY + lv) || 0); } catch (e) { return 0; } }
+function setBest(lv, v) { try { localStorage.setItem(KEY + lv, String(v)); } catch (e) { } }
+function paintBests() { for (let i = 1; i <= 3; i++) { const b = best(i); $('b' + i).textContent = b ? 'สถิติ ' + b + '/' + LEVELS[i].total : ''; } }
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function markNot(q) { return esc(q).replace(/\b(NOT|EXCEPT|INCORRECT|TRUE)\b/g, '<mark>$1</mark>'); }
+function renderItem(it) {
+  if (it.html) return it.html;
+  if (it.pass) return '<span class="pass">' + esc(it.pass) + '</span><span class="ask">' + (S.si === 0 ? esc(it.ask) : markNot(it.ask)) + '</span>';
+  let i = 0; return esc(it.text).replace(/___/g, () => '<span class="blank">' + (++i) + '</span>');
+}
+function start(lv) {
+  const cfg = LEVELS[lv];
+  S = { lv, cfg, score: 0, asked: 0, wrong: [], t0: Date.now(), item: null, si: 0, itemOk: true, locked: false };
+  resetDecks();
+  $('menu').classList.add('hidden'); $('over').classList.add('hidden'); $('play').classList.remove('hidden');
+  $('hScore').textContent = '0';
+  nextItem();
+}
+function nextItem() {
+  if (S.asked >= S.cfg.total) { finish(); return; }
+  S.item = draw(S.lv); S.si = 0; S.itemOk = true;
+  $('hItem').textContent = (S.asked + 1) + '/' + S.cfg.total;
+  $('barFill').style.width = (S.asked / S.cfg.total * 100) + '%';
+  renderStep();
+}
+function renderStep() {
+  const st = S.item.steps[S.si];
+  S.locked = false; $('fb').className = 'fb idle'; $('fb').textContent = '';
+  $('hStep').textContent = (S.si + 1) + '/2';
+  $('qText').innerHTML = '<span class="th">ข้อ ' + (S.asked + 1) + ' · ' + esc(S.item.tag) + '</span>' + renderItem(S.item);
+  $('step').innerHTML = st.prompt;
+  const box = $('choices'); box.innerHTML = ''; box.classList.toggle('grid2', st.ch.every(c => c.t.length < 16));
+  st.ch.forEach((c, i) => { const b = document.createElement('button'); b.className = 'ch'; b.innerHTML = '<b>' + (i + 1) + '.</b> ' + esc(c.t); b.onclick = () => answer(i); box.appendChild(b); });
+}
+function flash(ok, html) { const f = $('fb'); f.className = 'fb ' + (ok ? 'ok' : 'bad'); f.innerHTML = html; $('step').classList.remove('pop'); void $('step').offsetWidth; $('step').classList.add('pop'); }
+function answer(i) {
+  if (!S || S.locked) return;
+  S.locked = true;
+  const st = S.item.steps[S.si], c = st.ch[i], right = st.ch.find(x => x.ok), last = S.si === 1;
+  if (c.ok) flash(true, last ? '✓ ถูกทั้งสองขั้น! ' + esc(S.item.why) : '✓ นิสัยถูก — ' + esc(st.why));
+  else {
+    S.itemOk = false;
+    S.wrong.push({ q: (S.item.text || S.item.ask || S.item.html).replace(/<[^>]+>/g, ''), step: st.prompt, your: c.t, ans: right.t, why: st.why });
+    flash(false, '✗ ที่ถูกคือ <b>' + esc(right.t) + '</b><br>' + esc(st.why));
+  }
+  if (last) { S.asked++; if (S.itemOk) S.score++; $('hScore').textContent = S.score; }
+  setTimeout(() => { if (!S) return; if (last) nextItem(); else { S.si = 1; renderStep(); } }, c.ok ? (last ? 1600 : 900) : 4200);
+}
+function finish() {
+  const lv = S.lv, cfg = S.cfg, secs = (Date.now() - S.t0) / 1000, per = S.asked ? secs / S.asked : 0;
+  $('play').classList.add('hidden'); $('over').classList.remove('hidden');
+  $('oScore').textContent = S.score + ' / ' + cfg.total;
+  const passed = S.score >= cfg.goal;
+  $('oGrade').innerHTML = passed ? '🟢 ผ่านเป้าแล้ว! (เป้า ' + cfg.goal + ') นิสัยติดแล้ว 🎉'
+    : (S.score >= cfg.goal * 0.6 ? '🟡 ใกล้แล้ว! เป้าคือ ' + cfg.goal + ' — ดูว่าพลาดที่ขั้น 1 (นิสัย) หรือขั้น 2 (คำตอบ)'
+      : '🔴 ยังไม่ถึงเป้า ' + cfg.goal + ' — อ่านตารางด้านล่าง แล้วลองใหม่ (ทำขั้น 1 ให้ครบทุกข้อก่อน)');
+  const b = best(lv); if (S.score > b) setBest(lv, S.score);
+  const cueMiss = S.wrong.filter(w => /ขั้น 1/.test(w.step)).length;
+  $('oStats').innerHTML = '<tr><th>ถูกทั้งสองขั้น</th><td>' + S.score + ' / ' + S.asked + '</td></tr>' +
+    '<tr><th>พลาดที่ขั้น 1 (นิสัย)</th><td>' + cueMiss + ' ครั้ง</td></tr>' +
+    '<tr><th>พลาดที่ขั้น 2 (คำตอบ)</th><td>' + (S.wrong.length - cueMiss) + ' ครั้ง</td></tr>' +
+    '<tr><th>เฉลี่ยต่อข้อ</th><td>' + per.toFixed(0) + ' วินาที' + (lv === 3 ? ' (reading ข้อสอบจริง ≈ 60)' : ' (ข้อสอบจริง ≤ 36)') + '</td></tr>' +
+    '<tr><th>สถิติดีที่สุด</th><td>' + Math.max(b, S.score) + ' / ' + cfg.total + (S.score > b ? ' 🆕' : '') + '</td></tr>';
+  $('oWrong').innerHTML = S.wrong.length
+    ? '<h3 style="font-size:1rem;margin:18px 0 6px">ที่พลาด — อ่านสักนิดก่อนเล่นรอบหน้า</h3><table><tr><th>โจทย์ · ขั้น</th><th>ตอบไป</th><th>ที่ถูก</th></tr>' +
+      S.wrong.map(w => '<tr><td>' + esc(w.q) + '<br><b>' + esc(w.step) + '</b><br><span style="color:var(--muted)">' + esc(w.why) + '</span></td><td>' + esc(w.your) + '</td><td><b>' + esc(w.ans) + '</b></td></tr>').join('') + '</table>'
+    : '<p style="text-align:center;color:var(--ok);font-weight:700;margin-top:16px">ไม่พลาดสักขั้น! 🏆</p>';
+  paintBests();
+}
+function toMenu() { S = null; $('play').classList.add('hidden'); $('over').classList.add('hidden'); $('menu').classList.remove('hidden'); paintBests(); }
+document.querySelectorAll('.lv').forEach(b => b.onclick = () => start(+b.dataset.lv));
+$('quit').onclick = () => { if (S) finish(); };
+$('again').onclick = () => start(S ? S.lv : 1);
+$('back').onclick = toMenu;
+document.addEventListener('keydown', e => { if (!S || S.locked) return; const n = +e.key; if (n >= 1 && n <= 4) answer(n - 1); });
+paintBests();
+</script>
+</body>
+</html>

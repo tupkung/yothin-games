@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tense Rules — 5 กฎที่พลาด แตะสัญญาณก่อนตอบ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+--ink:#1a1c1e;--muted:#5b6167;--line:#dfe3e8;--bg:#fbfbfa;--card:#fff;--soft:#f4f6f8;
+--accent:#1f6feb;--accent-bg:#eaf2ff;--warn:#b25000;--warn-bg:#fff4e8;--ok:#136c39;--ok-bg:#e8f6ee;
+--bad:#b3261e;--bad-bg:#fdecea;--vio:#6b46e0;--vio-bg:#efeaff}
+@media (prefers-color-scheme:dark){:root{
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#333a42;--bg:#16181b;--card:#1e2126;--soft:#262a30;
+--accent:#69a4ff;--accent-bg:#1a2740;--warn:#f0a163;--warn-bg:#33240f;--ok:#6fd39a;--ok-bg:#13301f;
+--bad:#ff8a80;--bad-bg:#3a1a17;--vio:#a68cff;--vio-bg:#2a2140}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:"Sarabun","Noto Sans Thai",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+font-size:17px;line-height:1.75;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:680px;margin:0 auto;padding:22px 16px calc(60px + env(safe-area-inset-bottom))}
+h1{font-size:1.45rem;margin:0 0 6px;line-height:1.35}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.hidden{display:none !important}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+.lv{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);
+border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:11px;transition:.12s}
+.lv:active{border-color:var(--accent)}
+.lv b{font-size:1.06rem}
+.lv .d{color:var(--muted);font-size:.87rem;line-height:1.6}
+.lv .best{float:right;font-size:.8rem;color:var(--ok);font-weight:700}
+.hud{display:flex;gap:10px;margin-bottom:14px}
+.pill{flex:1;background:var(--soft);border:1px solid var(--line);border-radius:11px;padding:7px 4px;text-align:center;line-height:1.3}
+.pill .n{font-size:1.28rem;font-weight:700;font-family:"IBM Plex Mono",monospace}
+.pill .l{font-size:.72rem;color:var(--muted)}
+.bar{height:9px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s linear}
+.q{font-size:1.12rem;font-weight:600;text-align:left;margin:12px 0 6px;line-height:1.8}
+.q .blank{display:inline-block;min-width:2.6em;border-bottom:2px solid var(--accent);color:var(--accent);text-align:center;font-family:"IBM Plex Mono",monospace;font-weight:700;padding:0 4px}
+.q .th{display:block;font-size:.84rem;font-weight:400;color:var(--muted);margin-top:4px}
+.q .ctx{display:block;font-weight:400;color:var(--muted);font-size:1rem}
+.q .direct{display:block;font-family:"IBM Plex Mono",monospace;font-size:1rem;color:var(--vio);margin-bottom:4px}
+.step{background:var(--vio-bg);border:1px solid var(--vio);color:var(--vio);border-radius:12px;padding:9px 13px;font-weight:700;font-size:1rem;line-height:1.6;margin:10px 0 6px}
+.choices{display:grid;gap:9px;margin:14px 0 4px}
+.choices.grid2{grid-template-columns:1fr 1fr}
+.ch{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;text-align:left;color:var(--ink);line-height:1.55;font-size:1rem}
+.choices.grid2 .ch{text-align:center;font-weight:600;padding:13px 6px;font-size:.95rem}
+.ch:active{border-color:var(--accent);background:var(--accent-bg)}
+.ch b{color:var(--accent);margin-right:7px}
+.fb{min-height:62px;border-radius:12px;padding:11px 14px;font-size:.94rem;line-height:1.65;margin-top:6px}
+.fb.ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);color:var(--bad);border:1px solid var(--bad)}
+.fb.idle{background:var(--soft);color:var(--muted)}
+.tagline{display:inline-block;font-size:.76rem;background:var(--soft);border:1px solid var(--line);border-radius:99px;padding:0 9px;color:var(--muted);margin-top:6px}
+.pop{animation:pop .25s}
+@keyframes pop{0%{transform:scale(.97)}60%{transform:scale(1.02)}100%{transform:scale(1)}}
+.btnrow{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap}
+.btnrow button{flex:1;padding:11px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:600}
+.btnrow button.pri{background:var(--accent);color:#fff;border-color:var(--accent)}
+.big{font-size:2.4rem;font-weight:700;text-align:center;font-family:"IBM Plex Mono",monospace}
+.grade{text-align:center;font-weight:700;margin:4px 0 14px;line-height:1.6}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--soft);font-weight:600;width:38%}
+.tip{background:var(--warn-bg);border:1px solid var(--warn);color:var(--warn);border-radius:12px;padding:10px 14px;font-size:.9rem;line-height:1.65}
+kbd{font-family:"IBM Plex Mono",monospace;background:var(--soft);border:1px solid var(--line);border-radius:5px;padding:0 5px;font-size:.85em}
+footer{margin-top:28px;color:var(--muted);font-size:.78rem;text-align:center;line-height:1.6}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<section id="menu">
+  <h1>📏 Tense Rules — 5 กฎที่พลาด</h1>
+  <p class="sub">ด่านละกฎ ตามที่พลาดในชุดอังกฤษ 02 · ทุกข้อมี <b>2 ขั้น</b>: ขั้นแรก "แตะสัญญาณ" ในประโยค (คำเชื่อม / ประโยคข้าง ๆ / ประธานทำเองไหม) ขั้นสองค่อยเลือกรูปกริยา — ถูกทั้งสองขั้นถึงได้คะแนน เพราะข้อสอบไม่ได้วัดว่ารู้กฎ แต่วัดว่า<b>เห็นสัญญาณแล้วใช้กฎทัน</b></p>
+
+  <button class="lv" data-lv="1"><span class="best" id="b1"></span><b>ด่าน 1 · ห้าม will หลัง when / as soon as</b>
+    <div class="d">แตะคำเชื่อมเวลาก่อน (when · as soon as · before · after · until · if) → ช่องที่ติดคำนั้นใช้ present simple · will อยู่อีกฝั่ง — 10 ข้อ เป้า 8</div></button>
+  <button class="lv" data-lv="2"><span class="best" id="b2"></span><b>ด่าน 2 · if — จริงหรือสมมติ อ่านประโยคข้าง ๆ</b>
+    <div class="d">ประโยคข้าง ๆ บอกว่าเป็นไปได้จริง (C1: if + present → will) หรือตรงข้ามความจริง (C2: if + past → would) — 10 ข้อ เป้า 8</div></button>
+  <button class="lv" data-lv="3"><span class="best" id="b3"></span><b>ด่าน 3 · ประธานทำเองได้ไหม (passive)</b>
+    <div class="d">สะพานสร้างตัวเองไม่ได้ → be + V3 · มีข้อ active ปนอยู่ ต้องถามจริง ๆ — 10 ข้อ เป้า 8</div></button>
+  <button class="lv" data-lv="4"><span class="best" id="b4"></span><b>ด่าน 4 · รายงานคำพูด 2 ขั้น</b>
+    <div class="d">ขั้น 1 เปลี่ยนคำบอกเวลา (now → then · tomorrow → the next day) · ขั้น 2 ถอย tense 1 ขั้น — 8 ข้อ เป้า 7</div></button>
+  <button class="lv" data-lv="5"><span class="best" id="b5"></span><b>ด่าน 5 · หนึ่งช่อง หนึ่ง marker</b>
+    <div class="d">สองช่องในประโยคเดียว แตะ marker ของช่องที่ถามก่อน (since then · ago · so far · still · already) แล้วค่อยเลือกคู่ — 10 ข้อ เป้า 8</div></button>
+
+  <p class="tip">💡 กฎเดียวก่อนเล่น: <b>ขั้นแรกห้ามข้าม</b> — ถ้าแตะสัญญาณผิด ระบบจะบอกสัญญาณที่ถูกให้ แล้วให้ตอบต่อ แต่ข้อนั้นไม่ได้คะแนน<br>
+  ⌨️ กดเลข <kbd>1</kbd>–<kbd>4</kbd> เลือกช้อยส์ได้</p>
+</section>
+
+<section id="play" class="hidden">
+  <div class="hud">
+    <div class="pill"><div class="n" id="hScore">0</div><div class="l">ถูกทั้ง 2 ขั้น</div></div>
+    <div class="pill"><div class="n" id="hStep">1/2</div><div class="l">ขั้นที่</div></div>
+    <div class="pill"><div class="n" id="hItem">1</div><div class="l">ข้อที่</div></div>
+  </div>
+  <div class="bar"><i id="barFill"></i></div>
+  <div class="card">
+    <div class="q" id="qText">—</div>
+    <div class="step" id="step">—</div>
+    <div class="choices" id="choices"></div>
+    <div class="fb idle" id="fb"></div>
+  </div>
+  <div class="btnrow"><button id="quit">⏹ หยุดกลับเมนู</button></div>
+</section>
+
+<section id="over" class="hidden">
+  <div class="card">
+    <div class="big" id="oScore">—</div>
+    <div class="grade" id="oGrade">—</div>
+    <table id="oStats"></table>
+    <div id="oWrong"></div>
+  </div>
+  <div class="btnrow">
+    <button class="pri" id="again">🔁 เล่นด่านนี้อีกครั้ง</button>
+    <button id="back">📋 เลือกด่านใหม่</button>
+  </div>
+</section>
+
+<footer>Road to Yothin · เกมประกอบชุดอังกฤษ 02 (5 กฎที่พลาด 15 ก.ย.)<br>
+ประโยคในเกมไม่ซ้ำกับชุดฝึก · สถิติที่ดีที่สุดเก็บไว้ในเครื่องนี้</footer>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); } } catch (e) { }
+</script>
+
+<!-- ============ POOL + DRAW (ไม่แตะ DOM — ทดสอบด้วย Node ได้) ============ -->
+<script id="gen">
+"use strict";
+/* ทุกข้อ = 2 ขั้น · ขั้น 1 (cue) แตะสัญญาณ · ขั้น 2 เลือกรูป · ทุก wrong ไล่แล้วว่าผิดจริง (ไม่ใช่แค่ "ไม่ใช่ตัวที่ตั้งใจ") */
+const C1 = 'เป็นไปได้จริง → C1: if + present, will + V', C2 = 'ตรงข้ามความจริง / สมมติ → C2: if + past, would + V';
+const ACT = 'ประธานทำเอง → active', PAS = 'ประธานถูกทำ → passive (be + V3)';
+
+/* ---------- ด่าน 1: ห้าม will หลังคำเชื่อมเวลา ---------- */
+const TIME = [
+  { s: 'Wait here until the rain ___.', cue: { a: 'until', wrong: ['here', 'rain', 'Wait'] }, a: 'stops', wrong: ['will stop', 'stopped', 'is stopping'], why: 'หลัง until → present simple (stops) แม้ความหมายเป็นอนาคต' },
+  { s: 'We ___ the game when Dad ___ home.', cue: { a: 'when', wrong: ['game', 'home', 'Dad'] }, a: 'will start / comes', wrong: ['will start / will come', 'start / will come', 'started / comes'], why: 'will อยู่ประโยคหลัก (will start) · หลัง when → comes' },
+  { s: 'Before you ___ the room, please turn off the lights.', cue: { a: 'Before', wrong: ['room', 'lights', 'please'] }, a: 'leave', wrong: ['will leave', 'left', 'are leaving'], why: 'หลัง before → present simple (leave)' },
+  { s: 'After the bell ___ this afternoon, the students ___ outside.', cue: { a: 'After', wrong: ['bell', 'students', 'outside'] }, a: 'rings / will go', wrong: ['will ring / will go', 'rang / will go', 'will ring / go'], why: 'หลัง after → rings · ประโยคหลัก → will go' },
+  { s: 'Call me as soon as you ___ the airport.', cue: { a: 'as soon as', wrong: ['Call', 'airport', 'me'] }, a: 'reach', wrong: ['will reach', 'reached', 'are reaching'], why: 'หลัง as soon as → present simple (reach)' },
+  { s: 'I ___ my homework before I ___ TV tonight.', cue: { a: 'before', wrong: ['homework', 'tonight', 'TV'] }, a: 'will finish / watch', wrong: ['finish / will watch', 'will finish / will watch', 'finished / watch'], why: 'ประโยคหลัก → will finish · หลัง before → watch' },
+  { s: 'When the water ___, add the noodles.', cue: { a: 'When', wrong: ['water', 'noodles', 'add'] }, a: 'boils', wrong: ['will boil', 'boiled', 'is boiling'], why: 'หลัง when (คำสั่งที่จะทำในอนาคต) → boils' },
+  { s: 'She ___ us a photo as soon as the baby ___ born.', cue: { a: 'as soon as', wrong: ['photo', 'baby', 'born'] }, a: 'will send / is', wrong: ['will send / will be', 'sends / will be', 'sent / is'], why: 'will send (หลัก) · หลัง as soon as → is born' },
+  { s: 'Don\'t leave until the teacher ___ you can go.', cue: { a: 'until', wrong: ['leave', 'teacher', 'go'] }, a: 'says', wrong: ['will say', 'said', 'is saying'], why: 'หลัง until → says' },
+  { s: 'After I ___ the dishes, I ___ you with your project.', cue: { a: 'After', wrong: ['dishes', 'project', 'you'] }, a: 'wash / will help', wrong: ['will wash / will help', 'washed / will help', 'will wash / help'], why: 'หลัง after → wash · ประโยคหลัก → will help' },
+  { s: 'If it ___ tomorrow, the trip ___ cancelled.', cue: { a: 'If', wrong: ['tomorrow', 'trip', 'cancelled'] }, a: 'rains / will be', wrong: ['will rain / will be', 'rained / will be', 'will rain / is'], why: 'if ใช้กฎเดียวกับ when: if + present (rains) · will อยู่อีกฝั่ง (will be)' },
+  { s: 'We ___ home when the concert ___.', cue: { a: 'when', wrong: ['home', 'concert', 'We'] }, a: 'will go / ends', wrong: ['will go / will end', 'go / will end', 'went / ends'], why: 'will go (หลัก) · หลัง when → ends' },
+];
+
+/* ---------- ด่าน 2: if จริงหรือสมมติ — อ่านประโยคข้าง ๆ ---------- */
+const COND = [
+  { ctx: 'I have a free afternoon tomorrow.', s: 'If the weather ___ nice, I ___ to the park.', real: true, a: 'is / will go', wrong: ['were / would go', 'is / would go', 'will be / will go'], why: 'พรุ่งนี้ว่างจริง = เป็นไปได้ → C1: is … will go' },
+  { ctx: 'I\'m not a bird.', s: 'If I ___ wings, I ___ over the city.', real: false, a: 'had / would fly', wrong: ['have / will fly', 'had / will fly', 'have / would fly'], why: 'ไม่ใช่นก = ตรงข้ามความจริง → C2: had … would fly' },
+  { ctx: 'The bus leaves at 7 o\'clock.', s: 'If we ___ up late, we ___ it.', real: true, a: 'get / will miss', wrong: ['got / would miss', 'get / would miss', 'will get / will miss'], why: 'ตื่นสายเป็นไปได้จริง → C1: get … will miss' },
+  { ctx: 'My grandfather is 80 years old.', s: 'If he ___ younger, he ___ with us to the mountains.', real: false, a: 'were / would come', wrong: ['is / will come', 'were / will come', 'is / would come'], why: 'อายุ 80 แล้ว "ถ้าหนุ่มกว่านี้" = สมมติ → C2: were … would come' },
+  { ctx: 'Mom is cooking dinner now.', s: 'If dinner ___ ready early, we ___ a movie.', real: true, a: 'is / will watch', wrong: ['were / would watch', 'is / would watch', 'will be / will watch'], why: 'กำลังทำอาหารอยู่ เสร็จเร็วเป็นไปได้ → C1' },
+  { ctx: 'I don\'t have a car.', s: 'If I ___ a car, I ___ you to school every day.', real: false, a: 'had / would drive', wrong: ['have / will drive', 'had / will drive', 'have / would drive'], why: 'ไม่มีรถ = ตรงข้ามความจริง → C2: had … would drive' },
+  { ctx: 'Nok studies hard every day.', s: 'If she ___ the exam, her parents ___ very proud.', real: true, a: 'passes / will be', wrong: ['passed / would be', 'passes / would be', 'will pass / will be'], why: 'ขยันจริง สอบผ่านเป็นไปได้ → C1: passes … will be' },
+  { ctx: 'We live far from the sea.', s: 'If we ___ near the beach, we ___ every morning.', real: false, a: 'lived / would swim', wrong: ['live / will swim', 'lived / will swim', 'live / would swim'], why: 'อยู่ไกลทะเลจริง "ถ้าอยู่ใกล้" = สมมติ → C2' },
+  { ctx: 'The shop is still open.', s: 'If you ___ now, you ___ the sale.', real: true, a: 'go / will catch', wrong: ['went / would catch', 'go / would catch', 'will go / will catch'], why: 'ร้านยังเปิด ไปทันเป็นไปได้ → C1' },
+  { ctx: 'I can\'t speak Japanese.', s: 'If I ___ Japanese, I ___ for the job in Tokyo.', real: false, a: 'spoke / would apply', wrong: ['speak / will apply', 'spoke / will apply', 'speak / would apply'], why: 'พูดญี่ปุ่นไม่ได้ = ตรงข้ามความจริง → C2: spoke … would apply' },
+];
+
+/* ---------- ด่าน 3: ประธานทำเองได้ไหม ---------- */
+const PASSIVE = [
+  { s: 'The bridge ___ in 1932 and it is still used today.', pas: true, a: 'was built', wrong: ['built', 'was building', 'is built'], why: 'สะพานสร้างตัวเองไม่ได้ → passive · in 1932 → was built' },
+  { s: 'Rice ___ in many parts of Thailand.', pas: true, a: 'is grown', wrong: ['grows', 'is growing', 'grew'], why: 'ข้าวถูกปลูก (คนปลูก) → passive present simple: is grown' },
+  { s: 'My uncle ___ a new house near the river last year.', pas: false, a: 'built', wrong: ['was built', 'is built', 'was building'], why: 'ลุงสร้างบ้านเอง → active · last year → built' },
+  { s: 'The homework ___ by tomorrow morning.', pas: true, a: 'must be finished', wrong: ['must finish', 'finishes', 'is finishing'], why: 'การบ้านทำตัวเองไม่ได้ → must be + V3' },
+  { s: 'These cookies ___ by my grandmother every Sunday.', pas: true, a: 'are made', wrong: ['make', 'are making', 'made'], why: 'คุกกี้ถูกทำ (by grandmother บอกชัด) → are made' },
+  { s: 'The teacher ___ the exam papers right now.', pas: false, a: 'is checking', wrong: ['is checked', 'is being checked', 'checks'], why: 'ครูตรวจเอง → active · right now → is checking' },
+  { s: 'A new hospital ___ in our town at the moment.', pas: true, a: 'is being built', wrong: ['is building', 'builds', 'was built'], why: 'โรงพยาบาลถูกสร้าง + at the moment → is being built' },
+  { s: 'The winners ___ next Friday.', pas: true, a: 'will be announced', wrong: ['will announce', 'announce', 'are announcing'], why: 'ผู้ชนะถูกประกาศ + next Friday → will be announced' },
+  { s: 'The dog ___ the ball across the yard.', pas: false, a: 'chased', wrong: ['was chased', 'is chased', 'has been chased'], why: 'หมาไล่ลูกบอลเอง → active' },
+  { s: 'English ___ in more than 50 countries.', pas: true, a: 'is spoken', wrong: ['speaks', 'is speaking', 'spoke'], why: 'ภาษาถูกพูด → is spoken' },
+];
+
+/* ---------- ด่าน 4: reported speech 2 ขั้น ---------- */
+const REPORT = [
+  { d: '"I am tired now."', s: 'She said that she ___ tired ___.', cue: { a: 'now → then', wrong: ['now → now (ไม่เปลี่ยน)', 'now → today', 'now → that day'] }, a: 'was / then', wrong: ['is / then', 'was / now', 'is / now'], why: 'am → was (ถอย 1 ขั้น) · now → then' },
+  { d: '"We will visit you tomorrow."', s: 'They said that they ___ us ___.', cue: { a: 'tomorrow → the next day', wrong: ['tomorrow → tomorrow (ไม่เปลี่ยน)', 'tomorrow → the day before', 'tomorrow → then'] }, a: 'would visit / the next day', wrong: ['will visit / the next day', 'would visit / tomorrow', 'will visit / tomorrow'], why: 'will → would · tomorrow → the next day' },
+  { d: '"I have finished my project today."', s: 'He said that he ___ his project ___.', cue: { a: 'today → that day', wrong: ['today → today (ไม่เปลี่ยน)', 'today → the next day', 'today → then'] }, a: 'had finished / that day', wrong: ['has finished / that day', 'had finished / today', 'has finished / today'], why: 'have finished → had finished · today → that day' },
+  { d: '"I like this song."', s: 'She said that she ___ ___ song.', cue: { a: 'this → that', wrong: ['this → this (ไม่เปลี่ยน)', 'this → there', 'this → the'] }, a: 'liked / that', wrong: ['likes / this', 'liked / this', 'likes / that'], why: 'like → liked · this → that' },
+  { d: '"My parents are here."', s: 'He said that his parents ___ ___.', cue: { a: 'here → there', wrong: ['here → here (ไม่เปลี่ยน)', 'here → then', 'here → that'] }, a: 'were / there', wrong: ['are / there', 'were / here', 'are / here'], why: 'are → were · here → there' },
+  { d: '"I saw the film yesterday."', s: 'She said that she ___ the film ___.', cue: { a: 'yesterday → the day before', wrong: ['yesterday → yesterday (ไม่เปลี่ยน)', 'yesterday → the next day', 'yesterday → then'] }, a: 'had seen / the day before', wrong: ['saw / the day before', 'had seen / yesterday', 'saw / yesterday'], why: 'saw → had seen · yesterday → the day before' },
+  { d: '"We can\'t come tonight."', s: 'They said that they ___ come ___.', cue: { a: 'tonight → that night', wrong: ['tonight → tonight (ไม่เปลี่ยน)', 'tonight → the next night', 'tonight → then'] }, a: 'couldn\'t / that night', wrong: ['can\'t / that night', 'couldn\'t / tonight', 'can\'t / tonight'], why: 'can\'t → couldn\'t · tonight → that night' },
+  { d: '"I am going to buy a bike next week."', s: 'He said that he ___ going to buy a bike ___.', cue: { a: 'next week → the following week', wrong: ['next week → next week (ไม่เปลี่ยน)', 'next week → the week before', 'next week → then'] }, a: 'was / the following week', wrong: ['is / the following week', 'was / next week', 'is / next week'], why: 'am going to → was going to · next week → the following week' },
+];
+
+/* ---------- ด่าน 5: หนึ่งช่อง หนึ่ง marker ---------- */
+const MARK = [
+  { s: 'Somsak ___ in this school in 2019 and he ___ here since then.', cue: { n: 2, a: 'since then', wrong: ['in 2019', 'school', 'here'] }, a: 'started / has studied', wrong: ['started / studied', 'has started / has studied', 'started / studies'], why: 'in 2019 → started · since then → has studied' },
+  { s: 'I ___ my keys two hours ago and I still ___ them.', cue: { n: 2, a: 'still', wrong: ['two hours ago', 'keys', 'them'] }, a: 'lost / haven\'t found', wrong: ['have lost / haven\'t found', 'lost / didn\'t find', 'lost / don\'t find'], why: 'ago → lost · still (ถึงตอนนี้) → haven\'t found' },
+  { s: 'We ___ each other for ten years, and we first ___ at a summer camp.', cue: { n: 1, a: 'for ten years', wrong: ['first', 'summer camp', 'each other'] }, a: 'have known / met', wrong: ['knew / met', 'have known / have met', 'know / met'], why: 'for ten years (ยังรู้จักกันอยู่) → have known · first … at a camp (จุดในอดีต) → met' },
+  { s: 'Grandpa ___ to Bangkok last month; he ___ the city three times so far.', cue: { n: 2, a: 'so far', wrong: ['last month', 'three times', 'city'] }, a: 'went / has visited', wrong: ['has gone / has visited', 'went / visited', 'went / visits'], why: 'last month → went · so far → has visited' },
+  { s: 'Dao ___ the violin since she was five, and yesterday she ___ at a concert.', cue: { n: 2, a: 'yesterday', wrong: ['since she was five', 'violin', 'concert'] }, a: 'has played / played', wrong: ['played / played', 'has played / has played', 'plays / played'], why: 'since … → has played · yesterday → played' },
+  { s: 'It ___ all morning and the streets ___ still wet.', cue: { n: 1, a: 'all morning', wrong: ['streets', 'wet', 'still'] }, a: 'has been raining / are', wrong: ['rained / are', 'has been raining / were', 'is raining / are'], why: 'all morning + ถนนยังเปียก → has been raining · still wet ตอนนี้ → are' },
+  { s: 'My cousin ___ his job recently and he ___ a new one last week.', cue: { n: 1, a: 'recently', wrong: ['job', 'last week', 'new one'] }, a: 'has lost / found', wrong: ['lost / found', 'has lost / has found', 'lost / has found'], why: 'recently → has lost ★ · last week → found' },
+  { s: 'They ___ this house in 2010 and they ___ it twice since.', cue: { n: 2, a: 'since', wrong: ['in 2010', 'twice', 'house'] }, a: 'bought / have painted', wrong: ['bought / painted', 'have bought / have painted', 'buy / have painted'], why: 'in 2010 → bought · since → have painted' },
+  { s: 'Ploy ___ in the pool right now; she ___ every day after school.', cue: { n: 2, a: 'every day', wrong: ['right now', 'pool', 'after school'] }, a: 'is swimming / swims', wrong: ['swims / swims', 'is swimming / is swimming', 'swam / swims'], why: 'right now → is swimming · every day → swims' },
+  { s: 'Ben ___ TV when the phone ___ ten minutes ago.', cue: { n: 2, a: 'ten minutes ago', wrong: ['TV', 'phone', 'when'] }, a: 'was watching / rang', wrong: ['watched / rang', 'was watching / was ringing', 'watches / rang'], why: 'ตัวยาว → was watching · ago + ตัวสั้น → rang' },
+  { s: 'The children ___ their homework already, so now they ___ outside.', cue: { n: 1, a: 'already', wrong: ['now', 'homework', 'outside'] }, a: 'have finished / are playing', wrong: ['finished / are playing', 'have finished / play', 'finish / are playing'], why: 'already → have finished · now → are playing' },
+  { s: 'By the time the bus ___, we ___ for half an hour.', cue: { n: 2, a: 'By the time', wrong: ['bus', 'half an hour', 'we'] }, a: 'arrived / had been waiting', wrong: ['arrived / waited', 'arrives / had waited', 'arrived / have been waiting'], why: 'by the time + past → เหตุการณ์ที่เกิดก่อน = past perfect (had been waiting)' },
+];
+
+function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const opts = (a, wrong) => shuffle([{ t: a, ok: true }].concat(wrong.map(w => ({ t: w, ok: false }))));
+/* แปลงทุก pool ให้เป็นรูปเดียวกัน: { text, ctx, direct, steps: [cue, answer], why } */
+function build(lv, it) {
+  if (lv === 1) return { text: it.s, steps: [{ prompt: 'ขั้น 1 — คำเชื่อมเวลาในประโยคคือคำไหน', ch: opts(it.a === undefined ? '' : it.cue.a, it.cue.wrong), why: 'คำเชื่อมเวลาคือ "' + it.cue.a + '" → ช่องที่ติดคำนี้ห้ามมี will' }, { prompt: 'ขั้น 2 — เติมช่อง', ch: opts(it.a, it.wrong), why: it.why }], why: it.why, tag: 'ห้าม will หลังคำเชื่อมเวลา' };
+  if (lv === 2) return { text: it.s, ctx: it.ctx, steps: [{ prompt: 'ขั้น 1 — อ่านประโยคข้าง ๆ: สถานการณ์นี้เป็นไปได้จริง หรือตรงข้ามความจริง', ch: opts(it.real ? C1 : C2, [it.real ? C2 : C1]), why: it.why }, { prompt: 'ขั้น 2 — เติมคู่', ch: opts(it.a, it.wrong), why: it.why }], why: it.why, tag: 'if: อ่านบริบทก่อน' };
+  if (lv === 3) return { text: it.s, steps: [{ prompt: 'ขั้น 1 — ประธานทำเองได้ไหม', ch: opts(it.pas ? PAS : ACT, [it.pas ? ACT : PAS]), why: it.why }, { prompt: 'ขั้น 2 — เติมช่อง', ch: opts(it.a, it.wrong), why: it.why }], why: it.why, tag: 'passive: ถามก่อนว่าใครทำ' };
+  if (lv === 4) return { text: it.s, direct: it.d, steps: [{ prompt: 'ขั้น 1 — คำบอกเวลา/สถานที่ต้องเปลี่ยนเป็นอะไร', ch: opts(it.cue.a, it.cue.wrong), why: 'คำพูดตรง → รายงาน: ' + it.cue.a }, { prompt: 'ขั้น 2 — ถอย tense 1 ขั้น แล้วเติม', ch: opts(it.a, it.wrong), why: it.why }], why: it.why, tag: 'reported speech 2 ขั้น' };
+  return { text: it.s, steps: [{ prompt: 'ขั้น 1 — marker ของช่อง ' + it.cue.n + ' คือคำไหน', ch: opts(it.cue.a, it.cue.wrong), why: 'ช่อง ' + it.cue.n + ' ขึ้นกับ "' + it.cue.a + '" — ช่องอื่นมี marker ของตัวเอง' }, { prompt: 'ขั้น 2 — เติมคู่', ch: opts(it.a, it.wrong), why: it.why }], why: it.why, tag: 'หนึ่งช่อง หนึ่ง marker' };
+}
+const POOLS = { 1: TIME, 2: COND, 3: PASSIVE, 4: REPORT, 5: MARK };
+const decks = {};
+function draw(lv) { if (!decks[lv] || !decks[lv].length) decks[lv] = shuffle(POOLS[lv]); return build(lv, decks[lv].pop()); }
+function resetDecks() { for (const k in decks) delete decks[k]; }
+const LEVELS = {
+  1: { name: 'ด่าน 1 ห้าม will หลัง when', total: 10, goal: 8 },
+  2: { name: 'ด่าน 2 if จริงหรือสมมติ', total: 10, goal: 8 },
+  3: { name: 'ด่าน 3 passive', total: 10, goal: 8 },
+  4: { name: 'ด่าน 4 reported speech', total: 8, goal: 7 },
+  5: { name: 'ด่าน 5 หนึ่งช่อง หนึ่ง marker', total: 10, goal: 8 }
+};
+if (typeof module !== 'undefined') module.exports = { TIME, COND, PASSIVE, REPORT, MARK, POOLS, build, draw, resetDecks, LEVELS };
+</script>
+
+<!-- ============ UI ============ -->
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+let S = null;
+const KEY = 'tense-rules-best-';
+function best(lv) { try { return +(localStorage.getItem(KEY + lv) || 0); } catch (e) { return 0; } }
+function setBest(lv, v) { try { localStorage.setItem(KEY + lv, String(v)); } catch (e) { } }
+function paintBests() { for (let i = 1; i <= 5; i++) { const b = best(i); $('b' + i).textContent = b ? 'สถิติ ' + b + '/' + LEVELS[i].total : ''; } }
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function renderSentence(it) { let i = 0; return esc(it.text).replace(/___/g, () => '<span class="blank">' + (++i) + '</span>'); }
+function start(lv) {
+  const cfg = LEVELS[lv];
+  S = { lv, cfg, score: 0, asked: 0, wrong: [], t0: Date.now(), item: null, si: 0, itemOk: true, locked: false };
+  resetDecks();
+  $('menu').classList.add('hidden'); $('over').classList.add('hidden'); $('play').classList.remove('hidden');
+  $('hScore').textContent = '0';
+  nextItem();
+}
+function nextItem() {
+  if (S.asked >= S.cfg.total) { finish(); return; }
+  S.item = draw(S.lv); S.si = 0; S.itemOk = true;
+  $('hItem').textContent = (S.asked + 1) + '/' + S.cfg.total;
+  $('barFill').style.width = (S.asked / S.cfg.total * 100) + '%';
+  const it = S.item;
+  $('qText').innerHTML = '<span class="th">ข้อ ' + (S.asked + 1) + ' · ' + esc(it.tag) + '</span>' + (it.direct ? '<span class="direct">' + esc(it.direct) + '</span>' : '') + (it.ctx ? '<span class="ctx">' + esc(it.ctx) + '</span>' : '') + renderSentence(it);
+  renderStep();
+}
+function renderStep() {
+  const st = S.item.steps[S.si];
+  S.locked = false; $('fb').className = 'fb idle'; $('fb').textContent = '';
+  $('hStep').textContent = (S.si + 1) + '/2';
+  $('step').innerHTML = st.prompt;
+  const box = $('choices'); box.innerHTML = ''; box.classList.toggle('grid2', st.ch.every(c => c.t.length < 20));
+  st.ch.forEach((c, i) => { const b = document.createElement('button'); b.className = 'ch'; b.innerHTML = '<b>' + (i + 1) + '.</b> ' + esc(c.t); b.onclick = () => answer(i); box.appendChild(b); });
+}
+function flash(ok, html) { const f = $('fb'); f.className = 'fb ' + (ok ? 'ok' : 'bad'); f.innerHTML = html; $('step').classList.remove('pop'); void $('step').offsetWidth; $('step').classList.add('pop'); }
+function answer(i) {
+  if (!S || S.locked) return;
+  S.locked = true;
+  const st = S.item.steps[S.si], c = st.ch[i], right = st.ch.find(x => x.ok), last = S.si === 1;
+  if (c.ok) flash(true, last ? '✓ ถูกทั้งสองขั้น! ' + esc(S.item.why) : '✓ สัญญาณถูก — ' + esc(st.why));
+  else {
+    S.itemOk = false;
+    S.wrong.push({ q: S.item.text, step: st.prompt, your: c.t, ans: right.t, why: st.why });
+    flash(false, '✗ ที่ถูกคือ <b>' + esc(right.t) + '</b><br>' + esc(st.why));
+  }
+  if (last) { S.asked++; if (S.itemOk) S.score++; $('hScore').textContent = S.score; }
+  setTimeout(() => { if (!S) return; if (last) nextItem(); else { S.si = 1; renderStep(); } }, c.ok ? (last ? 1600 : 900) : 4200);
+}
+function finish() {
+  const lv = S.lv, cfg = S.cfg, secs = (Date.now() - S.t0) / 1000, per = S.asked ? secs / S.asked : 0;
+  $('play').classList.add('hidden'); $('over').classList.remove('hidden');
+  $('oScore').textContent = S.score + ' / ' + cfg.total;
+  const passed = S.score >= cfg.goal;
+  $('oGrade').innerHTML = passed ? '🟢 ผ่านเป้าแล้ว! (เป้า ' + cfg.goal + ') เห็นสัญญาณแล้วใช้กฎทัน 🎉'
+    : (S.score >= cfg.goal * 0.6 ? '🟡 ใกล้แล้ว! เป้าคือ ' + cfg.goal + ' — ดูว่าพลาดที่ขั้น 1 (สัญญาณ) หรือขั้น 2 (รูปกริยา)'
+      : '🔴 ยังไม่ถึงเป้า ' + cfg.goal + ' — อ่านตารางด้านล่าง กฎเดียวต่อด่าน ซ้อมจนถึงเป้าแล้วค่อยไปด่านต่อไป');
+  const b = best(lv); if (S.score > b) setBest(lv, S.score);
+  const cueMiss = S.wrong.filter(w => /ขั้น 1/.test(w.step)).length;
+  $('oStats').innerHTML = '<tr><th>ถูกทั้งสองขั้น</th><td>' + S.score + ' / ' + S.asked + '</td></tr>' +
+    '<tr><th>พลาดที่ขั้น 1 (สัญญาณ)</th><td>' + cueMiss + ' ครั้ง</td></tr>' +
+    '<tr><th>พลาดที่ขั้น 2 (รูปกริยา)</th><td>' + (S.wrong.length - cueMiss) + ' ครั้ง</td></tr>' +
+    '<tr><th>เฉลี่ยต่อข้อ</th><td>' + per.toFixed(0) + ' วินาที (ข้อสอบจริง ≤ 36)</td></tr>' +
+    '<tr><th>สถิติดีที่สุด</th><td>' + Math.max(b, S.score) + ' / ' + cfg.total + (S.score > b ? ' 🆕' : '') + '</td></tr>';
+  $('oWrong').innerHTML = S.wrong.length
+    ? '<h3 style="font-size:1rem;margin:18px 0 6px">ที่พลาด — อ่านสักนิดก่อนเล่นรอบหน้า</h3><table><tr><th>โจทย์ · ขั้น</th><th>ตอบไป</th><th>ที่ถูก</th></tr>' +
+      S.wrong.map(w => '<tr><td>' + esc(w.q) + '<br><b>' + esc(w.step) + '</b><br><span style="color:var(--muted)">' + esc(w.why) + '</span></td><td>' + esc(w.your) + '</td><td><b>' + esc(w.ans) + '</b></td></tr>').join('') + '</table>'
+    : '<p style="text-align:center;color:var(--ok);font-weight:700;margin-top:16px">ไม่พลาดสักขั้น! 🏆</p>';
+  paintBests();
+}
+function toMenu() { S = null; $('play').classList.add('hidden'); $('over').classList.add('hidden'); $('menu').classList.remove('hidden'); paintBests(); }
+document.querySelectorAll('.lv').forEach(b => b.onclick = () => start(+b.dataset.lv));
+$('quit').onclick = () => { if (S) finish(); };
+$('again').onclick = () => start(S ? S.lv : 1);
+$('back').onclick = toMenu;
+document.addEventListener('keydown', e => { if (!S || S.locked) return; const n = +e.key; if (n >= 1 && n <= 4) answer(n - 1); });
+paintBests();
+</script>
+</body>
+</html>

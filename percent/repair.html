@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ซ่อมร้อยละ 4 จุด — ทำขั้นตอนก่อนตอบ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+--ink:#1a1c1e;--muted:#5b6167;--line:#dfe3e8;--bg:#fbfbfa;--card:#fff;--soft:#f4f6f8;
+--accent:#1f6feb;--accent-bg:#eaf2ff;--warn:#b25000;--warn-bg:#fff4e8;--ok:#136c39;--ok-bg:#e8f6ee;
+--bad:#b3261e;--bad-bg:#fdecea;--vio:#6b46e0;--vio-bg:#efeaff}
+@media (prefers-color-scheme:dark){:root{
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#333a42;--bg:#16181b;--card:#1e2126;--soft:#262a30;
+--accent:#69a4ff;--accent-bg:#1a2740;--warn:#f0a163;--warn-bg:#33240f;--ok:#6fd39a;--ok-bg:#13301f;
+--bad:#ff8a80;--bad-bg:#3a1a17;--vio:#a68cff;--vio-bg:#2a2140}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:"Sarabun","Noto Sans Thai",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+font-size:17px;line-height:1.75;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:680px;margin:0 auto;padding:22px 16px calc(60px + env(safe-area-inset-bottom))}
+h1{font-size:1.45rem;margin:0 0 6px;line-height:1.35}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.hidden{display:none !important}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+.lv{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);
+border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:11px;transition:.12s}
+.lv:active{border-color:var(--accent)}
+.lv b{font-size:1.06rem}
+.lv .d{color:var(--muted);font-size:.87rem;line-height:1.6}
+.lv .best{float:right;font-size:.8rem;color:var(--ok);font-weight:700}
+.hud{display:flex;gap:10px;margin-bottom:14px}
+.pill{flex:1;background:var(--soft);border:1px solid var(--line);border-radius:11px;padding:7px 4px;text-align:center;line-height:1.3}
+.pill .n{font-size:1.28rem;font-weight:700;font-family:"IBM Plex Mono",monospace}
+.pill .l{font-size:.72rem;color:var(--muted)}
+.bar{height:9px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s linear}
+.prob{font-size:1.05rem;font-weight:600;line-height:1.8;margin:4px 0 10px}
+.prob .th{display:block;font-size:.82rem;font-weight:400;color:var(--muted)}
+.step{background:var(--vio-bg);border:1px solid var(--vio);color:var(--vio);border-radius:12px;padding:9px 13px;font-weight:700;font-size:1rem;line-height:1.6;margin:10px 0 6px}
+.step small{display:block;font-weight:400;font-size:.82rem;opacity:.9}
+.lines{background:var(--soft);border:1px dashed var(--line);border-radius:10px;padding:8px 12px;font-family:"IBM Plex Mono","Sarabun",monospace;font-size:.92rem;line-height:1.9;margin:6px 0}
+.lines .done{color:var(--ok)}
+.choices{display:grid;gap:9px;margin:14px 0 4px}
+.choices.grid2{grid-template-columns:1fr 1fr}
+.ch{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;text-align:left;color:var(--ink);line-height:1.55;font-size:1rem}
+.choices.grid2 .ch{text-align:center;font-weight:600;padding:13px 6px;font-size:.98rem}
+.ch:active{border-color:var(--accent);background:var(--accent-bg)}
+.ch b{color:var(--accent);margin-right:7px}
+.ch.dim{opacity:.38}
+.ch.dim::after{content:" (หน่วยไม่ตรง)";font-size:.75rem;color:var(--bad)}
+.fb{min-height:62px;border-radius:12px;padding:11px 14px;font-size:.94rem;line-height:1.65;margin-top:6px}
+.fb.ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);color:var(--bad);border:1px solid var(--bad)}
+.fb.idle{background:var(--soft);color:var(--muted)}
+.tagline{display:inline-block;font-size:.76rem;background:var(--soft);border:1px solid var(--line);border-radius:99px;padding:0 9px;color:var(--muted);margin-top:6px}
+.pop{animation:pop .25s}
+@keyframes pop{0%{transform:scale(.97)}60%{transform:scale(1.02)}100%{transform:scale(1)}}
+.btnrow{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap}
+.btnrow button{flex:1;padding:11px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:600}
+.btnrow button.pri{background:var(--accent);color:#fff;border-color:var(--accent)}
+.big{font-size:2.4rem;font-weight:700;text-align:center;font-family:"IBM Plex Mono",monospace}
+.grade{text-align:center;font-weight:700;margin:4px 0 14px;line-height:1.6}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--soft);font-weight:600;width:38%}
+.tip{background:var(--warn-bg);border:1px solid var(--warn);color:var(--warn);border-radius:12px;padding:10px 14px;font-size:.9rem;line-height:1.65}
+kbd{font-family:"IBM Plex Mono",monospace;background:var(--soft);border:1px solid var(--line);border-radius:5px;padding:0 5px;font-size:.85em}
+.grid{display:grid;gap:1px;margin:8px auto 4px;max-width:300px;background:var(--line);border:1px solid var(--line)}
+.grid i{display:block;aspect-ratio:1;background:var(--accent-bg)}
+.grid i.new{background:var(--warn-bg)}
+.grid i.gone{background:var(--card);opacity:.35}
+.legend{font-size:.78rem;color:var(--muted);text-align:center;margin-bottom:4px}
+.legend span{display:inline-block;width:.9em;height:.9em;vertical-align:-1px;border:1px solid var(--line);margin:0 3px 0 8px}
+footer{margin-top:28px;color:var(--muted);font-size:.78rem;text-align:center;line-height:1.6}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<section id="menu">
+  <h1>🔧 ซ่อมร้อยละ 4 จุด</h1>
+  <p class="sub">เกมนี้ไม่ได้ให้ "คิดเลขเร็ว" แต่ให้ <b>ทำขั้นตอนก่อนตอบ</b> — 4 จุดที่อ่านบทแล้วยังพลาด เพราะข้ามขั้นตอนไปตอบเลย ทุกด่านต้องแตะทีละขั้น ถูกครบทุกขั้นถึงได้คะแนน</p>
+
+  <button class="lv" data-lv="1"><span class="best" id="b1"></span><b>ด่าน 1 · เขียน 3 บรรทัดก่อนคิด</b>
+    <div class="d">ทุน = … · ขายจริง = … · กำไร = ขาย − ทุน · แล้วค่อยหาร<b>ทุน</b> — 6 ข้อ เป้า 5</div></button>
+  <button class="lv" data-lv="2"><span class="best" id="b2"></span><b>ด่าน 2 · ลบ 100 หรือไม่ลบ</b>
+    <div class="d">โจทย์คิดตัวคูณให้แล้ว หน้าที่เดียวคืออ่านคำถาม: "กำไร/เพิ่มขึ้นกี่ %" ต้องลบ 100 · "เป็นกี่ % ของ…" ไม่ลบ — 8 ข้อ เป้า 7</div></button>
+  <button class="lv" data-lv="3"><span class="best" id="b3"></span><b>ด่าน 3 · นับช่องจริง</b>
+    <div class="d">ด้านยืด 20% พื้นที่ไม่ได้ยืด 20% — ดูตาราง 10×10 → 12×12 แล้วนับเอง · ปริมาตรยกกำลังสาม — 6 ข้อ เป้า 5</div></button>
+  <button class="lv" data-lv="4"><span class="best" id="b4"></span><b>ด่าน 4 · วงหน่วยก่อน</b>
+    <div class="d">แตะหน่วยของคำตอบ (บาท / % / คน) ก่อนคิดเลข ช้อยส์ที่หน่วยไม่ตรงจะจางลงเอง — 8 ข้อ เป้า 7</div></button>
+  <button class="lv" data-lv="5"><span class="best" id="b5"></span><b>ด่าน 5 · รวม 4 จุด ไม่มีตัวช่วย</b>
+    <div class="d">โจทย์เต็ม 10 ข้อ ไม่มีขั้นตอนนำ ตัวลวงคือคำตอบที่เคยตอบผิดจริง (115 · 20 · ตอบ % แทนบาท · หารราคาขาย) — เป้า 8/10</div></button>
+
+  <p class="tip">💡 กฎเดียวก่อนเล่น: <b>อ่านคำถามท้ายโจทย์ก่อน แล้วถามตัวเองว่า "ถามหน่วยอะไร ถามส่วนเพิ่มหรือทั้งก้อน"</b> — ทุกด่านสร้างมาจาก 4 ข้อที่พลาดในชุดร้อยละ 01 (ข้อ 3, 4, 5, 10)<br>
+  ⌨️ กดเลข <kbd>1</kbd>–<kbd>4</kbd> เลือกช้อยส์ได้</p>
+</section>
+
+<section id="play" class="hidden">
+  <div class="hud">
+    <div class="pill"><div class="n" id="hScore">0</div><div class="l">ข้อที่ถูกครบ</div></div>
+    <div class="pill"><div class="n" id="hStep">1</div><div class="l">ขั้นที่</div></div>
+    <div class="pill"><div class="n" id="hItem">1</div><div class="l" id="hItemL">ข้อที่</div></div>
+  </div>
+  <div class="bar"><i id="barFill"></i></div>
+  <div class="card">
+    <div class="prob" id="prob">—</div>
+    <div id="visual"></div>
+    <div class="lines hidden" id="lines"></div>
+    <div class="step" id="step">—</div>
+    <div class="choices" id="choices"></div>
+    <div class="fb idle" id="fb"></div>
+  </div>
+  <div class="btnrow"><button id="quit">⏹ หยุดกลับเมนู</button></div>
+</section>
+
+<section id="over" class="hidden">
+  <div class="card">
+    <div class="big" id="oScore">—</div>
+    <div class="grade" id="oGrade">—</div>
+    <table id="oStats"></table>
+    <div id="oWrong"></div>
+  </div>
+  <div class="btnrow">
+    <button class="pri" id="again">🔁 เล่นด่านนี้อีกครั้ง</button>
+    <button id="back">📋 เลือกด่านใหม่</button>
+  </div>
+</section>
+
+<footer>Road to Yothin · เกมซ่อม 4 จุดของบทร้อยละ (ชุดคณิต 01 ข้อ 3, 4, 5, 10)<br>
+ตัวเลขสุ่มใหม่ทุกรอบ ไม่ซ้ำชุดฝึก 01/01B · สถิติที่ดีที่สุดเก็บไว้ในเครื่องนี้</footer>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); } } catch (e) { }
+</script>
+
+<!-- ============ GENERATORS (ไม่แตะ DOM — ทดสอบด้วย Node ได้) ============ -->
+<script id="gen">
+"use strict";
+/* ตัวเลขที่ห้ามสุ่มชน: ทุกตัวเลขในชุดคณิต 01 และ 01B (ผู้เรียนต้องกลับไปทำชุดเดิมซ้ำเพื่อวัดผล) */
+const RESERVED = new Set([1.5, 13.04, 13.33, 15, 16, 18, 20, 23.08, 24, 25, 30, 36, 36.67, 40, 42, 44, 50, 51, 60, 66.67, 72, 86.96, 115, 144, 180, 210, 270, 375, 442, 450, 500, 510, 600, 750, 794, 799, 844, 850, 918, 933, 1020, 1055.7, 1080, 2400, 2760, 6000, 25000,
+  1.6, 16.67, 20.63, 26, 69, 80, 83.33, 120, 140, 169, 200, 420, 560, 700, 800, 1152, 1440, 1500, 1728, 1800]);
+const bigReserved = n => n >= 100 && RESERVED.has(n);      // เช็กเฉพาะเลขใหญ่ (ราคา/พื้นที่) — เปอร์เซ็นต์เล็ก ๆ ซ้ำได้เป็นธรรมดา
+const ri = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+const fmt = n => (Math.round(n * 100) / 100).toLocaleString('en-US', { maximumFractionDigits: 2 });
+const baht = n => fmt(n) + ' บาท';
+const pct = n => 'ร้อยละ ' + fmt(n);
+function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+/* ช้อยส์: ตัวถูก 1 + ตัวลวงที่มีเหตุผล · ตัดตัวซ้ำออกโดยโครงสร้าง */
+function mk(correct, wrongs, unitOf) {
+  const seen = new Set([correct.t]);
+  const ws = wrongs.filter(w => { if (seen.has(w.t)) return false; seen.add(w.t); return true; });
+  const all = [{ t: correct.t, ok: true, why: correct.why || '', u: unitOf ? unitOf(correct.t) : '' }]
+    .concat(ws.map(w => ({ t: w.t, ok: false, why: w.why, u: unitOf ? unitOf(w.t) : '' })));
+  return shuffle(all);
+}
+const unitOf = t => /บาท/.test(t) ? 'บาท' : /ร้อยละ|%/.test(t) ? '%' : /คน/.test(t) ? 'คน' : /ตาราง/.test(t) ? 'ตร.ม.' : '';
+
+/* ---------- ด่าน 1: เขียน 3 บรรทัดก่อนคิด (ฐานของกำไร = ทุน · ลบ 100) ---------- */
+function genProfit(mixOnly) {
+  let c, s, L, r, kind, d, r1;
+  do {
+    kind = pick(['gain', 'gain', 'loss', 'list']);
+    if (kind === 'gain') { c = 100 * ri(3, 45); r = pick([10, 15, 20, 25, 30, 40, 50]); s = c * (100 + r) / 100; L = null; }
+    else if (kind === 'loss') { c = 100 * ri(3, 45); r = pick([10, 20, 25, 40]); s = c * (100 - r) / 100; L = null; }
+    else { c = 400 * ri(1, 12); [r1, d] = pick([[50, 20], [50, 10], [60, 25], [40, 25], [30, 10], [80, 25]]); L = c * (100 + r1) / 100; s = L * (100 - d) / 100; r = (s - c) / c * 100; }
+  } while (bigReserved(c) || bigReserved(s) || bigReserved(Math.abs(s - c)) || (L && bigReserved(L)) || Math.abs(Math.round(r * 100) / 100 - r) > 1e-9);
+  const P = Math.abs(s - c), loss = s < c, even = Math.abs(s - c) < 1e-9;
+  const words = kind === 'list'
+    ? 'ร้านตั้งราคาสินค้าไว้ ' + baht(L) + ' (ตั้งให้ได้กำไรร้อยละ ' + r1 + ') แต่ลดราคาให้ลูกค้าร้อยละ ' + d + ' ขายไปในราคา ' + baht(s) + ' <b>ร้านได้กำไรร้อยละเท่าใด</b>'
+    : 'แม่ค้าซื้อของมา ' + baht(c) + ' แล้วขายไป ' + baht(s) + ' <b>แม่ค้า' + (loss ? 'ขาดทุน' : 'ได้กำไร') + 'ร้อยละเท่าใด</b>';
+  const wrongBase = Math.round(P / s * 10000) / 100;
+  const finalStep = {
+    prompt: 'ขั้น 4 — หารด้วย<b>ทุน</b> → ' + (loss ? 'ขาดทุน' : 'กำไร') + 'กี่ %',
+    hint: (loss ? 'ขาดทุน' : 'กำไร') + ' ' + fmt(P) + ' ÷ ทุน ' + fmt(c) + ' × 100',
+    ch: mk({ t: even ? 'เท่าทุน (ร้อยละ 0)' : pct(r), why: '' }, [
+      { t: pct(loss ? 100 - r : 100 + r), why: 'นี่คือ "ราคาขายเทียบทุนทั้งก้อน" (' + fmt(s) + ' ÷ ' + fmt(c) + ' = ' + fmt(s / c * 100) + '%) — ถาม' + (loss ? 'ขาดทุน' : 'กำไร') + 'ต้องลบ 100 ก่อน ★ ตัวที่เคยตอบ' },
+      { t: pct(wrongBase), why: 'เอา' + (loss ? 'ขาดทุน' : 'กำไร') + 'หารด้วย<b>ราคาขาย</b> — ฐานของกำไร/ขาดทุนต้องเป็น<b>ทุน</b>เสมอ ★ ตัวที่เคยตอบ' },
+      { t: pct(kind === 'list' ? r1 : Math.round(r * 2 * 100) / 100), why: kind === 'list' ? 'นี่คือ % ที่ "ตั้งใจ" ตอนติดป้าย แต่ขายจริงถูกกว่านั้น ต้องคิดจากราคาขายจริง' : 'คูณสองเข้าไปเฉย ๆ ไม่มีที่มา' }
+    ]),
+    why: (loss ? 'ขาดทุน' : 'กำไร') + ' = ' + fmt(P) + ' → ' + fmt(P) + ' ÷ ' + fmt(c) + ' × 100 = ' + fmt(r) + '%'
+  };
+  const steps = [
+    { prompt: 'ขั้น 1 — บรรทัดแรก: <b>ทุน</b> = ?', line: 'ทุน', ch: mk({ t: baht(c) }, [
+      { t: baht(s), why: 'นี่คือราคาขาย ไม่ใช่ทุน' },
+      { t: baht(L || P), why: L ? 'นี่คือราคาป้าย ยังไม่ใช่ทุน (ป้ายตั้งจากทุน + ' + r1 + '%)' : 'นี่คือส่วนต่าง ไม่ใช่ทุน' },
+      { t: baht(L ? P : s + c), why: L ? 'นี่คือส่วนต่างขายกับทุน' : 'เอาทุนกับขายมาบวกกัน ไม่มีความหมาย' }
+    ]) },
+    { prompt: 'ขั้น 2 — บรรทัดสอง: <b>ขายจริง</b> = ? (ราคาที่ลูกค้าจ่ายจริง)', line: 'ขายจริง', ch: mk({ t: baht(s) }, [
+      { t: baht(L || c), why: L ? 'นี่คือราคาป้ายก่อนลด ลูกค้าไม่ได้จ่ายราคานี้' : 'นี่คือทุน' },
+      { t: baht(L ? c : P), why: L ? 'นี่คือทุน' : 'นี่คือส่วนต่าง' },
+      { t: baht(L ? L - s : s + c), why: L ? 'นี่คือจำนวนเงินที่ลดให้ ไม่ใช่ราคาขาย' : 'บวกกันไม่มีความหมาย' }
+    ]) },
+    { prompt: 'ขั้น 3 — บรรทัดสาม: <b>' + (loss ? 'ขาดทุน = ทุน − ขาย' : 'กำไร = ขาย − ทุน') + '</b> = ?', line: loss ? 'ขาดทุน' : 'กำไร', ch: mk({ t: even ? '0 บาท (เท่าทุน)' : baht(P) }, [
+      { t: baht(s + c), why: 'บวกแทนลบ' },
+      { t: baht(c), why: 'นี่คือทุน ยังไม่ได้ลบ' },
+      { t: baht(L ? L - c : s), why: L ? 'นี่คือกำไรที่ "ตั้งใจ" ตอนติดป้าย ไม่ใช่กำไรจริงหลังลดราคา' : 'นี่คือราคาขาย ยังไม่ได้ลบทุน' }
+    ]) },
+    finalStep
+  ];
+  const item = { words, steps: mixOnly ? [Object.assign({}, finalStep, { prompt: 'ตอบเลย (ไม่มีขั้นนำ)' })] : steps, why: finalStep.why, tag: 'ฐานของกำไร = ทุน · ลบ 100' };
+  return item;
+}
+
+/* ---------- ด่าน 2: ลบ 100 หรือไม่ลบ ---------- */
+function genSubtract(mixOnly) {
+  let base, now, r, ctx;
+  do {
+    r = pick([5, 10, 15, 20, 25, 30, 40, 50, 60, 75]);
+    ctx = pick(['price', 'students', 'area', 'salary']);
+    base = ctx === 'students' ? 20 * ri(5, 30) : 100 * ri(2, 40);
+    now = base * (100 + r) / 100;
+  } while (bigReserved(base) || bigReserved(now) || now !== Math.round(now));
+  const askGain = Math.random() < .5;                   // ครึ่งหนึ่งถามส่วนเพิ่ม ครึ่งหนึ่งถามทั้งก้อน — ต้องอ่านจริง
+  const noun = { price: ['ทุน', 'ราคาขาย', 'พ่อค้าได้กำไร'], students: ['นักเรียนปีที่แล้ว', 'ปีนี้', 'จำนวนนักเรียนเพิ่มขึ้น'], area: ['พื้นที่เดิม', 'พื้นที่ใหม่', 'พื้นที่เพิ่มขึ้น'], salary: ['เงินเดือนเดิม', 'เงินเดือนใหม่', 'เงินเดือนเพิ่มขึ้น'] }[ctx];
+  const unit = ctx === 'students' ? ' คน' : ctx === 'area' ? ' ตารางเมตร' : ' บาท';
+  const q = askGain ? '<b>' + noun[2] + 'ร้อยละเท่าใด</b>' : '<b>' + noun[1] + 'เป็นร้อยละเท่าใดของ' + noun[0] + '</b>';
+  const words = noun[0] + ' ' + fmt(base) + unit + ' → ' + noun[1] + ' ' + fmt(now) + unit + '<span class="th">คิดให้แล้ว: ' + fmt(now) + ' ÷ ' + fmt(base) + ' = ' + fmt(now / base) + ' = ' + fmt(100 + r) + '%</span>' + q;
+  const step1 = { prompt: 'ขั้น 1 — อ่านคำถาม: โจทย์ถามอะไร', ch: mk(
+    askGain ? { t: 'ถาม "ส่วนที่เพิ่ม/กำไร" → ต้องลบ 100', why: '' } : { t: 'ถาม "ทั้งก้อนเทียบฐาน" (เป็นกี่ % ของ…) → ไม่ลบ 100', why: '' },
+    [askGain ? { t: 'ถาม "ทั้งก้อนเทียบฐาน" (เป็นกี่ % ของ…) → ไม่ลบ 100', why: 'คำว่า "' + (ctx === 'price' ? 'กำไร' : 'เพิ่มขึ้น') + '" = ส่วนที่งอกจาก 100 → ต้องลบ 100' } : { t: 'ถาม "ส่วนที่เพิ่ม/กำไร" → ต้องลบ 100', why: 'คำว่า "เป็นร้อยละเท่าใดของ…" = ทั้งก้อนเทียบฐาน → ไม่ต้องลบ' }]) };
+  const step2 = { prompt: 'ขั้น 2 — ตอบ', ch: mk({ t: pct(askGain ? r : 100 + r) }, [
+    { t: pct(askGain ? 100 + r : r), why: askGain ? 'ลืมลบ 100 — นี่คือทั้งก้อนเทียบฐาน ★ ตัวที่เคยตอบ' : 'ลบ 100 ทั้งที่โจทย์ถาม "เป็นกี่ % ของ…" (ทั้งก้อน)' },
+    { t: pct(100 - r === r ? 2 * r : 100 - r), why: 100 - r === r ? 'คูณสองเข้าไปเฉย ๆ ไม่มีที่มา' : 'ทิศทางกลับด้าน — ตัวเลขเพิ่มขึ้น ไม่ใช่ลด' },
+    { t: pct(Math.round(r / 2 * 100) / 100), why: 'ครึ่งเดียวของส่วนเพิ่ม ไม่มีที่มา' }
+  ]), why: fmt(now) + ' ÷ ' + fmt(base) + ' = ' + fmt(100 + r) + '% → ' + (askGain ? 'ถามส่วนเพิ่ม: ' + fmt(100 + r) + ' − 100 = ' + fmt(r) + '%' : 'ถามทั้งก้อน: ตอบ ' + fmt(100 + r) + '% ตรง ๆ') };
+  return { words, steps: mixOnly ? [Object.assign({}, step2, { prompt: 'ตอบเลย (ไม่มีขั้นนำ)' })] : [step1, step2], why: step2.why, tag: 'ลบ 100 หรือไม่ลบ' };
+}
+
+/* ---------- ด่าน 3: นับช่องจริง (มิติยกกำลัง) ---------- */
+function genArea(mixOnly) {
+  const cube = !mixOnly && Math.random() < .25 || (mixOnly && Math.random() < .2);
+  const n = pick(cube ? [11, 12] : [11, 12, 15, 9, 8]);
+  const chg = n - 10, up = chg > 0, A0 = cube ? 1000 : 100, A1 = cube ? n * n * n : n * n;
+  const dpct = Math.round(Math.abs(A1 - A0) / A0 * 10000) / 100;
+  const words = (cube ? 'ลูกบาศก์' : 'สี่เหลี่ยมจัตุรัส') + 'ด้าน 10 หน่วย ' + (up ? 'เพิ่ม' : 'ลด') + 'ความยาวด้าน' + (up ? 'ขึ้น' : 'ลง') + 'ร้อยละ ' + Math.abs(chg) * 10 + ' (ด้านใหม่ ' + n + ') <b>' + (cube ? 'ปริมาตร' : 'พื้นที่') + (up ? 'เพิ่มขึ้น' : 'ลดลง') + 'ร้อยละเท่าใด</b>';
+  const area = cube ? 'ปริมาตร' : 'พื้นที่', un = cube ? ' ลูกบาศก์หน่วย' : ' ตารางหน่วย';
+  const s1 = { prompt: 'ขั้น 1 — ' + area + 'เดิม (ด้าน 10) = ?', ch: mk({ t: fmt(A0) + un }, [
+    { t: '10' + un, why: area + 'ไม่เท่ากับด้าน ต้องคูณกัน' }, { t: (cube ? 300 : 20) + un, why: cube ? 'บวกสามด้าน ไม่ใช่คูณ' : 'บวกสองด้าน ไม่ใช่คูณ' }, { t: (cube ? 100 : 40) + un, why: cube ? 'นี่คือพื้นที่หน้าเดียว ไม่ใช่ปริมาตร' : 'นี่คือเส้นรอบรูป ไม่ใช่พื้นที่' }
+  ]) };
+  const strip = up ? 100 + 10 * chg : 100 - 10 * (10 - n), twoStrip = up ? 100 + 20 * chg : 100 - 20 * (10 - n);
+  const s2 = { prompt: 'ขั้น 2 — ' + area + 'ใหม่ (ด้าน ' + n + ') = ? ' + (cube ? '(' + n + ' × ' + n + ' × ' + n + ')' : 'นับช่องจากตารางได้เลย'), grid: cube ? 0 : n, ch: mk({ t: fmt(A1) + un }, cube ? [
+    { t: fmt(n * n * 10) + un, why: 'ยืดแค่สองด้าน ด้านที่สามยังเป็น 10 — ลูกบาศก์ยืดทั้งสามด้าน' }, { t: fmt(n * 100) + un, why: 'ยืดด้านเดียว ที่เหลือยังเป็น 10' }, { t: fmt(A1 - A0) + un, why: 'นี่คือส่วนที่เพิ่ม ไม่ใช่ปริมาตรใหม่' }
+  ] : [
+    { t: fmt(strip) + un, why: up ? 'นับเพิ่มแค่แถบเดียว — ด้านยืดทั้งสองทิศ (กว้างและยาว)' : 'ตัดออกแค่แถบเดียว — ด้านหดทั้งสองทิศ' }, { t: fmt(twoStrip) + un, why: up ? 'นับสองแถบแต่ลืมช่องมุม (' + chg + '×' + chg + ' = ' + chg * chg + ' ช่อง)' : 'ตัดสองแถบแต่ลืมว่าช่องมุมถูกนับซ้ำ' }, { t: fmt(Math.abs(A1 - A0)) + un, why: 'นี่คือส่วนที่' + (up ? 'เพิ่ม' : 'หาย') + ' ไม่ใช่พื้นที่ใหม่' }
+  ]) };
+  const s3 = { prompt: 'ขั้น 3 — ' + area + (up ? 'เพิ่มขึ้น' : 'ลดลง') + 'กี่ %  (ส่วนต่าง ÷ ' + area + 'เดิม × 100)', ch: mk({ t: pct(dpct) }, [
+    { t: pct(Math.abs(chg) * 10), why: 'คิดว่า' + area + 'เปลี่ยนเท่าด้าน — ด้านยืด' + (cube ? 'สาม' : 'สอง') + 'ครั้ง ตัวคูณต้องยกกำลัง' + (cube ? 'สาม' : 'สอง') + ' ★ ตัวที่เคยตอบ' },
+    { t: pct(Math.round(A1 / A0 * 10000) / 100), why: 'นี่คือ' + area + 'ใหม่เทียบเดิมทั้งก้อน — ถาม "เพิ่มขึ้น" ต้องลบ 100' },
+    { t: pct(Math.abs(chg) * 10 * (cube ? 3 : 2)), why: 'เอา ' + (cube ? 3 : 2) + ' คูณ % ของด้านตรง ๆ แทนที่จะยกกำลัง' }
+  ]), why: area + 'เดิม ' + fmt(A0) + ' → ใหม่ ' + fmt(A1) + ' → ' + (up ? 'เพิ่ม' : 'ลด') + ' ' + fmt(Math.abs(A1 - A0)) + ' ÷ ' + fmt(A0) + ' × 100 = ' + fmt(dpct) + '%  (ตัวคูณ ' + (n / 10) + (cube ? '³' : '²') + ' = ' + fmt(A1 / A0) + ')' };
+  return { words, steps: mixOnly ? [Object.assign({}, s3, { prompt: 'ตอบเลย (ไม่มีขั้นนำ)' })] : [s1, s2, s3], why: s3.why, tag: 'มิติยกกำลัง' };
+}
+
+/* ---------- ด่าน 4: วงหน่วยก่อน (ตอบ % ทั้งที่ถามบาท) ---------- */
+function genUnit(mixOnly) {
+  let kind, p, full, paid, part, base, T, g;
+  do {
+    kind = pick(['price', 'price', 'ratio', 'people']);
+    if (kind === 'price') { p = pick([10, 15, 20, 25, 30, 40]); full = 100 * ri(3, 40); paid = full * (100 - p) / 100; }
+    else if (kind === 'ratio') { p = pick([10, 20, 25, 30, 40, 60, 75]); base = 100 * ri(2, 30); part = base * p / 100; }
+    else { p = pick([30, 40, 45, 55, 60]); T = 20 * ri(5, 40); g = T * p / 100; }
+  } while (kind === 'price' ? (bigReserved(full) || bigReserved(paid) || paid !== Math.round(paid)) : kind === 'ratio' ? (bigReserved(base) || bigReserved(part) || part !== Math.round(part)) : (bigReserved(T) || bigReserved(g) || bigReserved(T - g) || g !== Math.round(g)));
+  let words, unit, answer, wrongs, why;
+  if (kind === 'price') {
+    words = 'ร้านลดราคาร้อยละ ' + p + ' ลูกค้าจ่ายเงิน ' + baht(paid) + ' <b>สินค้านี้ราคาเต็มกี่บาท</b>'; unit = 'บาท'; answer = baht(full);
+    wrongs = [{ t: pct(100 - p), why: 'นี่คือ "จ่ายกี่ % ของราคาเต็ม" — โจทย์ถาม<b>บาท</b> ไม่ได้ถาม % ★ ตัวที่เคยตอบ' }, { t: baht(paid * (100 + p) / 100), why: 'บวก ' + p + '% กลับเข้าที่ราคาที่จ่าย — แต่ส่วนลดคิดจากราคาเต็ม' }, { t: baht(paid + p), why: 'เอาเลข ' + p + ' ไปบวกเป็นบาท ทั้งที่มันเป็น %' }];
+    why = 'จ่าย = ' + (100 - p) + '% ของราคาเต็ม → ราคาเต็ม = ' + fmt(paid) + ' ÷ ' + ((100 - p) / 100) + ' = ' + fmt(full) + ' บาท';
+  } else if (kind === 'ratio') {
+    words = 'เงินเดือน ' + baht(base) + ' เก็บออม ' + baht(part) + ' <b>เงินออมเป็นร้อยละเท่าใดของเงินเดือน</b>'; unit = '%'; answer = pct(p);
+    wrongs = [{ t: baht(part), why: 'ตอบเป็นบาททั้งที่โจทย์ถาม<b>ร้อยละ</b>' }, { t: baht(base - part), why: 'นี่คือเงินที่ใช้ไป และหน่วยผิดด้วย' }, { t: pct(100 - p), why: 'นี่คือ % ที่ใช้ไป ไม่ใช่ % ที่ออม' }];
+    why = fmt(part) + ' ÷ ' + fmt(base) + ' × 100 = ' + p + '%';
+  } else {
+    words = 'โรงเรียนมีนักเรียน ' + fmt(T) + ' คน เป็นหญิงร้อยละ ' + p + ' <b>มีนักเรียนชายกี่คน</b>'; unit = 'คน'; answer = fmt(T - g) + ' คน';
+    wrongs = [{ t: pct(100 - p), why: 'นี่คือ % ของชาย — โจทย์ถาม<b>กี่คน</b>' }, { t: fmt(g) + ' คน', why: 'นี่คือจำนวนหญิง ไม่ใช่ชาย (อ่านคำถามอีกรอบ)' }, { t: fmt(T) + ' คน', why: 'นี่คือทั้งหมด' }];
+    why = 'ชาย = ' + (100 - p) + '% ของ ' + fmt(T) + ' = ' + fmt(T - g) + ' คน';
+  }
+  const units = shuffle(['บาท', 'ร้อยละ (%)', 'คน']);
+  const s1 = { prompt: 'ขั้น 1 — วงหน่วย: คำตอบต้องเป็นหน่วยอะไร', ch: units.map(u => ({ t: u, ok: (u === 'ร้อยละ (%)' ? '%' : u) === unit, why: 'อ่านคำถามท้ายโจทย์: ถาม "' + (unit === '%' ? 'ร้อยละเท่าใด' : 'กี่' + unit) + '"' })) };
+  const s2 = { prompt: 'ขั้น 2 — ตอบ (ช้อยส์ที่หน่วยไม่ตรงจางลงแล้ว)', dimUnit: unit, ch: mk({ t: answer }, wrongs, unitOf), why };
+  return { words, steps: mixOnly ? [Object.assign({}, s2, { prompt: 'ตอบเลย (ไม่มีขั้นนำ)', dimUnit: null })] : [s1, s2], why, tag: 'วงหน่วยของคำตอบ' };
+}
+
+function genMix() { return pick([genProfit, genSubtract, genArea, genUnit])(true); }
+
+const LEVELS = {
+  1: { name: 'ด่าน 1 เขียน 3 บรรทัด', total: 6, goal: 5, gen: () => genProfit(false) },
+  2: { name: 'ด่าน 2 ลบ 100 หรือไม่', total: 8, goal: 7, gen: () => genSubtract(false) },
+  3: { name: 'ด่าน 3 นับช่องจริง', total: 6, goal: 5, gen: () => genArea(false) },
+  4: { name: 'ด่าน 4 วงหน่วยก่อน', total: 8, goal: 7, gen: () => genUnit(false) },
+  5: { name: 'ด่าน 5 รวม 4 จุด', total: 10, goal: 8, gen: genMix }
+};
+if (typeof module !== 'undefined') module.exports = { RESERVED, genProfit, genSubtract, genArea, genUnit, genMix, LEVELS };
+</script>
+
+<!-- ============ UI ============ -->
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+let S = null;
+const KEY = 'pct-repair-best-';
+function best(lv) { try { return +(localStorage.getItem(KEY + lv) || 0); } catch (e) { return 0; } }
+function setBest(lv, v) { try { localStorage.setItem(KEY + lv, String(v)); } catch (e) { } }
+function paintBests() { for (let i = 1; i <= 5; i++) { const b = best(i); $('b' + i).textContent = b ? 'สถิติ ' + b + '/' + LEVELS[i].total : ''; } }
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function start(lv) {
+  const cfg = LEVELS[lv];
+  S = { lv, cfg, score: 0, asked: 0, wrong: [], t0: Date.now(), item: null, si: 0, itemOk: true, locked: false, lines: [] };
+  $('menu').classList.add('hidden'); $('over').classList.add('hidden'); $('play').classList.remove('hidden');
+  $('hScore').textContent = '0';
+  nextItem();
+}
+function nextItem() {
+  if (S.asked >= S.cfg.total) { finish(); return; }
+  S.item = S.cfg.gen(); S.si = 0; S.itemOk = true; S.lines = [];
+  $('hItem').textContent = (S.asked + 1) + '/' + S.cfg.total;
+  $('barFill').style.width = (S.asked / S.cfg.total * 100) + '%';
+  $('prob').innerHTML = '<span class="th">ข้อ ' + (S.asked + 1) + ' · ' + esc(S.item.tag) + '</span>' + S.item.words;
+  renderStep();
+}
+function gridHtml(n) {
+  const size = Math.max(n, 10); let h = '<div class="legend"><span style="background:var(--accent-bg)"></span>ของเดิม 10×10 <span style="background:var(--warn-bg)"></span>ส่วนที่เพิ่ม <span style="background:var(--card);opacity:.5"></span>ส่วนที่หายไป</div><div class="grid" style="grid-template-columns:repeat(' + size + ',1fr)">';
+  for (let r = 0; r < size; r++) for (let c = 0; c < size; c++) {
+    const inOld = r < 10 && c < 10, inNew = r < n && c < n;
+    h += '<i class="' + (inOld && inNew ? '' : inNew ? 'new' : 'gone') + '"></i>';
+  }
+  return h + '</div>';
+}
+function renderStep() {
+  const st = S.item.steps[S.si];
+  S.locked = false; $('fb').className = 'fb idle'; $('fb').textContent = '';
+  $('hStep').textContent = (S.si + 1) + '/' + S.item.steps.length;
+  $('step').innerHTML = st.prompt + (st.hint ? '<small>' + esc(st.hint) + '</small>' : '');
+  $('visual').innerHTML = st.grid ? gridHtml(st.grid) : '';
+  const ln = $('lines'); if (S.lines.length) { ln.classList.remove('hidden'); ln.innerHTML = S.lines.map(l => '<div class="done">✓ ' + esc(l) + '</div>').join(''); } else ln.classList.add('hidden');
+  const box = $('choices'); box.innerHTML = ''; box.classList.toggle('grid2', st.ch.length <= 3 && st.ch.every(c => c.t.length < 22));
+  st.ch.forEach((c, i) => {
+    const b = document.createElement('button'); b.className = 'ch' + (st.dimUnit && c.u && c.u !== st.dimUnit ? ' dim' : '');
+    b.innerHTML = '<b>' + (i + 1) + '.</b> ' + esc(c.t);
+    b.onclick = () => answer(i); box.appendChild(b);
+  });
+}
+function flash(ok, html) { const f = $('fb'); f.className = 'fb ' + (ok ? 'ok' : 'bad'); f.innerHTML = html; $('step').classList.remove('pop'); void $('step').offsetWidth; $('step').classList.add('pop'); }
+function answer(i) {
+  if (!S || S.locked) return;
+  S.locked = true;
+  const st = S.item.steps[S.si], c = st.ch[i], right = st.ch.find(x => x.ok), last = S.si === S.item.steps.length - 1;
+  if (c.ok) {
+    if (st.line) S.lines.push(st.line + ' = ' + c.t);
+    flash(true, last ? '✓ ครบทุกขั้น! ' + esc(S.item.why) : '✓ ถูก — ไปขั้นถัดไป');
+  } else {
+    S.itemOk = false;
+    S.wrong.push({ q: S.item.words.replace(/<[^>]+>/g, ''), step: st.prompt.replace(/<[^>]+>/g, ''), your: c.t, ans: right.t, why: c.why || S.item.why });
+    if (st.line) S.lines.push(st.line + ' = ' + right.t);
+    flash(false, '✗ ที่ถูกคือ <b>' + esc(right.t) + '</b><br>' + (c.why || '') + (last ? '<br>' + esc(S.item.why) : ''));
+  }
+  if (last) { S.asked++; if (S.itemOk) S.score++; $('hScore').textContent = S.score; }
+  setTimeout(() => { if (!S) return; if (last) nextItem(); else { S.si++; renderStep(); } }, c.ok ? (last ? 1800 : 600) : 4200);
+}
+function finish() {
+  const lv = S.lv, cfg = S.cfg, secs = (Date.now() - S.t0) / 1000, per = S.asked ? secs / S.asked : 0;
+  $('play').classList.add('hidden'); $('over').classList.remove('hidden');
+  $('oScore').textContent = S.score + ' / ' + cfg.total;
+  const passed = S.score >= cfg.goal;
+  $('oGrade').innerHTML = passed ? '🟢 ผ่านเป้าแล้ว! (เป้า ' + cfg.goal + ') ขั้นตอนอยู่ในมือแล้ว 🎉'
+    : (S.score >= cfg.goal * 0.6 ? '🟡 ใกล้แล้ว! เป้าคือ ' + cfg.goal + ' — ดูว่าพลาดที่ "ขั้นไหน" ด้านล่าง'
+      : '🔴 ยังไม่ถึงเป้า ' + cfg.goal + ' — อ่านขั้นที่พลาดก่อน แล้วลองใหม่ (ผิดได้ นี่คือด่านซ่อม)');
+  const b = best(lv); if (S.score > b) setBest(lv, S.score);
+  $('oStats').innerHTML = '<tr><th>ข้อที่ถูกครบทุกขั้น</th><td>' + S.score + ' / ' + S.asked + '</td></tr>' +
+    '<tr><th>ขั้นที่พลาด</th><td>' + S.wrong.length + ' ขั้น</td></tr>' +
+    '<tr><th>เฉลี่ยต่อข้อ</th><td>' + per.toFixed(0) + ' วินาที' + (lv === 5 ? ' (ข้อสอบจริง ≈ 72 วินาที/ข้อ)' : '') + '</td></tr>' +
+    '<tr><th>สถิติดีที่สุด</th><td>' + Math.max(b, S.score) + ' / ' + cfg.total + (S.score > b ? ' 🆕' : '') + '</td></tr>';
+  $('oWrong').innerHTML = S.wrong.length
+    ? '<h3 style="font-size:1rem;margin:18px 0 6px">ขั้นที่พลาด — ตรงนี้คือจุดที่ต้องซ่อม</h3><table><tr><th>โจทย์ · ขั้น</th><th>ตอบไป</th><th>ที่ถูก</th></tr>' +
+      S.wrong.map(w => '<tr><td>' + esc(w.q) + '<br><b>' + esc(w.step) + '</b><br><span style="color:var(--muted)">' + w.why + '</span></td><td>' + esc(w.your) + '</td><td><b>' + esc(w.ans) + '</b></td></tr>').join('') + '</table>'
+    : '<p style="text-align:center;color:var(--ok);font-weight:700;margin-top:16px">ไม่พลาดสักขั้น! 🏆</p>';
+  paintBests();
+}
+function toMenu() { S = null; $('play').classList.add('hidden'); $('over').classList.add('hidden'); $('menu').classList.remove('hidden'); paintBests(); }
+document.querySelectorAll('.lv').forEach(b => b.onclick = () => start(+b.dataset.lv));
+$('quit').onclick = () => { if (S) finish(); };
+$('again').onclick = () => start(S ? S.lv : 1);
+$('back').onclick = toMenu;
+document.addEventListener('keydown', e => { if (!S || S.locked) return; const n = +e.key; if (n >= 1 && n <= 4) answer(n - 1); });
+paintBests();
+</script>
+</body>
+</html>
