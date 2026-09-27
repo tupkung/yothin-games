@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ทบทวนจุดพลาด — อังกฤษ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+--ink:#1a1c1e;--muted:#5b6167;--line:#dfe3e8;--bg:#fbfbfa;--card:#fff;--soft:#f4f6f8;
+--accent:#1f6feb;--accent-bg:#eaf2ff;--warn:#b25000;--warn-bg:#fff4e8;--ok:#136c39;--ok-bg:#e8f6ee;
+--bad:#b3261e;--bad-bg:#fdecea;--vio:#6b46e0;--vio-bg:#efeaff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#333a42;--bg:#16181b;--card:#1e2126;--soft:#262a30;
+--accent:#69a4ff;--accent-bg:#1a2740;--warn:#f0a163;--warn-bg:#33240f;--ok:#6fd39a;--ok-bg:#13301f;
+--bad:#ff8a80;--bad-bg:#3a1a17;--vio:#a68cff;--vio-bg:#2a2140}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:"Sarabun","Noto Sans Thai",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+font-size:17px;line-height:1.75;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:680px;margin:0 auto;padding:22px 16px calc(60px + env(safe-area-inset-bottom))}
+h1{font-size:1.45rem;margin:0 0 6px;line-height:1.35}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.hidden{display:none !important}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+.lv{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);
+border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:11px;transition:.12s}
+.lv.lead{border:2px solid var(--accent);background:var(--accent-bg)}
+.lv:active{border-color:var(--accent)}
+.lv b{font-size:1.06rem}
+.lv .d{color:var(--muted);font-size:.87rem;line-height:1.6}
+.lv .best{float:right;font-size:.8rem;color:var(--ok);font-weight:700}
+.hud{display:flex;gap:10px;margin-bottom:14px}
+.pill{flex:1;background:var(--soft);border:1px solid var(--line);border-radius:11px;padding:7px 4px;text-align:center;line-height:1.3}
+.pill .n{font-size:1.28rem;font-weight:700;font-family:"IBM Plex Mono",monospace}
+.pill .l{font-size:.72rem;color:var(--muted)}
+.bar{height:9px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s linear}
+.kind{display:inline-block;font-size:.76rem;background:var(--vio-bg);color:var(--vio);border:1px solid var(--vio);border-radius:99px;padding:0 9px}
+.q{font-size:1.1rem;font-weight:600;margin:10px 0 6px;line-height:1.8}
+.q .blank{display:inline-block;min-width:2.4em;border-bottom:2px solid var(--accent);color:var(--accent);text-align:center;font-family:"IBM Plex Mono",monospace;font-weight:700;padding:0 4px}
+.q .ctx{display:block;font-weight:400;color:var(--muted);font-size:1rem}
+.q u{text-decoration:none;border-bottom:2px solid var(--warn);padding:0 1px}
+.q u sup{color:var(--warn);font-size:.7em;font-family:"IBM Plex Mono",monospace;margin-left:1px}
+.choices{display:grid;gap:9px;margin:14px 0 4px}
+.ch{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;text-align:left;color:var(--ink);line-height:1.55;font-size:1rem}
+.ch:active{border-color:var(--accent);background:var(--accent-bg)}
+.ch b{color:var(--accent);margin-right:7px}
+.ch.right{border-color:var(--ok);background:var(--ok-bg)}
+.ch.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.fb{min-height:52px;border-radius:12px;padding:11px 14px;font-size:.94rem;line-height:1.65;margin-top:6px}
+.fb.ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);color:var(--bad);border:1px solid var(--bad)}
+.fb.idle{background:var(--soft);color:var(--muted)}
+.fb .rule{display:block;margin-top:6px;color:var(--ink);font-weight:600}
+.btnrow{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap}
+.btnrow button{flex:1;padding:11px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:600}
+.btnrow button.pri{background:var(--accent);color:#fff;border-color:var(--accent)}
+.big{font-size:2.4rem;font-weight:700;text-align:center;font-family:"IBM Plex Mono",monospace}
+.grade{text-align:center;font-weight:700;margin:4px 0 14px;line-height:1.6}
+table{width:100%;border-collapse:collapse;font-size:.9rem;margin-bottom:12px}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--soft);font-weight:600}
+.tip{background:var(--warn-bg);border:1px solid var(--warn);color:var(--warn);border-radius:12px;padding:10px 14px;font-size:.9rem;line-height:1.65}
+.wl{font-size:.88rem;line-height:1.6;border-top:1px solid var(--line);padding:8px 0}
+kbd{font-family:"IBM Plex Mono",monospace;background:var(--soft);border:1px solid var(--line);border-radius:5px;padding:0 5px;font-size:.85em}
+footer{margin-top:28px;color:var(--muted);font-size:.78rem;text-align:center;line-height:1.6}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<section id="menu">
+  <h1>🔁 ทบทวนจุดพลาด — อังกฤษ</h1>
+  <p class="sub">5 เรื่องที่เคยพลาดในชุดอังกฤษ 01–04 และการ์ดซ่อม · ประโยคใหม่ทั้งหมด · ตัวเลือกผิดทำจากคำตอบที่เคยตอบจริง (ติด ★)</p>
+
+  <button class="lv lead" data-lv="0"><span class="best" id="b0"></span><b>🎯 ชุดผสม 10 ข้อ (เหมือนข้อสอบจริง)</b>
+    <div class="d">คละ 5 เรื่อง · จับเวลา เป้า ≤ 6 นาที (0.6 นาที/ข้อ) · จบแล้วบอกว่าเรื่องไหนยังพลาด</div></button>
+  <button class="lv" data-lv="1"><span class="best" id="b1"></span><b>ด่าน 1 · ประตูก่อน คำบอกเวลาทีหลัง</b>
+    <div class="d">when / before / after / as soon as / until → หลังคำนั้นห้าม will <b>ถึงจะมี tomorrow / next ก็ห้าม</b></div></button>
+  <button class="lv" data-lv="2"><span class="best" id="b2"></span><b>ด่าน 2 · A since B</b>
+    <div class="d">ฝั่งที่ลากถึงตอนนี้ = have + V3 · ฝั่งหลัง since = จุดเริ่ม = อดีต</div></button>
+  <button class="lv" data-lv="3"><span class="best" id="b3"></span><b>ด่าน 3 · will หรือ going to</b>
+    <div class="d">เห็นหลักฐาน / วางแผนไว้แล้ว → going to · ตัดสินใจตอนพูด / เสนอช่วย → will</div></button>
+  <button class="lv" data-lv="4"><span class="best" id="b4"></span><b>ด่าน 4 · question tag ตรวจ 2 อย่าง</b>
+    <div class="d">คำช่วยต้องตรงกัน + กลับบวก/ลบ · มีข้อ "หาส่วนที่ผิด" ปน — tag อาจถูกก็ได้</div></button>
+  <button class="lv" data-lv="5"><span class="best" id="b5"></span><b>ด่าน 5 · adjective หรือ adverb</b>
+    <div class="d">ขยายคำนาม / ตามหลัง look · smell · feel → adj · ขยายกริยา → adv (-ly)</div></button>
+
+  <p class="tip">💡 ตอบผิดไม่เป็นไร — อ่านกล่องสีแดงให้จบก่อนกด "ข้อต่อไป" ทุกครั้ง เพราะมันบอกว่า<b>ผิดแบบไหน</b><br>
+  ⌨️ กดเลข <kbd>1</kbd>–<kbd>4</kbd> เลือกช้อยส์ · <kbd>Enter</kbd> ข้อต่อไป</p>
+</section>
+
+<section id="play" class="hidden">
+  <div class="hud">
+    <div class="pill"><div class="n" id="hScore">0</div><div class="l">ถูก</div></div>
+    <div class="pill"><div class="n" id="hItem">1/10</div><div class="l">ข้อที่</div></div>
+    <div class="pill"><div class="n" id="hTime">0:00</div><div class="l">เวลา</div></div>
+  </div>
+  <div class="bar"><i id="barFill"></i></div>
+  <div class="card">
+    <span class="kind" id="kind">—</span>
+    <div class="q" id="qText">—</div>
+    <div class="choices" id="choices"></div>
+    <div class="fb idle" id="fb">เลือกคำตอบ</div>
+  </div>
+  <div class="btnrow">
+    <button id="quit">⏹ กลับเมนู</button>
+    <button class="pri hidden" id="next">ข้อต่อไป ➜</button>
+  </div>
+</section>
+
+<section id="over" class="hidden">
+  <div class="card">
+    <div class="big" id="oScore">—</div>
+    <div class="grade" id="oGrade">—</div>
+    <table id="oStats"></table>
+    <div id="oWrong"></div>
+  </div>
+  <div class="btnrow">
+    <button class="pri" id="again">🔁 เล่นอีกครั้ง</button>
+    <button id="back">📋 เลือกด่าน</button>
+  </div>
+</section>
+
+<footer>Road to Yothin · เกมทบทวนจากชุดอังกฤษ 01–04 + การ์ดซ่อม (ก.ย. 2569)<br>
+ประโยคในเกมไม่ซ้ำกับชุดฝึก · เกมนี้เป็นการฝึก ไม่ใช่ตัววัดผล · สถิติเก็บไว้ในเครื่องนี้</footer>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); } } catch (e) { }
+</script>
+
+<!-- ============ POOL (ไม่แตะ DOM — ทดสอบด้วย Node ได้) ============ -->
+<script id="gen">
+"use strict";
+/* ทุกข้อ: a = ตัวถูก · wrong = [{t, why}] 3 ตัว · ★ = รูปที่น้องเคยตอบจริง (อ้างใน OKF คู่เกม)
+   type 'fill' = เติมคำ (จำนวน ___ ต้องเท่ากับจำนวนส่วนที่คั่นด้วย " / ") · type 'id' = หาส่วนที่ผิด (ขีดเส้นใต้ด้วย [[...]]) */
+const GATE = 'เจอ when / before / after / as soon as / until → หลังคำนั้นใช้ present ห้าม will แม้มีคำอนาคต · อีกฝั่งค่อยเป็น will';
+const SINCE = 'ฝั่งที่ลากถึงตอนนี้ = have/has + V3 · ฝั่งหลัง since = จุดเริ่มที่จบแล้ว = อดีต (V2)';
+const WG = 'หลักฐานตรงหน้า / แผนที่ตัดสินไว้แล้ว → be going to · ตัดสินใจตอนพูด / เสนอช่วย → will';
+const TAG = 'ตรวจ 2 อย่าง: ① คำช่วยตรงกับประโยค (ไม่มีคำช่วย → do/does/did) ② กลับด้าน บวก → ลบ · ลบ → บวก';
+const ADJ = 'ขยายคำนาม หรือตามหลัง look / smell / feel / taste / sound → adjective · ขยายกริยา (ทำอย่างไร) → adverb (-ly)';
+
+const P = {
+  1: { name: 'ประตู time clause', slug: 'will-in-time-clause', rule: GATE, items: [
+    { s: 'When the new library ___ next week, I ___ a card there.', a: 'opens / will get', wrong: [
+      { t: 'will open / will get', why: '★ will ทั้งคู่ — เห็น next week แล้วใส่ will ทุกช่อง แต่ next week อยู่หลัง When (ในประตู) → opens' },
+      { t: 'opens / get', why: 'ผ่านประตูแล้ว แต่ลืมว่าอีกฝั่งยังเป็นอนาคต → will get' },
+      { t: 'will open / get', why: 'สลับฝั่ง — will ไปอยู่ในประตู' }] },
+    { s: 'Before Dad ___ for work tomorrow morning, he ___ us to school.', a: 'leaves / will drive', wrong: [
+      { t: 'will leave / will drive', why: '★ will ทั้งคู่ — tomorrow อยู่หลัง Before (ในประตู) → leaves' },
+      { t: 'leaves / drives', why: 'อีกฝั่งเป็นเรื่องพรุ่งนี้ ต้อง will drive' },
+      { t: 'will leave / drives', why: 'สลับฝั่ง — will ไปอยู่ในประตู' }] },
+    { s: 'After we ___ lunch tomorrow, we ___ the zoo.', a: 'have / will visit', wrong: [
+      { t: 'will have / will visit', why: '★ will ทั้งคู่ — หลัง After ห้าม will แม้มี tomorrow' },
+      { t: 'have / visit', why: 'อีกฝั่งเป็นอนาคต → will visit' },
+      { t: 'will have / visit', why: 'สลับฝั่ง' }] },
+    { s: 'I ___ you a postcard as soon as I ___ in Japan next month.', a: 'will send / arrive', wrong: [
+      { t: 'will send / will arrive', why: '★ will ทั้งคู่ — next month อยู่หลัง as soon as (ในประตู) → arrive' },
+      { t: 'send / arrive', why: 'ฝั่งหน้าเป็นอนาคต ไม่มีประตู → will send' },
+      { t: 'send / will arrive', why: 'สลับฝั่ง — ประตูอยู่กลางประโยค ดูว่าคำไหนอยู่หลัง as soon as' }] },
+    { s: 'We ___ inside until the storm ___ tonight.', a: 'will stay / ends', wrong: [
+      { t: 'will stay / will end', why: '★ will ทั้งคู่ — tonight อยู่หลัง until (ในประตู) → ends' },
+      { t: 'stay / will end', why: 'สลับฝั่ง' },
+      { t: 'stayed / ends', why: 'เรื่องคืนนี้ยังไม่เกิด ใช้อดีตไม่ได้ → will stay' }] },
+    { s: 'When Pim ___ thirteen next year, she ___ a phone of her own.', a: 'is / will get', wrong: [
+      { t: 'will be / will get', why: '★ will ทั้งคู่ — next year อยู่หลัง When → is' },
+      { t: 'is / gets', why: 'อีกฝั่งเป็นอนาคต → will get' },
+      { t: 'will be / gets', why: 'สลับฝั่ง' }] },
+    { s: 'I think our new computer room ___ ready next month.', a: 'will be', wrong: [
+      { t: 'is', why: 'ข้อนี้ไม่มีประตู (ไม่มี when / before / after / until) + next month + I think → will be' },
+      { t: 'was', why: 'next month ยังไม่เกิด ใช้อดีตไม่ได้' },
+      { t: 'has been', why: 'ไม่มี since / for ลากถึงตอนนี้ และเป็นเรื่องอนาคต' }] }
+  ] },
+  2: { name: 'A since B', slug: 'time-marker-per-blank', rule: SINCE, items: [
+    { s: 'Ploy ___ in Chiang Rai since her family ___ there in 2020.', a: 'has lived / moved', wrong: [
+      { t: 'lived / moved', why: '★ อดีตทั้งคู่ — ฝั่งหน้า since ยังอยู่ถึงตอนนี้ → has lived' },
+      { t: 'has lived / has moved', why: '★ perfect ทั้งคู่ — ย้ายมา "ปี 2020" จบแล้ว → moved' },
+      { t: 'lived / has moved', why: '★ สลับ — have ไปอยู่หลัง since (จุดเริ่มต้องเป็นอดีต)' }] },
+    { s: 'I ___ a single cold since I ___ drinking warm water every morning.', a: "haven't had / started", wrong: [
+      { t: "didn't have / started", why: '★ อดีตทั้งคู่ — "ไม่เป็นหวัดเลยจนถึงตอนนี้" → haven\'t had' },
+      { t: "haven't had / have started", why: '★ perfect ทั้งคู่ — จุดเริ่ม (ตอนเริ่มดื่ม) จบแล้ว → started' },
+      { t: "didn't have / have started", why: '★ สลับ — have ไปอยู่หลัง since' }] },
+    { s: 'Our teacher ___ happier since she ___ her new puppy.', a: 'has been / got', wrong: [
+      { t: 'was / got', why: '★ อดีตทั้งคู่ — มีความสุขขึ้นจนถึงตอนนี้ → has been' },
+      { t: 'has been / has got', why: '★ perfect ทั้งคู่ — ได้ลูกหมาเป็นจุดเริ่ม จบแล้ว → got' },
+      { t: 'was / has got', why: '★ สลับ' }] },
+    { s: 'The twins ___ best friends ever since they ___ on the first day of kindergarten.', a: 'have been / met', wrong: [
+      { t: 'were / met', why: '★ อดีตทั้งคู่ — ยังเป็นเพื่อนกันถึงตอนนี้ → have been' },
+      { t: 'have been / have met', why: '★ perfect ทั้งคู่ — วันแรกของอนุบาลจบแล้ว → met' },
+      { t: 'were / have met', why: '★ สลับ' }] },
+    { s: 'Mr. Chai ___ at this hospital since he ___ medical school.', a: 'has worked / finished', wrong: [
+      { t: 'worked / finished', why: '★ อดีตทั้งคู่ — ยังทำงานอยู่ถึงตอนนี้ → has worked' },
+      { t: 'has worked / has finished', why: '★ perfect ทั้งคู่ — เรียนจบเป็นจุดเริ่ม → finished' },
+      { t: 'worked / has finished', why: '★ สลับ' }] },
+    { s: 'Since Ton ___ the football team, he ___ to every practice.', a: 'joined / has gone', wrong: [
+      { t: 'has joined / has gone', why: '★ perfect ทั้งคู่ — ข้อนี้ since อยู่หน้าประโยค คำที่ติด since คือจุดเริ่ม → joined' },
+      { t: 'joined / went', why: 'ไปซ้อมทุกครั้งจนถึงตอนนี้ → has gone' },
+      { t: 'has joined / went', why: '★ สลับ — "since อยู่ติดคำไหน คำนั้น perfect" ไม่จริง · ติด since = จุดเริ่ม = อดีต' }] }
+  ] },
+  3: { name: 'will / going to', slug: 'will-vs-going-to', rule: WG, items: [
+    { ctx: 'A: Why are you carrying a ladder?', s: 'B: I ___ the lamp in the kitchen. A: Wait, I ___ you hold it.', a: 'am going to fix / will help', wrong: [
+      { t: 'will fix / will help', why: '★ will ทั้งคู่ — ถือบันไดมาแล้ว = วางแผนไว้แล้ว → am going to fix' },
+      { t: 'am going to fix / am going to help', why: '★ going to ทั้งคู่ — "Wait, I…" = ตัดสินใจเสนอช่วยตอนนั้นเลย → will help' },
+      { t: 'will fix / am going to help', why: '★ สลับด้าน' }] },
+    { ctx: 'Look! That glass is too close to the edge of the table.', s: 'A: It ___. B: Oh, thanks! I ___ it right now.', a: 'is going to fall / will move', wrong: [
+      { t: 'will fall / will move', why: '★ will ทั้งคู่ — Look! + แก้วอยู่ริมโต๊ะ = เห็นหลักฐานตรงหน้า → is going to fall' },
+      { t: 'is going to fall / am going to move', why: '★ going to ทั้งคู่ — "right now" หลังเพิ่งรู้ = ตัดสินใจตอนพูด → will move' },
+      { t: 'will fall / am going to move', why: '★ สลับด้าน' }] },
+    { ctx: 'A: The phone is ringing!', s: 'B: OK, I ___ it.', a: 'will answer', wrong: [
+      { t: 'am going to answer', why: 'เพิ่งได้ยินเสียงโทรศัพท์ ตัดสินใจตอนนั้น → will (ไม่ใช่แผน)' },
+      { t: 'answer', why: 'present simple ไม่ใช้บอกการตัดสินใจทำเดี๋ยวนี้' },
+      { t: 'answered', why: 'ยังไม่ได้รับ ใช้อดีตไม่ได้' }] },
+    { ctx: 'My brother has saved money for months and has already chosen the model he wants.', s: 'He ___ a new bike this weekend.', a: 'is going to buy', wrong: [
+      { t: 'will buy', why: '★ เก็บเงินหลายเดือน + เลือกรุ่นไว้แล้ว = แผนที่ตัดสินไว้ก่อน → is going to buy' },
+      { t: 'buys', why: 'present simple ไม่ใช้กับแผนส่วนตัว' },
+      { t: 'bought', why: 'this weekend ยังไม่ถึง ใช้อดีตไม่ได้' }] },
+    { ctx: "A: Oh no, I don't have a pen for the test!", s: "B: Don't worry. I ___ you one of mine.", a: 'will lend', wrong: [
+      { t: 'am going to lend', why: '★ เสนอช่วยตอนเพิ่งรู้ปัญหา = ตัดสินใจตอนพูด → will' },
+      { t: 'lend', why: 'present simple ไม่ใช้เสนอช่วย' },
+      { t: 'lent', why: 'ยังไม่ได้ให้ยืม ใช้อดีตไม่ได้' }] },
+    { ctx: 'A: What are your plans for the long weekend?', s: 'B: We ___ our grandparents in Nan. Dad has already booked the hotel.', a: 'are going to visit', wrong: [
+      { t: 'will visit', why: '★ จองโรงแรมแล้ว = แผนที่ตัดสินไว้ก่อน → are going to visit (หลักฐานอยู่ประโยคหลัง อ่านให้จบ)' },
+      { t: 'visit', why: 'present simple ไม่ใช้กับแผนส่วนตัว' },
+      { t: 'visited', why: 'ยังไม่ได้ไป ใช้อดีตไม่ได้' }] }
+  ] },
+  4: { name: 'question tag', slug: 'question-tag-two-checks', rule: TAG, items: [
+    { s: 'Your sister can ride a horse, ___?', a: "can't she", wrong: [
+      { t: 'can she', why: '★ คำช่วยถูก (can) แต่ลืมกลับด้าน — ประโยคบวก → tag ลบ can\'t' },
+      { t: "doesn't she", why: 'มีคำช่วย can อยู่แล้ว ห้ามเปลี่ยนเป็น do' },
+      { t: "isn't she", why: 'คำช่วยไม่ตรง — ประโยคใช้ can ไม่ใช่ is' }] },
+    { s: 'The boys went to the zoo yesterday, ___?', a: "didn't they", wrong: [
+      { t: 'did they', why: 'คำช่วยถูก (went → did) แต่ลืมกลับด้าน' },
+      { t: "weren't they", why: 'went ไม่มีคำช่วย be → ใช้ did' },
+      { t: "don't they", why: 'went เป็นอดีต → did ไม่ใช่ do' }] },
+    { s: "You haven't seen my glasses, ___?", a: 'have you', wrong: [
+      { t: "haven't you", why: 'ประโยคลบ (haven\'t) → tag บวก have you' },
+      { t: 'did you', why: 'คำช่วยคือ have ห้ามเปลี่ยนเป็น did' },
+      { t: 'do you', why: 'คำช่วยคือ have ห้ามเปลี่ยนเป็น do' }] },
+    { s: 'Mr. Lee teaches art, ___?', a: "doesn't he", wrong: [
+      { t: 'does he', why: 'ลืมกลับด้าน — ประโยคบวก → doesn\'t' },
+      { t: "isn't he", why: 'teaches ไม่มีคำช่วย be → ใช้ does' },
+      { t: "don't he", why: 'he → does (เอกพจน์) ไม่ใช่ do' }] },
+    { s: 'It was very hot last night, ___?', a: "wasn't it", wrong: [
+      { t: 'was it', why: 'ลืมกลับด้าน — ประโยคบวก → wasn\'t' },
+      { t: "didn't it", why: 'มีคำช่วย was อยู่แล้ว ห้ามเปลี่ยนเป็น did' },
+      { t: "isn't it", why: 'last night เป็นอดีต → was ไม่ใช่ is' }] },
+    { s: "Kanya isn't coming to the party, ___?", a: 'is she', wrong: [
+      { t: "isn't she", why: 'ประโยคลบ (isn\'t) → tag บวก is she' },
+      { t: 'does she', why: 'คำช่วยคือ is ห้ามเปลี่ยนเป็น does' },
+      { t: 'will she', why: 'คำช่วยคือ is ห้ามเปลี่ยนเป็น will' }] },
+    { type: 'id', s: 'Tom [[have]] lived here [[for]] two years, [[hasn\'t]] [[he]]?', a: 'have', wrong: [
+      { t: 'for', why: 'for + ช่วงเวลา ถูกแล้ว' },
+      { t: "hasn't", why: '★ tag ถูกแล้ว (has → hasn\'t) — อย่าเห็น tag แล้วตอบ tag เลย ต้องตรวจคำอื่นด้วย' },
+      { t: 'he', why: 'Tom → he ถูกแล้ว' }], fix: 'Tom → has lived (ประธานเอกพจน์)' },
+    { type: 'id', s: 'My parents [[enjoy]] cooking [[together]] on Sundays, [[do]] [[they]]?', a: 'do', wrong: [
+      { t: 'enjoy', why: 'parents พหูพจน์ → enjoy ถูกแล้ว' },
+      { t: 'together', why: 'together ถูกแล้ว' },
+      { t: 'they', why: 'parents → they ถูกแล้ว' }], fix: "ประโยคบวก → tag ต้องเป็น don't they" }
+  ] },
+  5: { name: 'adj / adv', slug: 'adjective-for-adverb', rule: ADJ, items: [
+    { s: 'Please speak ___. The baby is sleeping.', a: 'quietly', wrong: [
+      { t: 'quiet', why: 'ขยายกริยา speak (พูดอย่างไร) → adverb quietly' },
+      { t: 'quieter', why: 'ไม่มีการเปรียบเทียบ และยังเป็น adjective' },
+      { t: 'quietness', why: 'เป็นคำนาม ขยายกริยาไม่ได้' }] },
+    { s: 'The soup smells ___.', a: 'delicious', wrong: [
+      { t: 'deliciously', why: 'smell เป็นกริยาบอกความรู้สึก (เหมือน look / taste) → ตามด้วย adjective' },
+      { t: 'deliciousness', why: 'เป็นคำนาม' },
+      { t: 'more deliciously', why: 'ยังเป็น adverb และไม่มีการเปรียบเทียบ' }] },
+    { s: 'Nat finished the test very ___.', a: 'quickly', wrong: [
+      { t: 'quick', why: 'ขยายกริยา finished (ทำเสร็จอย่างไร) → quickly' },
+      { t: 'quicker', why: 'very ใช้กับขั้นกว่าไม่ได้ และยังเป็น adjective' },
+      { t: 'quickness', why: 'เป็นคำนาม' }] },
+    { s: 'My dad is a ___ driver.', a: 'careful', wrong: [
+      { t: 'carefully', why: 'ขยายคำนาม driver → adjective careful' },
+      { t: 'care', why: 'เป็นคำนาม/กริยา ขยายคำนามแบบนี้ไม่ได้' },
+      { t: 'carefulness', why: 'เป็นคำนาม' }] },
+    { s: 'The children played ___ in the garden.', a: 'happily', wrong: [
+      { t: 'happy', why: 'ขยายกริยา played (เล่นอย่างไร) → happily' },
+      { t: 'happiness', why: 'เป็นคำนาม' },
+      { t: 'happier', why: 'ไม่มีการเปรียบเทียบ และยังเป็น adjective' }] },
+    { s: 'This question looks ___, but it is actually hard.', a: 'easy', wrong: [
+      { t: 'easily', why: 'look (ดูเหมือน) → ตามด้วย adjective' },
+      { t: 'ease', why: 'เป็นคำนาม' },
+      { t: 'easiness', why: 'เป็นคำนาม' }] }
+  ] }
+};
+
+/* ชุดผสม: น้ำหนักตามจุดที่ยังไม่ผ่านใน score-log (time clause หนักสุด) */
+const MIX_PLAN = [1, 1, 1, 2, 2, 3, 3, 4, 4, 5];
+
+function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function build(lv, it) {
+  const opts = shuffle([{ t: it.a, ok: true, why: '' }].concat(it.wrong.map(w => ({ t: w.t, ok: false, why: w.why }))));
+  return { lv, it, opts };
+}
+function deck(lv) {
+  if (lv === 0) {
+    const used = {}; const out = [];
+    for (const k of MIX_PLAN) { if (!used[k]) used[k] = shuffle(P[k].items); out.push(build(k, used[k].pop())); }
+    return shuffle(out);
+  }
+  return shuffle(P[lv].items).map(it => build(lv, it));
+}
+if (typeof module !== 'undefined') module.exports = { P, MIX_PLAN, deck, build };
+</script>
+
+<!-- ============ UI ============ -->
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const KEY = 'eng-review-best-';
+let S = null, timer = null;
+function best(lv) { try { return +(localStorage.getItem(KEY + lv) || 0); } catch (e) { return 0; } }
+function setBest(lv, v) { try { localStorage.setItem(KEY + lv, String(v)); } catch (e) { } }
+function paintBests() { for (let i = 0; i <= 5; i++) { const b = best(i); $('b' + i).textContent = b ? 'สถิติ ' + b + '%' : ''; } }
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function renderQ(it) {
+  let html = '';
+  if (it.ctx) html += '<span class="ctx">' + esc(it.ctx) + '</span>';
+  if (it.type === 'id') {
+    let n = 0;
+    html += '<span class="ctx">หาส่วนที่ผิด (Choose the incorrect part)</span>' +
+      esc(it.s).replace(/\[\[(.+?)\]\]/g, (m, w) => '<u>' + w + '<sup>' + (++n) + '</sup></u>');
+  } else {
+    let i = 0;
+    html += esc(it.s).replace(/___/g, () => '<span class="blank">' + (++i) + '</span>');
+  }
+  return html;
+}
+function fmtT(sec) { return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); }
+function start(lv) {
+  S = { lv, items: deck(lv), i: 0, score: 0, t0: Date.now(), locked: false, log: [] };
+  $('menu').classList.add('hidden'); $('over').classList.add('hidden'); $('play').classList.remove('hidden');
+  clearInterval(timer); timer = setInterval(() => { if (S) $('hTime').textContent = fmtT(Math.round((Date.now() - S.t0) / 1000)); }, 500);
+  show();
+}
+function show() {
+  const q = S.items[S.i];
+  S.locked = false;
+  $('hItem').textContent = (S.i + 1) + '/' + S.items.length;
+  $('hScore').textContent = S.score;
+  $('barFill').style.width = (S.i / S.items.length * 100) + '%';
+  $('kind').textContent = P[q.lv].name;
+  $('qText').innerHTML = renderQ(q.it);
+  $('choices').innerHTML = q.opts.map((o, k) => '<button class="ch" data-k="' + k + '"><b>' + (k + 1) + '</b>' + esc(o.t) + '</button>').join('');
+  $('fb').className = 'fb idle'; $('fb').textContent = 'เลือกคำตอบ';
+  $('next').classList.add('hidden');
+}
+function answer(k) {
+  if (!S || S.locked) return;
+  const q = S.items[S.i], o = q.opts[k];
+  if (!o) return;
+  S.locked = true;
+  const btns = $('choices').querySelectorAll('.ch');
+  q.opts.forEach((x, j) => { if (x.ok) btns[j].classList.add('right'); });
+  const fix = q.it.fix ? ' · แก้เป็น: ' + esc(q.it.fix) : '';
+  if (o.ok) {
+    S.score++;
+    $('fb').className = 'fb ok';
+    $('fb').innerHTML = '✔ ถูก! <b>' + esc(q.it.a) + '</b>' + fix + '<span class="rule">' + esc(P[q.lv].rule) + '</span>';
+  } else {
+    btns[k].classList.add('wrong');
+    $('fb').className = 'fb bad';
+    $('fb').innerHTML = '✘ ' + esc(o.why) + '<br>คำตอบ: <b>' + esc(q.it.a) + '</b>' + fix + '<span class="rule">' + esc(P[q.lv].rule) + '</span>';
+  }
+  S.log.push({ lv: q.lv, ok: o.ok, s: q.it.s, a: q.it.a, pick: o.t, why: o.why });
+  $('hScore').textContent = S.score;
+  $('next').classList.remove('hidden');
+}
+function next() {
+  if (!S || !S.locked) return;
+  S.i++;
+  if (S.i >= S.items.length) finish(); else show();
+}
+function finish() {
+  clearInterval(timer);
+  const n = S.items.length, pct = Math.round(S.score / n * 100), sec = Math.round((Date.now() - S.t0) / 1000);
+  if (pct > best(S.lv)) setBest(S.lv, pct);
+  $('play').classList.add('hidden'); $('over').classList.remove('hidden');
+  $('oScore').textContent = S.score + '/' + n;
+  const perItem = (sec / 60 / n).toFixed(2);
+  $('oGrade').innerHTML = (pct >= 80 ? '🟢 เยี่ยม! ผ่านเกณฑ์ 80%' : pct >= 50 ? '🟡 กำลังดี — อ่านข้อที่พลาดข้างล่างแล้วเล่นอีกรอบ' : '🔴 ยังพลาดเยอะ — เล่นเฉพาะด่านที่พลาดก่อน') +
+    '<br><span style="font-weight:400;color:var(--muted)">เวลา ' + fmtT(sec) + ' · ' + perItem + ' นาที/ข้อ' + (S.lv === 0 ? ' (เป้า ≤ 0.6)' : '') + '</span>';
+  const by = {};
+  S.log.forEach(r => { by[r.lv] = by[r.lv] || [0, 0]; by[r.lv][1]++; if (r.ok) by[r.lv][0]++; });
+  $('oStats').innerHTML = '<tr><th>เรื่อง</th><th>ถูก</th></tr>' + Object.keys(by).map(k =>
+    '<tr><td>' + esc(P[k].name) + '</td><td>' + by[k][0] + '/' + by[k][1] + (by[k][0] < by[k][1] ? ' ⚠️ เล่นด่าน ' + k + ' ซ้ำ' : ' ✔') + '</td></tr>').join('');
+  const wrong = S.log.filter(r => !r.ok);
+  $('oWrong').innerHTML = wrong.length ? '<b>ข้อที่พลาด</b>' + wrong.map(r =>
+    '<div class="wl">' + esc(r.s.replace(/\[\[|\]\]/g, '')) + '<br>ตอบ <b>' + esc(r.pick) + '</b> → ที่ถูก <b>' + esc(r.a) + '</b><br><span style="color:var(--muted)">' + esc(r.why) + '</span></div>').join('') : '<p>ไม่พลาดเลย 🎉</p>';
+}
+function toMenu() { clearInterval(timer); S = null; $('play').classList.add('hidden'); $('over').classList.add('hidden'); $('menu').classList.remove('hidden'); paintBests(); }
+document.querySelectorAll('.lv').forEach(b => b.addEventListener('click', () => start(+b.dataset.lv)));
+$('choices').addEventListener('click', e => { const b = e.target.closest('.ch'); if (b) answer(+b.dataset.k); });
+$('next').addEventListener('click', next);
+$('quit').addEventListener('click', toMenu);
+$('back').addEventListener('click', toMenu);
+$('again').addEventListener('click', () => start(S ? S.lv : 0));
+document.addEventListener('keydown', e => {
+  if (!S) return;
+  if (e.key === 'Enter') { next(); return; }
+  const n = +e.key; if (n >= 1 && n <= 4) answer(n - 1);
+});
+paintBests();
+</script>
+</body>
+</html>

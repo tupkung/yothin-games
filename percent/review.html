@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ทบทวนจุดพลาด — คณิต</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+--ink:#1a1c1e;--muted:#5b6167;--line:#dfe3e8;--bg:#fbfbfa;--card:#fff;--soft:#f4f6f8;
+--accent:#1f6feb;--accent-bg:#eaf2ff;--warn:#b25000;--warn-bg:#fff4e8;--ok:#136c39;--ok-bg:#e8f6ee;
+--bad:#b3261e;--bad-bg:#fdecea;--vio:#6b46e0;--vio-bg:#efeaff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#333a42;--bg:#16181b;--card:#1e2126;--soft:#262a30;
+--accent:#69a4ff;--accent-bg:#1a2740;--warn:#f0a163;--warn-bg:#33240f;--ok:#6fd39a;--ok-bg:#13301f;
+--bad:#ff8a80;--bad-bg:#3a1a17;--vio:#a68cff;--vio-bg:#2a2140}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:"Sarabun","Noto Sans Thai",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+font-size:17px;line-height:1.75;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:680px;margin:0 auto;padding:22px 16px calc(60px + env(safe-area-inset-bottom))}
+h1{font-size:1.45rem;margin:0 0 6px;line-height:1.35}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.hidden{display:none !important}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+.lv{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);
+border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:11px}
+.lv.lead{border:2px solid var(--accent);background:var(--accent-bg)}
+.lv b{font-size:1.06rem}
+.lv .d{color:var(--muted);font-size:.87rem;line-height:1.6}
+.lv .best{float:right;font-size:.8rem;color:var(--ok);font-weight:700}
+.hud{display:flex;gap:10px;margin-bottom:14px}
+.pill{flex:1;background:var(--soft);border:1px solid var(--line);border-radius:11px;padding:7px 4px;text-align:center;line-height:1.3}
+.pill .n{font-size:1.28rem;font-weight:700;font-family:"IBM Plex Mono",monospace}
+.pill .l{font-size:.72rem;color:var(--muted)}
+.bar{height:9px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s linear}
+.kind{display:inline-block;font-size:.76rem;background:var(--vio-bg);color:var(--vio);border:1px solid var(--vio);border-radius:99px;padding:0 9px}
+.q{font-size:1.08rem;font-weight:600;margin:10px 0 6px;line-height:1.8}
+.lines{font-family:"IBM Plex Mono",monospace;font-size:.92rem;background:var(--soft);border:1px dashed var(--line);border-radius:10px;padding:8px 12px;margin:8px 0;white-space:pre-wrap;line-height:1.7}
+.step{background:var(--vio-bg);border:1px solid var(--vio);color:var(--vio);border-radius:12px;padding:9px 13px;font-weight:700;font-size:.98rem;line-height:1.6;margin:10px 0 6px}
+.choices{display:grid;gap:9px;margin:12px 0 4px}
+.ch{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;text-align:left;color:var(--ink);line-height:1.55;font-size:1rem}
+.ch b{color:var(--accent);margin-right:7px}
+.ch.right{border-color:var(--ok);background:var(--ok-bg)}
+.ch.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.fb{min-height:52px;border-radius:12px;padding:11px 14px;font-size:.94rem;line-height:1.65;margin-top:6px}
+.fb.ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);color:var(--bad);border:1px solid var(--bad)}
+.fb.idle{background:var(--soft);color:var(--muted)}
+.btnrow{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap}
+.btnrow button{flex:1;padding:11px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:600}
+.btnrow button.pri{background:var(--accent);color:#fff;border-color:var(--accent)}
+.big{font-size:2.4rem;font-weight:700;text-align:center;font-family:"IBM Plex Mono",monospace}
+.grade{text-align:center;font-weight:700;margin:4px 0 14px;line-height:1.6}
+table{width:100%;border-collapse:collapse;font-size:.9rem;margin-bottom:12px}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--soft);font-weight:600}
+.tip{background:var(--warn-bg);border:1px solid var(--warn);color:var(--warn);border-radius:12px;padding:10px 14px;font-size:.9rem;line-height:1.65}
+.wl{font-size:.88rem;line-height:1.6;border-top:1px solid var(--line);padding:8px 0}
+kbd{font-family:"IBM Plex Mono",monospace;background:var(--soft);border:1px solid var(--line);border-radius:5px;padding:0 5px;font-size:.85em}
+footer{margin-top:28px;color:var(--muted);font-size:.78rem;text-align:center;line-height:1.6}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<section id="menu">
+  <h1>🔁 ทบทวนจุดพลาด — คณิต</h1>
+  <p class="sub">5 เรื่องที่เคยพลาดในชุดคณิต 01–02 และการ์ดซ่อม · ตัวเลขสุ่มใหม่ทุกรอบ ไม่ซ้ำชุดฝึก · ตัวเลือกผิดทำจากคำตอบที่เคยตอบจริง (ติด ★)</p>
+
+  <button class="lv lead" data-lv="0"><span class="best" id="b0"></span><b>🎯 ชุดผสม 10 ข้อ ไม่มีขั้นช่วย</b>
+    <div class="d">คละทุกเรื่องเหมือนข้อสอบจริง · ต้องคิดขั้นตอนในหัวเอง · เป้า ≤ 12 นาที (1.2 นาที/ข้อ)</div></button>
+  <button class="lv" data-lv="1"><span class="best" id="b1"></span><b>ด่าน 1 · กำไร–ขาดทุน 3 บรรทัด</b>
+    <div class="d">บัญญัติไตรยางศ์: กำไรกี่บาท → ทุน … ได้ … → ทุน 100 ได้ ? · 8 ข้อ</div></button>
+  <button class="lv" data-lv="2"><span class="best" id="b2"></span><b>ด่าน 2 · อ่านคำถามท้ายโจทย์</b>
+    <div class="d">รู้ทุนกับร้อยละ → ถามกำไรเป็นบาท หรือถามราคาขาย? ขีดเส้นใต้คำถามก่อนคิด · 8 ข้อ</div></button>
+  <button class="lv" data-lv="3"><span class="best" id="b3"></span><b>ด่าน 3 · ร้อยละสองชั้น (ฐานเปลี่ยน)</b>
+    <div class="d">ตั้งราคาแล้วลด · ลดแล้วขึ้น → ชั้นที่สองคิดจากราคาใหม่ ห้ามบวกลบร้อยละตรง ๆ · 6 ข้อ</div></button>
+  <button class="lv" data-lv="4"><span class="best" id="b4"></span><b>ด่าน 4 · ด้านเปลี่ยน → พื้นที่เปลี่ยน</b>
+    <div class="d">ด้านเพิ่ม 20% ไม่ใช่พื้นที่เพิ่ม 20% · คูณสองด้าน 1.2 × 1.2 · 6 ข้อ</div></button>
+  <button class="lv" data-lv="5"><span class="best" id="b5"></span><b>ด่าน 5 · ปักเสารอบรั้ว</b>
+    <div class="d">รอบ = 4 ด้าน · ระยะห่าง = ห.ร.ม. · ถามจำนวนเสา ไม่ใช่ระยะห่าง · 6 ข้อ</div></button>
+
+  <p class="tip">💡 ด่าน 1–5 มี <b>ขั้นตอนให้ทำทีละบรรทัด</b> — ได้คะแนนเมื่อถูกทุกขั้น · ขั้นไหนผิด ระบบบอกเหตุผลแล้วให้ทำขั้นต่อไป<br>
+  มีกระดาษทดข้างตัวได้เลย · ⌨️ กดเลข <kbd>1</kbd>–<kbd>4</kbd> เลือกช้อยส์ · <kbd>Enter</kbd> ข้อต่อไป</p>
+</section>
+
+<section id="play" class="hidden">
+  <div class="hud">
+    <div class="pill"><div class="n" id="hScore">0</div><div class="l">ถูกครบทุกขั้น</div></div>
+    <div class="pill"><div class="n" id="hItem">1/10</div><div class="l">ข้อที่</div></div>
+    <div class="pill"><div class="n" id="hTime">0:00</div><div class="l">เวลา</div></div>
+  </div>
+  <div class="bar"><i id="barFill"></i></div>
+  <div class="card">
+    <span class="kind" id="kind">—</span>
+    <div class="q" id="qText">—</div>
+    <div class="lines hidden" id="lines"></div>
+    <div class="step" id="step">—</div>
+    <div class="choices" id="choices"></div>
+    <div class="fb idle" id="fb">เลือกคำตอบ</div>
+  </div>
+  <div class="btnrow">
+    <button id="quit">⏹ กลับเมนู</button>
+    <button class="pri hidden" id="next">ต่อไป ➜</button>
+  </div>
+</section>
+
+<section id="over" class="hidden">
+  <div class="card">
+    <div class="big" id="oScore">—</div>
+    <div class="grade" id="oGrade">—</div>
+    <table id="oStats"></table>
+    <div id="oWrong"></div>
+  </div>
+  <div class="btnrow">
+    <button class="pri" id="again">🔁 เล่นอีกครั้ง</button>
+    <button id="back">📋 เลือกด่าน</button>
+  </div>
+</section>
+
+<footer>Road to Yothin · เกมทบทวนจากชุดคณิต 01–02 + การ์ดซ่อม (ก.ย. 2569)<br>
+ตัวเลขไม่ซ้ำชุดฝึก · เกมนี้เป็นการฝึก ไม่ใช่ตัววัดผล · สถิติเก็บไว้ในเครื่องนี้</footer>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); } } catch (e) { }
+</script>
+
+<!-- ============ GENERATORS (ไม่แตะ DOM — ทดสอบด้วย Node ได้) ============ -->
+<script id="gen">
+"use strict";
+/* RESERVED = ราคา/จำนวนใหญ่ (≥ 100) ที่อยู่ในชุดฝึก/การ์ดวัด/โจทย์ปากเปล่า — ห้ามโผล่ในเกม (ดู OKF คู่เกม)
+   รวม: repair.html RESERVED · การ์ดกำไร 25–27 ก.ย. · ปากเปล่า 27 ก.ย. · การ์ดวัด cold 30 ก.ย. (1,450/1,682 · 2,000/2,600/2,340) */
+const RESERVED = new Set([115, 144, 180, 210, 270, 375, 442, 450, 500, 510, 600, 750, 794, 799, 844, 850, 918, 933, 1020, 1080, 2400, 2760, 6000, 25000,
+  120, 140, 169, 200, 420, 560, 700, 800, 1152, 1440, 1500, 1728, 1800,
+  960, 1200, 3000, 3600, 3200, 4000, 900, 1250, 1550, 300, 4500, 3960, 540, 1600, 1840, 240, 2200, 1980, 220, 1300, 390,
+  250, 400, 460, 1450, 1682, 232, 2000, 2600, 2340, 340]);
+/* ด้านรั้วที่อยู่ในชุด 02 / 02B / 02C / 02r */
+const FENCE_RESERVED = new Set([28, 42, 48, 50, 60, 75, 80, 112, 140]);
+
+const ri = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+const fmt = n => (Math.round(n * 100) / 100).toLocaleString('en-US', { maximumFractionDigits: 2 });
+const baht = n => fmt(n) + ' บาท';
+const pc = n => 'ร้อยละ ' + fmt(n);
+const gcd = (a, b) => b ? gcd(b, a % b) : a;
+const bad = (...ns) => ns.some(n => n >= 100 && RESERVED.has(Math.round(n * 100) / 100));
+function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+/* ช้อยส์: ตัวถูก 1 + ตัวลวงที่มีเหตุผล 3 · คืน null ถ้าชนกัน (ให้ generator สุ่มใหม่) */
+function mk(correct, wrongs) {
+  const all = [{ t: correct, ok: true, why: '' }].concat(wrongs.map(w => ({ t: w.t, ok: false, why: w.why })));
+  if (new Set(all.map(o => o.t)).size !== 4) return null;
+  return shuffle(all);
+}
+const THINGS = ['นาฬิกา', 'พัดลม', 'กระเป๋านักเรียน', 'รองเท้ากีฬา', 'หม้อหุงข้าว', 'โต๊ะอ่านหนังสือ', 'ลำโพง', 'เตารีด', 'ชั้นวางของ', 'ไมโครเวฟ', 'จักรเย็บผ้า', 'กล้องถ่ายรูป'];
+
+/* ---------- ด่าน 1: กำไร–ขาดทุน 3 บรรทัด (forgot-subtract-100 ★ · profit-base-is-cost) ---------- */
+function genProfit() {
+  for (let tries = 0; tries < 500; tries++) {
+    const loss = Math.random() < .4;
+    const p = pick(loss ? [5, 8, 10, 12, 15, 20, 25] : [5, 8, 10, 12, 15, 16, 18, 20, 24, 25, 30, 35, 40]);
+    const c = ri(6, 99) * 20;                       // ทุน 120–1,980 ขั้นละ 20
+    const d = c * p / 100;
+    if (d !== Math.round(d) || d < 10) continue;
+    const s = loss ? c - d : c + d;
+    if (bad(c, s)) continue;
+    const G = loss ? 'ขาดทุน' : 'กำไร', thing = pick(THINGS);
+    const viaSell = Math.round(d * 10000 / s) / 100;
+    const s1 = mk(baht(d), [
+      { t: baht(s), why: 'นี่คือราคาขาย ยังไม่ได้ลบ — บรรทัด 1 ต้อง' + (loss ? 'ทุน − ขาย' : 'ขาย − ทุน') + ' ก่อนเสมอ ★' },
+      { t: baht(c), why: 'นี่คือทุน ยังไม่ใช่' + G },
+      { t: baht(c + s), why: 'เอาทุนกับขายมาบวกกัน ไม่มีความหมาย' }]);
+    const s2 = mk('ทุน ' + baht(c) + ' → ' + G + ' ' + baht(d), [
+      { t: 'ขาย ' + baht(s) + ' → ' + G + ' ' + baht(d), why: '★ ตั้งราคาขายเป็นฐาน — ร้อยละ' + G + 'เทียบกับเงินที่จ่ายตอนซื้อ (ทุน) เสมอ' },
+      { t: 'ทุน ' + baht(c) + ' → ขาย ' + baht(s), why: '★ เทียบขายกับทุนตรง ๆ จะได้ ' + (loss ? 100 - p : 100 + p) + ' ซึ่งยังไม่ได้ลบ — ต้องใช้' + G + 'ที่หาในบรรทัด 1' },
+      { t: G + ' ' + baht(d) + ' → ทุน ' + baht(c), why: 'กลับหัว — ทุนต้องอยู่ข้างหน้า (ทุน … ได้ …)' }]);
+    const s3 = mk(pc(p), [
+      { t: pc(loss ? 100 - p : 100 + p), why: '★ ลืมลบ 100 — นี่คือราคาขายเทียบทุนทั้งก้อน ไม่ใช่' + G },
+      { t: pc(viaSell), why: '★ หารด้วยราคาขาย (' + fmt(d) + ' ÷ ' + fmt(s) + ') — ฐานต้องเป็นทุน' },
+      { t: pc(d), why: 'นี่คือ' + G + 'เป็นบาท ยังไม่ได้ทำบรรทัด 3 (ทุน 100 → ?)' }]);
+    if (!s1 || !s2 || !s3) continue;
+    return {
+      lv: 1, slug: 'forgot-subtract-100',
+      q: 'ร้านซื้อ' + thing + 'มาราคา ' + baht(c) + ' ขายไป ' + baht(s) + ' ' + G + 'ร้อยละเท่าไร',
+      steps: [
+        { prompt: 'บรรทัด 1 — ' + G + ' = ' + (loss ? 'ทุน − ขาย' : 'ขาย − ทุน') + ' = ?', opts: s1, line: G + ' = ' + baht(d) },
+        { prompt: 'บรรทัด 2 — เขียนว่าอะไร?', opts: s2, line: 'ทุน ' + baht(c) + ' → ' + G + ' ' + baht(d) },
+        { prompt: 'บรรทัด 3 — ทุน 100 บาท → ' + G + ' ? บาท', opts: s3, line: 'ทุน 100 บาท → ' + G + ' ' + fmt(p) + ' บาท' }],
+      ans: pc(p), work: G + ' ' + fmt(d) + ' · ' + fmt(d) + ' × 100 ÷ ' + fmt(c) + ' = ' + fmt(p)
+    };
+  }
+  throw new Error('genProfit');
+}
+
+/* ---------- ด่าน 2: รู้ทุน + ร้อยละ → อ่านคำถามท้ายโจทย์ (read-back-the-question) ---------- */
+function genReverse() {
+  for (let tries = 0; tries < 500; tries++) {
+    const loss = Math.random() < .35, askSell = Math.random() < .5;
+    const p = pick(loss ? [5, 10, 15, 20, 25] : [5, 10, 15, 20, 25, 30, 40]);
+    const c = ri(6, 99) * 20, d = c * p / 100;
+    if (d !== Math.round(d)) continue;
+    const s = loss ? c - d : c + d;
+    if (bad(c, s)) continue;
+    const G = loss ? 'ขาดทุน' : 'กำไร', thing = pick(THINGS);
+    const ask = askSell ? 'ขายไปราคาเท่าไร' : G + 'กี่บาท';
+    const s1 = mk(askSell ? 'ราคาขาย (บาท)' : G + ' (บาท)', [
+      { t: askSell ? G + ' (บาท)' : 'ราคาขาย (บาท)', why: 'อ่านคำถามอีกครั้ง: "' + ask + '"' },
+      { t: 'ร้อยละ' + G, why: 'ร้อยละโจทย์บอกมาแล้ว ไม่ได้ถาม' },
+      { t: 'ทุน (บาท)', why: 'ทุนโจทย์บอกมาแล้ว' }]);
+    const wr = askSell ? [
+      { t: baht(d), why: '★ หยุดกลางทาง — นี่คือ' + G + ' โจทย์ถามราคาขาย ต้อง' + (loss ? 'ทุน − ' + G : 'ทุน + ' + G) },
+      { t: baht(loss ? c + d : c - d), why: (loss ? 'ขาดทุนต้องลบ ไม่ใช่บวก' : 'กำไรต้องบวก ไม่ใช่ลบ') },
+      { t: baht(loss ? c - p : c + p), why: 'เอาร้อยละ (' + p + ') มา' + (loss ? 'ลบ' : 'บวก') + 'เป็นบาทตรง ๆ — ต้องหา' + G + 'เป็นบาทก่อน' }] : [
+      { t: baht(s), why: '★ เลยไปอีกขั้น — นี่คือราคาขาย โจทย์ถาม' + G + 'เป็นบาท' },
+      { t: baht(p), why: 'นี่คือร้อยละ ยังไม่ได้เทียบกับทุนจริง (ทุน 100 → ' + p + ' · ทุน ' + fmt(c) + ' → ?)' },
+      { t: baht(c * p), why: 'ลืมหาร 100 — ทุน 100 ได้ ' + p + ' ต้อง × ' + fmt(c) + ' ÷ 100' }];
+    const s2 = mk(baht(askSell ? s : d), wr);
+    if (!s1 || !s2) continue;
+    return {
+      lv: 2, slug: 'read-back-the-question',
+      q: 'ซื้อ' + thing + 'มา ' + baht(c) + ' ขายไป' + G + 'ร้อยละ ' + p + ' <u>' + ask + '</u>',
+      steps: [
+        { prompt: 'ขั้น 1 — โจทย์ถามอะไร? (ขีดเส้นใต้คำถาม)', opts: s1, line: 'ถาม: ' + ask },
+        { prompt: 'ขั้น 2 — ทุน 100 → ' + G + ' ' + p + ' · ทุน ' + fmt(c) + ' → ' + G + ' ' + fmt(d) + ' · คำตอบ = ?', opts: s2, line: 'ตอบ ' + baht(askSell ? s : d) }],
+      ans: baht(askSell ? s : d), work: G + ' = ' + fmt(c) + ' × ' + p + ' ÷ 100 = ' + fmt(d) + (askSell ? ' · ขาย = ' + fmt(c) + (loss ? ' − ' : ' + ') + fmt(d) + ' = ' + fmt(s) : '')
+    };
+  }
+  throw new Error('genReverse');
+}
+
+/* ---------- ด่าน 3: ร้อยละสองชั้น — ฐานเปลี่ยน (profit-base-is-cost · percent-base-shift) ---------- */
+const MARKUP = [[50, 20], [40, 10], [30, 10], [20, 10], [50, 10], [40, 25], [30, 20], [60, 25], [60, 20], [50, 30]];
+function genChain() {
+  for (let tries = 0; tries < 500; tries++) {
+    if (Math.random() < .6) {
+      const [m, dd] = pick(MARKUP);
+      const c = ri(4, 60) * 50;
+      const L = c * (100 + m) / 100, s = L * (100 - dd) / 100, g = s - c, net = g * 100 / c;
+      if (s !== Math.round(s) || net !== Math.round(net) || bad(c, L, s)) continue;
+      const thing = pick(THINGS);
+      const s1 = mk(baht(L), [
+        { t: baht(c * m / 100), why: 'นี่คือแค่ส่วนที่บวกเพิ่ม ยังไม่ได้รวมทุน' },
+        { t: baht(c + m), why: 'เอาร้อยละ ' + m + ' มาบวกเป็นบาทตรง ๆ' },
+        { t: baht(s), why: 'นี่คือราคาหลังลดแล้ว ยังไม่ใช่ป้าย' }]);
+      const s2 = mk(baht(s), [
+        { t: baht(c * (100 - dd) / 100), why: '★ ลดจากทุน — ส่วนลดคิดจาก "ราคาป้าย" ไม่ใช่ทุน (ฐานเปลี่ยน)' },
+        { t: baht(L - dd), why: 'เอาร้อยละ ' + dd + ' มาลบเป็นบาทตรง ๆ' },
+        { t: baht(L * dd / 100), why: 'นี่คือแค่ส่วนลด ยังไม่ได้ลบออกจากป้าย' }]);
+      const s3 = mk(pc(net), [
+        { t: pc(m - dd), why: '★ เอาร้อยละมาลบกันตรง ๆ (' + m + ' − ' + dd + ') — สองชั้นคนละฐาน ลบกันไม่ได้' },
+        { t: pc(Math.round(g * 10000 / s) / 100), why: '★ หารด้วยราคาขาย — กำไรเทียบกับทุนเสมอ' },
+        { t: pc(g), why: 'นี่คือกำไรเป็นบาท ยังไม่ได้ทำ ทุน 100 → ?' }]);
+      if (!s1 || !s2 || !s3) continue;
+      return {
+        lv: 3, slug: 'profit-base-is-cost',
+        q: 'ร้านซื้อ' + thing + 'มาราคา ' + baht(c) + ' ติดป้ายเพิ่มจากทุนร้อยละ ' + m + ' แล้วลดราคาจากป้ายร้อยละ ' + dd + ' ร้านได้กำไรร้อยละเท่าไร',
+        steps: [
+          { prompt: 'ขั้น 1 — ราคาป้าย = ? (ทุน 100 → ป้าย ' + (100 + m) + ')', opts: s1, line: 'ป้าย = ' + baht(L) },
+          { prompt: 'ขั้น 2 — ขายจริง = ? (ป้าย 100 → ขาย ' + (100 - dd) + ')', opts: s2, line: 'ขายจริง = ' + baht(s) },
+          { prompt: 'ขั้น 3 — กำไร ' + fmt(g) + ' บาท · ทุน 100 → กำไร ?', opts: s3, line: 'ทุน ' + fmt(c) + ' → กำไร ' + fmt(g) + ' · ทุน 100 → ' + fmt(net) }],
+        ans: pc(net), work: 'ป้าย ' + fmt(L) + ' · ขาย ' + fmt(s) + ' · กำไร ' + fmt(g) + ' → ' + fmt(net) + '%'
+      };
+    } else {
+      const x = pick([10, 20, 30, 40, 50]), up = Math.random() < .5;
+      const y = pick([x, x, 10, 20, 25].filter(v => v <= 50));
+      const f = (100 - x) * (100 + y) / 100;             // ลด x แล้วขึ้น y (ต่อราคาเดิม 100)
+      const diff = Math.round((f - 100) * 100) / 100;
+      if (diff === 0 || diff !== Math.round(diff)) continue;
+      const P0 = ri(4, 40) * 100;
+      if (bad(P0)) continue;
+      const P1 = P0 * (100 - x) / 100, P2 = P1 * (100 + y) / 100;
+      if (P2 !== Math.round(P2) || bad(P1, P2)) continue;
+      const dir = diff < 0 ? 'ต่ำกว่าเดิม' : 'สูงกว่าเดิม', a = Math.abs(diff);
+      const s1 = mk(baht(P1), [
+        { t: baht(P0 * x / 100), why: 'นี่คือแค่ส่วนที่ลด' },
+        { t: baht(P0 - x), why: 'เอาร้อยละมาลบเป็นบาทตรง ๆ' },
+        { t: baht(P2), why: 'นี่คือราคาหลังขึ้นแล้ว' }]);
+      const s2 = mk(baht(P2), [
+        { t: baht(P1 + P0 * y / 100), why: '★ ขึ้นจากราคาเดิม — ชั้นที่สองต้องคิดจากราคาใหม่ (' + fmt(P1) + ')' },
+        { t: baht(P0), why: '★ คิดว่าลดแล้วขึ้นหักล้างกันพอดี — ฐานเปลี่ยน ไม่หักล้าง' },
+        { t: baht(P1 * y / 100), why: 'นี่คือแค่ส่วนที่ขึ้น' }]);
+      const other = diff < 0 ? 'สูงกว่าเดิม' : 'ต่ำกว่าเดิม';
+      const s3 = mk(dir + 'ร้อยละ ' + fmt(a), [
+        { t: 'เท่าเดิม', why: '★ ลด ' + x + ' ขึ้น ' + y + ' ไม่หักล้าง เพราะชั้นที่สองคิดจากราคาใหม่' },
+        { t: other + 'ร้อยละ ' + fmt(a), why: '★ ทิศผิด — ราคาสุดท้าย ' + fmt(P2) + ' เทียบราคาเดิม ' + fmt(P0) },
+        (y === x ? { t: 'ต่ำกว่าเดิมร้อยละ ' + x, why: 'นับแค่ชั้นแรก (ลด ' + x + ') ลืมชั้นที่สอง' } :
+          { t: (y > x ? 'สูงกว่าเดิม' : 'ต่ำกว่าเดิม') + 'ร้อยละ ' + Math.abs(y - x), why: 'เอาร้อยละมาลบกันตรง ๆ (' + y + ' − ' + x + ') — สองชั้นคนละฐาน ต้องเทียบราคาจริง' })]);
+      if (!s1 || !s2 || !s3) continue;
+      return {
+        lv: 3, slug: 'percent-base-shift',
+        q: 'ของชิ้นหนึ่งราคา ' + baht(P0) + ' ลดราคาร้อยละ ' + x + ' ต่อมาขึ้นราคาร้อยละ ' + y + ' จากราคาที่ลดแล้ว ราคาสุดท้ายเทียบกับราคาเดิมเป็นอย่างไร',
+        steps: [
+          { prompt: 'ขั้น 1 — หลังลด = ?', opts: s1, line: 'หลังลด = ' + baht(P1) },
+          { prompt: 'ขั้น 2 — หลังขึ้น = ? (ฐานใหม่ = ' + fmt(P1) + ')', opts: s2, line: 'หลังขึ้น = ' + baht(P2) },
+          { prompt: 'ขั้น 3 — เทียบกับราคาเดิม ' + fmt(P0) + ' บาท', opts: s3, line: fmt(P2) + ' เทียบ ' + fmt(P0) }],
+        ans: dir + 'ร้อยละ ' + fmt(a), work: fmt(P0) + ' → ' + fmt(P1) + ' → ' + fmt(P2)
+      };
+    }
+  }
+  throw new Error('genChain');
+}
+
+/* ---------- ด่าน 4: ด้านเปลี่ยน → พื้นที่เปลี่ยน (dimension-multiplier ★) ---------- */
+function genArea() {
+  for (let tries = 0; tries < 200; tries++) {
+    const down = Math.random() < .3;
+    const p = pick(down ? [10, 20, 30] : [10, 20, 30, 40, 50]);
+    const k = down ? 100 - p : 100 + p;
+    const A = k * k / 100, ch = Math.round(Math.abs(A - 100) * 100) / 100;
+    const word = down ? 'ลดลง' : 'เพิ่มขึ้น', side = ri(3, 11) * 10;
+    const shape = pick(['สนามหญ้ารูปสี่เหลี่ยมจัตุรัส', 'แผ่นกระเบื้องรูปสี่เหลี่ยมจัตุรัส', 'ภาพวาดรูปสี่เหลี่ยมจัตุรัส', 'บ่อปลารูปสี่เหลี่ยมจัตุรัส']);
+    const s1 = mk(String(k / 100), [
+      { t: String(p / 100), why: 'นี่คือแค่ส่วนที่' + (down ? 'ลด' : 'เพิ่ม') + ' ด้านใหม่ = เดิม ' + (down ? '−' : '+') + ' ส่วนนั้น' },
+      { t: String((down ? 100 + p : 100 - p) / 100), why: 'ทิศผิด — ด้าน' + word },
+      { t: String(k), why: 'ยังไม่ได้หาร 100' }]);
+    const s2 = mk(pc(ch), [
+      { t: pc(p), why: '★ ด้าน' + word + ' ' + p + '% ≠ พื้นที่' + word + ' ' + p + '% — พื้นที่ = ด้าน × ด้าน ต้องคูณ ' + fmt(k / 100) + ' สองครั้ง' },
+      { t: pc(2 * p), why: 'เอา ' + p + ' + ' + p + ' — ต้องคูณ ไม่ใช่บวก' },
+      { t: pc(A), why: 'นี่คือพื้นที่ใหม่ทั้งก้อน (' + fmt(A) + '% ของเดิม) ยังไม่ได้เทียบกับ 100' }]);
+    if (!s1 || !s2) continue;
+    return {
+      lv: 4, slug: 'dimension-multiplier',
+      q: shape + 'ยาวด้านละ ' + side + ' เซนติเมตร ถ้าด้าน' + word + 'ร้อยละ ' + p + ' พื้นที่จะ' + word + 'ร้อยละเท่าไร',
+      steps: [
+        { prompt: 'ขั้น 1 — ด้านใหม่ = ด้านเดิม × ?', opts: s1, line: 'ด้าน × ' + fmt(k / 100) },
+        { prompt: 'ขั้น 2 — พื้นที่ใหม่ = ' + fmt(k / 100) + ' × ' + fmt(k / 100) + ' = ' + fmt(A / 100) + ' เท่า → ' + word + 'ร้อยละ ?', opts: s2, line: 'พื้นที่ ' + fmt(A) + '% ของเดิม' }],
+      ans: pc(ch), work: fmt(k / 100) + ' × ' + fmt(k / 100) + ' = ' + fmt(A / 100) + ' → ' + word + ' ' + fmt(ch) + '%'
+    };
+  }
+  throw new Error('genArea');
+}
+
+/* ---------- ด่าน 5: ปักเสารอบรั้ว (perimeter-half ★ · read-back-the-question ★) ---------- */
+function genFence() {
+  for (let tries = 0; tries < 500; tries++) {
+    const g = pick([3, 4, 5, 6, 7, 8, 9, 10, 12, 15]);
+    const m = ri(2, 9), n = ri(2, 9);
+    if (m === n || gcd(m, n) !== 1) continue;
+    const a = g * Math.max(m, n), b = g * Math.min(m, n);
+    if (a > 150 || FENCE_RESERVED.has(a) || FENCE_RESERVED.has(b) || RESERVED.has(a) || RESERVED.has(b)) continue;
+    const per = 2 * (a + b), posts = per / g, lcm = a * b / g;
+    const what = pick([['ที่ดิน', 'ปักเสารั้ว', 'ต้น'], ['สนาม', 'ปลูกต้นไม้', 'ต้น'], ['สระน้ำ', 'ติดหลอดไฟ', 'ดวง'], ['แปลงผัก', 'ปักหลักไม้', 'หลัก']]);
+    const unit = what[2];
+    const s1 = mk(fmt(per) + ' เมตร', [
+      { t: fmt(a + b) + ' เมตร', why: '★ ครึ่งรอบ — กว้าง + ยาว คือแค่ 2 ด้าน รั้วรอบต้องครบ 4 ด้าน' },
+      { t: fmt(a * b) + ' เมตร', why: 'นี่คือพื้นที่ (กว้าง × ยาว) ไม่ใช่ความยาวรอบ' },
+      { t: fmt(4 * a) + ' เมตร', why: 'คิดเหมือนสี่เหลี่ยมจัตุรัส — ด้านกว้างกับยาวไม่เท่ากัน' }]);
+    const s2 = mk(g + ' เมตร', [
+      { t: fmt(lcm) + ' เมตร', why: 'สลับ — ระยะห่างต้องหารทั้งสองด้านลงตัว = ห.ร.ม. (ค.ร.น. ใหญ่กว่าด้านเสียอีก)' },
+      { t: b + ' เมตร', why: 'ด้านสั้นหารด้านยาว ' + a + ' ไม่ลงตัว มุมจะไม่มี' + unit },
+      { t: (2 * g) + ' เมตร', why: (2 * g) + ' หาร ' + ((a / g) % 2 ? a : b) + ' ไม่ลงตัว — ต้องหารทั้งสองด้านลงตัว (ห.ร.ม.)' }]);
+    const s3 = mk(posts + ' ' + unit, [
+      { t: (a + b) / g + ' ' + unit, why: '★ ใช้ครึ่งรอบ — ได้แค่ครึ่งเดียวของรั้ว' },
+      { t: g + ' ' + unit, why: '★ ตอบระยะห่าง (ห.ร.ม.) — โจทย์ถาม "กี่' + unit + '"' },
+      { t: (posts + 4) + ' ' + unit, why: 'บวกมุมอีก 4 — รอบปิด นับจุดเท่ากับจำนวนช่องพอดี มุมถูกนับไปแล้ว' }]);
+    if (!s1 || !s2 || !s3) continue;
+    return {
+      lv: 5, slug: 'perimeter-half',
+      q: what[0] + 'รูปสี่เหลี่ยมผืนผ้ากว้าง ' + b + ' เมตร ยาว ' + a + ' เมตร ต้องการ' + what[1] + 'รอบ' + what[0] + ' ให้ทุกมุมมี และระยะห่างเท่ากันมากที่สุด <u>ต้องใช้กี่' + unit + '</u>',
+      steps: [
+        { prompt: 'ขั้น 1 — วาดรูป · รอบ = 4 ด้าน = ?', opts: s1, line: 'รอบ = ' + b + ' + ' + a + ' + ' + b + ' + ' + a + ' = ' + per },
+        { prompt: 'ขั้น 2 — ระยะห่างมากที่สุด = ห.ร.ม. ของ ' + b + ' กับ ' + a + ' = ?', opts: s2, line: 'ห่าง ' + g + ' เมตร' },
+        { prompt: 'ขั้น 3 — ถามกี่' + unit + '? รอบ ÷ ระยะห่าง = ?', opts: s3, line: per + ' ÷ ' + g + ' = ' + posts + ' ' + unit }],
+      ans: posts + ' ' + unit, work: 'รอบ ' + per + ' ÷ ห.ร.ม. ' + g + ' = ' + posts
+    };
+  }
+  throw new Error('genFence');
+}
+
+const GENS = { 1: genProfit, 2: genReverse, 3: genChain, 4: genArea, 5: genFence };
+const NAMES = { 1: 'กำไร–ขาดทุน 3 บรรทัด', 2: 'อ่านคำถามท้ายโจทย์', 3: 'ร้อยละสองชั้น', 4: 'ด้าน → พื้นที่', 5: 'ปักเสารอบรั้ว' };
+const COUNT = { 1: 8, 2: 8, 3: 6, 4: 6, 5: 6 };
+const MIX_PLAN = [1, 1, 2, 3, 3, 3, 4, 4, 5, 5];
+/* ชุดผสม: ไม่มีขั้นช่วย — ใช้เฉพาะขั้นสุดท้าย (ตัวลวงชุดเดียวกัน) */
+function flatten(it) { const last = it.steps[it.steps.length - 1]; return Object.assign({}, it, { steps: [{ prompt: 'คำตอบ = ?', opts: last.opts, line: '' }] }); }
+function deck(lv) {
+  if (lv === 0) return shuffle(MIX_PLAN.map(k => flatten(GENS[k]())));
+  const out = []; const seen = new Set();
+  while (out.length < COUNT[lv]) { const it = GENS[lv](); if (seen.has(it.q)) continue; seen.add(it.q); out.push(it); }
+  return out;
+}
+if (typeof module !== 'undefined') module.exports = { GENS, deck, RESERVED, FENCE_RESERVED, flatten };
+</script>
+
+<!-- ============ UI ============ -->
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const KEY = 'math-review-best-';
+let S = null, timer = null;
+function best(lv) { try { return +(localStorage.getItem(KEY + lv) || 0); } catch (e) { return 0; } }
+function setBest(lv, v) { try { localStorage.setItem(KEY + lv, String(v)); } catch (e) { } }
+function paintBests() { for (let i = 0; i <= 5; i++) { const b = best(i); $('b' + i).textContent = b ? 'สถิติ ' + b + '%' : ''; } }
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function fmtT(sec) { return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); }
+function start(lv) {
+  S = { lv, items: deck(lv), i: 0, st: 0, score: 0, clean: true, lines: [], t0: Date.now(), locked: false, log: [] };
+  $('menu').classList.add('hidden'); $('over').classList.add('hidden'); $('play').classList.remove('hidden');
+  clearInterval(timer); timer = setInterval(() => { if (S) $('hTime').textContent = fmtT(Math.round((Date.now() - S.t0) / 1000)); }, 500);
+  showItem();
+}
+function showItem() {
+  const it = S.items[S.i];
+  S.st = 0; S.clean = true; S.lines = []; S.firstPick = null;
+  $('hItem').textContent = (S.i + 1) + '/' + S.items.length;
+  $('hScore').textContent = S.score;
+  $('barFill').style.width = (S.i / S.items.length * 100) + '%';
+  $('kind').textContent = NAMES[it.lv];
+  $('qText').innerHTML = it.q;                               /* q สร้างจากตัวเลขในโค้ดเท่านั้น (มี <u> ตั้งใจ) */
+  showStep();
+}
+function showStep() {
+  const it = S.items[S.i], step = it.steps[S.st];
+  S.locked = false;
+  $('lines').textContent = S.lines.join('\n');
+  $('lines').classList.toggle('hidden', !S.lines.length);
+  $('step').textContent = (it.steps.length > 1 ? '📝 ' : '') + step.prompt;
+  $('choices').innerHTML = step.opts.map((o, k) => '<button class="ch" data-k="' + k + '"><b>' + (k + 1) + '</b>' + esc(o.t) + '</button>').join('');
+  $('fb').className = 'fb idle'; $('fb').textContent = 'เลือกคำตอบ';
+  $('next').classList.add('hidden');
+}
+function answer(k) {
+  if (!S || S.locked) return;
+  const it = S.items[S.i], step = it.steps[S.st], o = step.opts[k];
+  if (!o) return;
+  S.locked = true;
+  const btns = $('choices').querySelectorAll('.ch');
+  step.opts.forEach((x, j) => { if (x.ok) btns[j].classList.add('right'); });
+  const lastStep = S.st === it.steps.length - 1;
+  if (o.ok) {
+    $('fb').className = 'fb ok';
+    $('fb').innerHTML = '✔ ถูก!' + (lastStep ? ' · ' + esc(it.work) : '');
+  } else {
+    S.clean = false;
+    if (!S.firstPick) S.firstPick = { step: S.st + 1, pick: o.t, why: o.why };
+    btns[k].classList.add('wrong');
+    $('fb').className = 'fb bad';
+    $('fb').innerHTML = '✘ ' + esc(o.why) + (lastStep ? '<br>วิธีทำ: ' + esc(it.work) : '<br>ที่ถูก: <b>' + esc(step.opts.find(x => x.ok).t) + '</b> — ทำขั้นต่อไปได้เลย');
+  }
+  if (step.line) S.lines.push(step.line);
+  if (lastStep) {
+    if (S.clean) S.score++;
+    S.log.push({ lv: it.lv, ok: S.clean, q: it.q, ans: it.ans, work: it.work, miss: S.firstPick });
+    $('hScore').textContent = S.score;
+    $('next').textContent = S.i + 1 < S.items.length ? 'ข้อต่อไป ➜' : 'ดูผล ➜';
+  } else $('next').textContent = 'ขั้นต่อไป ➜';
+  $('next').classList.remove('hidden');
+}
+function next() {
+  if (!S || !S.locked) return;
+  const it = S.items[S.i];
+  if (S.st < it.steps.length - 1) { S.st++; showStep(); return; }
+  S.i++;
+  if (S.i >= S.items.length) finish(); else showItem();
+}
+function finish() {
+  clearInterval(timer);
+  const n = S.items.length, pct = Math.round(S.score / n * 100), sec = Math.round((Date.now() - S.t0) / 1000);
+  if (pct > best(S.lv)) setBest(S.lv, pct);
+  $('play').classList.add('hidden'); $('over').classList.remove('hidden');
+  $('oScore').textContent = S.score + '/' + n;
+  $('oGrade').innerHTML = (pct >= 80 ? '🟢 เยี่ยม! ผ่านเกณฑ์ 80%' : pct >= 50 ? '🟡 กำลังดี — อ่านข้อที่พลาดข้างล่างแล้วเล่นอีกรอบ' : '🔴 ยังพลาดเยอะ — เล่นเฉพาะด่านที่พลาดก่อน') +
+    '<br><span style="font-weight:400;color:var(--muted)">เวลา ' + fmtT(sec) + ' · ' + (sec / 60 / n).toFixed(2) + ' นาที/ข้อ' + (S.lv === 0 ? ' (เป้า ≤ 1.2)' : '') + '</span>';
+  const by = {};
+  S.log.forEach(r => { by[r.lv] = by[r.lv] || [0, 0]; by[r.lv][1]++; if (r.ok) by[r.lv][0]++; });
+  $('oStats').innerHTML = '<tr><th>เรื่อง</th><th>ถูก</th></tr>' + Object.keys(by).map(k =>
+    '<tr><td>' + esc(NAMES[k]) + '</td><td>' + by[k][0] + '/' + by[k][1] + (by[k][0] < by[k][1] ? ' ⚠️ เล่นด่าน ' + k + ' ซ้ำ' : ' ✔') + '</td></tr>').join('');
+  const wrong = S.log.filter(r => !r.ok);
+  $('oWrong').innerHTML = wrong.length ? '<b>ข้อที่พลาด</b>' + wrong.map(r =>
+    '<div class="wl">' + r.q.replace(/<\/?u>/g, '') + '<br>' + (r.miss ? 'พลาด' + (S.lv === 0 ? '' : 'ขั้น ' + r.miss.step) + ': ตอบ <b>' + esc(r.miss.pick) + '</b> — <span style="color:var(--muted)">' + esc(r.miss.why) + '</span><br>' : '') +
+    'คำตอบ <b>' + esc(r.ans) + '</b> · ' + esc(r.work) + '</div>').join('') : '<p>ไม่พลาดเลย 🎉</p>';
+}
+function toMenu() { clearInterval(timer); S = null; $('play').classList.add('hidden'); $('over').classList.add('hidden'); $('menu').classList.remove('hidden'); paintBests(); }
+document.querySelectorAll('.lv').forEach(b => b.addEventListener('click', () => start(+b.dataset.lv)));
+$('choices').addEventListener('click', e => { const b = e.target.closest('.ch'); if (b) answer(+b.dataset.k); });
+$('next').addEventListener('click', next);
+$('quit').addEventListener('click', toMenu);
+$('back').addEventListener('click', toMenu);
+$('again').addEventListener('click', () => start(S ? S.lv : 0));
+document.addEventListener('keydown', e => {
+  if (!S) return;
+  if (e.key === 'Enter') { next(); return; }
+  const n = +e.key; if (n >= 1 && n <= 4) answer(n - 1);
+});
+paintBests();
+</script>
+</body>
+</html>
