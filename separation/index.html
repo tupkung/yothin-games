@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>เกมวิทย์ บทที่ 2 — การละลายและการแยกสาร</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+--ink:#1a1c1e;--muted:#5b6167;--line:#dfe3e8;--bg:#fbfbfa;--card:#fff;--soft:#f4f6f8;
+--accent:#1f6feb;--accent-bg:#eaf2ff;--warn:#b25000;--warn-bg:#fff4e8;--ok:#136c39;--ok-bg:#e8f6ee;
+--bad:#b3261e;--bad-bg:#fdecea;--vio:#6b46e0}
+@media (prefers-color-scheme:dark){:root{
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#333a42;--bg:#16181b;--card:#1e2126;--soft:#262a30;
+--accent:#69a4ff;--accent-bg:#1a2740;--warn:#f0a163;--warn-bg:#33240f;--ok:#6fd39a;--ok-bg:#13301f;
+--bad:#ff8a80;--bad-bg:#3a1a17;--vio:#a68cff}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:"Sarabun","Noto Sans Thai",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+font-size:17px;line-height:1.75}
+.wrap{max-width:680px;margin:0 auto;padding:26px 18px 70px}
+h1{font-size:1.5rem;margin:0 0 6px;line-height:1.35}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.hidden{display:none !important}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+.lv{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);
+border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:11px;transition:.12s}
+.lv:hover{border-color:var(--accent);transform:translateY(-1px)}
+.lv b{font-size:1.06rem}
+.lv .d{color:var(--muted);font-size:.87rem;line-height:1.6}
+.lv .best{float:right;font-size:.8rem;color:var(--ok);font-weight:700}
+.hud{display:flex;gap:10px;margin-bottom:14px}
+.pill{flex:1;background:var(--soft);border:1px solid var(--line);border-radius:11px;
+padding:7px 4px;text-align:center;line-height:1.3}
+.pill .n{font-size:1.28rem;font-weight:700;font-family:"IBM Plex Mono",monospace}
+.pill .l{font-size:.72rem;color:var(--muted)}
+.bar{height:9px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+.qwords{font-size:1.12rem;font-weight:600;text-align:left;line-height:1.75;margin:20px 0 4px}
+.qtag{display:inline-block;font-size:.76rem;font-weight:700;color:var(--vio);
+background:var(--soft);border-radius:99px;padding:2px 10px;margin-bottom:10px}
+.choices{display:grid;gap:9px;margin:16px 0 4px}
+.ch{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;
+text-align:left;color:var(--ink);line-height:1.6}
+.ch:hover{border-color:var(--accent);background:var(--accent-bg)}
+.ch b{color:var(--accent);margin-right:7px}
+.ch:disabled{opacity:.55}
+.ch.right{border-color:var(--ok);background:var(--ok-bg)}
+.ch.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.fb{min-height:62px;border-radius:12px;padding:11px 14px;font-size:.94rem;line-height:1.65;margin-top:10px}
+.fb.ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok)}
+.fb.no{background:var(--bad-bg);color:var(--bad);border:1px solid var(--bad)}
+.fb .how{display:block;margin-top:6px;color:var(--ink);font-weight:600}
+.next{background:var(--accent);color:#fff;border:0;border-radius:12px;padding:11px 22px;
+font-weight:700;margin-top:12px;width:100%}
+.res{text-align:center}
+.res .big{font-size:3rem;font-weight:700;font-family:"IBM Plex Mono",monospace;margin:8px 0}
+.res .tier{font-size:1.15rem;font-weight:700;margin-bottom:10px}
+.back{background:var(--soft);color:var(--ink);border:1px solid var(--line);border-radius:12px;
+padding:10px 18px;font-weight:600;margin-top:10px;width:100%}
+.note{font-size:.86rem;color:var(--muted);margin-top:18px;line-height:1.7}
+.wrongs{text-align:left;margin-top:16px;font-size:.9rem;line-height:1.7}
+.wrongs li{margin-bottom:9px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div id="menu">
+  <h1>🧪 เกมวิทย์ บทที่ 2</h1>
+  <p class="sub">การละลาย · การแยกสาร · เคมีหรือกายภาพ · 3 ด่าน ด่านละ 10 ข้อ · <b>ไม่จับเวลา</b> คิดให้เต็มที่ได้เลย</p>
+  <button class="lv" data-lv="1"><span class="best" id="b1"></span><b>ด่าน 1 · เลือกประตู</b><div class="d">ถาม "ต่างกันเรื่องอะไร?" แล้วเลือกวิธีแยกสารที่ใช้ความต่างนั้น</div></button>
+  <button class="lv" data-lv="2"><span class="best" id="b2"></span><b>ด่าน 2 · เคมีหรือกายภาพ</b><div class="d">เกิดสารใหม่ = เคมี · ยังเป็นของเดิม = กายภาพ</div></button>
+  <button class="lv" data-lv="3"><span class="best" id="b3"></span><b>ด่าน 3 · ด่านกับดัก ⛔</b><div class="d">ละลายแล้วกรองไม่ออก · ฟอง/ตะกอน/สี มาจากไหน · ใครคือตัวทำละลาย</div></button>
+  <p class="note">เกมนี้ไม่มีนาฬิกากดดัน เพราะวิทย์เราเน้น <b>เข้าใจว่าทำไม</b> ไม่ใช่ความเร็ว<br>
+  ทุกข้อตอบแล้วจะมีบรรทัด <b>"คิดยังไง"</b> บอกทางคิดสั้น ๆ ให้เสมอ</p>
+</div>
+
+<div id="play" class="hidden">
+  <div class="hud">
+    <div class="pill"><div class="n" id="hq">1</div><div class="l">ข้อที่</div></div>
+    <div class="pill"><div class="n" id="hs">0</div><div class="l">ถูก</div></div>
+    <div class="pill"><div class="n" id="hl">1</div><div class="l">ด่าน</div></div>
+  </div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card">
+    <div class="qtag" id="qtag"></div>
+    <div class="qwords" id="q"></div>
+    <div class="choices" id="ch"></div>
+    <div class="fb hidden" id="fb"></div>
+    <button class="next hidden" id="next">ข้อต่อไป →</button>
+  </div>
+</div>
+
+<div id="done" class="hidden">
+  <div class="card res">
+    <div class="sub" id="dlv"></div>
+    <div class="big" id="dscore"></div>
+    <div class="tier" id="dtier"></div>
+    <div id="dmsg" class="sub"></div>
+    <ul class="wrongs" id="dwrongs"></ul>
+    <button class="next" id="again">เล่นด่านนี้อีกครั้ง</button>
+    <button class="back" id="tomenu">← กลับหน้าเลือกด่าน</button>
+  </div>
+</div>
+
+</div>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); } } catch (e) { }
+</script>
+<script>
+/* ---------------- ข้อมูลโจทย์ (concept pool) ----------------
+   ทุกข้อระบุ wrong ของตัวเอง → การันตีว่ามีคำตอบถูกตัวเดียวเสมอ
+   wrong ของด่าน 1 ตัดวิธีที่ "พอใช้ได้บางส่วน" ออกแล้ว เหลือแต่วิธีที่ใช้ไม่ได้จริง
+   how = บรรทัด "คิดยังไง" ผูกกับกฎเหล็ก §1.3 และทางลัด §9 ของบทเรียน      */
+
+var METHODS = ['การหยิบออก', 'การร่อน', 'การฝัด', 'ใช้แม่เหล็ก', 'การกรอง', 'การระเหยแห้ง', 'การกลั่น', 'กรวยแยก'];
+
+var L1 = [
+  { q: 'หมุดเหล็กเล็ก ๆ หล่นปนอยู่ในกองแป้งทำขนม',
+    a: 'ใช้แม่เหล็ก', wrong: ['การกรอง', 'การฝัด', 'การกลั่น', 'กรวยแยก'],
+    how: 'ความต่าง = เหล็กเป็นสารแม่เหล็ก แป้งไม่เป็น → ใช้แม่เหล็กเป็นประตู' },
+  { q: 'ชาวนาเกลือต้องการ "เกลือ" จากน้ำทะเลที่ขังไว้ในแปลงนา',
+    a: 'การระเหยแห้ง', wrong: ['การกรอง', 'การร่อน', 'กรวยแยก', 'การฝัด'],
+    how: 'เกลือละลายอยู่ → กรองไม่ติด · ไล่น้ำออกด้วยแดด เกลือจึงเหลือเป็นของแข็ง' },
+  { q: 'อยู่กลางทะเล ต้องการ "น้ำจืด" ไว้ดื่มจากน้ำทะเล',
+    a: 'การกลั่น', wrong: ['การกรอง', 'การระเหยแห้ง', 'การร่อน', 'กรวยแยก'],
+    how: 'อยากได้ของเหลวคืน = กลั่น (เก็บไอน้ำมาควบแน่น) · ระเหยแห้งปล่อยน้ำทิ้งไปในอากาศ' },
+  { q: 'น้ำมันงาหกลงในชามน้ำ ลอยเป็นชั้นอยู่ด้านบน',
+    a: 'กรวยแยก', wrong: ['การกรอง', 'การระเหยแห้ง', 'ใช้แม่เหล็ก', 'การร่อน'],
+    how: 'ของเหลว 2 ชนิดไม่ผสมกัน แยกเป็นชั้น → กรวยแยก · กระดาษกรองให้ของเหลวผ่านทั้งคู่' },
+  { q: 'ชงกาแฟบดในน้ำร้อน ต้องการเอากากกาแฟออก',
+    a: 'การกรอง', wrong: ['การระเหยแห้ง', 'กรวยแยก', 'ใช้แม่เหล็ก', 'การฝัด'],
+    how: 'กากกาแฟเป็นของแข็งที่ไม่ละลาย → กรองให้ค้างบนกระดาษ' },
+  { q: 'ลูกปัดพลาสติกสีแดงกับสีฟ้า ขนาดและน้ำหนักเท่ากัน ปนกันอยู่ในกล่อง',
+    a: 'การหยิบออก', wrong: ['การร่อน', 'การฝัด', 'การกรอง', 'ใช้แม่เหล็ก'],
+    how: 'ต่างกันแค่ "สี" — ขนาดเท่ากัน (ร่อนไม่ได้) หนักเท่ากัน (ฝัดไม่ได้) → หยิบออกทีละเม็ด' },
+  { q: 'ทรายละเอียดปนกับกรวดก้อนเท่าเม็ดถั่ว (แห้งทั้งคู่)',
+    a: 'การร่อน', wrong: ['การกรอง', 'การระเหยแห้ง', 'กรวยแยก', 'การกลั่น'],
+    how: 'ความต่าง = ขนาดเม็ด → ตะแกรงให้ทรายลอดรู กรวดค้าง' },
+  { q: 'ข้าวเปลือกที่เพิ่งนวด มีเศษฟางและเมล็ดลีบเบา ๆ ปนอยู่มาก',
+    a: 'การฝัด', wrong: ['ใช้แม่เหล็ก', 'การกรอง', 'การระเหยแห้ง', 'กรวยแยก'],
+    how: 'ความต่าง = น้ำหนัก → ลมพัดของเบาปลิวออก ข้าวหนักตกลงกระด้ง' },
+  { q: 'ก้อนกรวด 3–4 ก้อนปนอยู่ในถุงข้าวสาร',
+    a: 'การหยิบออก', wrong: ['การฝัด', 'การกรอง', 'การระเหยแห้ง', 'การกลั่น'],
+    how: 'ชิ้นใหญ่ มองเห็น มีไม่กี่ก้อน → หยิบออกเร็วที่สุด · ฝัดไม่ได้เพราะกรวดหนัก ตกลงพร้อมข้าว' },
+  { q: 'น้ำฝนที่รองไว้มีผงดินและเศษใบไม้เล็ก ๆ ลอยปน ต้องการน้ำใสไว้รดต้นไม้',
+    a: 'การกรอง', wrong: ['การระเหยแห้ง', 'ใช้แม่เหล็ก', 'การฝัด', 'กรวยแยก'],
+    how: 'ผงดิน/ใบไม้ไม่ละลาย → กรองออก · ระเหยแห้งจะทำให้น้ำที่อยากได้หายไปหมด' },
+  { q: 'ต้องการผลึกจุนสีคืน จากสารละลายจุนสีสีฟ้าใส',
+    a: 'การระเหยแห้ง', wrong: ['การกรอง', 'การร่อน', 'การฝัด', 'ใช้แม่เหล็ก'],
+    how: 'จุนสีละลายอยู่ (สีฟ้าใส = สารละลาย) → กรองไม่ติด ต้องไล่น้ำออก' },
+  { q: 'แอลกอฮอล์ (เดือด 78 °C) ผสมกับน้ำ (เดือด 100 °C) เป็นเนื้อเดียวกัน ต้องการแยกแอลกอฮอล์ออก',
+    a: 'การกลั่น', wrong: ['การกรอง', 'กรวยแยก', 'การระเหยแห้ง', 'การร่อน'],
+    how: 'ผสมเป็นเนื้อเดียว (กรวยแยกใช้ไม่ได้) แต่จุดเดือดต่างกัน → กลั่นให้ตัวที่เดือดก่อนระเหยออกมาก่อน' },
+  { q: 'ผงตะไบเหล็กปนกับผงกำมะถันสีเหลือง',
+    a: 'ใช้แม่เหล็ก', wrong: ['การกรอง', 'การกลั่น', 'กรวยแยก', 'การฝัด'],
+    how: 'เหล็กเป็นสารแม่เหล็ก กำมะถันไม่เป็น → แม่เหล็กดูดเหล็กออกมา' },
+  { q: 'มีทรายปนอยู่ในน้ำเกลือ ต้องการเอาทรายออกก่อน (ยังไม่ต้องการเกลือ)',
+    a: 'การกรอง', wrong: ['การระเหยแห้ง', 'ใช้แม่เหล็ก', 'กรวยแยก', 'การฝัด'],
+    how: 'ทรายไม่ละลาย → ค้างบนกระดาษกรอง · น้ำเกลือไหลผ่านลงไป (ขั้นที่ 2 ของ "ทราย + เกลือ")' }
+];
+
+var L2 = [
+  { q: 'หย่อนเม็ดฟู่วิตามินซีลงแก้วน้ำเย็น เกิดฟองแก๊สฟู่ขึ้นมา', a: 'ทางเคมี', how: 'ฟองเกิดโดยไม่ได้ต้ม และแก๊สไม่ได้มีอยู่ก่อน = สารใหม่' },
+  { q: 'นมทิ้งไว้นอกตู้เย็น 2 วัน มีกลิ่นเปรี้ยวและจับตัวเป็นก้อน', a: 'ทางเคมี', how: 'กลิ่นใหม่ + เนื้อเปลี่ยน = เกิดสารใหม่ · ย้อนกลับเป็นนมสดไม่ได้' },
+  { q: 'กล้วยหั่นวางทิ้งไว้ เนื้อกล้วยเปลี่ยนเป็นสีน้ำตาลคล้ำ', a: 'ทางเคมี', how: 'สีใหม่เกิดจากเนื้อกล้วยเอง ไม่ได้เติมสีอะไรลงไป = สารใหม่' },
+  { q: 'เผาถ่านในเตา มีแสง ความร้อน และเหลือขี้เถ้าสีเทา', a: 'ทางเคมี', how: 'การเผาไหม้ = ได้ขี้เถ้าและแก๊สใหม่ · เอากลับเป็นถ่านไม่ได้' },
+  { q: 'ขนมปังทิ้งไว้หลายวัน มีราสีเขียวขึ้น', a: 'ทางเคมี', how: 'ราย่อยขนมปังจนเกิดสารใหม่ · ย้อนกลับไม่ได้' },
+  { q: 'เคี่ยวน้ำตาลทรายนาน ๆ จนเป็นคาราเมลสีน้ำตาล มีกลิ่นหอมไหม้', a: 'ทางเคมี', how: 'สีใหม่ + กลิ่นใหม่ = สารใหม่ (ต่างจากน้ำตาลแค่หลอมเหลวใส ๆ)' },
+  { q: 'บีบมะนาวลงในน้ำดอกอัญชันสีน้ำเงิน น้ำเปลี่ยนเป็นสีม่วง', a: 'ทางเคมี', how: 'สีม่วงเป็นสีใหม่ ไม่ใช่สีของน้ำมะนาวหรืออัญชันเดิม = ทำปฏิกิริยากัน' },
+  { q: 'นวดแป้งกับยีสต์ทิ้งไว้ แป้งฟูขึ้นและมีกลิ่นเปรี้ยว', a: 'ทางเคมี', how: 'ยีสต์สร้างแก๊สและกลิ่นใหม่ = สารใหม่' },
+  { q: 'ใส่ดินลงในแก้วน้ำแล้วคน ทิ้งไว้ ดินตกตะกอนที่ก้นแก้ว', a: 'ทางกายภาพ', how: 'ตะกอนคือดินเดิมที่ไม่ละลายจมลง ไม่ใช่สารใหม่' },
+  { q: 'ฉีกกระดาษแผ่นใหญ่เป็นชิ้นเล็ก ๆ', a: 'ทางกายภาพ', how: 'ยังเป็นกระดาษเหมือนเดิม แค่ขนาดเปลี่ยน' },
+  { q: 'บดพริกไทยเม็ดจนเป็นผง', a: 'ทางกายภาพ', how: 'ยังเป็นพริกไทยตัวเดิม แค่เม็ดเล็กลง' },
+  { q: 'ดัดลวดทองแดงให้เป็นรูปดาว', a: 'ทางกายภาพ', how: 'ยังเป็นทองแดงเหมือนเดิม แค่รูปร่างเปลี่ยน' },
+  { q: 'เทเกลือกับทรายลงในกล่องเดียวกันแล้วเขย่าให้ปน', a: 'ทางกายภาพ', how: 'สารผสม = ทุกตัวยังเป็นตัวเดิม แยกกลับได้' },
+  { q: 'ก้อนน้ำแข็งในแก้วน้ำหวานค่อย ๆ ละลายเป็นน้ำ', a: 'ทางกายภาพ', how: 'หลอมเหลว = เปลี่ยนสถานะ = กายภาพเสมอ (บทที่ 1)' },
+  { q: 'ตัดผมให้สั้นลง', a: 'ทางกายภาพ', how: 'ผมยังเป็นผมเดิม แค่ความยาวเปลี่ยน' },
+  { q: 'ตากผ้าเปียกไว้ จนผ้าแห้ง', a: 'ทางกายภาพ', how: 'น้ำระเหยไป = เปลี่ยนสถานะ ไม่เกิดสารใหม่' }
+];
+
+var L3 = [
+  { q: 'สาร P เม็ด 2 มม. ละลายน้ำ · สาร Q เม็ด 0.5 มม. ไม่ละลายน้ำ · เททั้งคู่ลงน้ำแล้วกรองด้วยตะแกรงรู 1 มม. — อะไรค้างบนตะแกรง',
+    a: 'ไม่มีอะไรค้าง — P ละลายไปแล้ว ส่วน Q เล็กกว่ารู',
+    wrong: ['P ค้าง เพราะเม็ดใหญ่กว่ารู', 'Q ค้าง เพราะไม่ละลายน้ำ', 'ทั้ง P และ Q ค้าง'],
+    how: 'ถาม "ละลายอยู่ไหม?" ก่อนดูขนาดเสมอ · ละลายแล้วขนาดในตารางไม่มีความหมาย (กับดัก 1)' },
+  { q: 'น้ำมันมะพร้าวลอยเป็นชั้นบนน้ำ — วิธีใด "ไม่" ได้ผล',
+    a: 'กรองผ่านกระดาษกรอง',
+    wrong: ['ใช้กรวยแยก', 'ใช้ช้อนตักชั้นบนออก', 'แช่เย็นให้น้ำมันมะพร้าวแข็งตัว แล้วตักออก'],
+    how: 'ของเหลวทั้งสองไหลผ่านกระดาษกรองได้ → กรองไม่ออก (กับดัก 2 · O-NET 67 ข้อ 6)' },
+  { q: 'ถั่วเหลืองกับข้าวโพดเม็ดเล็ก ขนาดและน้ำหนักใกล้กันมาก ปนกัน 1 ถ้วย — วิธีใดเหมาะสมที่สุด',
+    a: 'การหยิบออก',
+    wrong: ['การร่อน', 'การฝัด', 'การกรอง'],
+    how: 'ขนาดใกล้กัน → ร่อนไม่ได้ · น้ำหนักใกล้กัน → ฝัดไม่ได้ · เหลือหยิบออก (กับดัก 3 · O-NET 66 ข้อ 6)' },
+  { q: 'ต้มน้ำจนเดือด มีฟองผุดเต็มหม้อ — ข้อใดถูก',
+    a: 'กายภาพ เพราะฟองคือไอน้ำ ซึ่งยังเป็นน้ำ',
+    wrong: ['เคมี เพราะมีฟองแก๊สเกิดขึ้น', 'เคมี เพราะมีการเปลี่ยนสถานะ', 'กายภาพ เพราะไม่มีแสงเกิดขึ้น'],
+    how: 'ฟองเป็นสัญญาณเคมีเฉพาะตอนที่ไม่ได้ต้ม · ตัวเลือกสุดท้ายสรุปถูกแต่เหตุผลผิด (กับดัก 4)' },
+  { q: 'ละลายผงสีผสมอาหารสีเขียวในน้ำ น้ำกลายเป็นสีเขียว — ข้อใดถูก',
+    a: 'กายภาพ เพราะสีมาจากผงสีเดิมที่ละลายอยู่',
+    wrong: ['เคมี เพราะสีของน้ำเปลี่ยน', 'เคมี เพราะผงสีหายไป', 'เปลี่ยนสถานะ เพราะผงสีกลายเป็นของเหลว'],
+    how: 'ถาม "สีมาจากไหน?" — มาจากผงที่เติมเอง = ละลายเฉย ๆ (O-NET 67 ข้อ 5 ตัวเลือก A)' },
+  { q: 'เขย่าขวดน้ำอัดลมแล้วเปิดฝา มีฟองพุ่งออกมา — ข้อใดถูก',
+    a: 'กายภาพ — แก๊สที่ละลายอยู่ในน้ำแยกตัวออกมา ไม่เกิดสารใหม่',
+    wrong: ['เคมี — มีฟองแก๊สทั้งที่ไม่ได้ต้ม', 'เคมี — น้ำกับน้ำตาลทำปฏิกิริยากัน', 'เปลี่ยนสถานะ — น้ำเดือดเพราะการเขย่า'],
+    how: 'ถาม "ฟองมาจากไหน?" — แก๊สละลายอยู่ในขวดตั้งแต่แรก แค่หลุดออกมา · กฎ "ฟองไม่ได้ต้ม = เคมี" ใช้ไม่ได้ถ้าแก๊สมีอยู่ก่อน' },
+  { q: 'แบบที่ 1: เทของเหลวใส 2 ชนิดรวมกัน เกิดตะกอนสีเหลือง · แบบที่ 2: ใส่ทรายลงน้ำ ทรายตกตะกอน — ข้อใดถูก',
+    a: 'แบบที่ 1 เป็นเคมี · แบบที่ 2 เป็นกายภาพ',
+    wrong: ['ทั้งคู่เป็นเคมี เพราะมีตะกอน', 'ทั้งคู่เป็นกายภาพ เพราะตะกอนเป็นของแข็ง', 'แบบที่ 1 เป็นกายภาพ · แบบที่ 2 เป็นเคมี'],
+    how: 'คำว่า "ตะกอน" เหมือนกัน แต่แบบ 1 โผล่มาจากของเหลวใส (สารใหม่) · แบบ 2 คือทรายเดิมจมลง' },
+  { q: 'อยากได้ "น้ำจืด" จากน้ำทะเล ใช้การระเหยแห้งได้ไหม',
+    a: 'ไม่ได้ — ระเหยแห้งปล่อยน้ำทิ้งไป ได้แต่เกลือ ต้องใช้การกลั่น',
+    wrong: ['ได้ — เพราะน้ำระเหยแยกออกจากเกลือแล้ว', 'ได้ — ถ้ากรองก่อนแล้วค่อยระเหยแห้ง', 'ไม่ได้ — ต้องใช้กรวยแยก'],
+    how: 'อ่านให้ดีว่าอยากได้ตัวไหนคืน · ของแข็งคืน = ระเหยแห้ง · ของเหลวคืน = กลั่น (กับดัก 5)' },
+  { q: 'น้ำเชื่อมทำจากน้ำ 100 กรัม กับน้ำตาล 150 กรัม — ตัวทำละลาย (solvent) คือ',
+    a: 'น้ำ เพราะสถานะเหมือนสารละลาย (ของเหลว)',
+    wrong: ['น้ำตาล เพราะมีปริมาณมากกว่า', 'น้ำตาล เพราะเป็นตัวที่หายไป', 'ทั้งน้ำและน้ำตาลเป็นตัวทำละลาย'],
+    how: 'สถานะต่างกัน → ดูว่าใครสถานะเหมือนสารละลาย · "ปริมาณมากกว่า" ใช้เฉพาะตอนสถานะเหมือนกัน' },
+  { q: 'แอลกอฮอล์ 70 มล. ผสมน้ำ 30 มล. เป็นเนื้อเดียวกัน — ตัวทำละลาย (solvent) คือ',
+    a: 'แอลกอฮอล์ เพราะสถานะเหมือนกัน และมีปริมาณมากกว่า',
+    wrong: ['น้ำ เพราะน้ำเป็นตัวทำละลายเสมอ', 'น้ำ เพราะมีปริมาณน้อยกว่า', 'ไม่มีตัวทำละลาย เพราะเป็นของเหลวทั้งคู่'],
+    how: 'ของเหลว + ของเหลว (สถานะเหมือนกัน) → ตัวที่มากกว่าคือตัวทำละลาย · น้ำไม่ได้เป็น solvent เสมอไป' },
+  { q: 'ข้อใดเป็น "สารเนื้อเดียว"',
+    a: 'อากาศบริสุทธิ์ที่ไม่มีฝุ่น',
+    wrong: ['น้ำโคลน', 'น้ำมันลอยบนน้ำ', 'ข้าวผัดกุ้ง'],
+    how: 'อากาศเป็นสารละลายของแก๊สหลายชนิด มองเป็นเนื้อเดียว · อีกสามข้อเห็นเป็นส่วน ๆ' },
+  { q: 'ข้อใดเป็น "สารบริสุทธิ์"',
+    a: 'น้ำกลั่น',
+    wrong: ['น้ำแร่', 'น้ำทะเล', 'น้ำเชื่อม'],
+    how: 'สารบริสุทธิ์ = อนุภาคชนิดเดียว · น้ำแร่มีแร่ธาตุละลายอยู่ = สารผสม (ถึงจะใสก็ตาม)' },
+  { q: 'กรองน้ำเกลือผ่านกระดาษกรอง ได้น้ำใส และไม่มีอะไรค้างบนกระดาษ — สรุปได้ว่าอะไร',
+    a: 'เกลือยังอยู่ในน้ำที่ผ่านกระดาษกรองลงไป',
+    wrong: ['เกลือค้างอยู่ในเนื้อกระดาษกรอง', 'เกลือหายไปแล้ว น้ำที่ได้เป็นน้ำจืด', 'เกลือเปลี่ยนเป็นน้ำ'],
+    how: 'ใส ≠ ไม่มีอะไรละลาย · เกลือเล็กระดับอนุภาค ไหลผ่านรูกระดาษไปกับน้ำ' },
+  { q: 'ทรายกับเกลือปนกันแห้ง ๆ ต้องการเกลือคืน — ลำดับใดถูก',
+    a: 'เติมน้ำคน → กรอง → ระเหยแห้งน้ำที่ผ่านกระดาษกรอง',
+    wrong: ['เติมน้ำคน → ระเหยแห้งทั้งหมดเลย', 'เติมน้ำคน → กรอง → ระเหยแห้งสิ่งที่ค้างบนกระดาษกรอง', 'กรองของแห้ง → เติมน้ำ → ระเหยแห้ง'],
+    how: 'ตามของให้ทันทีละขั้น: เกลือละลายไปกับน้ำ ผ่านกระดาษกรองลงไป → ต้องระเหยส่วนที่ผ่านลงไป' },
+  { q: 'เปิดสวิตช์ หลอดไฟสว่างขึ้น มีแสงและความร้อน — ข้อใดถูก',
+    a: 'กายภาพ — ไส้หลอดยังเป็นโลหะเดิม ปิดไฟก็กลับเหมือนเดิม',
+    wrong: ['เคมี — เพราะมีแสงและความร้อนออกมา', 'เคมี — เพราะไฟฟ้าทำให้เกิดสารใหม่', 'เปลี่ยนสถานะ — เพราะไส้หลอดหลอมเหลว'],
+    how: 'แสง/ความร้อนเป็นแค่ "สัญญาณ" · ถามว่าเกิดสารใหม่จริงไหม — ไส้หลอดไม่เปลี่ยนเป็นสารอื่น' }
+];
+
+/* ---------------- generator (ทดสอบด้วย Node ได้) ---------------- */
+function shuffle(a, rnd) {
+  rnd = rnd || Math.random;
+  var r = a.slice();
+  for (var i = r.length - 1; i > 0; i--) {
+    var j = Math.floor(rnd() * (i + 1));
+    var t = r[i]; r[i] = r[j]; r[j] = t;
+  }
+  return r;
+}
+
+function buildQ(lv, item, rnd) {
+  var correct, opts;
+  if (lv === 2) {
+    correct = item.a;
+    opts = shuffle(['ทางเคมี', 'ทางกายภาพ'], rnd);
+  } else {
+    correct = item.a;
+    var picks = shuffle(item.wrong, rnd).slice(0, 3);
+    opts = shuffle([correct].concat(picks), rnd);
+  }
+  return { text: item.q, opts: opts, correct: opts.indexOf(correct), how: item.how, answer: correct };
+}
+
+function buildRound(lv, rnd) {
+  var pool = lv === 1 ? L1 : lv === 2 ? L2 : L3;
+  return shuffle(pool, rnd).slice(0, 10).map(function (it) { return buildQ(lv, it, rnd); });
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { L1: L1, L2: L2, L3: L3, buildQ: buildQ, buildRound: buildRound, shuffle: shuffle, METHODS: METHODS };
+}
+
+/* ---------------- UI ---------------- */
+if (typeof document !== 'undefined') (function () {
+  var TAG = { 1: 'ด่าน 1 · เลือกประตู', 2: 'ด่าน 2 · เคมีหรือกายภาพ', 3: 'ด่าน 3 · ด่านกับดัก ⛔' };
+  var menu = document.getElementById('menu'), play = document.getElementById('play'), done = document.getElementById('done');
+  var st = null;
+
+  function best(lv) { try { return +(localStorage.getItem('sci02-best-' + lv) || 0); } catch (e) { return 0; } }
+  function setBest(lv, v) { try { localStorage.setItem('sci02-best-' + lv, String(v)); } catch (e) { } }
+  function paintBest() {
+    for (var i = 1; i <= 3; i++) {
+      var b = best(i), el = document.getElementById('b' + i);
+      if (el) el.textContent = b ? 'สูงสุด ' + b + '/10' : '';
+    }
+  }
+
+  function show(el) {
+    [menu, play, done].forEach(function (x) { x.classList.add('hidden'); });
+    el.classList.remove('hidden');
+  }
+
+  function start(lv) {
+    st = { lv: lv, i: 0, score: 0, qs: buildRound(lv), wrongs: [] };
+    document.getElementById('hl').textContent = lv;
+    show(play);
+    render();
+  }
+
+  function render() {
+    var q = st.qs[st.i];
+    document.getElementById('qtag').textContent = TAG[st.lv];
+    document.getElementById('q').textContent = q.text;
+    document.getElementById('hq').textContent = (st.i + 1);
+    document.getElementById('hs').textContent = st.score;
+    document.getElementById('prog').style.width = (st.i / st.qs.length * 100) + '%';
+    var fb = document.getElementById('fb');
+    fb.className = 'fb hidden';
+    fb.innerHTML = '';
+    document.getElementById('next').classList.add('hidden');
+    var box = document.getElementById('ch');
+    box.innerHTML = '';
+    q.opts.forEach(function (o, k) {
+      var b = document.createElement('button');
+      b.className = 'ch';
+      b.innerHTML = '<b>' + 'กขคง'[k] + '.</b>' + o;
+      b.onclick = function () { answer(k); };
+      box.appendChild(b);
+    });
+  }
+
+  function answer(k) {
+    var q = st.qs[st.i];
+    var btns = document.getElementById('ch').querySelectorAll('.ch');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].disabled = true;
+      if (i === q.correct) btns[i].classList.add('right');
+      else if (i === k) btns[i].classList.add('wrong');
+    }
+    var ok = k === q.correct;
+    if (ok) st.score++;
+    else st.wrongs.push(q);
+    var fb = document.getElementById('fb');
+    fb.className = 'fb ' + (ok ? 'ok' : 'no');
+    fb.innerHTML = (ok ? '✅ ถูกต้อง!' : '❌ ยังไม่ใช่ — คำตอบคือ <b>' + q.answer + '</b>')
+      + '<span class="how">💡 คิดยังไง: ' + q.how + '</span>';
+    var nx = document.getElementById('next');
+    nx.classList.remove('hidden');
+    nx.textContent = (st.i + 1 >= st.qs.length) ? 'ดูผลรวม →' : 'ข้อต่อไป →';
+  }
+
+  document.getElementById('next').onclick = function () {
+    st.i++;
+    if (st.i >= st.qs.length) finish(); else render();
+  };
+
+  function finish() {
+    var s = st.score, lv = st.lv;
+    if (s > best(lv)) setBest(lv, s);
+    document.getElementById('dlv').textContent = TAG[lv];
+    document.getElementById('dscore').textContent = s + '/10';
+    var tier, msg;
+    if (s >= 8) { tier = '🟢 ผ่านเกณฑ์!'; msg = 'แม่นมาก ด่านนี้ผ่านแล้ว ไปด่านต่อไปได้เลย'; }
+    else if (s >= 5) { tier = '🟡 กำลังดี'; msg = 'เข้าใจแล้ว เหลือเก็บรายละเอียด ลองอีกรอบให้ถึง 8'; }
+    else { tier = '🔴 ต้องซ้อมอีกนิด'; msg = 'ไม่เป็นไรเลย กลับไปอ่านการ์ดสรุป §8 แล้วมาเล่นอีกรอบ เดี๋ยวก็ขึ้น'; }
+    document.getElementById('dtier').textContent = tier;
+    document.getElementById('dmsg').textContent = msg;
+    var ul = document.getElementById('dwrongs');
+    ul.innerHTML = '';
+    if (st.wrongs.length) {
+      var h = document.createElement('li');
+      h.innerHTML = '<b>ข้อที่ยังพลาด — อ่านซ้ำรอบเดียวพอ:</b>';
+      h.style.listStyle = 'none';
+      ul.appendChild(h);
+      st.wrongs.forEach(function (q) {
+        var li = document.createElement('li');
+        li.innerHTML = '<b>' + q.answer + '</b> — ' + q.how;
+        ul.appendChild(li);
+      });
+    }
+    show(done);
+  }
+
+  document.getElementById('again').onclick = function () { start(st.lv); };
+  document.getElementById('tomenu').onclick = function () { paintBest(); show(menu); };
+  var lvs = document.querySelectorAll('.lv');
+  for (var i = 0; i < lvs.length; i++) {
+    lvs[i].onclick = (function (n) { return function () { start(n); }; })(+lvs[i].getAttribute('data-lv'));
+  }
+  paintBest();
+})();
+</script>
+</body>
+</html>
