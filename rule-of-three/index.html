@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>เกมไตรยางศ์ — วางเลขให้ถูกช่อง</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+--ink:#1a1c1e;--muted:#5b6167;--line:#dfe3e8;--bg:#fbfbfa;--card:#fff;--soft:#f4f6f8;
+--accent:#1f6feb;--accent-bg:#eaf2ff;--warn:#b25000;--warn-bg:#fff4e8;--ok:#136c39;--ok-bg:#e8f6ee;
+--bad:#b3261e;--bad-bg:#fdecea;--vio:#6b46e0;--vio-bg:#f1ecff}
+@media (prefers-color-scheme:dark){:root{
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#333a42;--bg:#16181b;--card:#1e2126;--soft:#262a30;
+--accent:#69a4ff;--accent-bg:#1a2740;--warn:#f0a163;--warn-bg:#33240f;--ok:#6fd39a;--ok-bg:#13301f;
+--bad:#ff8a80;--bad-bg:#3a1a17;--vio:#a68cff;--vio-bg:#272040}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:"Sarabun","Noto Sans Thai",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+font-size:17px;line-height:1.75;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:680px;margin:0 auto;padding:22px 16px calc(60px + env(safe-area-inset-bottom))}
+h1{font-size:1.45rem;margin:0 0 6px;line-height:1.35}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 18px}
+.hidden{display:none !important}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+.tip{background:var(--vio-bg);border:1px solid var(--vio);border-radius:14px;padding:13px 15px;margin-bottom:16px;font-size:.95rem;line-height:1.7}
+.tip b{color:var(--vio)}
+.tip ol{margin:6px 0 0;padding-left:22px}
+.lv{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);
+border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:11px}
+.lv:active{border-color:var(--accent)}
+.lv b{font-size:1.06rem}
+.lv .d{color:var(--muted);font-size:.87rem;line-height:1.6;display:block}
+.lv .best{float:right;font-size:.8rem;color:var(--ok);font-weight:700}
+.hud{display:flex;gap:10px;margin-bottom:14px}
+.pill{flex:1;background:var(--soft);border:1px solid var(--line);border-radius:11px;padding:7px 4px;text-align:center;line-height:1.3}
+.pill .n{font-size:1.28rem;font-weight:700;font-family:"IBM Plex Mono",monospace}
+.pill .l{font-size:.72rem;color:var(--muted)}
+.story{font-size:1.08rem;font-weight:600;line-height:1.75;margin:6px 0 12px}
+.ask{font-size:.98rem;color:var(--accent);font-weight:700;margin:10px 0 4px}
+table.r3{border-collapse:separate;border-spacing:6px;margin:4px auto 6px;font-family:"IBM Plex Mono","Sarabun",monospace}
+table.r3 th{font-family:"Sarabun",sans-serif;font-size:.95rem;background:var(--accent-bg);color:var(--accent);border-radius:9px;padding:5px 14px;min-width:92px}
+table.r3 td{text-align:center;font-size:1.3rem;font-weight:700;border:2px solid var(--line);border-radius:10px;padding:6px 10px;min-width:92px;background:var(--card)}
+table.r3 td.arrow{border:0;background:none;min-width:0;padding:0 2px;color:var(--muted);font-size:1rem}
+table.r3 td.q{color:var(--vio);border-color:var(--vio);background:var(--vio-bg)}
+table.r3 td.empty{color:var(--muted);border-style:dashed}
+table.r3 td.div{border-color:var(--warn);background:var(--warn-bg);color:var(--warn)}
+table.r3 td.pick{color:var(--ok);border-color:var(--ok);background:var(--ok-bg)}
+table.r3 td.wrongpick{color:var(--bad);border-color:var(--bad);background:var(--bad-bg)}
+.choices{display:grid;gap:9px;margin:12px 0 4px}
+.choices.two{grid-template-columns:1fr 1fr}
+.choices.three{grid-template-columns:1fr 1fr 1fr}
+.ch{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;text-align:left;color:var(--ink);line-height:1.5;font-size:1rem}
+.choices.two .ch,.choices.three .ch{text-align:center;font-size:1.1rem;font-weight:700;padding:15px 6px}
+.ch:active{border-color:var(--accent);background:var(--accent-bg)}
+.ch b{color:var(--accent);margin-right:7px}
+.ch[disabled]{opacity:.55}
+.ch.right{border-color:var(--ok);background:var(--ok-bg);opacity:1}
+.ch.wrong{border-color:var(--bad);background:var(--bad-bg);opacity:1}
+.fb{border-radius:12px;padding:11px 14px;font-size:.94rem;line-height:1.7;margin-top:8px}
+.fb.ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);color:var(--bad);border:1px solid var(--bad)}
+.fb .calc{display:block;font-family:"IBM Plex Mono",monospace;color:var(--ink);margin-top:4px}
+.next{display:block;width:100%;margin-top:12px;background:var(--accent);color:#fff;border:0;border-radius:12px;padding:13px;font-weight:700;font-size:1.05rem}
+.ghost{background:none;border:0;color:var(--muted);font-size:.9rem;padding:6px 0;margin-bottom:8px}
+.end{text-align:center}
+.end .big{font-size:2.6rem;font-weight:700;font-family:"IBM Plex Mono",monospace;margin:8px 0}
+.end ul{text-align:left;font-size:.94rem}
+</style>
+</head>
+<body>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); } } catch (e) { }
+</script>
+<div class="wrap">
+
+<section id="menu">
+  <h1>🎯 เกมไตรยางศ์ — วางเลขให้ถูกช่อง</h1>
+  <p class="sub">อัตราส่วน · ร้อยละ · กำไร · ส่วนลด — ทุกโจทย์ใช้ตาราง 2 ช่องเดียวกัน</p>
+  <div class="tip">
+    <b>กฎ 3 ข้อ (เหมือนการ์ดของคุณแม่)</b>
+    <ol>
+      <li><b>เขียนชื่อหัวคอลัมน์ก่อน</b> แล้วเลขต้องอยู่ <b>ใต้ชื่อของมันเอง</b></li>
+      <li>เลขไหนอยู่ <b>ทแยง</b> กับ ? → ตัวนั้นเอาไป <b>หาร</b> อีก 2 ตัวคูณกัน</li>
+      <li>ก่อนคิดเลข ถามตัวเองว่าคำตอบควร <b>มากกว่า</b> หรือ <b>น้อยกว่า</b></li>
+    </ol>
+  </div>
+  <button class="lv" data-lv="1"><span class="best" id="best1"></span><b>ด่าน 1 · ใต้ชื่อใคร?</b><span class="d">เลขที่โจทย์ให้ ต้องไปอยู่ช่องไหน · 10 ข้อ กดครั้งเดียว</span></button>
+  <button class="lv" data-lv="2"><span class="best" id="best2"></span><b>ด่าน 2 · ตัวไหนทแยง?</b><span class="d">หาตัวหารจากตาราง · 10 ข้อ</span></button>
+  <button class="lv" data-lv="3"><span class="best" id="best3"></span><b>ด่าน 3 · มากหรือน้อย?</b><span class="d">ทายทิศก่อน แล้วเลือกคำตอบ · 8 ข้อ</span></button>
+  <button class="lv" data-lv="4"><span class="best" id="best4"></span><b>ด่าน 4 · กับดักข้อสอบ 🪤</b><span class="d">โจทย์เต็มแบบข้อสอบ ตัวเชื่อม · ลดราคาแล้วกำไร · 8 ข้อ</span></button>
+</section>
+
+<section id="play" class="hidden">
+  <button class="ghost" id="quit">← กลับเมนู</button>
+  <div class="hud">
+    <div class="pill"><div class="n" id="hNo">1/10</div><div class="l">ข้อ</div></div>
+    <div class="pill"><div class="n" id="hOk">0</div><div class="l">ถูก</div></div>
+    <div class="pill"><div class="n" id="hT">0</div><div class="l">วินาที</div></div>
+  </div>
+  <div id="stage"></div>
+</section>
+
+<section id="done" class="hidden end">
+  <h1 id="dTitle">จบด่าน!</h1>
+  <div class="big" id="dScore"></div>
+  <p id="dMsg"></p>
+  <ul id="dList"></ul>
+  <button class="next" id="again">เล่นด่านนี้อีกครั้ง</button>
+  <button class="ghost" id="toMenu">← กลับเมนู</button>
+</section>
+
+</div>
+
+<script id="gen">
+/* ===== generator (pure — ทดสอบด้วย Node ได้) ===== */
+var GEN = (function () {
+  var rnd = Math.random;
+  function setRng(f) { rnd = f; }
+  function ri(a, b) { return a + Math.floor(rnd() * (b - a + 1)); }
+  function pick(arr) { return arr[Math.floor(rnd() * arr.length)]; }
+  function gcd(a, b) { return b ? gcd(b, a % b) : a; }
+  function fmt(n) { return Number.isInteger(n) ? n.toLocaleString('en-US') : String(+n.toFixed(2)); }
+  function isInt(x) { return Math.abs(x - Math.round(x)) < 1e-9; }
+
+  /* ตัวเลขที่จองไว้ (ชุดวัด m1r B1 B2 · B1′ B2′ · A1 A2 · การ์ดคุณแม่ 10 ต.ค.) — ห้ามโผล่ในเกม */
+  var RESERVED_NUM = [400, 420, 500, 5250, 6000, 6480, 5000, 5200, 4800, 4000, 5400, 140, 36, 2500, 800];
+  var RESERVED_PAIR = ['5:2', '3:4', '7:3', '5:6', '4:9', '7:2', '3:12'];
+  function pairKey(a, b) { return a + ':' + b; }
+  function reservedPair(a, b) { return RESERVED_PAIR.indexOf(pairKey(a, b)) >= 0 || RESERVED_PAIR.indexOf(pairKey(b, a)) >= 0; }
+  function reservedNums(list) { for (var i = 0; i < list.length; i++) if (RESERVED_NUM.indexOf(list[i]) >= 0) return true; return false; }
+
+  /* ตารางไตรยางศ์: row1 = คู่ที่รู้ · แถว 2 มีเลขที่โจทย์ให้ (k) ใต้คอลัมน์ kc และ ? อีกช่อง */
+  function table(cols, row1, kc, k) {
+    var oc = 1 - kc;
+    var ans = k * row1[oc] / row1[kc];
+    return {
+      cols: cols, row1: row1, kc: kc, k: k, ans: ans,
+      divisor: row1[kc],
+      more: row1[oc] > row1[kc],
+      wrongPair: k * row1[kc] / row1[oc],          // วาง k ผิดคอลัมน์
+      flipMul: row1[0] * row1[1] / k               // คูณกลับ (เอาตัวทแยงไปคูณ)
+    };
+  }
+
+  var ITEMS = [['สมุด', 'เล่ม'], ['ไข่ไก่', 'ฟอง'], ['ขนมปัง', 'ก้อน'], ['น้ำดื่ม', 'ขวด'], ['ปากกา', 'ด้าม'], ['ลูกโป่ง', 'ลูก']];
+  var RATIOS = [['นักเรียนชาย', 'นักเรียนหญิง', 'คน'], ['แป้ง', 'น้ำตาล', 'กรัม'], ['สีแดง', 'สีเขียว', 'มล.'],
+    ['ลูกอมรสส้ม', 'ลูกอมรสมะนาว', 'เม็ด'], ['ไก่', 'เป็ด', 'ตัว'], ['น้ำ', 'น้ำหวาน', 'มล.'], ['ทองแดง', 'ดีบุก', 'กรัม']];
+
+  /* T1 ราคาต่อชิ้น — kc 0: ซื้อ b ชิ้นจ่ายเท่าไร · kc 1 (กับดัก): จ่าย X บาทได้กี่ชิ้น */
+  function genUnit(kc) {
+    for (;;) {
+      var it = pick(ITEMS), a = ri(2, 9), u = ri(3, 25), b = ri(2, 15);
+      if (b === a) continue;
+      var p = a * u, row1 = [a, p], k = kc === 0 ? b : b * u;
+      if (reservedNums([p, k, b * u]) || reservedPair(a, p)) continue;
+      var t = table(['จำนวน (' + it[1] + ')', 'ราคา (บาท)'], row1, kc, k);
+      t.story = kc === 0
+        ? it[0] + ' ' + a + ' ' + it[1] + ' ราคา ' + fmt(p) + ' บาท ถ้าซื้อ ' + b + ' ' + it[1] + ' ต้องจ่ายกี่บาท'
+        : it[0] + ' ' + a + ' ' + it[1] + ' ราคา ' + fmt(p) + ' บาท ถ้ามีเงิน ' + fmt(k) + ' บาท ซื้อได้กี่' + it[1];
+      t.unit = kc === 0 ? 'บาท' : it[1];
+      t.kind = 'unit';
+      return t;
+    }
+  }
+
+  /* T2 อัตราส่วน — kc 1 = เลขที่รู้อยู่คอลัมน์ที่สอง (แบบที่พลาด) */
+  function genRatio(kc) {
+    for (;;) {
+      var r = pick(RATIOS), m = ri(2, 12), n = ri(2, 12);
+      if (m === n || gcd(m, n) !== 1 || reservedPair(m, n)) continue;
+      var row1 = [m, n], t0 = ri(3, 30), k = row1[kc] * t0;
+      if (k > 600 || reservedNums([k, t0 * row1[1 - kc]])) continue;
+      var t = table([r[0], r[1]], row1, kc, k);
+      t.story = r[0] + ' : ' + r[1] + ' = ' + m + ' : ' + n + ' ถ้ามี' + r[kc] + ' ' + fmt(k) + ' ' + r[2] + ' จะมี' + r[1 - kc] + 'กี่' + r[2];
+      t.unit = r[2];
+      t.kind = 'ratio';
+      return t;
+    }
+  }
+
+  var COSTS = [200, 250, 300, 600, 900, 1200, 1500, 1600, 2000, 2400, 3000, 3200, 3600, 4500, 7500, 8000];
+  var PCTS = [5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45];
+
+  /* T3 กำไรร้อยละ — ทุน | กำไร · C → G · 100 → ? (แบบ B2′) */
+  function genProfitPct() {
+    for (;;) {
+      var C = pick(COSTS), r = pick(PCTS), G = C * r / 100;
+      if (!isInt(G) || reservedNums([C, G])) continue;
+      var t = table(['ทุน (บาท)', 'กำไร (บาท)'], [C, G], 0, 100);
+      t.story = 'ซื้อของมาราคาทุน ' + fmt(C) + ' บาท ขายได้กำไร ' + fmt(G) + ' บาท ได้กำไรร้อยละเท่าไร';
+      t.unit = '%';
+      t.kind = 'pct';
+      return t;
+    }
+  }
+
+  /* T4 ส่วนลด — kc 0: ป้าย P ลด r% ลดกี่บาท · kc 1 (กับดัก): ลดไป D บาท = r% ป้ายเท่าไร */
+  var LABELS = [300, 600, 900, 1200, 1500, 1800, 2000, 2400, 3000, 3600, 4500, 7000, 9000];
+  function genDiscount(kc) {
+    for (;;) {
+      var P = pick(LABELS), r = pick([5, 10, 15, 20, 25, 30, 40]), D = P * r / 100;
+      if (!isInt(D) || reservedNums([P, D])) continue;
+      var t = table(['ราคาป้าย (บาท)', 'ส่วนลด (บาท)'], [100, r], kc, kc === 0 ? P : D);
+      t.story = kc === 0
+        ? 'ราคาป้าย ' + fmt(P) + ' บาท ลดราคา ' + r + '% ลดไปกี่บาท'
+        : 'ร้านลดราคาไป ' + fmt(D) + ' บาท ซึ่งเท่ากับ ' + r + '% ของราคาป้าย ราคาป้ายเท่าไร';
+      t.unit = 'บาท';
+      t.kind = 'disc';
+      return t;
+    }
+  }
+
+  /* T5 กำไรกี่บาทจากร้อยละ — 100 → r · C → ? */
+  function genProfitBaht() {
+    for (;;) {
+      var C = pick(COSTS), r = pick(PCTS), G = C * r / 100;
+      if (!isInt(G) || reservedNums([C, G])) continue;
+      var t = table(['ทุน (บาท)', 'กำไร (บาท)'], [100, r], 0, C);
+      t.story = 'ซื้อของมาราคาทุน ' + fmt(C) + ' บาท ขายได้กำไรร้อยละ ' + r + ' ได้กำไรกี่บาท';
+      t.unit = 'บาท';
+      t.kind = 'pbaht';
+      return t;
+    }
+  }
+
+  function genBasic(i) {
+    // สลับแบบให้ครบ และครึ่งหนึ่งเป็นแบบ "เลขที่รู้อยู่คอลัมน์ที่สอง"
+    var f = [function () { return genRatio(1); }, function () { return genUnit(0); }, function () { return genProfitPct(); },
+      function () { return genRatio(0); }, function () { return genDiscount(1); }, function () { return genUnit(1); },
+      function () { return genDiscount(0); }, function () { return genProfitBaht(); }, function () { return genRatio(1); },
+      function () { return genUnit(0); }];
+    return f[i % f.length]();
+  }
+
+  /* ด่าน 3: ช้อยส์คำตอบ — ถูก · วางผิดคอลัมน์ · คูณกลับ · +/− ใกล้ ๆ */
+  function answerChoices(t) {
+    var opts = [{ v: t.ans, why: '' }];
+    function add(v, why) {
+      if (!(v > 0) || !isInt(v)) return;
+      for (var i = 0; i < opts.length; i++) if (opts[i].v === v) return;
+      opts.push({ v: v, why: why });
+    }
+    add(t.wrongPair, 'วางเลข ' + fmt(t.k) + ' ผิดคอลัมน์ (เอาไปไว้ใต้ "' + t.cols[1 - t.kc] + '") ได้คำตอบกลับทิศ');
+    add(t.flipMul, 'คูณกลับ — เอาตัวที่ทแยงกับ ? ไปคูณ แทนที่จะหาร');
+    var guard = 0;
+    while (opts.length < 4 && guard++ < 50) {
+      var d = pick([2, 3, 4, 5, 10]) * (rnd() < .5 ? 1 : -1);
+      var v = t.ans + d * Math.max(1, Math.round(t.ans / 20));
+      add(v, 'คิดเลขพลาด — ลองคูณ-หารใหม่ทีละขั้น');
+    }
+    return opts;
+  }
+
+  /* ด่าน 4: โจทย์เต็มหลายขั้น */
+  var CONN = [['สีขาว', 'สีฟ้า', 'สีชมพู', 'มล.'], ['ข้าวเหนียว', 'มะพร้าว', 'น้ำตาล', 'กรัม'], ['ปลาทอง', 'ปลาหางนกยูง', 'ปลากัด', 'ตัว'],
+    ['หนังสือการ์ตูน', 'นิทาน', 'สารคดี', 'เล่ม'], ['ส้ม', 'มะม่วง', 'ฝรั่ง', 'ผล']];
+  function genConnector() {
+    for (;;) {
+      var c = pick(CONN), a = ri(2, 9), b = ri(2, 9), cc = ri(2, 9), d = ri(2, 9);
+      if (a === b || cc === d || gcd(a, b) !== 1 || gcd(cc, d) !== 1 || b === d) continue;
+      if (reservedPair(a, b) || reservedPair(cc, d)) continue;
+      var L = b * d / gcd(b, d), X = a * L / b, Z = cc * L / d;
+      if (X === Z) continue;
+      var t0 = ri(2, 12), k = X * t0 * (ri(1, 3));
+      var ans = k * Z / X, link = k * L / X;
+      var stop = link, wrong = k * X / Z, skip = k * cc / d;
+      var vals = [ans, stop, wrong, skip];
+      if (!vals.every(isInt) || reservedNums([k, ans]) || k > 900) continue;
+      if (new Set(vals).size !== 4) continue;
+      return {
+        kind: 'conn', unit: c[3],
+        story: c[0] + ' : ' + c[1] + ' = ' + a + ' : ' + b + ' และ ' + c[2] + ' : ' + c[1] + ' = ' + cc + ' : ' + d +
+          ' ถ้ามี' + c[0] + ' ' + fmt(k) + ' ' + c[3] + ' จะมี' + c[2] + 'กี่' + c[3],
+        ans: ans,
+        opts: [{ v: ans, why: '' },
+          { v: stop, why: 'หยุดที่ตัวเชื่อม — ' + fmt(stop) + ' คือจำนวน' + c[1] + ' แต่โจทย์ถาม' + c[2] + ' (อ่านคำถามซ้ำก่อนตอบ)' },
+          { v: wrong, why: 'รวมอัตราส่วนถูก แต่วาง ' + fmt(k) + ' ไว้ใต้ "' + c[2] + '" ทั้งที่มันคือ' + c[0] + ' → ได้คำตอบกลับทิศ' },
+          { v: skip, why: 'ข้ามตัวเชื่อม — เอา ' + cc + ' : ' + d + ' มาใช้กับ' + c[0] + 'ตรง ๆ ทั้งที่คู่นี้เทียบกับ' + c[1] }],
+        tbl: Object.assign(table([c[0], c[2]], [X, Z], 0, k), { unit: c[3] }),
+        steps: 'ทำ' + c[1] + 'ให้เท่ากัน: ' + c[0] + ' : ' + c[1] + ' : ' + c[2] + ' = ' + X + ' : ' + L + ' : ' + Z
+      };
+    }
+  }
+
+  function genChain() {
+    for (;;) {
+      var P = pick([1000, 1500, 2000, 3000, 3500, 4500, 7000, 8000, 9000, 10000, 12000]), r = pick([10, 15, 20, 25, 30, 40]);
+      var cost = P * (100 - r) / 100;
+      var pct = pick([5, 10, 12, 15, 20, 25, 30, 40, 50]), G = cost * pct / 100, S = cost + G;
+      if (!isInt(cost) || !isInt(G) || reservedNums([P, S, cost, G])) continue;
+      var opts = [{ v: pct, why: '' }];
+      function add(v, why) { if (v > 0 && isInt(v) && !opts.some(function (o) { return o.v === v; })) opts.push({ v: v, why: why }); }
+      add(r, 'ตอบเลขส่วนลด — ' + r + '% คือที่ร้านลดให้ ไม่ใช่กำไร');
+      if (S > P) add((S - P) * 100 / P, 'ใช้ราคาป้ายเป็นทุน — แต่เราจ่ายจริงแค่ราคาหลังลด ' + fmt(cost) + ' บาท');
+      add(G * 100 / S, 'หารด้วยราคาขาย — กำไรร้อยละต้องเทียบกับทุนเสมอ');
+      add(G * cost / 100, 'คูณกลับ — ' + fmt(G) + ' × ' + fmt(cost) + ' ÷ 100 · กำไรเกินร้อยละ 100 ต้องสะดุดทันที');
+      if (opts.length < 4) continue;
+      opts = opts.slice(0, 4);
+      return {
+        kind: 'chain', unit: '%',
+        story: 'แม่ค้าซื้อของราคาป้าย ' + fmt(P) + ' บาท ได้ส่วนลด ' + r + '% แล้วนำไปขายต่อได้ ' + fmt(S) + ' บาท แม่ค้าได้กำไรร้อยละเท่าไร',
+        ans: pct, opts: opts,
+        tbl: Object.assign(table(['ทุน (บาท)', 'กำไร (บาท)'], [cost, G], 0, 100), { unit: '%' }),
+        steps: 'ทุน = ' + fmt(P) + ' − ' + r + '% = ' + fmt(cost) + ' บาท · กำไร = ' + fmt(S) + ' − ' + fmt(cost) + ' = ' + fmt(G) + ' บาท'
+      };
+    }
+  }
+
+  function genTrapBasic() {
+    var t = pick([function () { return genRatio(1); }, function () { return genUnit(1); }, function () { return genDiscount(1); }, genProfitPct])();
+    var o = answerChoices(t);
+    if (o.length < 4) return genTrapBasic();
+    return { kind: 'basic', unit: t.unit, story: t.story, ans: t.ans, opts: o, tbl: t, steps: '' };
+  }
+
+  function genTrap(i) { return [genConnector, genChain, genTrapBasic, genConnector, genChain, genTrapBasic, genConnector, genChain][i % 8](); }
+
+  return { setRng: setRng, fmt: fmt, isInt: isInt, genBasic: genBasic, answerChoices: answerChoices, genTrap: genTrap,
+    genConnector: genConnector, genChain: genChain, RESERVED_NUM: RESERVED_NUM, RESERVED_PAIR: RESERVED_PAIR };
+})();
+if (typeof module !== 'undefined') module.exports = GEN;
+</script>
+
+<script>
+/* ===== UI ===== */
+var KEY = 'r3game_best_';
+var N = { 1: 10, 2: 10, 3: 8, 4: 8 };
+var S = null, timer = null;
+var $ = function (id) { return document.getElementById(id); };
+var fmt = GEN.fmt;
+
+function best(lv) { try { return localStorage.getItem(KEY + lv) || ''; } catch (e) { return ''; } }
+function setBest(lv, v) { try { localStorage.setItem(KEY + lv, v); } catch (e) { } }
+function showBest() { for (var i = 1; i <= 4; i++) { var b = best(i); $('best' + i).textContent = b ? '⭐ ' + b : ''; } }
+function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function show(id) { ['menu', 'play', 'done'].forEach(function (s) { $(s).classList.toggle('hidden', s !== id); }); window.scrollTo(0, 0); }
+
+/* วาดตาราง · mode: 'blank' = แถว 2 ว่างทั้งคู่ · 'full' = มี k และ ? */
+function tableHTML(t, mode, mark) {
+  mark = mark || {};
+  var r2 = ['', ''];
+  if (mode === 'blank') { r2 = ['<td class="empty">…</td>', '<td class="empty">…</td>']; }
+  else {
+    r2[t.kc] = '<td' + (mark.k ? ' class="' + mark.k + '"' : '') + '>' + fmt(t.k) + '</td>';
+    r2[1 - t.kc] = '<td class="q">' + (mark.ans != null ? fmt(mark.ans) : '?') + '</td>';
+  }
+  var c0 = mark.div ? ' class="div"' : '';
+  var r1 = t.kc === 0
+    ? '<td' + c0 + '>' + fmt(t.row1[0]) + '</td><td class="arrow">→</td><td>' + fmt(t.row1[1]) + '</td>'
+    : '<td>' + fmt(t.row1[0]) + '</td><td class="arrow">→</td><td' + c0 + '>' + fmt(t.row1[1]) + '</td>';
+  return '<table class="r3"><tr><th>' + t.cols[0] + '</th><td class="arrow"></td><th>' + t.cols[1] + '</th></tr>' +
+    '<tr>' + r1 + '</tr><tr>' + r2[0] + '<td class="arrow">→</td>' + r2[1] + '</tr></table>';
+}
+function calcLine(t) {
+  var oc = 1 - t.kc;
+  return '? = ' + fmt(t.k) + ' × ' + fmt(t.row1[oc]) + ' ÷ ' + fmt(t.row1[t.kc]) + ' = ' + fmt(t.ans) + (t.unit === '%' ? ' (ร้อยละ ' + fmt(t.ans) + ')' : ' ' + t.unit);
+}
+
+function start(lv) {
+  S = { lv: lv, i: 0, ok: 0, t0: Date.now(), miss: [], step: 0 };
+  show('play');
+  clearInterval(timer);
+  timer = setInterval(function () { $('hT').textContent = Math.floor((Date.now() - S.t0) / 1000); }, 500);
+  next();
+}
+function hud() { $('hNo').textContent = (S.i + 1) + '/' + N[S.lv]; $('hOk').textContent = S.ok; }
+
+function next() {
+  if (S.i >= N[S.lv]) return finish();
+  hud();
+  S.answered = false;
+  var lv = S.lv;
+  if (lv === 4) { S.p = GEN.genTrap(S.i); return render4(); }
+  S.p = GEN.genBasic(S.i + Math.floor(Math.random() * 10));
+  if (lv === 1) render1(); else if (lv === 2) render2(); else { S.step = 0; render3(); }
+}
+
+function feedback(ok, html) {
+  return '<div class="fb ' + (ok ? 'ok' : 'bad') + '">' + html + '</div><button class="next" id="nx">' + (S.i + 1 >= N[S.lv] ? 'ดูผล' : 'ข้อต่อไป →') + '</button>';
+}
+function bindNext() { $('nx').onclick = function () { S.i++; next(); }; }
+function score(ok, label) { if (ok) S.ok++; else S.miss.push(label); hud(); }
+
+/* ด่าน 1 — เลข k ไปอยู่ใต้ชื่อไหน */
+function render1() {
+  var t = S.p;
+  $('stage').innerHTML = '<div class="story">' + t.story + '</div>' + tableHTML(t, 'blank') +
+    '<div class="ask">เลข ' + fmt(t.k) + ' ต้องไปอยู่ใต้ชื่อไหน?</div>' +
+    '<div class="choices two"><button class="ch" data-c="0">ใต้ "' + t.cols[0] + '"</button><button class="ch" data-c="1">ใต้ "' + t.cols[1] + '"</button></div><div id="fbx"></div>';
+  [].forEach.call(document.querySelectorAll('.ch'), function (b) {
+    b.onclick = function () {
+      if (S.answered) return; S.answered = true;
+      var c = +b.dataset.c, ok = c === t.kc;
+      b.classList.add(ok ? 'right' : 'wrong');
+      [].forEach.call(document.querySelectorAll('.ch'), function (x) { x.disabled = true; });
+      score(ok, t.story);
+      var why = ok ? '✔ ถูก! ' + fmt(t.k) + ' คือ "' + t.cols[t.kc] + '" เลยอยู่ใต้ชื่อนี้'
+        : '✘ ' + fmt(t.k) + ' ในโจทย์คือ <b>' + t.cols[t.kc] + '</b> — ต้องอยู่ใต้ชื่อของมันเอง ถ้าวางผิดช่อง คำตอบจะกลับทิศ (ได้ ' + fmt(+t.wrongPair.toFixed(2)) + ' แทน ' + fmt(t.ans) + ')';
+      $('stage').querySelector('table').outerHTML = tableHTML(t, 'full', { k: ok ? 'pick' : 'wrongpick' });
+      $('fbx').innerHTML = feedback(ok, why);
+      bindNext();
+    };
+  });
+}
+
+/* ด่าน 2 — ตัวไหนทแยงกับ ? */
+function render2() {
+  var t = S.p;
+  var cand = [t.row1[0], t.row1[1], t.k];
+  var uniq = cand.filter(function (v, i) { return cand.indexOf(v) === i; });
+  if (uniq.length < 3) { S.p = GEN.genBasic(Math.floor(Math.random() * 10)); return render2(); }
+  shuffle(uniq);
+  $('stage').innerHTML = '<div class="story">' + t.story + '</div>' + tableHTML(t, 'full') +
+    '<div class="ask">เลขไหนอยู่ทแยงกับ ? (= ตัวหาร)</div><div class="choices three">' +
+    uniq.map(function (v) { return '<button class="ch" data-v="' + v + '">' + fmt(v) + '</button>'; }).join('') + '</div><div id="fbx"></div>';
+  [].forEach.call(document.querySelectorAll('.ch'), function (b) {
+    b.onclick = function () {
+      if (S.answered) return; S.answered = true;
+      var v = +b.dataset.v, ok = v === t.divisor;
+      b.classList.add(ok ? 'right' : 'wrong');
+      [].forEach.call(document.querySelectorAll('.ch'), function (x) { x.disabled = true; });
+      score(ok, t.story);
+      var why = (ok ? '✔ ใช่เลย! ' + fmt(t.divisor) + ' อยู่ทแยงกับ ? → เอาไปหาร' :
+        '✘ ตัวทแยงคือ <b>' + fmt(t.divisor) + '</b> (มุมตรงข้ามกับ ?) — ' + (v === t.k ? fmt(v) + ' อยู่แถวเดียวกับ ? ' : fmt(v) + ' อยู่คอลัมน์เดียวกับ ? ') + 'จึงเป็นตัวคูณ') +
+        '<span class="calc">' + calcLine(t) + '</span>';
+      $('stage').querySelector('table').outerHTML = tableHTML(t, 'full', { div: 1, ans: t.ans });
+      $('fbx').innerHTML = feedback(ok, why);
+      bindNext();
+    };
+  });
+}
+
+/* ด่าน 3 — ทายมาก/น้อย แล้วเลือกคำตอบ */
+function render3() {
+  var t = S.p;
+  if (S.step === 0) {
+    var o = GEN.answerChoices(t);
+    if (o.length < 4 || t.row1[0] === t.row1[1]) { S.p = GEN.genBasic(Math.floor(Math.random() * 10)); return render3(); }
+    S.opts = shuffle(o);
+    S.dirOk = null;
+    $('stage').innerHTML = '<div class="story">' + t.story + '</div>' + tableHTML(t, 'full') +
+      '<div class="ask">ก่อนคิดเลข: คำตอบควรมากกว่าหรือน้อยกว่า ' + fmt(t.k) + '?</div>' +
+      '<div class="choices two"><button class="ch" data-m="1">มากกว่า ' + fmt(t.k) + '</button><button class="ch" data-m="0">น้อยกว่า ' + fmt(t.k) + '</button></div><div id="fbx"></div>';
+    [].forEach.call(document.querySelectorAll('.ch'), function (b) {
+      b.onclick = function () {
+        if (S.dirOk !== null) return;
+        S.dirOk = (+b.dataset.m === 1) === t.more;
+        b.classList.add(S.dirOk ? 'right' : 'wrong');
+        var oc = 1 - t.kc;
+        $('fbx').innerHTML = '<div class="fb ' + (S.dirOk ? 'ok' : 'bad') + '">' + (S.dirOk ? '✔ ' : '✘ ') +
+          'แถวบน ' + fmt(t.row1[t.kc]) + ' → ' + fmt(t.row1[oc]) + ' ' + (t.more ? 'ฝั่ง ? ใหญ่กว่า → คำตอบ<b>มากกว่า</b> ' : 'ฝั่ง ? เล็กกว่า → คำตอบ<b>น้อยกว่า</b> ') + fmt(t.k) + '</div>';
+        S.step = 1;
+        setTimeout(render3, 900);
+      };
+    });
+    return;
+  }
+  var box = $('stage');
+  box.querySelector('.choices').outerHTML = '<div class="ask">แล้วคำตอบคือ? (ตัดช้อยส์ที่ผิดทิศทิ้งได้เลย)</div><div class="choices">' +
+    S.opts.map(function (o, i) { return '<button class="ch" data-i="' + i + '"><b>' + 'กขคง'[i] + '.</b>' + fmt(o.v) + (t.unit === '%' ? '%' : ' ' + t.unit) + '</button>'; }).join('') + '</div>';
+  box.querySelectorAll('.ask')[0].remove();
+  $('fbx').innerHTML = '';
+  [].forEach.call(box.querySelectorAll('.ch'), function (b) {
+    b.onclick = function () {
+      if (S.answered) return; S.answered = true;
+      var o = S.opts[+b.dataset.i], ok = o.v === t.ans && S.dirOk;
+      b.classList.add(o.v === t.ans ? 'right' : 'wrong');
+      [].forEach.call(box.querySelectorAll('.ch'), function (x) { x.disabled = true; if (S.opts[+x.dataset.i].v === t.ans) x.classList.add('right'); });
+      score(ok, t.story);
+      var why = (o.v === t.ans ? (S.dirOk ? '✔ ถูกทั้งทิศและคำตอบ!' : '✔ คำตอบถูก แต่ทายทิศพลาด — ข้อนี้ยังไม่นับนะ ลองทายทิศให้ถูกก่อนคิดเลข') : '✘ ' + o.why) +
+        '<span class="calc">' + calcLine(t) + '</span>';
+      box.querySelector('table').outerHTML = tableHTML(t, 'full', { div: 1, ans: t.ans });
+      $('fbx').innerHTML = feedback(ok, why);
+      bindNext();
+    };
+  });
+}
+
+/* ด่าน 4 — กับดักข้อสอบ */
+function render4() {
+  var p = S.p;
+  var opts = shuffle(p.opts.slice());
+  $('stage').innerHTML = '<div class="story">' + p.story + '</div>' +
+    '<div class="ask">เขียนตารางในกระดาษทดก่อนนะ แล้วค่อยเลือก</div><div class="choices">' +
+    opts.map(function (o, i) { return '<button class="ch" data-i="' + i + '"><b>' + 'กขคง'[i] + '.</b>' + (p.unit === '%' ? 'ร้อยละ ' + fmt(o.v) : fmt(o.v) + ' ' + p.unit) + '</button>'; }).join('') +
+    '</div><div id="fbx"></div>';
+  [].forEach.call(document.querySelectorAll('.ch'), function (b) {
+    b.onclick = function () {
+      if (S.answered) return; S.answered = true;
+      var o = opts[+b.dataset.i], ok = o.v === p.ans;
+      [].forEach.call(document.querySelectorAll('.ch'), function (x) { x.disabled = true; if (opts[+x.dataset.i].v === p.ans) x.classList.add('right'); });
+      if (!ok) b.classList.add('wrong');
+      score(ok, p.story);
+      var why = (ok ? '✔ ไม่ติดกับดัก เก่งมาก!' : '✘ กับดัก: ' + o.why) +
+        (p.steps ? '<span class="calc">' + p.steps + '</span>' : '') +
+        tableHTML(p.tbl, 'full', { div: 1, ans: p.tbl.ans }) + '<span class="calc">' + calcLine(p.tbl) + '</span>';
+      $('fbx').innerHTML = feedback(ok, why);
+      bindNext();
+    };
+  });
+}
+
+function finish() {
+  clearInterval(timer);
+  var sec = Math.floor((Date.now() - S.t0) / 1000), n = N[S.lv];
+  var pct = Math.round(S.ok * 100 / n);
+  $('dScore').textContent = S.ok + '/' + n;
+  $('dTitle').textContent = pct >= 80 ? 'สุดยอด! 🎉' : pct >= 50 ? 'ดีขึ้นแล้ว 💪' : 'ได้ข้อมูลแล้ว ลองอีกรอบนะ 🙂';
+  $('dMsg').textContent = 'ใช้เวลา ' + sec + ' วินาที (' + Math.round(sec / n) + ' วินาที/ข้อ)' +
+    (pct >= 80 ? ' · ไปด่านถัดไปได้เลย' : ' · ทวนกฎ 3 ข้อในเมนูแล้วเล่นด่านนี้อีกรอบ');
+  $('dList').innerHTML = S.miss.length ? '<b>ข้อที่พลาด:</b>' + S.miss.map(function (m) { return '<li>' + m + '</li>'; }).join('') : '';
+  var prev = best(S.lv), mine = S.ok + '/' + n;
+  if (!prev || S.ok > +prev.split('/')[0]) setBest(S.lv, mine);
+  show('done');
+}
+
+[].forEach.call(document.querySelectorAll('.lv'), function (b) { b.onclick = function () { start(+b.dataset.lv); }; });
+$('quit').onclick = function () { clearInterval(timer); showBest(); show('menu'); };
+$('again').onclick = function () { start(S.lv); };
+$('toMenu').onclick = function () { showBest(); show('menu'); };
+showBest();
+</script>
+</body>
+</html>
