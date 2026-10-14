@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>S–V Agreement — ประธานกับกริยาต้องคู่กัน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+--ink:#1a1c1e;--muted:#5b6167;--line:#dfe3e8;--bg:#fbfbfa;--card:#fff;--soft:#f4f6f8;
+--accent:#1f6feb;--accent-bg:#eaf2ff;--warn:#b25000;--warn-bg:#fff4e8;--ok:#136c39;--ok-bg:#e8f6ee;
+--bad:#b3261e;--bad-bg:#fdecea;--vio:#6b46e0;--vio-bg:#efeaff}
+@media (prefers-color-scheme:dark){:root{
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#333a42;--bg:#16181b;--card:#1e2126;--soft:#262a30;
+--accent:#69a4ff;--accent-bg:#1a2740;--warn:#f0a163;--warn-bg:#33240f;--ok:#6fd39a;--ok-bg:#13301f;
+--bad:#ff8a80;--bad-bg:#3a1a17;--vio:#a68cff;--vio-bg:#2a2140}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:"Sarabun","Noto Sans Thai",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+font-size:17px;line-height:1.75;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:680px;margin:0 auto;padding:22px 16px calc(60px + env(safe-area-inset-bottom))}
+h1{font-size:1.45rem;margin:0 0 6px;line-height:1.35}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.hidden{display:none !important}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+.tip{background:var(--vio-bg);border:1px solid var(--vio);border-radius:14px;padding:12px 16px;margin-bottom:16px;font-size:.95rem}
+.tip b{color:var(--vio)}
+.lv{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);
+border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:11px}
+.lv:active{border-color:var(--accent)}
+.lv b{font-size:1.06rem}
+.lv .d{color:var(--muted);font-size:.87rem;line-height:1.6}
+.lv .best{float:right;font-size:.8rem;color:var(--ok);font-weight:700}
+.lv.mara{border-color:var(--warn);background:var(--warn-bg)}
+.hud{display:flex;gap:10px;margin-bottom:14px}
+.pill{flex:1;background:var(--soft);border:1px solid var(--line);border-radius:11px;padding:7px 4px;text-align:center;line-height:1.3}
+.pill .n{font-size:1.28rem;font-weight:700;font-family:"IBM Plex Mono",monospace}
+.pill .l{font-size:.72rem;color:var(--muted)}
+.bar{height:9px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+.prompt{color:var(--muted);font-size:.9rem;margin-bottom:4px}
+.q{font-size:1.15rem;font-weight:600;margin:6px 0 14px;line-height:1.9}
+.q .blank{display:inline-block;min-width:2.8em;border-bottom:2px solid var(--accent);color:var(--accent);text-align:center;font-family:"IBM Plex Mono",monospace}
+.q u{text-decoration:none;border-bottom:2px solid var(--vio);padding-bottom:1px}
+.q u b{color:var(--vio);font-size:.75em;margin-right:2px;vertical-align:super}
+.q .ask{display:block;font-size:1rem;color:var(--accent);margin-bottom:6px}
+.q .ask mark{background:var(--warn-bg);color:var(--warn);padding:0 4px;border-radius:4px}
+.ch{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);border:1.5px solid var(--line);
+border-radius:12px;padding:11px 14px;margin-bottom:9px;line-height:1.6}
+.ch:active{border-color:var(--accent)}
+.ch.ok{border-color:var(--ok);background:var(--ok-bg)}
+.ch.bad{border-color:var(--bad);background:var(--bad-bg)}
+.ch[disabled]{cursor:default}
+.fb{border-radius:12px;padding:12px 14px;margin:6px 0 12px;font-size:.96rem;line-height:1.7}
+.fb.ok{background:var(--ok-bg);border:1px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);border:1px solid var(--bad)}
+.fb .habit{display:block;background:var(--warn-bg);color:var(--warn);border-radius:8px;padding:6px 10px;margin-bottom:8px;font-weight:700}
+.fb .fix{display:block;margin-top:6px;font-family:"IBM Plex Mono",monospace;font-size:.92rem}
+.go{display:block;width:100%;background:var(--accent);color:#fff;border:0;border-radius:12px;padding:12px;font-weight:700}
+.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:.88rem}
+.hint{background:var(--soft);border-radius:10px;padding:8px 12px;font-size:.9rem;margin-bottom:10px}
+.big{font-size:2.2rem;font-weight:700;text-align:center;margin:8px 0}
+.res{text-align:center;color:var(--muted)}
+.miss{font-size:.9rem;background:var(--soft);border-radius:10px;padding:8px 12px;margin:6px 0}
+footer{color:var(--muted);font-size:.8rem;text-align:center;margin-top:24px;line-height:1.6}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<section id="menu">
+  <h1>🎯 S–V Agreement</h1>
+  <p class="sub">ประธาน (subject) กับกริยา (verb) ต้องคู่กันเสมอ · 5 ด่าน + โหมดมาราธอน · ประโยคใหม่ทั้งหมด ~150 ข้อ</p>
+  <div class="tip"><b>กฎเดียวที่ต้องจำ — สแกน 3 จังหวะ</b><br>
+  ① <b>ปิดวลี</b> ที่ขยายประธาน (of… / with… / in… / made by… / over…) ด้วยนิ้ว<br>
+  ② ถาม <b>ประธานตัวจริง</b> เป็นเอกพจน์ (1) หรือพหูพจน์ (หลาย)<br>
+  ③ เอกพจน์ → <b>is / was / has / does / V-s</b> · พหูพจน์ → <b>are / were / have / do / V</b></div>
+  <button class="lv" data-lv="1"><span class="best" id="b1"></span><b>ด่าน 1 · ปิดวลี หาประธานตัวจริง</b><div class="d">ประโยคยาว คำนามหลายตัว — ตัวไหนคือเจ้าของกริยา</div></button>
+  <button class="lv" data-lv="2"><span class="best" id="b2"></span><b>ด่าน 2 · เอกพจน์ หรือ พหูพจน์?</b><div class="d">everyone · news · people · jeans · the number of / a number of</div></button>
+  <button class="lv" data-lv="3"><span class="best" id="b3"></span><b>ด่าน 3 · เลือกกริยาให้คู่</b><div class="d">is/are · has/have · go/goes · do/does · there is/are</div></button>
+  <button class="lv" data-lv="4"><span class="best" id="b4"></span><b>ด่าน 4 · จับจุดผิด (แบบข้อสอบ)</b><div class="d">ขีดเส้นใต้ 4 ตัว เลือกตัวที่ผิด · บางข้อ S–V ถูกแล้ว ต้องสแกนต่อ</div></button>
+  <button class="lv" data-lv="5"><span class="best" id="b5"></span><b>ด่าน 5 · กับดักของน้อง ⛔</b><div class="d">ข้อสอบชอบถาม "INCORRECT" สลับ "CORRECT" — ต้องตอบก่อนว่าเขาถามอะไร</div></button>
+  <button class="lv mara" data-lv="9"><span class="best" id="b9"></span><b>🏃 มาราธอน — ผสมทุกด่าน</b><div class="d">เล่นไปเรื่อยๆ จนพลาด 3 ครั้ง · ทำลายสถิติตัวเอง</div></button>
+</section>
+
+<section id="play" class="hidden">
+  <div class="hud">
+    <div class="pill"><div class="n" id="hNo">1</div><div class="l">ข้อ</div></div>
+    <div class="pill"><div class="n" id="hOk">0</div><div class="l">ถูก</div></div>
+    <div class="pill"><div class="n" id="hX">0</div><div class="l" id="hXl">ผิด</div></div>
+    <div class="pill"><div class="n" id="hT">0:00</div><div class="l">เวลา</div></div>
+  </div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="card">
+    <div class="prompt" id="prompt"></div>
+    <div class="q" id="q"></div>
+    <div id="hintBox"></div>
+    <div id="choices"></div>
+    <div id="fb"></div>
+    <button class="go hidden" id="next">ข้อต่อไป →</button>
+  </div>
+  <p style="text-align:center;margin-top:12px"><button class="ghost" id="quit">← กลับเมนู</button></p>
+</section>
+
+<section id="done" class="hidden">
+  <div class="card">
+    <h1 id="dTitle">จบด่าน</h1>
+    <div class="big" id="dScore"></div>
+    <p class="res" id="dMsg"></p>
+    <div id="dMiss"></div>
+    <button class="go" id="again" style="margin-top:12px">เล่นอีกรอบ (โจทย์ใหม่)</button>
+    <p style="text-align:center;margin-top:10px"><button class="ghost" id="home">← กลับเมนู</button></p>
+  </div>
+</section>
+
+<footer>Road to Yothin · เกม subject–verb agreement · ประโยคในเกมแต่งใหม่ ไม่ซ้ำชุดฝึกใน examinations/<br>สถิติที่ดีที่สุดเก็บไว้ในเครื่องนี้เท่านั้น</footer>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); } } catch (e) { }
+</script>
+
+<!-- ============ POOL + BUILD (ไม่แตะ DOM — ทดสอบด้วย Node ได้) ============ -->
+<script id="gen">
+"use strict";
+/* ด่าน 1 — ปิดวลี หาประธาน: s = ประโยค (___ = กริยา), o = ตัวเลือก, a = ประธาน, cut = วลีที่ปิดได้, v = กริยาที่ถูก */
+const L1 = [
+  { s: 'The box of old toys ___ in the garage.', o: ['box', 'toys', 'garage'], a: 'box', cut: 'of old toys', v: 'is' },
+  { s: 'The keys to my bedroom ___ on the table.', o: ['keys', 'bedroom', 'table'], a: 'keys', cut: 'to my bedroom', v: 'are' },
+  { s: 'One of my cousins ___ in Chiang Mai.', o: ['One', 'cousins', 'Chiang Mai'], a: 'One', cut: 'of my cousins', v: 'lives' },
+  { s: 'The girl with long braids ___ my best friend.', o: ['girl', 'braids', 'friend'], a: 'girl', cut: 'with long braids', v: 'is' },
+  { s: 'The pictures on the wall of the classroom ___ very old.', o: ['pictures', 'wall', 'classroom'], a: 'pictures', cut: 'on the wall of the classroom', v: 'are' },
+  { s: 'A bowl of noodles ___ forty baht.', o: ['bowl', 'noodles', 'baht'], a: 'bowl', cut: 'of noodles', v: 'costs' },
+  { s: 'The students in Room 6/2 ___ a test today.', o: ['students', 'Room', 'test'], a: 'students', cut: 'in Room 6/2', v: 'have' },
+  { s: 'The teacher of the twins from Lampang ___ very kind.', o: ['teacher', 'twins', 'Lampang'], a: 'teacher', cut: 'of the twins from Lampang', v: 'is' },
+  { s: 'Each of the boys ___ a red cap.', o: ['Each', 'boys', 'cap'], a: 'Each', cut: 'of the boys', v: 'wears' },
+  { s: 'The color of these flowers in the park ___ beautiful.', o: ['color', 'flowers', 'park'], a: 'color', cut: 'of these flowers in the park', v: 'is' },
+  { s: 'Bags made of plastic ___ bad for the sea.', o: ['Bags', 'plastic', 'sea'], a: 'Bags', cut: 'made of plastic', v: 'are' },
+  { s: 'The man standing near the doors ___ a doctor.', o: ['man', 'doors', 'doctor'], a: 'man', cut: 'standing near the doors', v: 'is' },
+  { s: 'The cookies baked by my grandmother in the morning ___ delicious.', o: ['cookies', 'grandmother', 'morning'], a: 'cookies', cut: 'baked by my grandmother in the morning', v: 'are' },
+  { s: 'The number of students in our school ___ growing.', o: ['number', 'students', 'school'], a: 'number', cut: 'of students in our school', v: 'is' },
+  { s: 'A group of tourists ___ waiting for the bus.', o: ['group', 'tourists', 'bus'], a: 'group', cut: 'of tourists', v: 'is' },
+  { s: 'The sound of the drums at the festival ___ very loud.', o: ['sound', 'drums', 'festival'], a: 'sound', cut: 'of the drums at the festival', v: 'is' },
+  { s: 'Everyone in the two classrooms ___ quiet now.', o: ['Everyone', 'classrooms', 'now'], a: 'Everyone', cut: 'in the two classrooms', v: 'is' },
+  { s: 'The noise from the cars outside ___ me awake.', o: ['noise', 'cars', 'me'], a: 'noise', cut: 'from the cars outside', v: 'keeps' },
+  { s: 'My brother, together with his friends, ___ football every evening.', o: ['brother', 'friends', 'evening'], a: 'brother', cut: ', together with his friends,', v: 'plays' },
+  { s: 'The rules of this game for kids ___ easy to learn.', o: ['rules', 'game', 'kids'], a: 'rules', cut: 'of this game for kids', v: 'are' },
+  { s: 'A list of the winners ___ on the board.', o: ['list', 'winners', 'board'], a: 'list', cut: 'of the winners', v: 'is' },
+  { s: 'The leaves of this tree ___ yellow in winter.', o: ['leaves', 'tree', 'winter'], a: 'leaves', cut: 'of this tree', v: 'turn' },
+  { s: 'Swimming in rivers after heavy rain ___ dangerous.', o: ['Swimming', 'rivers', 'rain'], a: 'Swimming', cut: 'in rivers after heavy rain', v: 'is' },
+  { s: 'The fruit sold by the women at the market ___ fresh.', o: ['fruit', 'women', 'market'], a: 'fruit', cut: 'sold by the women at the market', v: 'is' },
+  { s: 'The changes in our town over the last ten years ___ huge.', o: ['changes', 'town', 'years'], a: 'changes', cut: 'in our town over the last ten years', v: 'are' },
+  { s: 'The water in these bottles from the fridge ___ cold.', o: ['water', 'bottles', 'fridge'], a: 'water', cut: 'in these bottles from the fridge', v: 'is' },
+  { s: 'The children of my neighbor ___ to the same school as me.', o: ['children', 'neighbor', 'school'], a: 'children', cut: 'of my neighbor', v: 'go' },
+  { s: 'The cat under the cars ___ hungry.', o: ['cat', 'cars', 'hungry'], a: 'cat', cut: 'under the cars', v: 'looks' },
+];
+
+/* ด่าน 2 — เอกพจน์/พหูพจน์: w = ประธาน, sg = true ถ้าเอกพจน์, n = เหตุผล */
+const SG = 'เอกพจน์ → is / has / V-s', PL = 'พหูพจน์ → are / have / V';
+const L2 = [
+  { w: 'Everyone', sg: true, n: 'every-/some-/any-/no- + one/body/thing = เอกพจน์เสมอ ถึงแปลว่า "ทุกคน" ก็ตาม' },
+  { w: 'Everybody in my family', sg: true, n: 'everybody = เอกพจน์ (ปิดวลี in my family ก่อน)' },
+  { w: 'Nobody', sg: true, n: 'nobody = เอกพจน์ → Nobody knows' },
+  { w: 'Something', sg: true, n: 'something = เอกพจน์ → Something is wrong' },
+  { w: 'Each student', sg: true, n: 'each + คำนามเอกพจน์ → เอกพจน์' },
+  { w: 'Every child', sg: true, n: 'every + คำนามเอกพจน์ → เอกพจน์' },
+  { w: 'Each of the girls', sg: true, n: 'ปิด "of the girls" → เหลือ Each = เอกพจน์' },
+  { w: 'One of my friends', sg: true, n: 'ปิด "of my friends" → เหลือ One = เอกพจน์' },
+  { w: 'The news', sg: true, n: 'news ลงท้าย -s แต่เป็นเอกพจน์ (ข่าว นับไม่ได้) → The news is' },
+  { w: 'Mathematics', sg: true, n: 'ชื่อวิชาลงท้าย -s (mathematics, physics) = เอกพจน์' },
+  { w: 'Physics', sg: true, n: 'ชื่อวิชาลงท้าย -s = เอกพจน์ → Physics is' },
+  { w: 'The people', sg: false, n: 'people = พหูพจน์ของ person (ไม่มี -s แต่พหูพจน์)' },
+  { w: 'The children', sg: false, n: 'children = พหูพจน์ของ child' },
+  { w: 'The police', sg: false, n: 'police = พหูพจน์เสมอ → The police are' },
+  { w: 'My teeth', sg: false, n: 'teeth = พหูพจน์ของ tooth' },
+  { w: 'The mice', sg: false, n: 'mice = พหูพจน์ของ mouse' },
+  { w: 'Those women', sg: false, n: 'women = พหูพจน์ของ woman' },
+  { w: 'My feet', sg: false, n: 'feet = พหูพจน์ของ foot' },
+  { w: 'My mom and my aunt', sg: false, n: 'A and B = 2 คน → พหูพจน์' },
+  { w: 'Ploy and her sister', sg: false, n: 'A and B → พหูพจน์' },
+  { w: 'Money', sg: true, n: 'money นับไม่ได้ → เอกพจน์' },
+  { w: 'The water', sg: true, n: 'water นับไม่ได้ → เอกพจน์' },
+  { w: 'Rice', sg: true, n: 'rice นับไม่ได้ → เอกพจน์' },
+  { w: 'The information', sg: true, n: 'information นับไม่ได้ (ห้ามเติม s) → เอกพจน์' },
+  { w: 'My homework', sg: true, n: 'homework นับไม่ได้ → เอกพจน์' },
+  { w: 'The furniture', sg: true, n: 'furniture นับไม่ได้ → เอกพจน์' },
+  { w: 'Fifty baht', sg: true, n: 'จำนวนเงิน/เวลา/ระยะทางที่มองเป็นก้อนเดียว → เอกพจน์ (Fifty baht is enough)' },
+  { w: 'Two hours', sg: true, n: 'ระยะเวลาเป็นก้อนเดียว → เอกพจน์ (Two hours is a long time)' },
+  { w: 'Swimming', sg: true, n: 'V-ing เป็นประธาน (กิจกรรม 1 อย่าง) → เอกพจน์' },
+  { w: 'Playing games', sg: true, n: 'V-ing เป็นประธาน → เอกพจน์ (games อยู่ในวลี)' },
+  { w: 'The number of cars', sg: true, n: 'THE number of = "จำนวน" (ตัวเลขตัวเดียว) → เอกพจน์' },
+  { w: 'A number of cars', sg: false, n: 'A number of = "หลาย" (= many) → พหูพจน์' },
+  { w: 'A lot of students', sg: false, n: 'a lot of + นามนับได้พหูพจน์ → พหูพจน์' },
+  { w: 'A lot of water', sg: true, n: 'a lot of + นามนับไม่ได้ → เอกพจน์' },
+  { w: 'Some of the cake', sg: true, n: 'some of + cake (ก้อนเดียว) → เอกพจน์' },
+  { w: 'Some of the cakes', sg: false, n: 'some of + cakes (หลายชิ้น) → พหูพจน์' },
+  { w: 'My new jeans', sg: false, n: 'ของเป็นคู่ (jeans, glasses, scissors, shorts) → พหูพจน์' },
+  { w: 'These scissors', sg: false, n: 'scissors = ของคู่ → พหูพจน์' },
+  { w: 'The bus', sg: true, n: 'bus ลงท้าย s แต่เป็น 1 คัน → เอกพจน์ (พหูพจน์คือ buses)' },
+  { w: 'This class', sg: true, n: 'class ลงท้าย ss แต่เป็น 1 ห้อง → เอกพจน์' },
+  { w: 'Tom, with his sisters,', sg: true, n: 'ปิดวลี with his sisters → เหลือ Tom = เอกพจน์' },
+  { w: 'The glass', sg: true, n: 'glass (แก้ว 1 ใบ) ลงท้าย ss → เอกพจน์' },
+];
+
+/* ด่าน 3 — เลือกกริยา: s (___), o = [ถูก, ผิด], n = เหตุผล */
+const L3 = [
+  { s: 'My sister ___ to school by bus every day.', o: ['goes', 'go'], n: 'My sister = 1 คน → goes' },
+  { s: 'The children in the park ___ very happy.', o: ['are', 'is'], n: 'ปิด in the park → children = พหูพจน์ → are' },
+  { s: 'Everyone in my class ___ a smartphone.', o: ['has', 'have'], n: 'Everyone = เอกพจน์ → has' },
+  { s: 'Mathematics ___ my favorite subject.', o: ['is', 'are'], n: 'ชื่อวิชาลงท้าย -s = เอกพจน์ → is' },
+  { s: 'One of the windows ___ broken last night.', o: ['was', 'were'], n: 'ปิด of the windows → One → was' },
+  { s: 'My father and my uncle ___ tennis on Sundays.', o: ['play', 'plays'], n: 'A and B = พหูพจน์ → play' },
+  { s: 'The news about the storm ___ scary.', o: ['was', 'were'], n: 'news = เอกพจน์ → was' },
+  { s: 'There ___ three eggs in the fridge.', o: ['are', 'is'], n: 'there is/are ดูคำนามหลัง → three eggs = พหูพจน์ → are' },
+  { s: 'There ___ some milk in the glass.', o: ['is', 'are'], n: 'milk นับไม่ได้ → there is' },
+  { s: 'Each of the students ___ a name card.', o: ['gets', 'get'], n: 'ปิด of the students → Each → gets' },
+  { s: 'The people next door ___ very friendly.', o: ['are', 'is'], n: 'people = พหูพจน์ → are' },
+  { s: 'Our teacher always ___ us funny stories.', o: ['tells', 'tell'], n: 'always คั่นกลางไม่เกี่ยว → Our teacher = 1 คน → tells' },
+  { s: 'Ploy usually ___ breakfast at seven.', o: ['eats', 'eat'], n: 'usually คั่นกลาง → Ploy = 1 คน → eats' },
+  { s: 'Where ___ your parents work?', o: ['do', 'does'], n: 'คำถาม: ประธานคือ your parents (พหูพจน์) → do' },
+  { s: '___ your brother like durian?', o: ['Does', 'Do'], n: 'ประธาน your brother = 1 คน → Does (แล้ว like ไม่เติม s)' },
+  { s: 'She ___ like spicy food.', o: ["doesn't", "don't"], n: "She → doesn't" },
+  { s: 'The box of crayons ___ on the desk.', o: ['is', 'are'], n: 'ปิด of crayons → The box → is' },
+  { s: 'The crayons in the box ___ new.', o: ['are', 'is'], n: 'ปิด in the box → crayons = พหูพจน์ → are' },
+  { s: 'Fifty baht ___ enough for lunch.', o: ['is', 'are'], n: 'จำนวนเงินก้อนเดียว → is' },
+  { s: 'My new jeans ___ too long.', o: ['are', 'is'], n: 'jeans = ของคู่ → are' },
+  { s: 'Playing video games ___ fun.', o: ['is', 'are'], n: 'V-ing เป็นประธาน → is' },
+  { s: 'A number of students ___ absent today.', o: ['are', 'is'], n: 'A number of = หลาย → are' },
+  { s: 'The number of students in Room 3 ___ thirty.', o: ['is', 'are'], n: 'THE number of = จำนวน (ตัวเลข) → is' },
+  { s: 'Nobody ___ the answer.', o: ['knows', 'know'], n: 'Nobody = เอกพจน์ → knows' },
+  { s: 'The bus ___ at 8 o\'clock.', o: ['leaves', 'leave'], n: 'The bus = 1 คัน → leaves' },
+  { s: 'The teachers at my school ___ a meeting every Friday.', o: ['have', 'has'], n: 'ปิด at my school → teachers → have' },
+  { s: 'A lot of water ___ wasted every day.', o: ['is', 'are'], n: 'water นับไม่ได้ → is' },
+  { s: 'A lot of my friends ___ cats.', o: ['have', 'has'], n: 'friends พหูพจน์ → have' },
+  { s: 'The girl with three dogs ___ next to me.', o: ['lives', 'live'], n: 'ปิด with three dogs → The girl → lives' },
+  { s: 'My cat, together with her kittens, ___ under the bed.', o: ['sleeps', 'sleep'], n: 'ปิด together with her kittens → My cat → sleeps' },
+  { s: 'Physics ___ hard for some students.', o: ['seems', 'seem'], n: 'ชื่อวิชา = เอกพจน์ → seems' },
+  { s: 'The homework for today ___ easy.', o: ['was', 'were'], n: 'homework นับไม่ได้ → was' },
+  { s: 'Tom and his dog ___ in the garden yesterday.', o: ['were', 'was'], n: 'A and B → were' },
+  { s: 'Your glasses ___ on the table.', o: ['are', 'is'], n: 'glasses (แว่นตา) = ของคู่ → are' },
+  { s: 'Every child ___ a gift at the party.', o: ['gets', 'get'], n: 'every + เอกพจน์ → gets' },
+  { s: 'The flowers my mom planted ___ beautiful.', o: ['look', 'looks'], n: 'ปิด my mom planted → flowers → look' },
+  { s: 'Some of the cake ___ left.', o: ['is', 'are'], n: 'cake ก้อนเดียว → is' },
+  { s: 'Some of the cookies ___ left.', o: ['are', 'is'], n: 'cookies หลายชิ้น → are' },
+  { s: 'The water in the two bottles ___ cold.', o: ['is', 'are'], n: 'ปิด in the two bottles → water นับไม่ได้ → is' },
+  { s: 'Mice ___ cheese in cartoons.', o: ['love', 'loves'], n: 'mice = พหูพจน์ → love' },
+  { s: 'The police ___ looking for the thief.', o: ['are', 'is'], n: 'police = พหูพจน์เสมอ → are' },
+  { s: 'Somebody ___ my umbrella!', o: ['has taken', 'have taken'], n: 'Somebody = เอกพจน์ → has' },
+];
+
+/* ด่าน 4 — จับจุดผิด: s มี [[...]] 4 จุด, a = ลำดับ 1–4, fix = แก้เป็น, n = เหตุผล */
+const L4 = [
+  { s: 'My [[best]] friend from Korea [[speak]] Thai [[very]] [[well]].', a: 2, fix: 'speak → speaks', n: 'ปิด from Korea → My best friend = 1 คน → speaks' },
+  { s: 'The [[books]] on the top shelf [[belongs]] [[to]] my [[older]] brother.', a: 2, fix: 'belongs → belong', n: 'ปิด on the top shelf → books = พหูพจน์ → belong' },
+  { s: 'Everyone [[in]] our team [[were]] [[happy]] [[after]] the game.', a: 2, fix: 'were → was', n: 'Everyone = เอกพจน์ → was' },
+  { s: 'One of the [[students]] [[in]] my class [[have]] a [[pet]] snake.', a: 3, fix: 'have → has', n: 'ปิด of the students in my class → One → has' },
+  { s: 'The [[smell]] of the flowers [[make]] me [[feel]] [[happy]].', a: 2, fix: 'make → makes', n: 'ปิด of the flowers → The smell → makes' },
+  { s: 'The cakes [[made]] by my aunt [[tastes]] [[really]] [[good]].', a: 2, fix: 'tastes → taste', n: 'ปิด made by my aunt → cakes = พหูพจน์ → taste' },
+  { s: 'Mathematics [[are]] the subject [[that]] I [[like]] [[most]].', a: 1, fix: 'are → is', n: 'ชื่อวิชา = เอกพจน์ → is' },
+  { s: 'My parents [[usually]] [[watches]] the news [[after]] [[dinner]].', a: 2, fix: 'watches → watch', n: 'My parents = พหูพจน์ → watch (usually คั่นกลางไม่เกี่ยว)' },
+  { s: 'There [[is]] [[many]] people [[at]] the beach [[today]].', a: 1, fix: 'is → are', n: 'there + ดูคำนามหลัง → many people = พหูพจน์ → are' },
+  { s: 'The news [[about]] the floods [[were]] [[very]] [[sad]].', a: 2, fix: 'were → was', n: 'news = เอกพจน์ (ปิด about the floods) → was' },
+  { s: 'Each [[of]] the players [[have]] [[a]] number [[on]] the shirt.', a: 2, fix: 'have → has', n: 'Each = เอกพจน์ → has' },
+  { s: 'The changes [[in]] our village over the past few years [[has]] been [[very]] [[big]].', a: 2, fix: 'has → have', n: 'ปิด in our village over the past few years → changes = พหูพจน์ → have' },
+  { s: 'Water [[from]] these mountains [[are]] [[clean]] [[enough]] to drink.', a: 2, fix: 'are → is', n: 'ปิด from these mountains → Water นับไม่ได้ → is' },
+  { s: 'The boy [[with]] the yellow balloons [[look]] [[very]] [[excited]].', a: 2, fix: 'look → looks', n: 'ปิด with the yellow balloons → The boy → looks' },
+  { s: 'Tom and Ben [[goes]] [[to]] a school [[near]] [[their]] house.', a: 1, fix: 'goes → go', n: 'A and B = พหูพจน์ → go' },
+  { s: 'My grandmother [[don\'t]] [[like]] [[watching]] [[cartoons]].', a: 1, fix: "don't → doesn't", n: "My grandmother = 1 คน → doesn't" },
+  { s: '[[Does]] your friends [[want]] [[to]] [[come]] with us?', a: 1, fix: 'Does → Do', n: 'ประธาน your friends = พหูพจน์ → Do' },
+  { s: 'The number of cars [[on]] the roads [[are]] [[increasing]] [[quickly]].', a: 2, fix: 'are → is', n: 'THE number of = จำนวน → is' },
+  { s: 'Insects [[found]] in this forest [[is]] [[very]] [[colorful]].', a: 2, fix: 'is → are', n: 'ปิด found in this forest → Insects = พหูพจน์ → are' },
+  { s: 'Playing [[games]] on phones [[are]] [[not]] [[good]] for your eyes.', a: 2, fix: 'are → is', n: 'Playing … = V-ing ประธาน → is (games อยู่ในวลี)' },
+  { s: 'The teacher [[always]] [[give]] us [[a lot of]] [[homework]].', a: 2, fix: 'give → gives', n: 'The teacher = 1 คน → gives (always คั่นกลาง)' },
+  { s: 'My dog, [[together]] with my two cats, [[sleep]] [[on]] [[my]] bed.', a: 2, fix: 'sleep → sleeps', n: 'ปิด together with my two cats → My dog → sleeps' },
+  { s: 'Ten minutes [[are]] [[not]] [[enough]] [[to]] finish this test.', a: 1, fix: 'are → is', n: 'ระยะเวลาเป็นก้อนเดียว → is' },
+  { s: 'Nobody [[in]] my family [[know]] [[how]] [[to]] swim.', a: 2, fix: 'know → knows', n: 'Nobody = เอกพจน์ → knows' },
+  { s: 'The students [[was]] [[playing]] football [[when]] it [[started]] to rain.', a: 1, fix: 'was → were', n: 'The students = พหูพจน์ → were' },
+  { s: 'Seeds [[from]] this old tree often [[grows]] [[into]] [[tall]] plants.', a: 2, fix: 'grows → grow', n: 'ปิด from this old tree → Seeds = พหูพจน์ → grow (often คั่นกลาง)' },
+  { s: 'The light [[from]] the stars [[take]] [[many]] years to [[reach]] Earth.', a: 2, fix: 'take → takes', n: 'ปิด from the stars → The light → takes' },
+  // S–V ถูกแล้ว — ต้องสแกนจุดอื่นต่อ
+  { s: 'The children [[sing]] [[beautiful]] [[at]] the [[school]] concert.', a: 2, fix: 'beautiful → beautifully', n: 'S–V ถูกแล้ว (children sing) → สแกนต่อ: ขยายกริยา sing ต้องเป็น adverb', other: true },
+  { s: 'My sister [[speaks]] English [[fluent]] [[because]] she [[lived]] in London.', a: 2, fix: 'fluent → fluently', n: 'S–V ถูกแล้ว (My sister speaks) → สแกนต่อ: ขยาย speaks ต้องเป็น adverb', other: true },
+  { s: 'My friends [[have]] [[visited]] Phuket [[last]] [[year]].', a: 1, fix: 'have visited → visited', n: 'S–V ถูกแล้ว (friends have) → สแกนต่อ: last year = อดีตชัด → past simple', other: true },
+];
+
+/* ด่าน 5 — กับดักของน้อง: ask = 'INCORRECT' | 'CORRECT', o = 4 ประโยค, a = index ที่ถูกต้องเป็นคำตอบ, w = เหตุผลรายตัวเลือก */
+const L5 = [
+  { ask: 'INCORRECT', o: ['Everyone in my class likes the new teacher.', 'The flowers in the vase need water.', "My uncle's car need a new tire.", 'Physics is my brother\'s favorite subject.'], a: 2,
+    w: ['ถูก — Everyone = เอกพจน์ → likes', 'ถูก — ปิด in the vase → flowers → need', "ผิด — ประธานคือ car (ไม่ใช่ uncle's) = 1 คัน → needs", 'ถูก — ชื่อวิชา = เอกพจน์ → is'] },
+  { ask: 'CORRECT', o: ['Everyone in the room are quiet.', 'The news were good.', 'Mathematics is easy for my sister.', 'One of my friends have a horse.'], a: 2,
+    w: ['ผิด — Everyone → is', 'ผิด — news = เอกพจน์ → was', 'ถูก — ชื่อวิชา = เอกพจน์ → is', 'ผิด — One of … → has'] },
+  { ask: 'INCORRECT', o: ['The news is on at seven.', 'Everybody wants to win the prize.', 'Mathematics are difficult for me.', 'The children are playing outside.'], a: 2,
+    w: ['ถูก — news = เอกพจน์', 'ถูก — Everybody = เอกพจน์ → wants', 'ผิด — Mathematics = เอกพจน์ → is', 'ถูก — children = พหูพจน์ → are'] },
+  { ask: 'CORRECT', o: ['Our coach always push us to try harder.', 'My mom often cooks Thai curry.', 'He never eat vegetables.', 'She usually walk to school.'], a: 1,
+    w: ['ผิด — always คั่นกลาง ไม่เกี่ยว → Our coach pushes', 'ถูก — My mom = 1 คน → cooks', 'ผิด — He → eats', 'ผิด — She → walks'] },
+  { ask: 'INCORRECT', o: ['The toys in the box are new.', 'The box of toys are heavy.', 'The keys on the table are mine.', 'The cup of tea is hot.'], a: 1,
+    w: ['ถูก — ปิด in the box → toys → are', 'ผิด — ปิด of toys → The box → is', 'ถูก — ปิด on the table → keys → are', 'ถูก — ปิด of tea → The cup → is'] },
+  { ask: 'CORRECT', o: ['The fruits sold at the market is cheap.', 'The bread baked by my aunt tastes great.', 'The shoes made in Italy is expensive.', 'The photos taken by Dad looks nice.'], a: 1,
+    w: ['ผิด — ปิด sold at the market → fruits → are', 'ถูก — ปิด baked by my aunt → bread → tastes', 'ผิด — ปิด made in Italy → shoes → are', 'ผิด — ปิด taken by Dad → photos → look'] },
+  { ask: 'INCORRECT', o: ['Each of the girls has a bag.', 'Every student needs a pencil.', 'Each of the boys have a hat.', 'Nobody likes rainy days.'], a: 2,
+    w: ['ถูก — Each → has', 'ถูก — Every student → needs', 'ผิด — Each of … → has', 'ถูก — Nobody → likes'] },
+  { ask: 'CORRECT', o: ['The growth of the plants over the past weeks were fast.', 'The growth of the plants over the past weeks was fast.', 'The plants in the garden grows fast.', 'Rice grow well in Thailand.'], a: 1,
+    w: ['ผิด — ปิด of the plants over the past weeks → The growth → was', 'ถูก — The growth → was', 'ผิด — plants → grow', 'ผิด — Rice นับไม่ได้ → grows'] },
+  { ask: 'INCORRECT', o: ['Germs in dirty water often cause illness.', 'Bees in this garden makes honey.', 'Birds in the forest sing early.', 'Fish in the pond swim fast.'], a: 1,
+    w: ['ถูก — ปิด in dirty water → Germs → cause', 'ผิด — ปิด in this garden → Bees → make', 'ถูก — Birds → sing', 'ถูก — Fish (หลายตัว) → swim'] },
+  { ask: 'CORRECT', o: ['There is ten students in the room.', 'There are a cat on the roof.', 'There are two cats on the roof.', 'There is many books here.'], a: 2,
+    w: ['ผิด — ten students → are', 'ผิด — a cat → is', 'ถูก — two cats → are', 'ผิด — many books → are'] },
+  { ask: 'INCORRECT', o: ['My jeans are blue.', 'My glasses is broken.', 'These scissors are sharp.', 'Your shoes are dirty.'], a: 1,
+    w: ['ถูก — jeans = ของคู่ → are', 'ผิด — glasses (แว่น) = ของคู่ → are', 'ถูก — scissors → are', 'ถูก — shoes → are'] },
+  { ask: 'CORRECT', o: ['The bus leave at nine.', 'The class start at eight.', 'The glass is full of water.', 'The boss want to see you.'], a: 2,
+    w: ['ผิด — bus = 1 คัน → leaves', 'ผิด — class = 1 ห้อง → starts', 'ถูก — glass = 1 ใบ → is', 'ผิด — boss = 1 คน → wants'] },
+  { ask: 'INCORRECT', o: ['A number of students are late.', 'The number of students is small.', 'A lot of water is wasted.', 'The number of cars are growing.'], a: 3,
+    w: ['ถูก — A number of = หลาย → are', 'ถูก — THE number → is', 'ถูก — water → is', 'ผิด — THE number of → is'] },
+  { ask: 'CORRECT', o: ['My brother and I is twins.', 'Ploy and Pim are sisters.', 'Tom and his dad plays golf.', 'The cat and the dog is friends.'], a: 1,
+    w: ['ผิด — A and B → are', 'ถูก — A and B → are', 'ผิด — A and B → play', 'ผิด — A and B → are'] },
+  { ask: 'INCORRECT', o: ['Five hundred baht is too much for a T-shirt.', 'Swimming is good exercise.', 'Reading comics make me happy.', 'Learning English is fun.'], a: 2,
+    w: ['ถูก — จำนวนเงินก้อนเดียว → is', 'ถูก — V-ing → is', 'ผิด — Reading comics = V-ing ประธาน → makes', 'ถูก — V-ing → is'] },
+  { ask: 'INCORRECT', o: ['The girl with the red shoes dances well.', 'The man with two sons works here.', 'The student with the highest scores get a prize.', 'The dog with black spots is mine.'], a: 2,
+    w: ['ถูก — The girl → dances', 'ถูก — The man → works', 'ผิด — ปิด with the highest scores → The student → gets', 'ถูก — The dog → is'] },
+  { ask: 'CORRECT', o: ['The people in this town is friendly.', 'The police is coming.', 'The children at the party were happy.', 'Mice is small animals.'], a: 2,
+    w: ['ผิด — people → are', 'ผิด — police → are', 'ถูก — children → were', 'ผิด — mice → are'] },
+  { ask: 'INCORRECT', o: ["He doesn't like cold weather.", "My friends don't play chess.", "She don't know the answer.", 'Do your parents work on Saturdays?'], a: 2,
+    w: ["ถูก — He → doesn't", "ถูก — friends → don't", "ผิด — She → doesn't", 'ถูก — parents → Do'] },
+  { ask: 'CORRECT', o: ['Does your sisters like K-pop?', 'Do your sister like K-pop?', 'Does your sister like K-pop?', 'Do your sister likes K-pop?'], a: 2,
+    w: ['ผิด — sisters พหูพจน์ → Do', 'ผิด — sister = 1 คน → Does', 'ถูก — Does + V ไม่เติม s', 'ผิด — Do ผิด และ likes ต้องไม่เติม s'] },
+  { ask: 'INCORRECT', o: ['Information about the trip is on the website.', 'The homework for this week is easy.', 'The furniture in our house are old.', 'The money in my piggy bank is safe.'], a: 2,
+    w: ['ถูก — information → is', 'ถูก — homework → is', 'ผิด — furniture นับไม่ได้ → is', 'ถูก — money → is'] },
+  { ask: 'CORRECT', o: ['The lights in the hall was off.', 'The lights in the hall were off.', 'The light in the halls were off.', 'The lights in the hall is off.'], a: 1,
+    w: ['ผิด — lights → were', 'ถูก — lights → were', 'ผิด — ปิด in the halls → The light → was', 'ผิด — lights → are'] },
+  { ask: 'INCORRECT', o: ['Plants in the desert store water in their stems.', 'Cells in our body divide to make new cells.', 'Seeds from this tree often falls into the river.', 'Roots of the tree hold the soil.'], a: 2,
+    w: ['ถูก — Plants → store', 'ถูก — Cells → divide', 'ผิด — ปิด from this tree → Seeds → fall (often คั่นกลาง)', 'ถูก — Roots → hold'] },
+  { ask: 'CORRECT', o: ['The changes in Bangkok over the last ten years has been huge.', 'The changes in Bangkok over the last ten years have been huge.', 'The change in the rules were big.', 'The changes was big.'], a: 1,
+    w: ['ผิด — changes → have', 'ถูก — ปิด in Bangkok over the last ten years → changes → have', 'ผิด — The change → was', 'ผิด — changes → were'] },
+  { ask: 'INCORRECT', o: ['The sound of the birds wakes me up.', 'The colors of the rainbow are bright.', 'The smell of the cookies fill the kitchen.', 'The pages of this book are torn.'], a: 2,
+    w: ['ถูก — The sound → wakes', 'ถูก — The colors → are', 'ผิด — ปิด of the cookies → The smell → fills', 'ถูก — The pages → are'] },
+];
+
+const LEVELS = {
+  1: { name: 'ด่าน 1 · ปิดวลี หาประธาน', pool: L1, total: 10 },
+  2: { name: 'ด่าน 2 · เอกพจน์ / พหูพจน์', pool: L2, total: 12 },
+  3: { name: 'ด่าน 3 · เลือกกริยาให้คู่', pool: L3, total: 12 },
+  4: { name: 'ด่าน 4 · จับจุดผิด', pool: L4, total: 10 },
+  5: { name: 'ด่าน 5 · กับดักของน้อง', pool: L5, total: 10 },
+  9: { name: 'มาราธอน', pool: null, total: 0, lives: 3 }
+};
+
+function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+const blank = s => esc(s).replace('___', '<span class="blank">___</span>');
+const fill = (s, v) => s.replace('___', v);
+
+/* แปลงโจทย์เป็นขั้นตอน: steps[] = { prompt, html, ch:[{t, ok, why}], fix } — ใช้ร่วมทั้ง UI และเทส */
+function build(lv, it) {
+  if (lv === 1) {
+    return { tag: 'ปิดวลี', steps: [{ prompt: 'ประธานตัวจริง (เจ้าของกริยาในช่อง ___) คือคำไหน?', html: blank(it.s),
+      ch: shuffle(it.o.map(t => ({ t, ok: t === it.a, why: t === it.a ? 'ปิดวลี "' + it.cut + '" → เหลือ ' + it.a : '"' + t + '" อยู่ในส่วนที่ปิดได้ หรือไม่ใช่คนทำกริยา — ปิดวลี "' + it.cut + '" แล้วเหลือ ' + it.a }))),
+      fix: fill(it.s, it.v) }] };
+  }
+  if (lv === 2) {
+    return { tag: 'เอก/พหู', steps: [{ prompt: 'ประธานนี้เป็นเอกพจน์หรือพหูพจน์?', html: '<b>' + esc(it.w) + '</b> <span class="blank">___</span> …',
+      ch: [SG, PL].map(t => ({ t, ok: (t === SG) === it.sg, why: it.n })), fix: it.n }] };
+  }
+  if (lv === 3) {
+    return { tag: 'เลือกกริยา', steps: [{ prompt: 'เลือกกริยาให้คู่กับประธาน', html: blank(it.s),
+      ch: shuffle(it.o.map((t, i) => ({ t, ok: i === 0, why: it.n }))), fix: fill(it.s, it.o[0]) }] };
+  }
+  if (lv === 4) {
+    const parts = []; let k = 0;
+    const html = esc(it.s).replace(/\[\[(.+?)\]\]/g, (m, w) => { k++; parts.push(w); return '<u><b>' + k + '</b>' + w + '</u>'; });
+    return { tag: it.other ? 'สแกนต่อ' : 'จับจุดผิด', steps: [{ prompt: 'ส่วนที่ขีดเส้นใต้ส่วนไหนผิด?', html,
+      ch: parts.map((w, i) => ({ t: (i + 1) + ' — ' + w, ok: i + 1 === it.a, why: i + 1 === it.a ? it.n : '"' + w + '" ถูกแล้ว — ' + it.n })), fix: it.fix }] };
+  }
+  /* ด่าน 5: ขั้น 1 ต้องตอบก่อนว่าเขาถามอะไร (นิสัยอ่านคำถามซ้ำ) */
+  const askHtml = '<span class="ask">Which sentence is <mark>' + it.ask + '</mark>?</span>';
+  const wantWrong = it.ask === 'INCORRECT';
+  const T_WRONG = 'ถามหาประโยคที่ "ผิด" (INCORRECT)', T_RIGHT = 'ถามหาประโยคที่ "ถูก" (CORRECT)';
+  return { tag: 'อ่านคำถามก่อน', steps: [
+    { prompt: 'ขั้น 1 — ชี้คำถาม แล้วพูดออกเสียง: เขาถามอะไร?', html: askHtml,
+      ch: [T_WRONG, T_RIGHT].map(t => ({ t, ok: (t === T_WRONG) === wantWrong, why: wantWrong ? 'มีคำว่า INCORRECT → หาตัวที่ผิดตัวเดียว (อีก 3 ตัวถูก)' : 'คำว่า CORRECT → หาตัวที่ถูกตัวเดียว (อีก 3 ตัวผิด)' })), fix: '' },
+    { prompt: wantWrong ? 'ขั้น 2 — สแกนทีละประโยค หาตัวที่ผิด' : 'ขั้น 2 — สแกนทีละประโยค หาตัวที่ถูก', html: askHtml,
+      ch: it.o.map((t, i) => ({ t: (i + 1) + '. ' + t, ok: i === it.a, why: it.w[i], flip: i !== it.a && (it.w[i].indexOf('ถูก') === 0) === wantWrong })), fix: it.w[it.a] }
+  ] };
+}
+
+const decks = {};
+function draw(lv) {
+  if (lv === 9) lv = 1 + Math.floor(Math.random() * 5);
+  if (!decks[lv] || !decks[lv].length) decks[lv] = shuffle(LEVELS[lv].pool);
+  const q = build(lv, decks[lv].pop()); q.lv = lv; return q;
+}
+function resetDecks() { for (const k in decks) delete decks[k]; }
+if (typeof module !== 'undefined') module.exports = { L1, L2, L3, L4, L5, LEVELS, build, draw, resetDecks };
+</script>
+
+<!-- ============ UI ============ -->
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const KEY = 'sva-best-';
+function best(lv) { try { return +(localStorage.getItem(KEY + lv) || 0); } catch (e) { return 0; } }
+function setBest(lv, v) { try { localStorage.setItem(KEY + lv, String(v)); } catch (e) { } }
+function paintBests() {
+  [1, 2, 3, 4, 5].forEach(i => { const b = best(i); $('b' + i).textContent = b ? 'สถิติ ' + b + '/' + LEVELS[i].total : ''; });
+  const m = best(9); $('b9').textContent = m ? 'สถิติ ' + m + ' ข้อ' : '';
+}
+let S = null, timer = null;
+function show(id) { ['menu', 'play', 'done'].forEach(x => $(x).classList.toggle('hidden', x !== id)); window.scrollTo(0, 0); }
+function fmt(s) { return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+
+function start(lv) {
+  resetDecks();
+  S = { lv, no: 0, ok: 0, x: 0, miss: [], t0: Date.now(), q: null, step: 0, stepOk: true };
+  clearInterval(timer); timer = setInterval(() => { $('hT').textContent = fmt(Math.floor((Date.now() - S.t0) / 1000)); }, 500);
+  $('hXl').textContent = lv === 9 ? 'ชีวิต' : 'ผิด';
+  show('play'); nextQ();
+}
+function nextQ() {
+  const L = LEVELS[S.lv];
+  if (S.lv !== 9 && S.no >= L.total) return finish();
+  if (S.lv === 9 && S.x >= L.lives) return finish();
+  S.no++; S.q = draw(S.lv); S.step = 0; S.stepOk = true;
+  $('hNo').textContent = S.no; $('hOk').textContent = S.ok;
+  $('hX').textContent = S.lv === 9 ? '❤️'.repeat(L.lives - S.x) || '0' : S.x;
+  $('bar').style.width = S.lv === 9 ? Math.min(100, S.ok * 2) + '%' : ((S.no - 1) / L.total * 100) + '%';
+  renderStep();
+}
+function renderStep() {
+  const st = S.q.steps[S.step];
+  $('prompt').textContent = (S.lv === 9 ? '[' + LEVELS[S.q.lv].name + '] ' : '') + st.prompt;
+  $('q').innerHTML = st.html; $('fb').innerHTML = ''; $('next').classList.add('hidden');
+  $('hintBox').innerHTML = '';
+  if (S.q.lv === 4 || S.q.lv === 1) {
+    const b = document.createElement('button'); b.className = 'ghost'; b.textContent = '💡 ใบ้ 3 จังหวะ';
+    b.onclick = () => { $('hintBox').innerHTML = '<div class="hint">① เอานิ้วปิดวลีที่ขยายประธาน (of / with / in / from / made by / together with) ② ประธานที่เหลือ 1 หรือหลาย? ③ กริยาคู่ไหม · ถ้า S–V ถูกแล้ว ให้สแกนจุดอื่นต่อ</div>'; };
+    $('hintBox').appendChild(b);
+  }
+  const box = $('choices'); box.innerHTML = '';
+  st.ch.forEach(c => {
+    const b = document.createElement('button'); b.className = 'ch'; b.textContent = c.t;
+    b.onclick = () => pick(c, b); box.appendChild(b);
+  });
+}
+function pick(c, btn) {
+  const st = S.q.steps[S.step];
+  [...$('choices').children].forEach((b, i) => { b.disabled = true; if (st.ch[i].ok) b.classList.add('ok'); });
+  if (!c.ok) { btn.classList.add('bad'); S.stepOk = false; }
+  const last = S.step === S.q.steps.length - 1;
+  let h = '';
+  if (!c.ok && c.flip) { const askWrong = S.q.steps[0].ch.find(x => x.ok).t.indexOf('ผิด') > 0;
+    h += '<span class="habit">⚠️ ข้อนี้ถามหาตัวที่ ' + (askWrong ? '"ผิด"' : '"ถูก"') + ' แต่ประโยคที่น้องเลือก' + (askWrong ? 'ถูกอยู่แล้ว' : 'มีจุดผิด') + ' — ชี้คำถามแล้วพูดออกเสียงก่อนวงทุกครั้งนะ</span>'; }
+  h += (c.ok ? '✅ ' : '❌ ') + esc(c.why);
+  if (!c.ok) h += '<br>👉 ' + esc(st.ch.find(x => x.ok).why);
+  if (last && st.fix) h += '<span class="fix">✔ ' + esc(st.fix) + '</span>';
+  $('fb').innerHTML = '<div class="fb ' + (c.ok ? 'ok' : 'bad') + '">' + h + '</div>';
+  if (!last) { $('next').textContent = 'ขั้นต่อไป →'; $('next').classList.remove('hidden'); $('next').onclick = () => { S.step++; renderStep(); }; return; }
+  if (S.stepOk) S.ok++; else { S.x++; S.miss.push(st.fix || st.html.replace(/<[^>]+>/g, '')); }
+  $('hOk').textContent = S.ok;
+  $('next').textContent = 'ข้อต่อไป →'; $('next').classList.remove('hidden'); $('next').onclick = nextQ;
+}
+function finish() {
+  clearInterval(timer);
+  const secs = Math.floor((Date.now() - S.t0) / 1000), L = LEVELS[S.lv];
+  if (S.lv === 9) {
+    $('dTitle').textContent = '🏃 มาราธอนจบ'; $('dScore').textContent = S.ok + ' ข้อ';
+    const b = best(9); if (S.ok > b) setBest(9, S.ok);
+    $('dMsg').textContent = (S.ok > b ? '🎉 สถิติใหม่! ' : 'สถิติเดิม ' + b + ' ข้อ · ') + 'เวลา ' + fmt(secs);
+  } else {
+    $('dTitle').textContent = 'จบ' + L.name; $('dScore').textContent = S.ok + ' / ' + L.total;
+    const b = best(S.lv); if (S.ok > b) setBest(S.lv, S.ok);
+    const pct = S.ok / L.total;
+    $('dMsg').textContent = (pct >= 0.8 ? '🟢 เก่งมาก! ไปด่านถัดไปได้เลย' : pct >= 0.5 ? '🟡 ดีขึ้นแล้ว เล่นอีกรอบให้ถึง 80%' : '🔴 ไม่เป็นไร เปิดใบ้ 3 จังหวะแล้วลองใหม่') + ' · เวลา ' + fmt(secs);
+  }
+  $('dMiss').innerHTML = S.miss.length ? '<p class="res" style="margin-top:10px">ข้อที่พลาด — อ่านประโยคที่ถูกออกเสียง 1 รอบ</p>' + S.miss.map(m => '<div class="miss">' + esc(m) + '</div>').join('') : '';
+  paintBests(); show('done');
+}
+document.querySelectorAll('.lv').forEach(b => b.onclick = () => start(+b.dataset.lv));
+$('quit').onclick = () => { clearInterval(timer); paintBests(); show('menu'); };
+$('home').onclick = () => { paintBests(); show('menu'); };
+$('again').onclick = () => start(S.lv);
+paintBests();
+</script>
+</body>
+</html>
