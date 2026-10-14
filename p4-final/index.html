@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ป.4 ทบทวนสอบปลายภาค</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+--ink:#1a1c1e;--muted:#5b6167;--line:#dfe3e8;--bg:#fbfbfa;--card:#fff;--soft:#f4f6f8;
+--accent:#1f6feb;--ok:#136c39;--ok-bg:#e8f6ee;--bad:#b3261e;--bad-bg:#fdecea;
+--en:#1f6feb;--ma:#b25000;--th:#6b46e0;--sc:#136c39}
+@media (prefers-color-scheme:dark){:root{
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#333a42;--bg:#16181b;--card:#1e2126;--soft:#262a30;
+--accent:#69a4ff;--ok:#6fd39a;--ok-bg:#13301f;--bad:#ff8a80;--bad-bg:#3a1a17;
+--en:#69a4ff;--ma:#f0a163;--th:#a68cff;--sc:#6fd39a}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Sarabun","Noto Sans Thai",-apple-system,sans-serif;font-size:18px;line-height:1.7;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:680px;margin:0 auto;padding:20px 16px calc(60px + env(safe-area-inset-bottom))}
+h1{font-size:1.45rem;margin:0 0 4px}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 16px}
+.hidden{display:none !important}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+.subj{display:block;width:100%;text-align:left;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;padding:14px 16px;margin-bottom:12px}
+.subj b{font-size:1.15rem}
+.subj .d{color:var(--muted);font-size:.86rem}
+.t{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:12px 16px;margin-bottom:10px}
+.t .best{float:right;font-size:.8rem;color:var(--ok);font-weight:700}
+.t .d{color:var(--muted);font-size:.85rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.hud{display:flex;gap:10px;margin-bottom:12px}
+.pill{flex:1;background:var(--soft);border-radius:11px;padding:6px;text-align:center;line-height:1.3}
+.pill .n{font-size:1.25rem;font-weight:700;font-family:"IBM Plex Mono",monospace}
+.pill .l{font-size:.72rem;color:var(--muted)}
+.q{font-size:1.15rem;font-weight:600;margin:4px 0 14px;white-space:pre-line}
+.ch{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;margin-bottom:9px}
+.ch.ok{border-color:var(--ok);background:var(--ok-bg)}
+.ch.bad{border-color:var(--bad);background:var(--bad-bg)}
+.fb{border-radius:12px;padding:10px 14px;margin:4px 0 12px;font-size:.96rem}
+.fb.ok{background:var(--ok-bg);border:1px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);border:1px solid var(--bad)}
+.go{display:block;width:100%;background:var(--accent);color:#fff;border:0;border-radius:12px;padding:12px;font-weight:700}
+.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:.88rem}
+.big{font-size:2.4rem;font-weight:700;text-align:center}
+.stars{font-size:2rem;text-align:center}
+.miss{font-size:.9rem;background:var(--soft);border-radius:10px;padding:8px 12px;margin:6px 0}
+footer{color:var(--muted);font-size:.8rem;text-align:center;margin-top:24px}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section id="home">
+  <h1>⭐ ป.4 ทบทวนสอบปลายภาค</h1>
+  <p class="sub">ภาคเรียนที่ 1/2569 · สอบศุกร์ 16 ต.ค. · เลือกวิชา แล้วเลือกหัวข้อ · รอบละ 10 ข้อ ผิดข้อไหนมีคำอธิบาย</p>
+  <div id="subjects"></div>
+</section>
+<section id="topics" class="hidden">
+  <h1 id="sTitle"></h1><p class="sub" id="sSub"></p>
+  <div id="topicList"></div>
+  <p style="text-align:center"><button class="ghost" id="backHome">← เลือกวิชาอื่น</button></p>
+</section>
+<section id="play" class="hidden">
+  <div class="hud">
+    <div class="pill"><div class="n" id="hNo">1</div><div class="l">ข้อ / 10</div></div>
+    <div class="pill"><div class="n" id="hOk">0</div><div class="l">ถูก</div></div>
+    <div class="pill"><div class="n" id="hStreak">0</div><div class="l">ถูกติดกัน 🔥</div></div>
+  </div>
+  <div class="card">
+    <div class="sub" id="tName" style="margin:0 0 4px"></div>
+    <div class="q" id="q"></div>
+    <div id="choices"></div>
+    <div id="fb"></div>
+    <button class="go hidden" id="next">ข้อต่อไป →</button>
+  </div>
+  <p style="text-align:center;margin-top:12px"><button class="ghost" id="quit">← กลับ</button></p>
+</section>
+<section id="done" class="hidden">
+  <div class="card">
+    <h1 id="dTitle"></h1>
+    <div class="stars" id="dStars"></div>
+    <div class="big" id="dScore"></div>
+    <p style="text-align:center;color:var(--muted)" id="dMsg"></p>
+    <div id="dMiss"></div>
+    <button class="go" id="again">เล่นอีกรอบ (ข้อใหม่)</button>
+    <p style="text-align:center;margin-top:10px"><button class="ghost" id="toTopics">← เลือกหัวข้อ</button></p>
+  </div>
+</section>
+<footer>เกมทบทวน ป.4 · ข้อในเกมแต่งใหม่ตามหัวข้อในตารางสอบ · สถิติเก็บในเครื่องนี้</footer>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); } } catch (e) { }
+</script>
+
+<script id="gen">
+"use strict";
+/* รูปแบบข้อ: [คำถาม, [คำตอบถูก, ตัวลวง...], คำอธิบาย] — สลับตัวเลือกตอนแสดง */
+const R = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const fmt = n => n.toLocaleString('en-US');
+function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function numChoices(ans, cands) { const s = [ans]; for (const c of cands) if (c > 0 && Number.isInteger(c) && !s.includes(c)) s.push(c); let k = 1; while (s.length < 4) { const v = ans + k * (k % 2 ? 10 : -1); if (v > 0 && !s.includes(v)) s.push(v); k++; } return s.slice(0, 4).map(fmt); }
+
+const EN_VOCAB = [
+ ['An animal with black and white stripes is a ___.', ['zebra', 'giraffe', 'camel', 'koala'], 'zebra = ม้าลาย มีลายขาวดำ'],
+ ['This animal has a very long neck.', ['giraffe', 'hippo', 'penguin', 'tiger'], 'giraffe = ยีราฟ คอยาว'],
+ ['Kangaroos and koalas come from ___.', ['Australia', 'Japan', 'Egypt', 'Canada'], 'จิงโจ้และโคอาลาอยู่ประเทศออสเตรเลีย'],
+ ['Pandas live in the forests of ___.', ['China', 'Brazil', 'England', 'Kenya'], 'แพนด้ามาจากประเทศจีน'],
+ ['Which one is a wild animal?', ['lion', 'cat', 'cow', 'hen'], 'wild animal = สัตว์ป่า · cat, cow, hen เป็นสัตว์เลี้ยง/สัตว์ในฟาร์ม'],
+ ['A big grey animal with a long trunk is an ___.', ['elephant', 'eagle', 'octopus', 'owl'], 'trunk = งวง → elephant ช้าง'],
+ ['This bird cannot fly. It lives in very cold places.', ['penguin', 'parrot', 'eagle', 'crow'], 'penguin = นกเพนกวิน บินไม่ได้ อยู่ที่หนาว'],
+ ['People in Japan speak ___.', ['Japanese', 'Japan', 'Chinese', 'English only'], 'ประเทศ Japan → ภาษา/สัญชาติ Japanese'],
+ ['The Eiffel Tower is in ___.', ['France', 'Italy', 'India', 'Korea'], 'หอไอเฟลอยู่ฝรั่งเศส (France)'],
+ ['The pyramids are in ___.', ['Egypt', 'Mexico', 'Thailand', 'Spain'], 'พีระมิดที่มีชื่อเสียงอยู่อียิปต์ (Egypt)'],
+ ['It is very cold. I wear a ___ on my head.', ['woolly hat', 'pair of shorts', 'T-shirt', 'sandal'], 'อากาศหนาว ใส่หมวกไหมพรม (woolly hat) ที่ศีรษะ'],
+ ['It is raining. Take your ___.', ['umbrella', 'sunglasses', 'swimsuit', 'kite'], 'ฝนตก (raining) → เอาร่ม umbrella'],
+ ['In summer it is hot and ___.', ['sunny', 'snowy', 'freezing', 'icy'], 'summer ฤดูร้อน → hot and sunny'],
+ ['In winter, it sometimes ___ in Japan.', ['snows', 'melts', 'shines', 'blooms'], 'ฤดูหนาวที่ญี่ปุ่นหิมะตก (snows)'],
+ ['Leaves fall from the trees in ___.', ['autumn', 'summer', 'spring', 'noon'], 'autumn (fall) = ฤดูใบไม้ร่วง'],
+ ['Flowers start to grow in ___.', ['spring', 'winter', 'autumn', 'night'], 'spring = ฤดูใบไม้ผลิ ดอกไม้บาน'],
+ ['You wear ___ on your feet.', ['socks', 'gloves', 'a scarf', 'a cap'], 'socks ถุงเท้า ใส่ที่เท้า · gloves ใส่มือ'],
+ ['You wear ___ on your hands when it is cold.', ['gloves', 'boots', 'a belt', 'a skirt'], 'gloves = ถุงมือ'],
+ ['It is windy today. It is a good day to fly a ___.', ['kite', 'boat', 'car', 'bike'], 'windy ลมแรง → เล่นว่าว kite'],
+ ['Which word is weather?', ['cloudy', 'jacket', 'Brazil', 'monkey'], 'cloudy = มีเมฆมาก เป็นคำบอกสภาพอากาศ'],
+ ['A ___ is a thick warm coat for winter.', ['jacket', 'swimsuit', 'vest top', 'pair of flip-flops'], 'jacket เสื้อแจ็กเก็ต ใส่กันหนาว'],
+ ['A crocodile lives in the ___.', ['river', 'desert sand only', 'sky', 'snow'], 'จระเข้อาศัยในแม่น้ำ/บึง'],
+];
+const EN_PHONICS = [
+ ['Which word has a long "o" sound (like in "go")?', ['boat', 'hot', 'dog', 'box'], 'boat ออกเสียง โอ ยาว · hot dog box เป็น o สั้น (เอาะ)'],
+ ['Which word has a long "i" sound (like in "my")?', ['bike', 'sit', 'pig', 'fish'], 'bike มี i_e (magic e) → ไอ ยาว'],
+ ['Which word has a long "u" sound (like in "you")?', ['cute', 'cup', 'bus', 'sun'], 'cute มี u_e → ยู ยาว · cup bus sun เป็น u สั้น (อะ)'],
+ ['Add magic e: "cap" → ___', ['cape', 'capi', 'caped', 'capa'], 'magic e ท้ายคำ ทำให้ a ออกเสียงยาว เอ: cap → cape'],
+ ['Add magic e: "kit" → ___', ['kite', 'kitt', 'kits', 'kito'], 'kit (คิท) + e → kite (ไคท์) ว่าว'],
+ ['Add magic e: "pin" → ___', ['pine', 'pinn', 'pina', 'pins'], 'pin → pine (ไพน์) ต้นสน'],
+ ['Add magic e: "hat" → ___', ['hate', 'hati', 'hatt', 'hats'], 'hat → hate (เฮท)'],
+ ['Which word has magic e with long "a"?', ['lake', 'lamp', 'black', 'back'], 'lake = a_e → เอ ยาว'],
+ ['Which word has magic e with long "i"?', ['time', 'tin', 'ink', 'milk'], 'time = i_e → ไอ ยาว'],
+ ['Which word starts with "th"?', ['three', 'tree', 'free', 'sea'], 'three = th · tree ขึ้นต้น tr'],
+ ['Which word starts with "sh"?', ['shoe', 'sock', 'chair', 'zoo'], 'shoe = sh (ช แบบเป่าลม)'],
+ ['Which word starts with "ch"?', ['cheese', 'sheep', 'thin', 'cat'], 'cheese = ch (ช)'],
+ ['Which word ends with "sh"?', ['fish', 'rich', 'bath', 'six'], 'fish ลงท้าย sh'],
+ ['Which word ends with "th"?', ['teeth', 'peach', 'wash', 'tent'], 'teeth ลงท้าย th'],
+ ['Which word ends with "ch"?', ['lunch', 'brush', 'mouth', 'box'], 'lunch ลงท้าย ch'],
+ ['"Sh" + "ip" makes ___', ['ship', 'chip', 'thip', 'sip'], 'sh + ip = ship เรือ'],
+ ['Which pair has the SAME vowel sound?', ['nose – rope', 'nose – not', 'rope – rob', 'hop – hope'], 'nose กับ rope เป็น โอ ยาว (o_e) ทั้งคู่'],
+ ['Which word does NOT have a long vowel?', ['run', 'rule', 'ride', 'road'], 'run = u สั้น · rule ride road เป็นเสียงยาว'],
+];
+const EN_GRAMMAR = [
+ ['Look! The baby ___ now.', ['is sleeping', 'sleeps', 'sleep', 'sleeping'], 'Look! / now → กำลังทำ → present continuous: is + V-ing'],
+ ['My dad ___ to work every day.', ['drives', 'is driving', 'drive', 'driving'], 'every day = ทำเป็นประจำ → present simple · he/she + V-s'],
+ ['They ___ football at the moment.', ['are playing', 'plays', 'is playing', 'play'], 'at the moment → are + V-ing (They ใช้ are)'],
+ ['Cats ___ milk.', ['like', 'likes', 'is liking', 'are like'], 'ความจริงทั่วไป + ประธานพหูพจน์ → like'],
+ ['___ she like ice cream?', ['Does', 'Do', 'Is', 'Are'], 'คำถาม present simple + she → Does'],
+ ['I ___ my homework right now.', ['am doing', 'do', 'does', 'is doing'], 'right now → am + V-ing (I ใช้ am)'],
+ ['She usually ___ up at six.', ['gets', 'get', 'is getting', 'getting'], 'usually = เป็นนิสัย → present simple · she + gets'],
+ ['Listen! Somebody ___ at the door.', ['is knocking', 'knocks', 'knock', 'are knocking'], 'Listen! → กำลังเกิดตอนนี้ → is knocking'],
+ ['The cat is ___ the table. (ใต้)', ['under', 'on', 'in', 'behind'], 'under = ใต้'],
+ ['The ball is ___ the box. (ข้างใน)', ['in', 'on', 'under', 'next to'], 'in = ข้างใน'],
+ ['The lamp is ___ the bed. (ข้างๆ)', ['next to', 'in', 'under', 'on'], 'next to = ข้างๆ'],
+ ['The bird is ___ the roof. (บน)', ['on', 'under', 'in', 'between'], 'on = บน (ติดพื้นผิว)'],
+ ['The bank is ___ the school and the park. (ระหว่าง)', ['between', 'behind', 'in front of', 'under'], 'between A and B = ระหว่าง'],
+ ['The dog is ___ the tree. (ข้างหลัง)', ['behind', 'in front of', 'on', 'in'], 'behind = ข้างหลัง · in front of = ข้างหน้า'],
+ ['I ___ two brothers.', ['have', 'has', 'is', 'am'], 'I / you / we / they → have'],
+ ['My sister ___ long hair.', ['has', 'have', 'is', 'are'], 'he / she / it / ชื่อคนเดียว → has'],
+ ['We ___ a big garden.', ['have', 'has', 'is', 'does'], 'We → have'],
+ ['The rabbit ___ long ears.', ['has', 'have', 'are', 'is'], 'The rabbit (1 ตัว) → has'],
+ ['___ is my pencil. (1 แท่ง ใกล้ตัว)', ['This', 'These', 'Those', 'They'], 'ของ 1 ชิ้นใกล้ตัว → This is'],
+ ['___ are my shoes. (ใกล้ตัว หลายชิ้น)', ['These', 'This', 'That', 'It'], 'หลายชิ้นใกล้ตัว → These are'],
+ ['These ___ my friends.', ['are', 'is', 'am', 'has'], 'These → are'],
+ ['This ___ my classroom.', ['is', 'are', 'am', 'have'], 'This → is'],
+ ['Which sentence is correct?', ['These are apples.', 'These is apples.', 'This are apples.', 'This are an apple.'], 'หลายลูก → These are + คำนามพหูพจน์'],
+ ['Which sentence is correct?', ['He has a red bike.', 'He have a red bike.', 'He is have a bike.', 'He haves a bike.'], 'He → has'],
+];
+const EN_INF = [
+ ['I want ___ the seals.', ['to see', 'seeing', 'see', 'sees'], 'want + to + V (full infinitive)'],
+ ['She enjoys ___ in the sea.', ['swimming', 'to swim', 'swim', 'swims'], 'enjoy + V-ing'],
+ ['The seals like ___ on the rocks.', ['lying / to lie', 'lie', 'lies', 'lied'], 'like ใช้ได้ทั้ง V-ing และ to + V'],
+ ['We hope ___ the seals again.', ['to watch', 'watching', 'watch', 'watches'], 'hope + to + V'],
+ ['He finished ___ his book.', ['reading', 'to read', 'read', 'reads'], 'finish + V-ing'],
+ ['They decided ___ to the zoo.', ['to go', 'going', 'go', 'goes'], 'decide + to + V'],
+ ['My brother loves ___ pictures of animals.', ['taking / to take', 'take', 'takes', 'took'], 'love ใช้ได้ทั้ง V-ing และ to + V'],
+ ['Stop ___ ! The seal is sleeping.', ['shouting', 'to shouting', 'shout', 'shouts'], 'stop ทำอะไรอยู่ → stop + V-ing'],
+ ['I need ___ my jacket. It is cold.', ['to wear', 'wearing', 'wear', 'wears'], 'need + to + V'],
+ ['Seals are good at ___.', ['swimming', 'to swim', 'swim', 'swims'], 'หลังคำบุพบท (at) → V-ing'],
+];
+const MA_GEO = [
+ ['มุมที่มีขนาด 90° เรียกว่ามุมอะไร', ['มุมฉาก', 'มุมแหลม', 'มุมป้าน', 'มุมตรง'], 'มุมฉาก (right angle) = 90° พอดี'],
+ ['มุมขนาด 45° เป็นมุมชนิดใด', ['มุมแหลม', 'มุมฉาก', 'มุมป้าน', 'มุมกลับ'], 'มุมแหลม (acute) เล็กกว่า 90°'],
+ ['มุมขนาด 120° เป็นมุมชนิดใด', ['มุมป้าน', 'มุมแหลม', 'มุมฉาก', 'มุมตรง'], 'มุมป้าน (obtuse) มากกว่า 90° แต่น้อยกว่า 180°'],
+ ['มุมขนาด 180° เรียกว่า', ['มุมตรง', 'มุมฉาก', 'มุมป้าน', 'มุมแหลม'], 'มุมตรง (straight angle) = 180° เป็นเส้นตรง'],
+ ['มุมขนาด 250° เป็นมุมชนิดใด', ['มุมกลับ', 'มุมป้าน', 'มุมตรง', 'มุมฉาก'], 'มุมกลับ (reflex) มากกว่า 180° แต่น้อยกว่า 360°'],
+ ['เส้นที่มีจุดปลาย 2 จุด เรียกว่า', ['ส่วนของเส้นตรง', 'รังสี', 'เส้นตรง', 'มุม'], 'ส่วนของเส้นตรง (line segment) มีจุดปลาย 2 ข้าง'],
+ ['เส้นที่มีจุดปลายข้างเดียว อีกข้างยาวไปไม่สิ้นสุด เรียกว่า', ['รังสี', 'ส่วนของเส้นตรง', 'เส้นตรง', 'จุด'], 'รังสี (ray) มีจุดปลาย 1 จุด'],
+ ['มุมเกิดจากอะไร', ['รังสี 2 เส้นที่มีจุดปลายร่วมกัน', 'จุด 2 จุด', 'เส้นตรง 2 เส้นที่ขนานกัน', 'วงกลม 2 วง'], 'มุม = รังสี 2 เส้นมีจุดปลายร่วมกัน (จุดยอดมุม)'],
+ ['เข็มนาฬิกาบอกเวลา 3 นาฬิกาพอดี ทำมุมกี่องศา', ['90°', '30°', '180°', '60°'], '3 นาฬิกา เข็มยาวที่ 12 เข็มสั้นที่ 3 = 1 ใน 4 รอบ = 90°'],
+ ['เข็มนาฬิกาบอกเวลา 6 นาฬิกาพอดี ทำมุมชนิดใด', ['มุมตรง', 'มุมฉาก', 'มุมแหลม', 'มุมป้าน'], '12 กับ 6 อยู่ตรงข้ามกัน = 180° มุมตรง'],
+ ['รูปสี่เหลี่ยมมุมฉากมีมุมฉากกี่มุม', ['4 มุม', '2 มุม', '1 มุม', '3 มุม'], 'สี่เหลี่ยมมุมฉาก มีมุมฉากทั้ง 4 มุม'],
+ ['รูปสามเหลี่ยมมีด้านกี่ด้าน และมุมกี่มุม', ['3 ด้าน 3 มุม', '3 ด้าน 4 มุม', '4 ด้าน 3 มุม', '3 ด้าน 6 มุม'], 'สามเหลี่ยม 3 ด้าน 3 มุม'],
+ ['เส้นตรง 2 เส้นที่ไม่ตัดกันเลย และห่างเท่ากันตลอด เรียกว่า', ['เส้นขนาน', 'เส้นตั้งฉาก', 'รังสี', 'มุมฉาก'], 'เส้นขนาน (parallel lines)'],
+ ['เส้นตรง 2 เส้นตัดกันเป็นมุมฉาก เรียกว่า', ['ตั้งฉากกัน', 'ขนานกัน', 'ทับกัน', 'โค้งกัน'], 'ตั้งฉาก (perpendicular) ตัดกันทำมุม 90°'],
+ ['เครื่องมือที่ใช้วัดขนาดของมุม คือ', ['โพรแทรกเตอร์', 'ไม้บรรทัด', 'ตาชั่ง', 'นาฬิกาจับเวลา'], 'โพรแทรกเตอร์ (protractor) วัดมุมเป็นองศา'],
+ ['มุม ABC มีจุดยอดมุมอยู่ที่จุดใด', ['B', 'A', 'C', 'A และ C'], 'ตัวอักษรตรงกลางคือจุดยอดมุม'],
+];
+const TH_FACT = [
+ ['"ประเทศไทยมี 77 จังหวัด" เป็นข้อความแบบใด', ['ข้อเท็จจริง', 'ข้อคิดเห็น'], 'ตรวจสอบได้จากข้อมูลทางราชการ → ข้อเท็จจริง'],
+ ['"ทุเรียนเป็นผลไม้ที่อร่อยที่สุด" เป็นข้อความแบบใด', ['ข้อคิดเห็น', 'ข้อเท็จจริง'], '"อร่อยที่สุด" เป็นความรู้สึก แต่ละคนไม่เหมือนกัน → ข้อคิดเห็น'],
+ ['"น้ำเดือดที่อุณหภูมิ 100 องศาเซลเซียส" เป็นข้อความแบบใด', ['ข้อเท็จจริง', 'ข้อคิดเห็น'], 'วัดและทดลองได้ → ข้อเท็จจริง'],
+ ['"ฉันคิดว่าวันนี้ฝนน่าจะตก" เป็นข้อความแบบใด', ['ข้อคิดเห็น', 'ข้อเท็จจริง'], 'มีคำว่า "คิดว่า" "น่าจะ" = การคาดคะเน → ข้อคิดเห็น'],
+ ['"เมื่อวานนี้ฝนตกที่กรุงเทพฯ" เป็นข้อความแบบใด', ['ข้อเท็จจริง', 'ข้อคิดเห็น'], 'เหตุการณ์ที่เกิดขึ้นแล้ว ตรวจสอบได้ → ข้อเท็จจริง'],
+ ['"แมวน่ารักกว่าสุนัข" เป็นข้อความแบบใด', ['ข้อคิดเห็น', 'ข้อเท็จจริง'], '"น่ารักกว่า" เป็นความชอบส่วนตัว → ข้อคิดเห็น'],
+ ['"โรงเรียนเปิดเรียนวันจันทร์ถึงวันศุกร์" เป็นข้อความแบบใด', ['ข้อเท็จจริง', 'ข้อคิดเห็น'], 'ตรวจสอบได้จากตารางเรียน → ข้อเท็จจริง'],
+ ['"การบ้านวิชาคณิตศาสตร์ยากมาก" เป็นข้อความแบบใด', ['ข้อคิดเห็น', 'ข้อเท็จจริง'], '"ยากมาก" แต่ละคนรู้สึกไม่เท่ากัน → ข้อคิดเห็น'],
+ ['"ช้างเป็นสัตว์ที่ใหญ่ที่สุดบนบก" เป็นข้อความแบบใด', ['ข้อเท็จจริง', 'ข้อคิดเห็น'], 'วัดขนาดตรวจสอบได้ → ข้อเท็จจริง'],
+ ['"ทุกคนควรตื่นนอนก่อน 6 โมงเช้า" เป็นข้อความแบบใด', ['ข้อคิดเห็น', 'ข้อเท็จจริง'], 'คำว่า "ควร" = ความเห็น/ข้อแนะนำ → ข้อคิดเห็น'],
+ ['"สนามฟุตบอลของโรงเรียนกว้าง 50 เมตร" เป็นข้อความแบบใด', ['ข้อเท็จจริง', 'ข้อคิดเห็น'], 'วัดได้ → ข้อเท็จจริง'],
+ ['"ภาพยนตร์เรื่องนี้สนุกที่สุดในปีนี้" เป็นข้อความแบบใด', ['ข้อคิดเห็น', 'ข้อเท็จจริง'], '"สนุกที่สุด" เป็นความรู้สึก → ข้อคิดเห็น'],
+ ['คำใดมักบอกว่าเป็น "ข้อคิดเห็น"', ['น่าจะ / ควร / ฉันคิดว่า', 'เมื่อวานนี้ / จำนวน / วันที่', 'กิโลกรัม / เมตร', 'พ.ศ. / ค.ศ.'], 'คำแสดงความรู้สึกหรือคาดคะเน: น่าจะ ควร คิดว่า ดีที่สุด สวยที่สุด'],
+ ['ข้อใดเป็นข้อเท็จจริง', ['ข่าวรายงานว่ามีนักเรียนมาร่วมงาน 300 คน', 'งานนี้จัดได้สวยงามที่สุด', 'นักเรียนน่าจะชอบงานนี้', 'ปีหน้าควรจัดงานให้ใหญ่กว่านี้'], 'ตัวเลขจำนวนคนตรวจสอบได้ → ข้อเท็จจริง'],
+ ['ข้อใดเป็นข้อคิดเห็น', ['ร้านนี้ขายก๋วยเตี๋ยวอร่อยกว่าทุกร้าน', 'ร้านนี้เปิด 7 โมงเช้า', 'ก๋วยเตี๋ยวชามละ 50 บาท', 'ร้านนี้อยู่ข้างโรงเรียน'], '"อร่อยกว่าทุกร้าน" = ความรู้สึก'],
+ ['ข้อใดเป็นข้อเท็จจริง', ['ดวงอาทิตย์ขึ้นทางทิศตะวันออก', 'พระอาทิตย์ตอนเช้าสวยที่สุด', 'ทุกคนควรดูพระอาทิตย์ขึ้น', 'ฉันคิดว่าพรุ่งนี้อากาศดี'], 'สังเกตและตรวจสอบได้ทุกวัน'],
+];
+const TH_READ = [
+ ['อ่านเรื่อง:\n"วันเสาร์ที่ผ่านมา ชาวบ้านช่วยกันเก็บขยะริมคลองได้ 200 กิโลกรัม ผู้ใหญ่บ้านกล่าวว่า กิจกรรมนี้ทำให้หมู่บ้านน่าอยู่ที่สุด"\n\nชาวบ้านเก็บขยะได้กี่กิโลกรัม', ['200 กิโลกรัม', '20 กิโลกรัม', '2,000 กิโลกรัม', 'ไม่ได้บอก'], 'หาคำตอบจากตัวเลขในเรื่อง: 200 กิโลกรัม'],
+ ['จากเรื่องเก็บขยะริมคลอง ข้อใดเป็นข้อคิดเห็น', ['หมู่บ้านน่าอยู่ที่สุด', 'เก็บขยะได้ 200 กิโลกรัม', 'เก็บขยะริมคลอง', 'จัดวันเสาร์'], '"น่าอยู่ที่สุด" เป็นความรู้สึกของผู้ใหญ่บ้าน'],
+ ['จากเรื่องเก็บขยะริมคลอง ใจความสำคัญคือข้อใด', ['ชาวบ้านช่วยกันเก็บขยะริมคลอง', 'ผู้ใหญ่บ้านชอบวันเสาร์', 'คลองมีปลาเยอะ', 'ขยะมีน้ำหนักมาก'], 'ใจความสำคัญ = เรื่องนี้พูดถึงอะไรเป็นหลัก'],
+ ['อ่านเรื่อง:\n"มะลิปลูกต้นถั่วเขียวในแก้ว 2 ใบ แก้วแรกวางไว้ที่หน้าต่าง แก้วที่สองวางในตู้มืด ผ่านไป 5 วัน ต้นในแก้วแรกสูงและใบเขียว ต้นในแก้วที่สองใบเหลือง"\n\nต้นถั่วในตู้มืดเป็นอย่างไร', ['ใบเหลือง', 'ใบเขียว', 'สูงมาก', 'ออกดอก'], 'เรื่องบอกตรงๆ ว่าแก้วที่สอง (ตู้มืด) ใบเหลือง'],
+ ['จากเรื่องต้นถั่ว ทำไมต้นแก้วแรกจึงใบเขียว', ['เพราะได้รับแสง', 'เพราะอยู่ในตู้', 'เพราะไม่รดน้ำ', 'เพราะปลูกนาน 10 วัน'], 'แก้วแรกวางที่หน้าต่าง = ได้แสง · หาเหตุผลจากรายละเอียดในเรื่อง'],
+ ['จากเรื่องต้นถั่ว มะลิปลูกนานกี่วัน', ['5 วัน', '2 วัน', '7 วัน', '10 วัน'], '"ผ่านไป 5 วัน"'],
+ ['อ่านเรื่อง:\n"ห้องสมุดโรงเรียนเปิดเวลา 7.30–16.00 น. นักเรียนยืมหนังสือได้ครั้งละ 2 เล่ม นาน 7 วัน ครูบรรณารักษ์บอกว่าการอ่านทุกวันช่วยให้เราฉลาดขึ้น"\n\nนักเรียนยืมหนังสือได้ครั้งละกี่เล่ม', ['2 เล่ม', '7 เล่ม', '1 เล่ม', '4 เล่ม'], '"ยืมได้ครั้งละ 2 เล่ม" · 7 คือจำนวนวัน'],
+ ['จากเรื่องห้องสมุด ข้อใดเป็นข้อคิดเห็น', ['การอ่านทุกวันช่วยให้ฉลาดขึ้น', 'ห้องสมุดเปิด 7.30 น.', 'ยืมได้นาน 7 วัน', 'ยืมได้ครั้งละ 2 เล่ม'], 'เป็นความเห็นของครู ไม่ใช่สิ่งที่วัดได้ตรงๆ'],
+ ['จากเรื่องห้องสมุด ถ้ามาห้องสมุดเวลา 16.30 น. จะเป็นอย่างไร', ['ห้องสมุดปิดแล้ว', 'ห้องสมุดเพิ่งเปิด', 'ยืมได้ 3 เล่ม', 'ครูไม่อยู่เพราะวันหยุด'], 'ปิด 16.00 น. → 16.30 น. ปิดแล้ว (ต้องคิดต่อจากข้อมูล)'],
+];
+const SC_PROP = [
+ ['วัสดุใดแข็งที่สุด', ['เหล็ก', 'ดินน้ำมัน', 'ฟองน้ำ', 'ผ้า'], 'ความแข็ง (hardness) = ทนต่อการขูดขีด/กดได้ดี · เหล็กแข็งกว่า'],
+ ['วิธีทดสอบความแข็งของวัสดุ ทำอย่างไร', ['นำวัสดุมาขูดขีดกัน', 'นำไปแช่น้ำ', 'นำไปชั่งน้ำหนัก', 'นำไปส่องแสง'], 'วัสดุที่แข็งกว่าจะขูดวัสดุที่อ่อนกว่าให้เป็นรอยได้'],
+ ['วัสดุใดมีความยืดหยุ่น (elasticity) มากที่สุด', ['ยางรัดของ', 'แก้ว', 'ไม้บรรทัดไม้', 'ก้อนหิน'], 'ยืดหยุ่น = ดึงแล้วยืด ปล่อยแล้วกลับรูปเดิม → ยางรัดของ'],
+ ['ข้อใดใช้ประโยชน์จากความยืดหยุ่นของวัสดุ', ['ยางยืดขอบกางเกง', 'กระจกหน้าต่าง', 'ช้อนสแตนเลส', 'อิฐก่อผนัง'], 'ยางยืดขอบกางเกงยืดออกได้แล้วหดกลับ'],
+ ['วัสดุใดนำความร้อน (heat conductor) ได้ดีที่สุด', ['ทองแดง', 'ไม้', 'พลาสติก', 'ผ้า'], 'โลหะ (เช่น ทองแดง อะลูมิเนียม) นำความร้อนได้ดี'],
+ ['ทำไมด้ามจับกระทะจึงทำด้วยพลาสติกหรือไม้', ['เพราะเป็นฉนวนความร้อน ไม่ร้อนมือ', 'เพราะนำความร้อนดี', 'เพราะนำไฟฟ้าดี', 'เพราะยืดหยุ่นมาก'], 'ไม้/พลาสติกนำความร้อนไม่ดี (ฉนวน) จับแล้วไม่ร้อน'],
+ ['ทำไมหม้อต้มน้ำจึงทำด้วยโลหะ', ['เพราะนำความร้อนได้ดี น้ำร้อนเร็ว', 'เพราะเบามาก', 'เพราะยืดหยุ่น', 'เพราะเป็นฉนวน'], 'โลหะนำความร้อนดี ความร้อนส่งถึงน้ำเร็ว'],
+ ['วัสดุใดนำไฟฟ้า (electrical conductor) ได้', ['ลวดทองแดง', 'ยางลบ', 'ไม้จิ้มฟัน', 'ถุงพลาสติก'], 'โลหะนำไฟฟ้าได้ · ยาง ไม้ พลาสติก เป็นฉนวนไฟฟ้า'],
+ ['ทำไมสายไฟจึงหุ้มด้วยพลาสติก', ['เพราะพลาสติกเป็นฉนวนไฟฟ้า ป้องกันไฟดูด', 'เพราะพลาสติกนำไฟฟ้า', 'เพราะพลาสติกแข็งที่สุด', 'เพราะพลาสติกนำความร้อน'], 'ข้างในเป็นโลหะนำไฟฟ้า ข้างนอกหุ้มฉนวนเพื่อความปลอดภัย'],
+ ['ต่อวงจรหลอดไฟ แล้วนำวัสดุใดมาต่อแทนสายไฟแล้วหลอดไฟสว่าง', ['คลิปหนีบกระดาษ (โลหะ)', 'หลอดดูดพลาสติก', 'ยางลบ', 'กระดาษ'], 'คลิปโลหะนำไฟฟ้า → วงจรครบ หลอดสว่าง'],
+ ['ข้อใดเป็นฉนวนไฟฟ้าทั้งหมด', ['ยาง ไม้แห้ง พลาสติก', 'เหล็ก ทองแดง ยาง', 'อะลูมิเนียม แก้ว ไม้', 'ทองแดง พลาสติก เหล็ก'], 'ฉนวน (insulator) = ไม่ยอมให้ไฟฟ้าผ่าน'],
+ ['ช่างไฟฟ้าใส่ถุงมือยาง เพราะอะไร', ['ยางเป็นฉนวนไฟฟ้า', 'ยางนำไฟฟ้าดี', 'ยางแข็งมาก', 'ยางนำความร้อนดี'], 'ถุงมือยางกันไฟฟ้าไหลผ่านตัว'],
+ ['ลูกบอลยางตกพื้นแล้วเด้งกลับ แสดงสมบัติข้อใด', ['ความยืดหยุ่น', 'ความแข็ง', 'การนำความร้อน', 'การนำไฟฟ้า'], 'ยางยุบแล้วคืนรูป → เด้ง = ยืดหยุ่น'],
+ ['ทำไมดอกสว่านเจาะผนังจึงทำด้วยเหล็กกล้า', ['เพราะแข็งมาก', 'เพราะยืดหยุ่น', 'เพราะเป็นฉนวน', 'เพราะเบา'], 'ต้องแข็งกว่าผนังจึงเจาะเข้าได้'],
+ ['ช้อนชนิดใดจุ่มน้ำร้อนแล้วร้อนมือเร็วที่สุด', ['ช้อนโลหะ', 'ช้อนไม้', 'ช้อนพลาสติก', 'ช้อนกระเบื้อง'], 'โลหะนำความร้อนดีที่สุด'],
+];
+const SC_STATE = [
+ ['ข้อใดเป็นของแข็ง', ['ก้อนน้ำแข็ง', 'น้ำผลไม้', 'ไอน้ำ', 'อากาศ'], 'ของแข็ง (solid) มีรูปร่างแน่นอน'],
+ ['ข้อใดเป็นของเหลว', ['นม', 'ก้อนหิน', 'ลูกโป่งที่ว่าง', 'ไอน้ำ'], 'ของเหลว (liquid) ไหลได้ รูปร่างเปลี่ยนตามภาชนะ'],
+ ['ข้อใดเป็นแก๊ส', ['อากาศในลูกโป่ง', 'น้ำมัน', 'ทราย', 'น้ำแข็ง'], 'แก๊ส (gas) ฟุ้งกระจายเต็มภาชนะ'],
+ ['สสารใดมีรูปร่างแน่นอน ไม่เปลี่ยนตามภาชนะ', ['ของแข็ง', 'ของเหลว', 'แก๊ส', 'ของเหลวและแก๊ส'], 'ของแข็งรักษารูปร่างได้'],
+ ['เทน้ำจากแก้วลงจาน รูปร่างของน้ำเป็นอย่างไร', ['เปลี่ยนตามรูปจาน', 'เหมือนแก้วเดิม', 'กลายเป็นแก๊สทันที', 'แข็งตัว'], 'ของเหลวเปลี่ยนรูปร่างตามภาชนะ แต่ปริมาตรเท่าเดิม'],
+ ['สสารใดฟุ้งกระจายเต็มภาชนะเสมอ', ['แก๊ส', 'ของเหลว', 'ของแข็ง', 'ทุกสถานะ'], 'แก๊สเคลื่อนที่อิสระ ฟุ้งเต็มพื้นที่'],
+ ['น้ำแข็งละลายกลายเป็นน้ำ เปลี่ยนจากสถานะใดเป็นสถานะใด', ['ของแข็ง → ของเหลว', 'ของเหลว → แก๊ส', 'แก๊ส → ของเหลว', 'ของเหลว → ของแข็ง'], 'การหลอมเหลว (melting) ของแข็งเป็นของเหลว'],
+ ['ต้มน้ำจนเดือดเกิดไอน้ำ เป็นการเปลี่ยนสถานะแบบใด', ['ของเหลว → แก๊ส', 'ของแข็ง → ของเหลว', 'แก๊ส → ของแข็ง', 'ของเหลว → ของแข็ง'], 'การกลายเป็นไอ (evaporation/boiling)'],
+ ['หยดน้ำเกาะข้างแก้วน้ำเย็น มาจากอะไร', ['ไอน้ำในอากาศกลายเป็นหยดน้ำ', 'น้ำซึมผ่านแก้ว', 'แก้วละลาย', 'น้ำแข็งระเหิด'], 'ไอน้ำ (แก๊ส) เจอแก้วเย็น → ควบแน่น (condensation) เป็นของเหลว'],
+ ['ข้อใดเป็นสมบัติของของเหลว', ['ไหลได้ และมีปริมาตรคงที่', 'รูปร่างแน่นอน', 'ฟุ้งเต็มภาชนะ', 'บีบให้เล็กลงได้มาก'], 'ของเหลว: ไหลได้ รูปร่างตามภาชนะ ปริมาตรคงที่'],
+ ['สิ่งใดไม่ใช่สสาร', ['แสง', 'อากาศ', 'น้ำ', 'ดินสอ'], 'สสาร = มีมวลและต้องการที่อยู่ · แสงไม่ใช่สสาร'],
+ ['ใส่น้ำไว้ในช่องแช่แข็ง น้ำจะเปลี่ยนเป็นอะไร', ['ของแข็ง (น้ำแข็ง)', 'แก๊ส', 'ของเหลวที่ร้อนขึ้น', 'หายไป'], 'การแข็งตัว (freezing) ของเหลว → ของแข็ง'],
+ ['ข้อใดเรียงสถานะจากรูปร่างคงที่มากที่สุดไปน้อยที่สุด', ['ของแข็ง ของเหลว แก๊ส', 'แก๊ส ของเหลว ของแข็ง', 'ของเหลว ของแข็ง แก๊ส', 'ของแข็ง แก๊ส ของเหลว'], 'ของแข็งรูปร่างคงที่ → ของเหลวเปลี่ยนตามภาชนะ → แก๊สฟุ้งกระจาย'],
+ ['ลูกโป่งที่เป่าลมแล้วพองขึ้น แสดงว่าแก๊ส…', ['ต้องการที่อยู่ และฟุ้งเต็มลูกโป่ง', 'ไม่มีน้ำหนักและไม่ใช้ที่', 'เป็นของแข็ง', 'ไหลออกไม่ได้'], 'แก๊สเป็นสสาร ต้องการที่อยู่ จึงดันให้ลูกโป่งพอง'],
+];
+
+/* คณิตแบบสุ่มตัวเลข */
+function genAdd() {
+  const a = R(10000, 89999), b = R(1000, 49999);
+  if (Math.random() < 0.5) { const ans = a + b; return ['หาผลบวก\n' + fmt(a) + ' + ' + fmt(b) + ' = ?', numChoices(ans, [ans - 1000, ans + 10, ans - 100, ans + 1000]), 'บวกทีละหลักจากหลักหน่วย อย่าลืมทด · ' + fmt(a) + ' + ' + fmt(b) + ' = ' + fmt(ans)]; }
+  const big = a + b, ans = big - b; return ['หาผลลบ\n' + fmt(big) + ' − ' + fmt(b) + ' = ?', numChoices(ans, [ans + 1000, ans - 10, ans + 100, ans - 1000]), 'ลบทีละหลัก อย่าลืมกระจาย (ยืม) · ตรวจ: ' + fmt(ans) + ' + ' + fmt(b) + ' = ' + fmt(big)];
+}
+function genMul() {
+  const t = Math.random();
+  if (t < 0.4) { const a = R(102, 899), b = R(3, 9), ans = a * b; return ['หาผลคูณ\n' + fmt(a) + ' × ' + b + ' = ?', numChoices(ans, [ans + b, ans - 10, a * (b + 1), ans + 100]), fmt(a) + ' × ' + b + ' = ' + fmt(ans) + ' (คูณหลักหน่วย สิบ ร้อย แล้วทด)']; }
+  if (t < 0.7) { const a = R(12, 98), b = R(11, 49), ans = a * b; return ['หาผลคูณ\n' + a + ' × ' + b + ' = ?', numChoices(ans, [a * (b % 10) + a * Math.floor(b / 10), ans + 10, ans - a, ans + a]), a + ' × ' + b + ' = ' + a + ' × ' + (b % 10) + ' + ' + a + ' × ' + (b - b % 10) + ' = ' + fmt(ans) + ' · ระวัง! คูณหลักสิบต้องเลื่อนเลขไป 1 หลัก']; }
+  const d = R(3, 9), q = R(120, 999), r = Math.random() < 0.5 ? 0 : R(1, d - 1), n = d * q + r;
+  const label = r ? q + ' เศษ ' + r : String(q);
+  const opts = [label, (q + 1) + (r ? ' เศษ ' + r : ''), (q - 10) + (r ? ' เศษ ' + r : ''), r ? q + ' เศษ ' + (r === d - 1 ? 0 : r + 1) : q + ' เศษ 1'];
+  return ['หาผลหาร\n' + fmt(n) + ' ÷ ' + d + ' = ?', [...new Set(opts)].concat(['ไม่มีคำตอบ']).slice(0, 4), 'ตรวจด้วยการคูณกลับ: ' + q + ' × ' + d + (r ? ' + ' + r : '') + ' = ' + fmt(n)];
+}
+function genWord() {
+  const t = R(1, 6);
+  if (t === 1) { const p = R(12, 48), n = R(15, 35), ans = p * n; return ['ดินสอราคาแท่งละ ' + p + ' บาท ครูซื้อ ' + n + ' แท่ง ครูต้องจ่ายเงินกี่บาท', numChoices(ans, [p + n, ans - p, ans + 10, p * (n - 1)]), 'ของหลายชิ้นราคาเท่ากัน → คูณ: ' + p + ' × ' + n + ' = ' + fmt(ans) + ' บาท']; }
+  if (t === 2) { const per = R(6, 9), g = R(25, 60), tot = per * g; return ['มีส้ม ' + fmt(tot) + ' ผล แบ่งใส่ถุง ถุงละ ' + per + ' ผล จะได้กี่ถุง', numChoices(g, [tot - per, g + 1, g * 10, g - 1]), 'แบ่งเท่าๆ กัน → หาร: ' + fmt(tot) + ' ÷ ' + per + ' = ' + g + ' ถุง']; }
+  if (t === 3) { const have = R(2000, 9000), spend = R(500, 1900), ans = have - spend; return ['แม่มีเงิน ' + fmt(have) + ' บาท ซื้อรองเท้า ' + fmt(spend) + ' บาท แม่เหลือเงินกี่บาท', numChoices(ans, [have + spend, ans + 100, ans - 10, spend]), 'คำว่า "เหลือ" → ลบ: ' + fmt(have) + ' − ' + fmt(spend) + ' = ' + fmt(ans) + ' บาท']; }
+  if (t === 4) { const a = R(1200, 4500), b = R(800, 3000), c = R(300, 900), ans = a + b - c; return ['โรงเรียนมีหนังสือ ' + fmt(a) + ' เล่ม ได้รับบริจาคเพิ่ม ' + fmt(b) + ' เล่ม แล้วให้ห้องสมุดชุมชนไป ' + fmt(c) + ' เล่ม โรงเรียนเหลือหนังสือกี่เล่ม', numChoices(ans, [a + b + c, a + b, a - b + c, ans + 100]), 'ทำทีละขั้น: บวกที่ได้เพิ่ม แล้วลบที่ให้ไป · ' + fmt(a) + ' + ' + fmt(b) + ' − ' + fmt(c) + ' = ' + fmt(ans)]; }
+  if (t === 5) { const rows = R(12, 25), per = R(14, 30), absent = R(5, 20), ans = rows * per - absent; return ['ห้องประชุมมีเก้าอี้ ' + rows + ' แถว แถวละ ' + per + ' ตัว มีนักเรียนนั่งเต็มทุกตัว แล้วลุกออกไป ' + absent + ' คน เหลือนักเรียนนั่งอยู่กี่คน', numChoices(ans, [rows * per, rows + per - absent, ans + absent * 2, ans - 1]), 'หาจำนวนเก้าอี้ก่อน ' + rows + ' × ' + per + ' = ' + fmt(rows * per) + ' แล้วลบ ' + absent + ' = ' + fmt(ans)]; }
+  const price = R(35, 90), n = R(4, 9), pay = Math.ceil(price * n / 100) * 100 + (Math.random() < 0.5 ? 0 : 100), ans = pay - price * n;
+  return ['ซื้อขนมราคาชิ้นละ ' + price + ' บาท จำนวน ' + n + ' ชิ้น จ่ายเงิน ' + fmt(pay) + ' บาท จะได้เงินทอนกี่บาท', numChoices(ans, [pay - price, price * n, ans + 10, ans - 5]), 'ราคารวม ' + price + ' × ' + n + ' = ' + fmt(price * n) + ' · ทอน ' + fmt(pay) + ' − ' + fmt(price * n) + ' = ' + fmt(ans) + ' บาท'];
+}
+
+const SUBJECTS = [
+ { id: 'en', name: '🇬🇧 ภาษาอังกฤษ', sub: 'Vocabulary · Phonics · Grammar · to/-ing', color: 'var(--en)', topics: [
+   { id: 'en1', name: 'Vocabulary', sub: 'countries · wild animals · clothing · seasons · weather', pool: EN_VOCAB },
+   { id: 'en2', name: 'Phonics', sub: 'long o/u/i · magic e · th / sh / ch', pool: EN_PHONICS },
+   { id: 'en3', name: 'Grammar', sub: 'present simple/continuous · prepositions · has/have · this is/these are', pool: EN_GRAMMAR },
+   { id: 'en4', name: 'Watching Seals: to + V / V-ing', sub: 'want to · enjoy -ing · like both', pool: EN_INF } ] },
+ { id: 'ma', name: '🔢 คณิตศาสตร์', sub: 'บวกลบ · คูณหาร · โจทย์ปัญหาระคน · มุม', color: 'var(--ma)', topics: [
+   { id: 'ma1', name: 'การบวกและการลบ', sub: 'จำนวนหลักหมื่น · ทด · กระจาย', gen: genAdd },
+   { id: 'ma2', name: 'การคูณและการหาร', sub: 'คูณ 1–2 หลัก · หารมีเศษ', gen: genMul },
+   { id: 'ma3', name: 'โจทย์ปัญหาระคน', sub: 'อ่านโจทย์ → บวก ลบ คูณ หาร กี่ขั้น', gen: genWord },
+   { id: 'ma4', name: 'รูปเรขาคณิตและมุม', sub: 'ชนิดของมุม · เส้น · รังสี · ขนาน/ตั้งฉาก', pool: MA_GEO } ] },
+ { id: 'th', name: '📖 ภาษาไทย', sub: 'ข้อเท็จจริง/ข้อคิดเห็น · อ่านจับใจความ', color: 'var(--th)', topics: [
+   { id: 'th1', name: 'ข้อเท็จจริง หรือ ข้อคิดเห็น', sub: 'ตรวจสอบได้ = ข้อเท็จจริง · ความรู้สึก = ข้อคิดเห็น', pool: TH_FACT },
+   { id: 'th2', name: 'อ่านเรื่องแล้วตอบคำถาม', sub: 'หาข้อมูลในเรื่อง · ใจความสำคัญ · เหตุผล', pool: TH_READ } ] },
+ { id: 'sc', name: '🔬 วิทยาศาสตร์', sub: 'สมบัติของวัสดุ · สถานะของสสาร', color: 'var(--sc)', topics: [
+   { id: 'sc1', name: 'Ep.4 สมบัติของวัสดุ', sub: 'ความแข็ง · ยืดหยุ่น · นำความร้อน · นำไฟฟ้า', pool: SC_PROP },
+   { id: 'sc2', name: 'Ep.5 สถานะของสสาร', sub: 'ของแข็ง · ของเหลว · แก๊ส', pool: SC_STATE } ] },
+];
+const ROUND = 10;
+function makeRound(topic) {
+  if (topic.gen) return Array.from({ length: ROUND }, () => topic.gen());
+  const p = shuffle(topic.pool); return p.slice(0, Math.min(ROUND, p.length));
+}
+if (typeof module !== 'undefined') module.exports = { SUBJECTS, makeRound, genAdd, genMul, genWord };
+</script>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const KEY = 'p4final-';
+const best = k => { try { return +(localStorage.getItem(KEY + k) || 0); } catch (e) { return 0; } };
+const setBest = (k, v) => { try { localStorage.setItem(KEY + k, String(v)); } catch (e) { } };
+let SUBJ = null, TOP = null, Q = [], i = 0, ok = 0, streak = 0, miss = [];
+function show(id) { ['home', 'topics', 'play', 'done'].forEach(x => $(x).classList.toggle('hidden', x !== id)); window.scrollTo(0, 0); }
+function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+function paintHome() {
+  $('subjects').innerHTML = SUBJECTS.map((s, k) => '<button class="subj" style="border-color:' + s.color + '" data-k="' + k + '"><b>' + s.name + '</b><div class="d">' + s.sub + '</div></button>').join('');
+  document.querySelectorAll('.subj').forEach(b => b.onclick = () => openSubj(SUBJECTS[+b.dataset.k]));
+}
+function openSubj(s) {
+  SUBJ = s; $('sTitle').textContent = s.name; $('sSub').textContent = 'เลือกหัวข้อ · รอบละ ' + ROUND + ' ข้อ';
+  $('topicList').innerHTML = s.topics.map((t, k) => { const b = best(t.id); return '<button class="t" data-k="' + k + '"><span class="best">' + (b ? '⭐ ' + b + '/' + ROUND : '') + '</span><b>' + t.name + '</b><div class="d">' + t.sub + '</div></button>'; }).join('');
+  document.querySelectorAll('.t').forEach(b => b.onclick = () => start(s.topics[+b.dataset.k]));
+  show('topics');
+}
+function start(t) { TOP = t; Q = makeRound(t); i = 0; ok = 0; streak = 0; miss = []; show('play'); render(); }
+function render() {
+  const [q, c, w] = Q[i];
+  $('hNo').textContent = i + 1; $('hOk').textContent = ok; $('hStreak').textContent = streak;
+  $('tName').textContent = SUBJ.name + ' · ' + TOP.name;
+  $('q').textContent = q; $('fb').innerHTML = ''; $('next').classList.add('hidden');
+  const box = $('choices'); box.innerHTML = '';
+  shuffle(c).forEach(t => { const b = document.createElement('button'); b.className = 'ch'; b.textContent = t; b.onclick = () => pick(t, b); box.appendChild(b); });
+}
+function pick(t, btn) {
+  const [q, c, w] = Q[i], right = t === c[0];
+  [...$('choices').children].forEach(b => { b.disabled = true; if (b.textContent === c[0]) b.classList.add('ok'); });
+  if (right) { ok++; streak++; } else { btn.classList.add('bad'); streak = 0; miss.push(q.split('\n').pop() + ' → ' + c[0]); }
+  $('fb').innerHTML = '<div class="fb ' + (right ? 'ok' : 'bad') + '">' + (right ? '✅ ถูกต้อง! ' : '❌ คำตอบคือ <b>' + esc(c[0]) + '</b> — ') + esc(w) + '</div>';
+  $('hOk').textContent = ok; $('hStreak').textContent = streak;
+  $('next').textContent = i === Q.length - 1 ? 'ดูคะแนน 🎉' : 'ข้อต่อไป →'; $('next').classList.remove('hidden');
+  $('next').onclick = () => { i++; i < Q.length ? render() : finish(); };
+}
+function finish() {
+  const n = Q.length, b = best(TOP.id); if (ok > b) setBest(TOP.id, ok);
+  $('dTitle').textContent = TOP.name; $('dScore').textContent = ok + ' / ' + n;
+  const p = ok / n; $('dStars').textContent = p >= 0.9 ? '⭐⭐⭐' : p >= 0.7 ? '⭐⭐' : p >= 0.5 ? '⭐' : '💪';
+  $('dMsg').textContent = (ok > b ? '🎉 สถิติใหม่! ' : '') + (p >= 0.8 ? 'เก่งมาก พร้อมสอบแล้ว!' : p >= 0.5 ? 'ดีแล้ว เล่นอีกรอบให้ได้ 8 ขึ้นไปนะ' : 'ไม่เป็นไร อ่านคำอธิบายแล้วลองใหม่');
+  $('dMiss').innerHTML = miss.length ? '<p style="color:var(--muted);text-align:center">ข้อที่ผิด — อ่านอีกครั้ง</p>' + miss.map(m => '<div class="miss">' + esc(m) + '</div>').join('') : '';
+  show('done');
+}
+$('backHome').onclick = () => { paintHome(); show('home'); };
+$('quit').onclick = () => openSubj(SUBJ);
+$('toTopics').onclick = () => openSubj(SUBJ);
+$('again').onclick = () => start(TOP);
+paintHome();
+</script>
+</body>
+</html>
