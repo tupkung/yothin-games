@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ห้องเรียนพี่ AI — กำไร ลดราคา</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+--ink:#1a1c1e;--muted:#5b6167;--line:#dfe3e8;--bg:#fbfbfa;--card:#fff;--soft:#f4f6f8;
+--accent:#1f6feb;--accent-bg:#eaf2ff;--warn:#b25000;--warn-bg:#fff4e8;--ok:#136c39;--ok-bg:#e8f6ee;
+--bad:#b3261e;--bad-bg:#fdecea;--vio:#6b46e0;--vio-bg:#efeaff}
+@media (prefers-color-scheme:dark){:root{
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#333a42;--bg:#16181b;--card:#1e2126;--soft:#262a30;
+--accent:#69a4ff;--accent-bg:#1a2740;--warn:#f0a163;--warn-bg:#33240f;--ok:#6fd39a;--ok-bg:#13301f;
+--bad:#ff8a80;--bad-bg:#3a1a17;--vio:#a68cff;--vio-bg:#2a2140}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:"Sarabun","Noto Sans Thai",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+font-size:17px;line-height:1.75;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:680px;margin:0 auto;padding:22px 16px calc(60px + env(safe-area-inset-bottom))}
+h1{font-size:1.45rem;margin:0 0 6px;line-height:1.35}
+h2{font-size:1.15rem;margin:0 0 8px}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px}
+.hidden{display:none !important}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+.day{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:11px}
+.day b{font-size:1.05rem}
+.day .d{color:var(--muted);font-size:.87rem;line-height:1.6}
+.day .st{float:right;font-size:.82rem;font-weight:700;color:var(--ok)}
+.day.intro{border-color:var(--vio);background:var(--vio-bg)}
+.tbl{width:100%;border-collapse:collapse;font-family:"IBM Plex Mono",monospace;font-size:.95rem;margin:8px 0}
+.tbl td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+.tbl td:first-child{font-family:"Sarabun",sans-serif;text-align:left;color:var(--muted)}
+.prob{background:var(--soft);border-radius:12px;padding:12px 14px;margin-bottom:12px;font-size:1rem}
+.mode{display:inline-block;font-size:.8rem;font-weight:700;border-radius:99px;padding:2px 10px;margin-bottom:6px}
+.mode.guide{background:var(--vio-bg);color:var(--vio)}
+.mode.self{background:var(--warn-bg);color:var(--warn)}
+.teach{background:var(--vio-bg);border-left:4px solid var(--vio);border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:.95rem}
+.q{font-weight:600;font-size:1.06rem;margin:4px 0 10px}
+.ch{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;margin-bottom:9px;font-family:"IBM Plex Mono","Sarabun",monospace}
+.ch.ok{border-color:var(--ok);background:var(--ok-bg)}
+.ch.bad{border-color:var(--bad);background:var(--bad-bg)}
+.fb{border-radius:12px;padding:10px 14px;margin:4px 0 12px;font-size:.96rem}
+.fb.ok{background:var(--ok-bg);border:1px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);border:1px solid var(--bad)}
+.go{display:block;width:100%;background:var(--accent);color:#fff;border:0;border-radius:12px;padding:12px;font-weight:700;margin-top:6px}
+.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:.88rem}
+.ladder{font-family:"IBM Plex Mono",monospace;background:var(--soft);border-radius:10px;padding:8px 12px;margin:8px 0;white-space:pre-wrap;font-size:.92rem}
+.big{font-size:2.2rem;font-weight:700;text-align:center;margin:6px 0}
+.paper{background:var(--warn-bg);border:1px solid var(--warn);border-radius:12px;padding:10px 14px;margin-top:12px}
+.dots{display:flex;gap:6px;margin-bottom:12px}
+.dots i{flex:1;height:7px;border-radius:99px;background:var(--soft)}
+.dots i.on{background:var(--accent)}
+footer{color:var(--muted);font-size:.8rem;text-align:center;margin-top:24px}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<section id="menu">
+  <h1>🧑‍🏫 ห้องเรียนพี่ AI — กำไร ลดราคา</h1>
+  <p class="sub">วันละ 2 ข้อ · ~15 นาที · กดตอบทีละขั้น ผิดตรงไหนพี่อธิบายตรงนั้น · ทำเองได้ ไม่ต้องมีคนสอน</p>
+  <button class="day intro" data-day="0"><span class="st" id="s0"></span><b>⭐ เริ่มตรงนี้: กฎ 3 ข้อ + ตาราง ทุน 100</b><div class="d">อ่าน 3 นาที ก่อนวันที่ 1</div></button>
+  <div id="days"></div>
+</section>
+
+<section id="intro" class="hidden">
+  <div class="card">
+    <h2>กฎ 1 — กำไร/ขาดทุน % คิดจาก <u>ทุน</u></h2>
+    ทุน (cost) 100 กำไร 20% → ขาย 120 · ขาดทุน 5% → ขาย 95
+  </div>
+  <div class="card">
+    <h2>กฎ 2 — ลดราคา % คิดจาก <u>ป้าย</u></h2>
+    ป้าย (tag price) 100 ลด 10% → ขาย 90 · ป้าย 120 ลด 10% → ลด 12 → ขาย 108 (ไม่ใช่ลด 10!)
+  </div>
+  <div class="card">
+    <h2>กฎ 3 — สมมติทุน 100 แล้วขยาย</h2>
+    เขียน 3 บรรทัดทุกข้อ:
+    <table class="tbl"><tr><td></td><td>โลก 100</td><td>ของจริง</td></tr>
+    <tr><td>ทุน</td><td>100</td><td>?</td></tr><tr><td>ป้าย</td><td>120</td><td>?</td></tr><tr><td>ขาย</td><td>108</td><td>?</td></tr></table>
+    รู้ของจริงช่องไหน ช่องเดียว → <b>จับคู่บรรทัดเดียวกัน</b> หาว่าขยายกี่เท่า → คูณทุกช่อง<br>
+    ตัวอย่าง: ป้ายจริง 360 · ป้ายโลก 100 = 120 → ขยาย 360 ÷ 120 = <b>3 เท่า</b> → ทุนจริง 300 · ขายจริง 324
+  </div>
+  <div class="card">
+    <h2>⚠️ กับดักที่ข้อสอบชอบ</h2>
+    • ลด 10% แล้วลดอีก 5% <b>≠ ลด 15%</b> (ลดครั้งที่ 2 คิดจากราคาที่ลดแล้ว)<br>
+    • กำไร 20% แล้วลด 5% <b>≠ กำไร 15%</b> (คนละฐาน)<br>
+    • รู้ราคาขาย อยากได้ทุน → <b>ห้ามลบ % จากราคาขาย</b> ต้องใช้ตาราง (÷ 108 × 100)
+  </div>
+  <button class="go" id="introDone">เข้าใจแล้ว → ไปวันที่ 1</button>
+  <p style="text-align:center;margin-top:10px"><button class="ghost" data-home>← กลับเมนู</button></p>
+</section>
+
+<section id="play" class="hidden">
+  <div class="dots" id="dots"></div>
+  <div class="card">
+    <span class="mode" id="mode"></span>
+    <div class="prob" id="prob"></div>
+    <div class="ladder" id="ladder"></div>
+    <div id="teach"></div>
+    <div class="q" id="q"></div>
+    <div id="choices"></div>
+    <div id="fb"></div>
+    <button class="go hidden" id="next">ขั้นต่อไป →</button>
+  </div>
+  <p style="text-align:center"><button class="ghost" data-home>← กลับเมนู</button></p>
+</section>
+
+<section id="done" class="hidden">
+  <div class="card">
+    <h1 id="dTitle"></h1>
+    <div class="big" id="dScore"></div>
+    <p id="dMsg" style="text-align:center;color:var(--muted)"></p>
+    <div class="paper" id="dPaper"></div>
+    <button class="go" id="again">ทำวันนี้ซ้ำ</button>
+    <p style="text-align:center;margin-top:10px"><button class="ghost" data-home>← กลับเมนู</button></p>
+  </div>
+</section>
+
+<footer>Road to Yothin · ห้องเรียนพี่ AI กำไร-ลดราคา · ตัวเลขแต่งใหม่ ไม่ซ้ำชุด rp-01 (เก็บไว้วัดผล) · ความคืบหน้าเก็บในเครื่องนี้</footer>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); } } catch (e) { }
+</script>
+
+<!-- ============ DATA (ไม่แตะ DOM — ทดสอบด้วย Node ได้) ============ -->
+<script id="gen">
+"use strict";
+/* แต่ละขั้น: q = คำถาม, c = ตัวเลือก (ตัวแรกคือคำตอบถูก — สลับตอนแสดง), w = เหตุผล, t = คำสอนก่อนตอบ (โหมดพี่พาทำ), L = บรรทัดตารางหลังตอบถูก
+   rp = ข้อ rp-01 คู่ของวันนั้น (ให้ทำบนกระดาษหลังจบวัน) */
+const DAYS = [
+ { title: 'วันที่ 1 · ติดป้าย → ลด → กำไรกี่บาท / ขายเท่าไร', rp: [2, 4], probs: [
+  { p: 'ร้านติดป้ายของเล่น <b>360 บาท</b> โดยตั้งให้ได้กำไร 20% จากทุน แล้วลดให้ลูกค้า 10% จากป้าย ร้านได้กำไรกี่บาท', steps: [
+    { t: 'เริ่มทุกข้อด้วย "สมมติทุน 100" · กำไรคิดจากทุน', q: 'ทุน 100 · กำไร 20% → ป้าย = ?', c: ['120', '80', '20', '110'], w: '100 + 20 = 120 (กำไรบวกเพิ่มจากทุน)', L: 'ทุน 100 → ป้าย 120' },
+    { t: 'ลดราคาคิดจาก "ป้าย" ไม่ใช่จากทุน', q: 'ลด 10% จากป้าย 120 → ลดไปกี่บาท?', c: ['12', '10', '20', '108'], w: '10% ของ 120 = 12 · ตัวลวง 10 = 10% ของ 100 (คิดจากทุน ผิดฐาน)' },
+    { q: 'ราคาขาย (ในโลกทุน 100) = ?', c: ['108', '110', '90', '132'], w: '120 − 12 = 108', L: 'ทุน 100 → ป้าย 120 → ขาย 108' },
+    { t: 'ของจริงรู้ "ป้าย" → จับคู่กับป้ายในโลก 100', q: 'ป้ายจริง 360 · ป้ายโลก 100 = 120 → ขยายกี่เท่า?', c: ['3', '4', '2', '6'], w: '360 ÷ 120 = 3 เท่า' },
+    { q: 'ทุนจริง = ?', c: ['300', '324', '360', '100'], w: '100 × 3 = 300' },
+    { q: 'ขายจริง = ?', c: ['324', '300', '360', '336'], w: '108 × 3 = 324', L: 'จริง: ทุน 300 → ป้าย 360 → ขาย 324' },
+    { q: 'กำไร = ขาย − ทุน = ?', c: ['24', '60', '36', '324'], w: '324 − 300 = 24 บาท · ตัวลวง 60 = ป้าย − ทุน (ลืมว่าลดราคาแล้ว)' } ] },
+  { p: 'ขายรองเท้า <b>230 บาท</b> ได้กำไร 15% ถ้าอยากได้กำไร 30% ต้องขายกี่บาท', steps: [
+    { q: 'ทุน 100 · กำไร 15% → ขาย = ?', c: ['115', '85', '130', '15'], w: '100 + 15 = 115', L: 'ทุน 100 → ขาย 115' },
+    { q: 'ขายจริง 230 จับคู่กับขาย 115 → ขยายกี่เท่า?', c: ['2', '3', '1.5', '115'], w: '230 ÷ 115 = 2 เท่า' },
+    { q: 'ทุนจริง = ?', c: ['200', '230', '195.5', '100'], w: '100 × 2 = 200 · ตัวลวง 195.5 = 230 − 15% ของ 230 (ลบ % จากราคาขาย ผิดฐาน!)', L: 'จริง: ทุน 200 → ขาย 230' },
+    { q: 'อยากได้กำไร 30% → ขาย = ทุน + 30% ของทุน = ?', c: ['260', '299', '230', '245'], w: '200 + 60 = 260 · ตัวลวง 299 = 230 × 1.3 (คิดจากราคาขายเดิม ผิดฐาน)' } ] } ] },
+ { title: 'วันที่ 2 · รู้ทุน + ลด + กำไร → หาป้าย', rp: [3, 5], probs: [
+  { p: 'เสื้อทุน <b>200 บาท</b> ร้านลดให้ 20% จากป้าย แต่ยังได้กำไร 4% ต้องติดป้ายกี่บาท', steps: [
+    { t: 'เริ่มจากสิ่งที่หาได้ก่อน: ทุน + กำไร → ราคาขาย', q: 'ทุน 200 · กำไร 4% → ขาย = ?', c: ['208', '192', '240', '204'], w: '4% ของ 200 = 8 → 208', L: 'ทุน 200 → ขาย 208' },
+    { t: 'ส่วนลดเป็นของ "ป้าย" → สมมติป้าย 100', q: 'ป้าย 100 ลด 20% → ขาย = ?', c: ['80', '120', '20', '96'], w: '100 − 20 = 80', L: 'โลก 100: ป้าย 100 → ขาย 80' },
+    { q: 'ขายจริง 208 จับคู่กับขาย 80 → ป้ายจริง = 208 ÷ 80 × 100 = ?', c: ['260', '249.6', '250', '228'], w: '208 ÷ 80 = 2.6 เท่า → ป้าย 260 · ตัวลวง 249.6 = 208 + 20% ของ 208 (บวกกลับ ผิดฐาน)' },
+    { t: 'นิสัยดี: เช็กกลับทุกครั้ง', q: 'เช็ก: 260 ลด 20% = ?', c: ['208', '200', '240', '212'], w: '20% ของ 260 = 52 → 208 ✔ ตรงกับราคาขาย' } ] },
+  { p: 'ทุน <b>500 บาท</b> อยากได้กำไร 20% แต่จะติดป้ายลด 25% ต้องติดป้ายกี่บาท', steps: [
+    { q: 'ทุน 500 · กำไร 20% → ขาย = ?', c: ['600', '625', '520', '650'], w: '20% ของ 500 = 100 → 600' },
+    { q: 'ป้าย 100 ลด 25% → ขาย = ?', c: ['75', '125', '25', '80'], w: '100 − 25 = 75' },
+    { q: 'ป้ายจริง = 600 ÷ 75 × 100 = ?', c: ['800', '750', '725', '780'], w: '600 ÷ 75 = 8 เท่า → 800 · ตัวลวง 750 = 600 + 25% ของ 600 (บวกกลับ ผิดฐาน)' },
+    { q: 'เช็ก: 800 ลด 25% = ?', c: ['600', '575', '625', '650'], w: '25% ของ 800 = 200 → 600 ✔' } ] } ] },
+ { title: 'วันที่ 3 · ลดได้ไม่เกินกี่ % / กำไรกี่ %', rp: [6, 7], probs: [
+  { p: 'ร้านติดป้ายสูงกว่าทุน <b>100%</b> (ป้าย = 2 เท่าของทุน) จะลดจากป้ายได้มากสุดกี่ % โดยไม่ขาดทุน', steps: [
+    { q: 'ทุน 100 · ติดสูงกว่าทุน 100% → ป้าย = ?', c: ['200', '100', '150', '110'], w: '100 + 100 = 200', L: 'ทุน 100 → ป้าย 200' },
+    { t: '"ไม่ขาดทุน" = ขายได้อย่างน้อยเท่าทุน', q: 'ลดได้มากสุดกี่บาท (ให้เหลือเท่าทุน 100)?', c: ['100', '200', '50', '0'], w: '200 − 100 = 100 บาท' },
+    { t: 'ส่วนลด % เทียบกับ "ป้าย"', q: 'ลด 100 จากป้าย 200 = กี่ %?', c: ['50', '100', '25', '200'], w: '100 ÷ 200 × 100 = 50% · ตัวลวง 100 = เทียบกับทุน (ผิดฐาน)' } ] },
+  { p: 'ร้านติดป้ายสูงกว่าทุน <b>20%</b> แล้วลดให้ 5% จากป้าย ร้านได้กำไรกี่ %', steps: [
+    { q: 'ทุน 100 → ป้าย = ?', c: ['120', '125', '115', '105'], w: '100 + 20 = 120' },
+    { q: 'ลด 5% ของป้าย 120 = กี่บาท?', c: ['6', '5', '12', '1.2'], w: '120 × 5 ÷ 100 = 6' },
+    { q: 'ขาย = ?', c: ['114', '115', '126', '108'], w: '120 − 6 = 114', L: 'ทุน 100 → ป้าย 120 → ขาย 114' },
+    { t: 'โลกทุน 100 ดีตรงนี้: กำไรกี่บาท = กำไรกี่ % ทันที', q: 'ได้กำไรกี่ %?', c: ['14', '15', '6', '25'], w: 'ทุน 100 กำไร 14 บาท = 14% · ตัวลวง 15 = 20 − 5 (ลบ % ตรงๆ ใช้ไม่ได้)' } ] } ] },
+ { title: 'วันที่ 4 · อ่านตาราง/เปรียบเทียบร้าน', rp: [1, 8], probs: [
+  { p: 'ขายกระเป๋าใบละ 500 บาท เดือน มิ.ย. รายได้ <b>6,000 บาท</b> เดือน ก.ค. ลดเหลือใบละ 450 บาท และขายได้มากกว่า มิ.ย. 3 ใบ รายได้ ก.ค. กี่บาท', steps: [
+    { t: 'รายได้ = ราคาต่อใบ × จำนวนใบ → หาจำนวนใบก่อน', q: 'มิ.ย. ขายได้กี่ใบ?', c: ['12', '3', '120', '15'], w: '6,000 ÷ 500 = 12 ใบ' },
+    { q: 'ก.ค. ขายได้กี่ใบ?', c: ['15', '9', '12', '13'], w: '12 + 3 = 15 ใบ' },
+    { q: 'รายได้ ก.ค. = ?', c: ['6,750', '7,500', '5,400', '6,000'], w: '15 × 450 = 6,750 · ตัวลวง 7,500 = 15 × 500 (ลืมราคาใหม่)' } ] },
+  { p: 'ซื้อขนม <b>2 ห่อ</b> ร้านไหนถูกสุด? · A ห่อละ 280 ซื้อ 1 แถม 1 · B ห่อละ 170 ลด 20% · D ห่อละ 160 ลด 10% แล้วลดเพิ่มอีก 5%', steps: [
+    { q: 'ร้าน A จ่ายกี่บาท (ได้ 2 ห่อ)?', c: ['280', '560', '140', '420'], w: 'ซื้อ 1 แถม 1 = จ่าย 1 ห่อ ได้ 2 ห่อ → 280' },
+    { q: 'ร้าน B ห่อละเท่าไรหลังลด 20%?', c: ['136', '150', '34', '204'], w: '20% ของ 170 = 34 → 136' },
+    { q: 'ร้าน B 2 ห่อ = ?', c: ['272', '136', '340', '300'], w: '136 × 2 = 272' },
+    { q: 'ร้าน D: 160 ลด 10% = ?', c: ['144', '150', '16', '136'], w: '160 − 16 = 144' },
+    { t: 'ลดครั้งที่ 2 คิดจากราคาที่ลดแล้ว (144) ไม่ใช่ลด 15% ทีเดียว', q: 'แล้วลดอีก 5% ของ 144 = เหลือ?', c: ['136.80', '136', '139', '128'], w: '5% ของ 144 = 7.20 → 136.80 · ตัวลวง 136 = 160 ลด 15% ทีเดียว' },
+    { q: 'ร้าน D 2 ห่อ = ?', c: ['273.60', '272', '288', '136.80'], w: '136.80 × 2 = 273.60' },
+    { q: 'ร้านไหนถูกสุด?', c: ['ร้าน B (272 บาท)', 'ร้าน A (280 บาท)', 'ร้าน D (273.60 บาท)'], w: 'B 272 < D 273.60 < A 280 → ร้าน B · ต่างกันนิดเดียว ต้องคิดให้ครบทุกร้าน อย่าเดาจาก "ซื้อ 1 แถม 1"' } ] } ] },
+ { title: 'วันที่ 5 · ข้อยาก: ถอยหลังหาทุน', rp: [9, 10], probs: [
+  { p: 'ติดป้ายทีวี <b>6,000 บาท</b> ลด 10% แล้วยังได้กำไร 8% ถ้าขายในราคา 4,750 บาท จะได้กำไรหรือขาดทุนกี่ %', steps: [
+    { q: 'ขายจริงตอนลด 10% = ?', c: ['5,400', '5,940', '600', '6,600'], w: '10% ของ 6,000 = 600 → 5,400' },
+    { t: 'รู้ราคาขาย อยากได้ทุน → ทุน 100 ขาย 108 แล้วขยาย (ห้ามลบ 8% จากราคาขาย)', q: 'ทุนจริง = 5,400 ÷ 108 × 100 = ?', c: ['5,000', '4,968', '5,832', '5,400'], w: '5,400 ÷ 108 = 50 → 5,000 · ตัวลวง 4,968 = 5,400 − 8% ของ 5,400 (ผิดฐาน)', L: 'ทุน 5,000 → ป้าย 6,000 → ขาย 5,400' },
+    { q: 'ขาย 4,750 เทียบทุน 5,000 → ?', c: ['ขาดทุน 250 บาท', 'กำไร 250 บาท', 'ขาดทุน 650 บาท', 'กำไร 750 บาท'], w: '4,750 < 5,000 → ขาดทุน 250 บาท' },
+    { q: 'ขาดทุนกี่ % (เทียบทุน)?', c: ['ขาดทุน 5%', 'ขาดทุน 25%', 'กำไร 5%', 'ขาดทุน 2.5%'], w: '250 ÷ 5,000 × 100 = 5%' } ] },
+  { p: 'ก ขายของให้ ข ได้กำไร 10% · ข ขายต่อให้ ค ได้กำไร 20% · ค ซื้อมา <b>2,640 บาท</b> · ก ซื้อของชิ้นนี้มาเดิมกี่บาท', steps: [
+    { t: 'เดินถอยหลังทีละคน · ราคาที่ ค ซื้อ = ราคาที่ ข ขาย', q: 'ข: ทุน 100 → ขาย 120 · ขายจริง 2,640 → ทุนของ ข = 2,640 ÷ 120 × 100 = ?', c: ['2,200', '2,112', '2,520', '2,400'], w: '2,640 ÷ 120 = 22 → 2,200 · ตัวลวง 2,112 = 2,640 − 20% ของ 2,640 (ผิดฐาน)' },
+    { q: 'ก: ทุน 100 → ขาย 110 · ขายจริง 2,200 → ทุนของ ก = ?', c: ['2,000', '1,980', '2,100', '1,800'], w: '2,200 ÷ 110 = 20 → 2,000' },
+    { q: 'เช็กเดินหน้า: 2,000 + 10% = 2,200 → + 20% = ?', c: ['2,640', '2,600', '2,420', '2,680'], w: '20% ของ 2,200 = 440 → 2,640 ✔' } ] } ] },
+];
+function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+if (typeof module !== 'undefined') module.exports = { DAYS, shuffle };
+</script>
+
+<!-- ============ UI ============ -->
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const KEY = 'pdcoach-';
+const get = k => { try { return localStorage.getItem(KEY + k); } catch (e) { return null; } };
+const set = (k, v) => { try { localStorage.setItem(KEY + k, v); } catch (e) { } };
+let S = null;
+function show(id) { ['menu', 'intro', 'play', 'done'].forEach(x => $(x).classList.toggle('hidden', x !== id)); window.scrollTo(0, 0); }
+function paintMenu() {
+  $('s0').textContent = get('intro') ? '✅ อ่านแล้ว' : '';
+  $('days').innerHTML = DAYS.map((d, i) => { const r = get('day' + (i + 1));
+    return '<button class="day" data-day="' + (i + 1) + '"><span class="st">' + (r ? '✅ ' + r : '') + '</span><b>' + d.title + '</b><div class="d">ข้อ 1 พี่พาทำ · ข้อ 2 ลองเอง · จบแล้วทำ rp-01 ข้อ ' + d.rp.join(', ') + ' บนกระดาษ</div></button>'; }).join('');
+  document.querySelectorAll('.day').forEach(b => b.onclick = () => { const d = +b.dataset.day; d === 0 ? show('intro') : start(d); });
+}
+function start(d) { S = { d, pi: 0, si: 0, ok: 0, total: 0, firstTry: true, lad: [] }; DAYS[d - 1].probs.forEach(p => S.total += p.steps.length); render(); show('play'); }
+function render() {
+  const day = DAYS[S.d - 1], pr = day.probs[S.pi], st = pr.steps[S.si];
+  const guide = S.pi === 0;
+  $('mode').className = 'mode ' + (guide ? 'guide' : 'self');
+  $('mode').textContent = (guide ? '🧑‍🏫 พี่พาทำ' : '✍️ ลองเอง') + ' · ข้อ ' + (S.pi + 1) + '/2 · ขั้น ' + (S.si + 1) + '/' + pr.steps.length;
+  $('prob').innerHTML = pr.p;
+  $('ladder').textContent = S.lad.length ? '📝 จดไว้: ' + S.lad[S.lad.length - 1] : '📝 จดในกระดาษไปด้วยนะ';
+  $('teach').innerHTML = (guide && st.t) ? '<div class="teach">💡 ' + st.t + '</div>' : '';
+  $('q').textContent = st.q; $('fb').innerHTML = ''; $('next').classList.add('hidden');
+  let done = 0; for (let i = 0; i < S.pi; i++) done += day.probs[i].steps.length; done += S.si;
+  $('dots').innerHTML = Array.from({ length: S.total }, (_, i) => '<i class="' + (i < done ? 'on' : '') + '"></i>').join('');
+  S.firstTry = true;
+  const box = $('choices'); box.innerHTML = '';
+  shuffle(st.c).forEach(t => { const b = document.createElement('button'); b.className = 'ch'; b.textContent = t; b.onclick = () => pick(t, b, st); box.appendChild(b); });
+}
+function pick(t, btn, st) {
+  const right = t === st.c[0];
+  if (!right) {
+    btn.classList.add('bad'); btn.disabled = true; S.firstTry = false;
+    $('fb').innerHTML = '<div class="fb bad">❌ ยังไม่ใช่ ลองอีกครั้ง' + (S.pi === 1 && st.t ? '<br>💡 ' + st.t : '') + '</div>';
+    return;
+  }
+  if (S.firstTry) S.ok++;
+  [...$('choices').children].forEach(b => { b.disabled = true; if (b.textContent === t) b.classList.add('ok'); });
+  if (st.L) S.lad.push(st.L);
+  $('fb').innerHTML = '<div class="fb ok">✅ ' + st.w + '</div>';
+  const pr = DAYS[S.d - 1].probs[S.pi];
+  const lastStep = S.si === pr.steps.length - 1, lastProb = S.pi === DAYS[S.d - 1].probs.length - 1;
+  $('next').textContent = lastStep ? (lastProb ? 'จบวันนี้ 🎉' : 'ไปข้อ 2 (ลองเอง) →') : 'ขั้นต่อไป →';
+  $('next').classList.remove('hidden');
+  $('next').onclick = () => { if (!lastStep) { S.si++; } else if (!lastProb) { S.pi++; S.si = 0; S.lad = []; } else return finish(); render(); };
+}
+function finish() {
+  const day = DAYS[S.d - 1];
+  set('day' + S.d, S.ok + '/' + S.total);
+  $('dTitle').textContent = '🎉 จบ' + day.title.split('·')[0];
+  $('dScore').textContent = S.ok + ' / ' + S.total;
+  $('dMsg').textContent = 'ตอบถูกครั้งแรก ' + S.ok + ' จาก ' + S.total + ' ขั้น · ' + (S.ok / S.total >= 0.8 ? 'เก่งมาก! 🟢' : 'ดีแล้ว ทำซ้ำอีกรอบได้นะ 🟡');
+  $('dPaper').innerHTML = '📝 <b>ต่อด้วยกระดาษ (ทำเอง ไม่มีคนช่วย):</b> rp-01 ข้อ <b>' + day.rp.join(' และ ') + '</b> · เขียน 3 บรรทัด ทุน → ป้าย → ขาย · จดเวลา · แล้ว<b>แคปหน้าจอนี้ + ส่งคำตอบในบอท</b>';
+  $('again').onclick = () => start(S.d);
+  paintMenu(); show('done');
+}
+$('introDone').onclick = () => { set('intro', '1'); paintMenu(); start(1); };
+document.querySelectorAll('[data-home]').forEach(b => b.onclick = () => { paintMenu(); show('menu'); });
+paintMenu();
+</script>
+</body>
+</html>
