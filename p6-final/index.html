@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ป.6 ทบทวนสอบปลายภาค</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+--ink:#1a1c1e;--muted:#5b6167;--line:#dfe3e8;--bg:#fbfbfa;--card:#fff;--soft:#f4f6f8;
+--accent:#1f6feb;--ok:#136c39;--ok-bg:#e8f6ee;--bad:#b3261e;--bad-bg:#fdecea;
+--en:#1f6feb;--ma:#b25000;--th:#6b46e0;--sc:#136c39;--on-accent:#fff}
+@media (prefers-color-scheme:dark){:root{
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#333a42;--bg:#16181b;--card:#1e2126;--soft:#262a30;
+--accent:#69a4ff;--ok:#6fd39a;--ok-bg:#13301f;--bad:#ff8a80;--bad-bg:#3a1a17;
+--en:#69a4ff;--ma:#f0a163;--th:#a68cff;--sc:#6fd39a;--on-accent:#0b1a33}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Sarabun","Noto Sans Thai",-apple-system,sans-serif;font-size:18px;line-height:1.7;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:680px;margin:0 auto;padding:20px 16px calc(60px + env(safe-area-inset-bottom))}
+h1{font-size:1.45rem;margin:0 0 4px}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 16px}
+.hidden{display:none !important}
+button{font-family:inherit;font-size:1rem;cursor:pointer;touch-action:manipulation}
+.subj{display:block;width:100%;text-align:left;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;padding:14px 16px;margin-bottom:12px}
+.subj b{font-size:1.15rem}
+.subj .d{color:var(--muted);font-size:.86rem}
+.t{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:12px 16px;margin-bottom:10px}
+.t .best{float:right;font-size:.8rem;color:var(--ok);font-weight:700}
+.t .d{color:var(--muted);font-size:.85rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.hud{display:flex;gap:10px;margin-bottom:12px}
+.pill{flex:1;background:var(--soft);border-radius:11px;padding:6px;text-align:center;line-height:1.3}
+.pill .n{font-size:1.25rem;font-weight:700;font-family:"IBM Plex Mono",monospace}
+.pill .l{font-size:.72rem;color:var(--muted)}
+.q{font-size:1.15rem;font-weight:600;margin:4px 0 14px;white-space:pre-line}
+.ch{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;margin-bottom:9px}
+.ch.ok{border-color:var(--ok);background:var(--ok-bg)}
+.ch.bad{border-color:var(--bad);background:var(--bad-bg)}
+.fb{border-radius:12px;padding:10px 14px;margin:4px 0 12px;font-size:.96rem}
+.fb.ok{background:var(--ok-bg);border:1px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);border:1px solid var(--bad)}
+.go{display:block;width:100%;background:var(--accent);color:var(--on-accent);border:0;border-radius:12px;padding:12px;font-weight:700}
+.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:.88rem}
+.big{font-size:2.4rem;font-weight:700;text-align:center}
+.stars{font-size:2rem;text-align:center}
+.miss{font-size:.9rem;background:var(--soft);border-radius:10px;padding:8px 12px;margin:6px 0}
+footer{color:var(--muted);font-size:.8rem;text-align:center;margin-top:24px}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section id="home">
+  <h1>⭐ ป.6 ทบทวนสอบปลายภาค</h1>
+  <p class="sub">ภาคเรียนที่ 1/2569 · สอบศุกร์ 16 ต.ค. · เลือกวิชา แล้วเลือกหัวข้อ · รอบละ 10 ข้อ ผิดข้อไหนมีคำอธิบาย</p>
+  <div id="subjects"></div>
+</section>
+<section id="topics" class="hidden">
+  <h1 id="sTitle"></h1><p class="sub" id="sSub"></p>
+  <div id="topicList"></div>
+  <p style="text-align:center"><button class="ghost" id="backHome">← เลือกวิชาอื่น</button></p>
+</section>
+<section id="play" class="hidden">
+  <div class="hud">
+    <div class="pill"><div class="n" id="hNo">1</div><div class="l" id="hOf">ข้อ / 10</div></div>
+    <div class="pill"><div class="n" id="hOk">0</div><div class="l">ถูก</div></div>
+    <div class="pill"><div class="n" id="hStreak">0</div><div class="l">ถูกติดกัน 🔥</div></div>
+  </div>
+  <div class="card">
+    <div class="sub" id="tName" style="margin:0 0 4px"></div>
+    <div class="q" id="q"></div>
+    <div id="choices"></div>
+    <div id="fb"></div>
+    <button class="go hidden" id="next">ข้อต่อไป →</button>
+  </div>
+  <p style="text-align:center;margin-top:12px"><button class="ghost" id="quit">← กลับ</button></p>
+</section>
+<section id="done" class="hidden">
+  <div class="card">
+    <h1 id="dTitle"></h1>
+    <div class="stars" id="dStars"></div>
+    <div class="big" id="dScore"></div>
+    <p style="text-align:center;color:var(--muted)" id="dMsg"></p>
+    <div id="dMiss"></div>
+    <button class="go" id="again">เล่นอีกรอบ</button>
+    <p style="text-align:center;margin-top:10px"><button class="ghost" id="toTopics">← เลือกหัวข้อ</button></p>
+  </div>
+</section>
+<footer>เกมทบทวน ป.6 · ข้อในเกมแต่งใหม่ตามหัวข้อในตารางสอบ (คำศัพท์ LFO ไม่มีในเกม — ทบทวนจากหนังสือ) · สถิติเก็บในเครื่องนี้</footer>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); if (Telegram.WebApp.disableVerticalSwipes) Telegram.WebApp.disableVerticalSwipes(); } } catch (e) { }
+</script>
+
+<script id="gen">
+"use strict";
+/* รูปแบบข้อ: [คำถาม, [คำตอบถูก, ตัวลวง...], คำอธิบาย] — สลับตัวเลือกตอนแสดง */
+const R = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const fmt = n => n.toLocaleString('en-US');
+function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function numChoices(ans, cands) { const s = [ans]; for (const c of cands) if (c > 0 && Number.isInteger(c) && !s.includes(c)) s.push(c); let k = 1; while (s.length < 4) { const v = ans + k * (k % 2 ? 10 : -1); if (v > 0 && !s.includes(v)) s.push(v); k++; } return s.slice(0, 4).map(fmt); }
+/* ตัวเลขของชุดวัดที่ยังไม่ทำ (math rp-01 · rp-02B) — ห้ามเกมสุ่มออกมาซ้ำ */
+const RESERVED = /(^|[^0-9,])(400|168|600|150|22,200|17,945|6,352|240|25,000)([^0-9,]|$)|200 ลูก|40 ลิตร/;
+function safe(gen) { for (let k = 0; k < 50; k++) { const q = gen(); if (!RESERVED.test(q[0])) return q; } return gen(); }
+
+/* ===================== ภาษาอังกฤษ ===================== */
+const EN_VOCAB = [
+ ['You fell off your bike. Now there is a dark blue mark on your leg. It is a ___.', ['bruise', 'burn', 'sting', 'pulse'], 'bruise = รอยฟกช้ำ (สีเขียวคล้ำ/ม่วง) เกิดจากกระแทก'],
+ ['You touched a hot pan. You have a ___ on your hand.', ['burn', 'bruise', 'sprain', 'cough'], 'burn = แผลไฟไหม้/น้ำร้อนลวก'],
+ ['A bee ___ me on the arm. It really hurts!', ['stung', 'bit', 'cut', 'broke'], 'ผึ้งต่อย = sting (อดีต stung) · bite ใช้กับสุนัข/ยุงกัด'],
+ ['I twisted my ankle when I was running. Now I have a ___ ankle.', ['sprained', 'burnt', 'stung', 'bleeding'], 'sprain = ข้อเท้าแพลง (บิดผิดท่า)'],
+ ['Put a ___ on the small cut to keep it clean.', ['plaster', 'pillow', 'helmet', 'needle'], 'plaster (band-aid) = พลาสเตอร์ปิดแผล'],
+ ['The ___ took the injured man to the hospital very quickly.', ['ambulance', 'tractor', 'library', 'pharaoh'], 'ambulance = รถพยาบาล'],
+ ['Wear a ___ when you ride a bike to protect your head.', ['helmet', 'bandage', 'plaster', 'scarf'], 'helmet = หมวกกันน็อก ป้องกันศีรษะ'],
+ ['A box with plasters, bandages and cream for small injuries is a ___.', ['first aid kit', 'lunch box', 'tool box', 'post box'], 'first aid kit = ชุดปฐมพยาบาล'],
+ ['The ___ pumps blood all around the body.', ['heart', 'lung', 'stomach', 'brain'], 'heart = หัวใจ ทำหน้าที่สูบฉีดเลือด (pump) · lungs = ปอด ใช้หายใจ'],
+ ['Blood vessels that carry blood AWAY from the heart are called ___.', ['arteries', 'veins', 'bones', 'muscles'], 'arteries = หลอดเลือดแดง (ออกจากหัวใจ) · veins = หลอดเลือดดำ (กลับเข้าหัวใจ)'],
+ ['Blood vessels that carry blood BACK to the heart are called ___.', ['veins', 'arteries', 'nerves', 'lungs'], 'veins = หลอดเลือดดำ นำเลือดกลับเข้าหัวใจ'],
+ ['The tiny blood vessels between arteries and veins are ___.', ['capillaries', 'muscles', 'pyramids', 'bandages'], 'capillaries = หลอดเลือดฝอย เล็กที่สุด เชื่อมแดงกับดำ'],
+ ['Red blood cells carry ___ to every part of the body.', ['oxygen', 'sugar water', 'sand', 'paper'], 'เซลล์เม็ดเลือดแดงนำออกซิเจน (oxygen) ไปทั่วร่างกาย'],
+ ['The doctor puts two fingers on your wrist to feel your ___.', ['pulse', 'bruise', 'tomb', 'sting'], 'pulse = ชีพจร (จังหวะการเต้นของหัวใจ จับที่ข้อมือ)'],
+ ['After running, your heart beats ___.', ['faster', 'slower', 'quieter', 'colder'], 'ออกกำลังกาย → ร่างกายต้องการออกซิเจนมากขึ้น → หัวใจเต้นเร็วขึ้น'],
+ ['The kings of Ancient Egypt were called ___.', ['pharaohs', 'mummies', 'sphinxes', 'scribes'], 'pharaoh = ฟาโรห์ กษัตริย์อียิปต์โบราณ'],
+ ['Egyptians wrapped dead bodies in cloth to keep them. These bodies are ___.', ['mummies', 'pharaohs', 'pyramids', 'papyrus'], 'mummy = มัมมี่ ศพที่ถูกเก็บรักษาโดยพันผ้า'],
+ ['Ancient Egyptian writing with pictures and symbols is called ___.', ['hieroglyphs', 'alphabets', 'numbers', 'capillaries'], 'hieroglyphs = อักษรภาพอียิปต์โบราณ'],
+ ['Egyptians made paper from a plant called ___.', ['papyrus', 'bamboo', 'cotton', 'rubber'], 'papyrus = ต้นกก/กระดาษปาปิรัส (คำว่า paper มาจากคำนี้)'],
+ ['The great river of Egypt is the ___.', ['Nile', 'Amazon', 'Mekong', 'Thames'], 'แม่น้ำไนล์ (Nile) เป็นหัวใจของอียิปต์โบราณ'],
+ ['A huge stone building with four triangular sides is a ___.', ['pyramid', 'temple', 'castle', 'tower'], 'pyramid = พีระมิด ฐานสี่เหลี่ยม ด้านข้างเป็นสามเหลี่ยม'],
+ ['A pharaoh was buried in a ___ with gold and treasures.', ['tomb', 'farm', 'market', 'school'], 'tomb = สุสาน/หลุมฝังศพ'],
+ ['The ___ has the body of a lion and the head of a human.', ['Sphinx', 'mummy', 'pharaoh', 'camel'], 'Sphinx = สฟิงซ์ ตัวสิงโต หัวคน อยู่หน้าพีระมิดกีซา'],
+];
+const EN_MODAL = [
+ ['Fish ___ swim, but they ___ walk.', ['can / can\'t', 'can\'t / can', 'can / can', 'can\'t / can\'t'], 'ความสามารถ (ability): ปลาว่ายน้ำได้ (can) เดินไม่ได้ (can\'t)'],
+ ['Penguins ___ fly, but they can swim very well.', ['can\'t', 'can', 'are', 'do'], 'นกเพนกวินบินไม่ได้ → can\'t + V1'],
+ ['My brother can ___ the guitar.', ['play', 'plays', 'playing', 'played'], 'หลัง can ใช้กริยาช่อง 1 ไม่เติม s/ing/ed เสมอ (แม้ประธานเอกพจน์)'],
+ ['She can ___ three languages.', ['speak', 'speaks', 'to speak', 'speaking'], 'can + V1 (ไม่มี to ไม่เติม s)'],
+ ['___ you ride a bike? — Yes, I can.', ['Can', 'Do', 'Are', 'Is'], 'ถามความสามารถ Can you…? ตอบ Yes, I can. / No, I can\'t.'],
+ ['Can your sister cook? — No, she ___.', ['can\'t', 'doesn\'t', 'isn\'t', 'can'], 'ถามด้วย Can ตอบด้วย can/can\'t · No → can\'t'],
+ ['"___ I open the window, please?" — "Yes, of course."', ['Can', 'Do', 'Am', 'Must'], 'ขออนุญาต (permission) ใช้ Can I …?'],
+ ['You ___ use your phone in the exam room. It is not allowed.', ['can\'t', 'can', 'don\'t can', 'not can'], 'ไม่อนุญาต → can\'t (cannot) · ไม่มีรูป don\'t can / not can'],
+ ['Which sentence is correct?', ['He can\'t swim.', 'He can\'t swims.', 'He don\'t can swim.', 'He not can swim.'], 'can\'t + V1 ไม่เติม s'],
+ ['Choose the correct instruction: "___ your hands before you eat."', ['Wash', 'Washes', 'Washing', 'To wash'], 'Imperative (คำสั่ง) ขึ้นต้นด้วยกริยาช่อง 1 (V1) ไม่มีประธาน ไม่เติม s/ing'],
+ ['Which sentence is an imperative (คำสั่ง)?', ['Close the door, please.', 'She closes the door.', 'The door is closed.', 'Did you close the door?'], 'Imperative ขึ้นต้นด้วยกริยาช่อง 1 ไม่มีประธาน'],
+ ['___ run in the corridor! It\'s dangerous.', ['Don\'t', 'Not', 'No', 'Doesn\'t'], 'คำสั่งห้าม (negative imperative) = Don\'t + V1'],
+ ['Which sign means "ห้ามว่ายน้ำ"?', ['Don\'t swim here.', 'Swim here.', 'You can swim here.', 'Let\'s swim here.'], 'Don\'t + V1 = ห้าม…'],
+ ['___ quiet, please. The baby is sleeping.', ['Be', 'Is', 'Are', 'Being'], 'คำสั่งกับคุณศัพท์ใช้ Be + adj (Be quiet. Be careful.)'],
+ ['First, ___ the water. Then, add the noodles.', ['boil', 'boils', 'boiled', 'to boiling'], 'คำสั่งในสูตรอาหาร (instructions) ใช้ V1 ขึ้นต้นประโยค'],
+ ['"___ go to the park!" — "Good idea!"', ['Let\'s', 'Let', 'Lets', 'Let\'s to'], 'ชวน = Let\'s + V1 (Let us)'],
+];
+const EN_PAST = [
+ ['Yesterday, I ___ a movie with my family.', ['watched', 'watch', 'watches', 'was watch'], 'Yesterday → Past Simple: V2 (watch → watched)'],
+ ['We ___ to Chiang Mai last summer.', ['went', 'go', 'goes', 'were go'], 'last summer → Past Simple · go → went (irregular)'],
+ ['She ___ her homework two hours ago.', ['did', 'does', 'do', 'doing'], 'ago → Past Simple · do → did'],
+ ['___ you see the pyramids last year? — Yes, I did.', ['Did', 'Do', 'Were', 'Was'], 'คำถาม Past Simple: Did + ประธาน + V1'],
+ ['He didn\'t ___ breakfast this morning.', ['eat', 'ate', 'eats', 'eating'], 'didn\'t + V1 (ห้ามใช้ ate หลัง didn\'t)'],
+ ['At 8 p.m. last night, I ___ TV.', ['was watching', 'was watch', 'am watching', 'were watching'], 'เวลาเจาะจงในอดีต (at 8 p.m. last night) → กำลังทำอยู่ = Past Continuous · I → was'],
+ ['They ___ football when it started to rain.', ['were playing', 'was playing', 'are playing', 'were play'], 'เหตุการณ์ยาวที่กำลังเกิด (were playing) + เหตุการณ์สั้นแทรก (started) · They → were'],
+ ['I was reading a book when the phone ___.', ['rang', 'was ringing', 'rings', 'ring'], 'when + เหตุการณ์สั้นที่แทรก → Past Simple (ring → rang)'],
+ ['While my mum ___ dinner, I was doing my homework.', ['was cooking', 'cooked', 'cooks', 'were cooking'], 'While + เหตุการณ์ยาว 2 อย่างเกิดพร้อมกัน → Past Continuous · my mum → was'],
+ ['What ___ you doing at 9 o\'clock yesterday?', ['were', 'was', 'did', 'are'], 'คำถาม Past Continuous: What + was/were + ประธาน + V-ing · you → were'],
+ ['The children ___ sleeping when the storm came.', ['were', 'was', 'are', 'did'], 'The children (พหูพจน์) → were + V-ing'],
+ ['Tom fell off his bike while he ___ down the hill.', ['was riding', 'rode', 'rides', 'were riding'], 'while + เหตุการณ์ยาว → was riding (Tom = เขาคนเดียว → was)'],
+ ['Which word is the past form of "buy"?', ['bought', 'buyed', 'brought', 'buys'], 'buy → bought (ซื้อ) · bring → brought (นำมา) ระวังสับสน'],
+ ['The Egyptians ___ the pyramids more than 4,000 years ago.', ['built', 'build', 'were build', 'builded'], '4,000 years ago → Past Simple · build → built'],
+ ['Find the mistake: "Last night I was study when my friend called."', ['was study → was studying', 'last → next', 'called → call', 'when → while'], 'Past Continuous ต้องเป็น was/were + V-ing → was studying'],
+ ['Find the mistake: "She didn\'t went to school yesterday."', ['went → go', 'didn\'t → doesn\'t', 'yesterday → tomorrow', 'to → at'], 'หลัง didn\'t ใช้ V1 เสมอ → didn\'t go'],
+ ['Which sentence is correct?', ['We were walking home when we saw a cat.', 'We was walking home when we saw a cat.', 'We were walk home when we saw a cat.', 'We walking home when we saw a cat.'], 'We → were + V-ing · ส่วนสั้นที่แทรก saw = V2'],
+ ['My friends and I ___ in the park at 4 p.m. yesterday.', ['were running', 'was running', 'is running', 'was run'], 'ประธาน My friends and I = พหูพจน์ → were (หาประธานจริงให้เจอก่อน!)'],
+];
+const EN_REL = [
+ ['A doctor is a person ___ helps sick people.', ['who', 'which', 'where', 'whose'], 'who ใช้แทน คน'],
+ ['This is the book ___ I bought yesterday.', ['which', 'who', 'where', 'whose'], 'which ใช้แทน สิ่งของ/สัตว์'],
+ ['Egypt is the country ___ the pyramids are.', ['where', 'who', 'which', 'whose'], 'where ใช้แทน สถานที่ (ที่ซึ่ง…)'],
+ ['That\'s the girl ___ bag is red.', ['whose', 'who', 'which', 'where'], 'whose = ของใคร (แสดงความเป็นเจ้าของ) ตามด้วยคำนาม: whose bag'],
+ ['The heart is an organ ___ pumps blood.', ['which', 'who', 'where', 'whose'], 'organ (อวัยวะ) เป็นสิ่ง ไม่ใช่คน → which'],
+ ['The man ___ lives next door is a pilot.', ['who', 'which', 'where', 'whose'], 'The man = คน → who'],
+ ['This is the hospital ___ I was born.', ['where', 'which', 'who', 'whose'], 'hospital + I was born (เกิดที่นั่น) → where (สถานที่)'],
+ ['A pharaoh was a king ___ ruled Ancient Egypt.', ['who', 'which', 'where', 'what'], 'king = คน → who'],
+ ['I have a dog ___ can catch a ball.', ['which', 'what', 'where', 'whose'], 'dog = สัตว์ → which (หรือ that)'],
+ ['He is the boy ___ father is a teacher.', ['whose', 'who', 'which', 'where'], 'whose father = พ่อของเขา'],
+ ['The park ___ we play football is near my house.', ['where', 'which', 'who', 'whose'], 'we play football ที่สวน (ประโยคหลัง relative ครบแล้ว ขาดแค่สถานที่) → where'],
+ ['Choose the correct sentence.', ['The woman who sells fruit is kind.', 'The woman which sells fruit is kind.', 'The woman where sells fruit is kind.', 'The woman whose sells fruit is kind.'], 'woman = คน → who'],
+ ['Join: "I met a girl. She can speak four languages." → I met a girl ___ can speak four languages.', ['who', 'which', 'she', 'where'], 'เชื่อม 2 ประโยค ตัด She ออก ใช้ who แทน (ห้ามซ้ำ she)'],
+ ['A plaster is something ___ you put on a small cut.', ['which', 'who', 'where', 'whose'], 'something = สิ่งของ → which'],
+];
+const FLYER = '📖 อ่านใบปลิว:\n🌙 NIGHT SKY VIEWING 🔭\nSaturday 7 November · 7:00 – 10:00 p.m.\nPlace: Sunflower Hill Park (behind the science museum)\nLook at the Moon, Saturn and its rings through big telescopes!\n• Tickets: Adults 120 baht · Children (under 12) 60 baht\n• Bring: a jacket, a mat to sit on, mosquito spray\n• Please DON\'T use bright flashlights — use a red light only.\n• If it rains or is very cloudy, the event will move to Sunday 8 November.\n\n❓ ';
+const EGYPT = '📖 Read:\n"Ancient Egypt began more than 5,000 years ago beside the River Nile. Every year the Nile flooded and left rich black soil on the land, so farmers could grow wheat. The Egyptians believed in life after death. When a pharaoh died, his body was made into a mummy and placed in a tomb. Some tombs were inside huge pyramids. The Great Pyramid of Giza was built for Pharaoh Khufu. Egyptians wrote with hieroglyphs on papyrus, which they made from plants that grew by the river."\n\n❓ ';
+const EN_READ = [
+ [FLYER + 'What time does the event finish?', ['10:00 p.m.', '7:00 p.m.', '8:00 p.m.', '7:00 a.m.'], 'Saturday 7 November · 7:00 – 10:00 p.m. → จบ 4 ทุ่ม (finish = เวลาจบ ไม่ใช่เวลาเริ่ม)'],
+ [FLYER + 'Where is the event?', ['at a park behind the science museum', 'inside the science museum', 'at a school', 'on a beach'], 'Place: Sunflower Hill Park (behind the science museum)'],
+ [FLYER + 'Which planet can people see?', ['Saturn', 'Mars', 'Jupiter', 'Earth'], 'Look at the Moon, Saturn and its rings…'],
+ [FLYER + 'A mother and her 10-year-old son go. How much do they pay?', ['180 baht', '120 baht', '240 baht', '60 baht'], 'ผู้ใหญ่ 120 + เด็ก (อายุไม่ถึง 12) 60 = 180 บาท'],
+ [FLYER + 'Which thing is NOT on the "Bring" list?', ['a telescope', 'a jacket', 'a mat', 'mosquito spray'], 'ข้อ NOT → หาสิ่งที่ไม่มีในรายการ · กล้องโทรทรรศน์ทางงานมีให้ (big telescopes) ไม่ต้องเอามาเอง'],
+ [FLYER + 'Why should people not use bright flashlights?', ['They make it hard to see the night sky.', 'They are too expensive.', 'They are too heavy.', 'Mosquitoes like them.'], 'แสงจ้าทำให้ตาปรับแสงไม่ได้ มองท้องฟ้า/ดวงจันทร์/ดาวเสาร์ยาก → ให้ใช้ไฟแดง (red light) · เป็นคำถามคิดเหตุผล ไม่ได้เขียนตรงๆ'],
+ [FLYER + 'What will happen if it rains on Saturday?', ['The event will be on Sunday.', 'The event is cancelled.', 'They will watch a movie.', 'Tickets are free.'], 'If it rains… the event will move to Sunday 8 November'],
+ [FLYER + 'Who is this flyer mainly for?', ['people who want to look at the night sky', 'people who want to buy telescopes', 'farmers', 'doctors'], 'จุดประสงค์ใบปลิว = เชิญชวนคนมาดูดาว'],
+ [EGYPT + 'Where did Ancient Egypt begin?', ['beside the River Nile', 'in the desert far from water', 'on an island', 'in the mountains'], '…began more than 5,000 years ago beside the River Nile'],
+ [EGYPT + 'Why was the flood of the Nile good for farmers?', ['It left rich soil for growing wheat.', 'It killed the insects.', 'It brought gold.', 'It made the river smaller.'], 'left rich black soil… so farmers could grow wheat (so = จึง บอกผลลัพธ์)'],
+ [EGYPT + 'The word "tomb" is closest in meaning to ___.', ['a place where a dead person is buried', 'a farm', 'a kind of paper', 'a king'], 'ใช้บริบท: body… placed in a tomb → ที่ฝังศพ'],
+ [EGYPT + 'Who was the Great Pyramid of Giza built for?', ['Pharaoh Khufu', 'the farmers', 'the scribes', 'the River Nile'], 'The Great Pyramid of Giza was built for Pharaoh Khufu'],
+ [EGYPT + 'What did the Egyptians make papyrus from?', ['plants by the river', 'animal skin', 'stone', 'wheat'], 'papyrus, which they made from plants that grew by the river'],
+ [EGYPT + 'Which sentence is NOT true according to the passage?', ['All pharaohs were buried in pyramids.', 'Egyptians believed in life after death.', 'Farmers grew wheat.', 'Egyptians wrote with hieroglyphs.'], 'เรื่องบอก "Some tombs were inside huge pyramids" = บางสุสาน ไม่ใช่ทุกองค์ · ระวังคำว่า All'],
+ [EGYPT + 'What is the passage mainly about?', ['life and beliefs in Ancient Egypt', 'how to build a house', 'modern Egypt today', 'how to grow rice'], 'ใจความหลัก (main idea) ครอบคลุมทั้งเรื่อง: แม่น้ำ การเกษตร ความเชื่อ พีระมิด การเขียน'],
+ [EGYPT + 'In "which they made from plants", the word "which" refers to ___.', ['papyrus', 'hieroglyphs', 'the river', 'the pyramids'], 'which แทนคำนามที่อยู่ข้างหน้าทันที → papyrus'],
+];
+
+/* ===================== คณิตศาสตร์ (สุ่มตัวเลข) ===================== */
+function genDiagram() {
+  const t = R(1, 4);
+  if (t === 1) {
+    const both = R(4, 12), a = both + R(8, 20), b = both + R(6, 18), none = R(2, 9), tot = a + b - both + none;
+    return ['นักเรียน ' + tot + ' คน ชอบฟุตบอล ' + a + ' คน ชอบบาสเกตบอล ' + b + ' คน ชอบทั้งสองอย่าง ' + both + ' คน มีนักเรียนที่ไม่ชอบทั้งสองอย่างกี่คน\n(วาดแผนภาพวงกลมซ้อนกัน 2 วง)', numChoices(none, [none + both, a + b - both, tot - a]), 'ชอบอย่างน้อย 1 อย่าง = ' + a + ' + ' + b + ' − ' + both + ' (ตรงกลางถูกนับ 2 ครั้ง) = ' + (a + b - both) + ' · ไม่ชอบเลย = ' + tot + ' − ' + (a + b - both) + ' = ' + none + ' คน'];
+  }
+  if (t === 2) {
+    const both = R(5, 15), onlyA = R(6, 20), b = both + R(5, 20);
+    return ['ในห้องเรียน มีนักเรียนเรียนดนตรี ' + (onlyA + both) + ' คน เรียนว่ายน้ำ ' + b + ' คน เรียนทั้งสองอย่าง ' + both + ' คน มีนักเรียนที่เรียนดนตรีเพียงอย่างเดียวกี่คน', numChoices(onlyA, [onlyA + both, b - both, onlyA + both + b]), 'ดนตรีเพียงอย่างเดียว = เรียนดนตรีทั้งหมด − เรียนทั้งสองอย่าง = ' + (onlyA + both) + ' − ' + both + ' = ' + onlyA + ' คน · อ่านคำว่า "เพียงอย่างเดียว" ให้ดี'];
+  }
+  if (t === 3) {
+    const diff = R(3, 15) * 10, small = R(10, 40) * 10, big = small + diff, sum = big + small;
+    return ['เอมีเงินมากกว่าบีม ' + diff + ' บาท ทั้งสองคนมีเงินรวมกัน ' + fmt(sum) + ' บาท เอมีเงินกี่บาท\n(วาดแผนภาพแท่ง: แท่งเอยาวกว่าแท่งบีม ' + diff + ')', numChoices(big, [small, sum / 2, sum - diff]), 'ตัดส่วนที่เกินออก: ' + fmt(sum) + ' − ' + diff + ' = ' + fmt(2 * small) + ' = 2 แท่งเท่ากัน → บีม = ' + small + ' · เอ = ' + small + ' + ' + diff + ' = ' + big + ' บาท (ถามเอ ไม่ใช่บีม!)'];
+  }
+  const u = R(4, 15) * 10, k = R(2, 4), sum = u * (k + 1);
+  return ['ส้มมีลูกแก้วเป็น ' + k + ' เท่าของแก้ม รวมกันมี ' + sum + ' ลูก ส้มมีลูกแก้วกี่ลูก\n(วาดแท่ง: แก้ม 1 ส่วน ส้ม ' + k + ' ส่วน)', numChoices(u * k, [u, sum / k, u * (k + 1)]), 'รวม ' + (k + 1) + ' ส่วน = ' + sum + ' → 1 ส่วน = ' + sum + ' ÷ ' + (k + 1) + ' = ' + u + ' · ส้ม ' + k + ' ส่วน = ' + u * k + ' ลูก'];
+}
+function genRatio() {
+  const t = R(1, 4);
+  if (t === 1) {
+    let a = R(2, 7), b = R(2, 8); while (a === b) b = R(2, 8); const u = R(5, 30), tot = (a + b) * u;
+    return ['ห้องเรียนมีนักเรียนชายต่อหญิงเป็น ' + a + ' : ' + b + ' มีนักเรียนทั้งหมด ' + tot + ' คน มีนักเรียนหญิงกี่คน', numChoices(b * u, [a * u, Math.abs(a - b) * u, tot / b]), 'รวม ' + a + ' + ' + b + ' = ' + (a + b) + ' ส่วน = ' + tot + ' คน → 1 ส่วน = ' + u + ' · หญิง ' + b + ' ส่วน = ' + b * u + ' คน'];
+  }
+  if (t === 2) {
+    const flour = R(2, 5), egg = R(2, 4), m = R(2, 5);
+    return ['สูตรขนมใช้แป้ง ' + flour + ' ถ้วย ต่อไข่ ' + egg + ' ฟอง ถ้าใช้แป้ง ' + flour * m + ' ถ้วย ต้องใช้ไข่กี่ฟอง', numChoices(egg * m, [egg + m, flour * m, egg * m + egg]), 'แป้งเพิ่มเป็น ' + m + ' เท่า (' + flour + ' → ' + flour * m + ') ไข่ก็ต้องเพิ่ม ' + m + ' เท่า: ' + egg + ' × ' + m + ' = ' + egg * m + ' ฟอง (บัญญัติไตรยางศ์)'];
+  }
+  if (t === 3) {
+    const scale = [10000, 20000, 50000, 100000][R(0, 3)], cm = R(3, 15), km = cm * scale / 100000;
+    return ['แผนที่มาตราส่วน 1 : ' + fmt(scale) + ' ระยะบนแผนที่ ' + cm + ' เซนติเมตร ระยะทางจริงกี่กิโลเมตร', [km, km * 10, km / 10, cm * scale / 100].map(v => +v.toFixed(3) + ' กม.'), cm + ' × ' + fmt(scale) + ' = ' + fmt(cm * scale) + ' ซม. · 1 กม. = 100,000 ซม. → ÷ 100,000 = ' + km + ' กม. (ระวังแปลงหน่วยผิด!)'];
+  }
+  const a = R(2, 5), b = a + R(1, 4), d = R(3, 12);
+  return ['ปากกาต่อดินสอในกล่องเป็น ' + a + ' : ' + b + ' ถ้ามีปากกา ' + a * d + ' ด้าม จะมีดินสอกี่แท่ง', numChoices(b * d, [a * d + (b - a), (a + b) * d, b * d - d]), 'ปากกา ' + a + ' ส่วน = ' + a * d + ' ด้าม → 1 ส่วน = ' + d + ' · ดินสอ ' + b + ' ส่วน = ' + b + ' × ' + d + ' = ' + b * d + ' แท่ง (ห้ามบวกผลต่าง ' + (b - a) + ' เฉยๆ)'];
+}
+function genPercent() {
+  const t = R(1, 6);
+  if (t === 1) {
+    const tag = R(3, 19) * 100, p = [10, 15, 20, 25, 30][R(0, 4)], off = tag * p / 100, pay = tag - off;
+    return ['เสื้อติดป้ายราคา ' + fmt(tag) + ' บาท ร้านลดราคา ' + p + '% ลูกค้าต้องจ่ายเงินกี่บาท', numChoices(pay, [off, tag + off, tag - p]), 'ส่วนลด = ' + p + '% ของ ' + fmt(tag) + ' = ' + fmt(off) + ' บาท · จ่าย = ' + fmt(tag) + ' − ' + fmt(off) + ' = ' + fmt(pay) + ' บาท (โจทย์ถาม "จ่าย" ไม่ใช่ "ส่วนลด")'];
+  }
+  if (t === 2) {
+    const cost = R(4, 30) * 20, p = [5, 10, 15, 20, 25][R(0, 4)], prof = cost * p / 100;
+    if (!Number.isInteger(prof)) return genPercent();
+    return ['แม่ค้าซื้อพัดลมมา ' + fmt(cost) + ' บาท ขายได้กำไร ' + p + '% แม่ค้าขายพัดลมราคากี่บาท', numChoices(cost + prof, [prof, cost - prof, cost + p]), 'กำไร ' + p + '% คิดจากทุนเสมอ: ' + p + '% ของ ' + fmt(cost) + ' = ' + fmt(prof) + ' · ขาย = ทุน + กำไร = ' + fmt(cost + prof) + ' บาท'];
+  }
+  if (t === 3) {
+    const pc = [10, 20, 25, 40][R(0, 3)], cost = R(3, 30) * 100, loss = cost * pc / 100, sell = cost - loss;
+    return ['ซื้อจักรยานมา ' + fmt(cost) + ' บาท ขายไป ' + fmt(sell) + ' บาท ขาดทุนกี่เปอร์เซ็นต์', [pc + '%', (100 - pc) + '%', +(loss * 100 / sell).toFixed(1) + '%', 'กำไร ' + pc + '%'], 'ขาดทุน = ' + fmt(cost) + ' − ' + fmt(sell) + ' = ' + fmt(loss) + ' บาท · คิดเทียบทุน: ' + fmt(loss) + ' ÷ ' + fmt(cost) + ' × 100 = ' + pc + '% (ห้ามหารด้วยราคาขาย)'];
+  }
+  if (t === 4) {
+    const P = R(2, 20) * 1000, r = [2, 3, 4, 5][R(0, 3)], y = R(1, 3), I = P * r * y / 100;
+    return ['ฝากเงินธนาคาร ' + fmt(P) + ' บาท ได้ดอกเบี้ย ' + r + '% ต่อปี (ดอกเบี้ยคงที่ทุกปี) ฝากไว้ ' + y + ' ปี จะได้ดอกเบี้ยรวมกี่บาท', numChoices(I, [P * r / 100, P + I, I + P * r / 100]).map(String), 'ดอกเบี้ยปีละ = ' + r + '% ของ ' + fmt(P) + ' = ' + fmt(P * r / 100) + ' · ' + y + ' ปี = ' + fmt(P * r / 100) + ' × ' + y + ' = ' + fmt(I) + ' บาท (ถาม "ดอกเบี้ย" ไม่ใช่เงินรวม)'];
+  }
+  if (t === 5) {
+    const price = R(10, 60) * 100000, p = [1, 2, 3][R(0, 2)], c = price * p / 100;
+    return ['นายหน้าขายที่ดินได้ราคา ' + fmt(price) + ' บาท ได้ค่านายหน้า ' + p + '% ของราคาขาย นายหน้าได้เงินกี่บาท', numChoices(c, [c * 10, c / 10, price - c]), 'ค่านายหน้า (commission) = ' + p + '% ของราคาขาย = ' + fmt(price) + ' × ' + p + ' ÷ 100 = ' + fmt(c) + ' บาท'];
+  }
+  const tot = R(4, 12) * 10, p = [10, 20, 25, 30, 40, 60, 75][R(0, 6)], n = tot * p / 100;
+  if (!Number.isInteger(n)) return genPercent();
+  return ['ห้องเรียนมีนักเรียน ' + tot + ' คน ' + p + '% ของนักเรียนใส่แว่น มีนักเรียนที่ไม่ใส่แว่นกี่คน', numChoices(tot - n, [n, tot - p, p]), 'ใส่แว่น = ' + p + '% ของ ' + tot + ' = ' + n + ' คน · ไม่ใส่ = ' + tot + ' − ' + n + ' = ' + (tot - n) + ' คน (อ่านกลับ: ถาม "ไม่ใส่")'];
+}
+function genPattern() {
+  const t = R(1, 4);
+  if (t === 1) {
+    const a = R(2, 20), d = R(3, 9), s = [0, 1, 2, 3].map(k => a + k * d), n = R(10, 20), ans = a + (n - 1) * d;
+    return ['แบบรูป ' + s.join(', ') + ', … พจน์ที่ ' + n + ' คือจำนวนใด', numChoices(ans, [a + n * d, ans - d, n * d]), 'เพิ่มทีละ ' + d + ' · พจน์ที่ n = ' + a + ' + (n − 1) × ' + d + ' → พจน์ที่ ' + n + ' = ' + a + ' + ' + (n - 1) + ' × ' + d + ' = ' + ans];
+  }
+  if (t === 2) {
+    const a = R(1, 4), r = R(2, 3), s = [0, 1, 2, 3].map(k => a * r ** k), ans = a * r ** 4;
+    return ['แบบรูป ' + s.join(', ') + ', ___ จำนวนถัดไปคืออะไร', numChoices(ans, [s[3] + (s[3] - s[2]), s[3] + r, s[3] * 2 + 1]), 'แต่ละพจน์คูณด้วย ' + r + ' · ' + s[3] + ' × ' + r + ' = ' + ans];
+  }
+  if (t === 3) {
+    const n = R(5, 15), ans = 3 * n + 1;
+    return ['ใช้ไม้ขีดต่อสี่เหลี่ยมเรียงเป็นแถว: 1 รูปใช้ 4 ก้าน, 2 รูปใช้ 7 ก้าน, 3 รูปใช้ 10 ก้าน ถ้าต่อ ' + n + ' รูป ใช้ไม้ขีดกี่ก้าน', numChoices(ans, [4 * n, 3 * n, 3 * n + 4]), 'เพิ่มรูปละ 3 ก้าน · n รูป = 3n + 1 → 3 × ' + n + ' + 1 = ' + ans + ' ก้าน (ไม่ใช่ 4 × ' + n + ' เพราะด้านติดกันใช้ร่วม)'];
+  }
+  const a = R(1, 5), s = [1, 2, 3, 4].map(k => k * k + a), ans = 25 + a;
+  return ['แบบรูป ' + s.join(', ') + ', ___ จำนวนถัดไปคืออะไร', numChoices(ans, [s[3] + (s[3] - s[2]), s[3] + 7, s[3] + 8]), 'ผลต่างเพิ่มขึ้น 3, 5, 7 → ต่อไปเพิ่ม 9 · ' + s[3] + ' + 9 = ' + ans + ' (หรือ n² + ' + a + ')'];
+}
+
+/* ===================== ภาษาไทย ===================== */
+const TH_TALK = [
+ ['เพื่อนชวนไปเล่นเกมตอนเย็น แต่เราต้องอ่านหนังสือสอบ ควรพูดปฏิเสธอย่างไร', ['"ขอบใจนะที่ชวน แต่วันนี้เราต้องอ่านหนังสือสอบ ไว้เสาร์นี้ไปด้วยกันนะ"', '"ไม่ไป เกมน่าเบื่อจะตาย"', '"เธอไม่อ่านหนังสือเหรอ ถึงได้เล่นแต่เกม"', '"ไม่ไป อย่ามาชวนอีก"'], 'ปฏิเสธอย่างสุภาพ = ขอบคุณ + บอกเหตุผลจริง + เสนอทางเลือก · ไม่ตำหนิอีกฝ่าย'],
+ ['ข้อใดไม่ใช่หลักการพูดปฏิเสธอย่างสุภาพ', ['พูดตำหนิผู้ชวนเพื่อให้เขาไม่ชวนอีก', 'ใช้น้ำเสียงนุ่มนวล', 'บอกเหตุผลที่ปฏิเสธ', 'เสนอทางเลือกอื่นถ้าทำได้'], 'ข้อนี้ถาม "ไม่ใช่" · การตำหนิทำให้เสียน้ำใจ ผิดหลักการ'],
+ ['การพูดปฏิเสธอย่างสุภาพ มีจุดมุ่งหมายสำคัญที่สุดคือข้อใด', ['รักษาน้ำใจและความสัมพันธ์กับผู้ฟัง', 'ทำให้ผู้ฟังรู้สึกผิด', 'แสดงว่าเราเก่งกว่า', 'จบการสนทนาให้เร็วที่สุด'], 'ปฏิเสธได้ แต่ยังคงรักษาน้ำใจ (ความสัมพันธ์) ไว้'],
+ ['คนแปลกหน้าชวนให้ขึ้นรถไปส่งบ้าน ข้อใดเป็นการปฏิเสธที่เหมาะสมที่สุด', ['"ไม่เป็นไรค่ะ ขอบคุณค่ะ คุณแม่กำลังมารับ" แล้วเดินไปหาผู้ใหญ่ที่รู้จัก', '"ไม่เป็นไรค่ะ" แล้วขึ้นรถไปเพราะเกรงใจ', '"ขอบคุณค่ะ" แล้วยืนคุยต่อกับเขานานๆ', '"ไปให้พ้นนะ คนไม่ดี" แล้วด่าว่าเขาเสียงดัง'], 'สถานการณ์เสี่ยงอันตราย: ปฏิเสธชัดเจน สุภาพ แล้วไปหาผู้ใหญ่ที่ไว้ใจ'],
+ ['การพูดโน้มน้าวใจ (persuasion) มีจุดมุ่งหมายเพื่ออะไร', ['ให้ผู้ฟังเชื่อ เห็นด้วย และทำตาม', 'ให้ผู้ฟังหัวเราะเท่านั้น', 'เล่าเรื่องในอดีต', 'บอกข้อมูลโดยไม่ต้องการให้ทำอะไร'], 'โน้มน้าว = ชักจูงให้คล้อยตาม เชื่อ/เปลี่ยนความคิด/ลงมือทำ'],
+ ['ข้อใดเป็นองค์ประกอบของการพูดโน้มน้าวใจ', ['ชี้ให้เห็นปัญหา ให้เหตุผลและตัวอย่าง แล้วเสนอแนวทางให้ทำ', 'พูดเรื่องที่ตัวเองชอบอย่างเดียว', 'พูดเร็วๆ ให้จบ', 'ใช้คำหยาบให้คนจำได้'], 'โครงสร้างโน้มน้าว: สร้างความน่าเชื่อถือ → ชี้ปัญหา/ความสำคัญ → เหตุผล + ตัวอย่าง → เสนอแนวทาง/เชิญชวน'],
+ ['"ทุกวันโรงเรียนเรามีขยะพลาสติกวันละ 30 กิโลกรัม (ก) ขยะเหล่านี้ใช้เวลาย่อยสลายหลายร้อยปี (ข) ดังนั้นมาพกกระบอกน้ำส่วนตัวกันเถอะ (ค)"\nส่วน (ค) คือองค์ประกอบใด', ['การเสนอแนวทาง/เชิญชวนให้ทำ', 'การชี้ให้เห็นปัญหา', 'การให้ตัวอย่าง', 'การแนะนำตัว'], '"มา…กันเถอะ" = เชิญชวนให้ลงมือทำ (ท้ายสุดของการโน้มน้าว)'],
+ ['จากข้อความเรื่องขยะพลาสติก ส่วน (ก) "มีขยะพลาสติกวันละ 30 กิโลกรัม" ทำหน้าที่ใด', ['ชี้ให้เห็นปัญหาด้วยข้อมูลจริง', 'เร้าอารมณ์ให้กลัว', 'เสนอทางแก้', 'สรุปเรื่อง'], 'ข้อมูลตัวเลขจริงทำให้เห็นปัญหาและน่าเชื่อถือ'],
+ ['ข้อใดเป็นการใช้เหตุผลโน้มน้าวที่ดีที่สุด', ['"ควรออกกำลังกายวันละ 30 นาที เพราะช่วยให้หัวใจแข็งแรงและนอนหลับดี"', '"ออกกำลังกายเถอะ เพราะฉันบอกให้ทำ"', '"ใครไม่ออกกำลังกายเป็นคนขี้เกียจ"', '"ออกกำลังกายเถอะ ทุกคนเขาทำกัน ไม่ต้องถามว่าทำไม"'], 'เหตุผลที่ดีต้องบอกประโยชน์ที่ตรวจสอบได้ ไม่ใช่สั่ง ดูถูก หรืออ้างว่าทุกคนทำ'],
+ ['ข้อใดเป็นการพูดโน้มน้าวที่ไม่เหมาะสม', ['ขู่ให้กลัวด้วยเรื่องที่ไม่จริง', 'ยกตัวอย่างจากเหตุการณ์จริง', 'พูดด้วยน้ำเสียงจริงใจ', 'ให้ข้อมูลถูกต้อง'], 'ถาม "ไม่เหมาะสม" · การหลอก/ขู่ด้วยเรื่องเท็จผิดหลัก'],
+ ['ผู้ฟังควรทำอย่างไรเมื่อฟังโฆษณาที่โน้มน้าวให้ซื้อสินค้า', ['ใช้วิจารณญาณ แยกข้อเท็จจริงกับคำโฆษณาก่อนตัดสินใจ', 'เชื่อทันทีเพราะมีดาราพูด', 'ซื้อเลยก่อนหมด', 'ไม่ฟังโฆษณาทุกชนิด'], 'ฟังอย่างมีวิจารณญาณ: ข้อใดตรวจสอบได้ (ข้อเท็จจริง) ข้อใดเป็นคำชวนเชื่อ'],
+ ['น้องอยากชวนเพื่อนในห้องช่วยกันปิดไฟเมื่อออกจากห้อง ประโยคใดโน้มน้าวได้ดีที่สุด', ['"ถ้าเราช่วยกันปิดไฟ โรงเรียนจะประหยัดค่าไฟ แล้วเอาเงินไปซื้ออุปกรณ์กีฬาได้นะ"', '"ปิดไฟสิ ไม่งั้นจะฟ้องครู"', '"ใครไม่ปิดไฟคือคนไม่ดี"', '"ไฟเปิดไว้ก็ได้ ไม่ใช่เงินเรา"'], 'ชี้ประโยชน์ที่ผู้ฟังได้รับ + น้ำเสียงเชิญชวน ไม่ข่มขู่'],
+];
+const TH_P1 = '📖 อ่านเรื่อง:\n"ฝนตกหนักติดต่อกันสามวัน น้ำในลำคลองหลังหมู่บ้านเอ่อล้นจนท่วมถนน ลุงมีซึ่งเป็นผู้ใหญ่บ้านรีบประกาศเสียงตามสายให้ชาวบ้านย้ายของขึ้นที่สูง และนำเด็กกับผู้สูงอายุไปพักที่ศาลาวัดซึ่งอยู่บนเนิน เช้าวันรุ่งขึ้น น้ำลดลง ไม่มีใครได้รับบาดเจ็บ ชาวบ้านต่างขอบคุณลุงมีที่เตือนภัยได้ทันเวลา"\n\n❓ ';
+const TH_P2 = '📖 อ่านเรื่อง:\n"ต้นไผ่ต้นหนึ่งขึ้นอยู่ข้างต้นไม้ใหญ่ ต้นไม้ใหญ่มักหัวเราะเยาะว่าไผ่ผอมบาง ลมพัดนิดเดียวก็เอนไปมา วันหนึ่งเกิดพายุรุนแรง ต้นไม้ใหญ่ยืนต้านลมอย่างแข็งทื่อจนรากถอนล้มลง ส่วนต้นไผ่ลู่ไปตามลม เมื่อพายุสงบก็กลับมาตั้งตรงได้ดังเดิม"\n\n❓ ';
+const TH_READ = [
+ [TH_P1 + 'ใจความสำคัญของเรื่องคือข้อใด', ['ผู้ใหญ่บ้านเตือนภัยน้ำท่วมได้ทันเวลา ทำให้ชาวบ้านปลอดภัย', 'ฝนตกหนักติดต่อกันสามวันจนน้ำในคลองเอ่อล้น', 'ศาลาวัดอยู่บนเนินจึงเป็นที่พักที่ปลอดภัย', 'น้ำท่วมถนนจนชาวบ้านต้องย้ายของขึ้นที่สูง'], 'ใจความสำคัญ = ประโยคที่ครอบคลุมทั้งเรื่อง ข้ออื่นเป็นแค่รายละเอียด'],
+ [TH_P1 + 'ตัวละครสำคัญของเรื่องคือใคร', ['ลุงมี', 'เด็กๆ', 'ผู้สูงอายุ', 'พระที่วัด'], 'ลุงมีเป็นผู้ทำให้เกิดเหตุการณ์สำคัญ (ประกาศเตือนภัย)'],
+ [TH_P1 + 'ลักษณะนิสัยของลุงมีคือข้อใด', ['มีความรับผิดชอบ เอาใจใส่ความปลอดภัยของผู้อื่น', 'ขี้กลัว', 'เห็นแก่ตัว', 'ประมาท'], 'ดูจากการกระทำ: รีบประกาศเตือน พาคนไปที่ปลอดภัย'],
+ [TH_P1 + 'เหตุใดจึงพาเด็กและผู้สูงอายุไปที่ศาลาวัด', ['เพราะศาลาวัดอยู่บนเนิน น้ำท่วมไม่ถึง', 'เพราะที่วัดมีอาหารอร่อย', 'เพราะเป็นวันพระ', 'เพราะบ้านพังหมด'], 'หลักฐานในเรื่อง: "ศาลาวัดซึ่งอยู่บนเนิน"'],
+ [TH_P1 + 'ข้อคิดที่ได้จากเรื่องคือข้อใด', ['การเตรียมพร้อมและเตือนภัยล่วงหน้าช่วยลดความสูญเสีย', 'ฝนตกเป็นเรื่องน่ากลัว', 'ควรสร้างบ้านใกล้คลอง', 'ไม่ต้องฟังเสียงตามสาย'], 'ข้อคิด = สิ่งที่นำไปใช้ในชีวิตได้ ไม่ใช่เหตุการณ์ในเรื่อง'],
+ [TH_P1 + 'ข้อใดเป็นข้อเท็จจริงตามเรื่อง', ['ไม่มีใครได้รับบาดเจ็บ', 'ลุงมีเป็นผู้ใหญ่บ้านที่ดีที่สุดในประเทศ', 'หมู่บ้านนี้น่าอยู่ที่สุด', 'ฝนปีนี้น่ากลัวที่สุด'], 'ข้อเท็จจริงตรวจสอบได้จากเรื่อง · คำว่า "ที่สุด/ดีที่สุด" มักเป็นความคิดเห็น'],
+ [TH_P2 + 'เรื่องนี้ต้องการสอนเรื่องใด', ['การรู้จักอ่อนน้อม ยืดหยุ่น ทำให้ผ่านอุปสรรคได้', 'ต้นไม้ใหญ่แข็งแรงกว่าเสมอ', 'พายุเป็นภัยธรรมชาติ', 'ควรปลูกไผ่ทุกบ้าน'], 'นิทานเปรียบเทียบ: ไผ่ลู่ตามลม = อ่อนน้อม ยืดหยุ่น · ต้นไม้ใหญ่แข็งทื่อ = หยิ่ง ดื้อดึง'],
+ [TH_P2 + 'ต้นไม้ใหญ่ในเรื่องเปรียบได้กับคนลักษณะใด', ['คนหยิ่ง ดื้อดึง ไม่ยอมปรับตัว', 'คนขยัน', 'คนใจดี', 'คนขี้อาย'], 'ต้นไม้ใหญ่เยาะเย้ยไผ่ และยืนแข็งทื่อจนล้ม'],
+ [TH_P2 + 'เหตุใดต้นไม้ใหญ่จึงล้ม', ['ยืนต้านลมอย่างแข็งทื่อจนรากถอน', 'ถูกตัด', 'ไม่มีน้ำ', 'ต้นไผ่ผลักล้ม'], 'หลักฐานในเรื่อง: "ยืนต้านลมอย่างแข็งทื่อจนรากถอนล้มลง"'],
+ [TH_P2 + 'เรื่องนี้เป็นงานเขียนประเภทใด', ['นิทานสอนใจ (ร้อยแก้ว)', 'กลอนแปด', 'ข่าว', 'จดหมาย'], 'เขียนเป็นความเรียงไม่มีสัมผัสบังคับ = ร้อยแก้ว · มีข้อคิดสอนใจ = นิทาน'],
+];
+const TH_LIT = [
+ ['"วรรณกรรม" หมายถึงข้อใด', ['งานเขียนทุกชนิดที่แต่งขึ้น ทั้งร้อยแก้วและร้อยกรอง', 'เฉพาะหนังสือที่ได้รับการยกย่องว่าแต่งดี', 'เฉพาะบทกลอน', 'เฉพาะหนังสือเรียน'], 'วรรณกรรม = งานเขียนทั่วไปทุกชนิด'],
+ ['"วรรณคดี" ต่างจาก "วรรณกรรม" อย่างไร', ['วรรณคดีคือวรรณกรรมที่ได้รับการยกย่องว่าแต่งดีมีคุณค่า', 'วรรณคดีต้องเป็นร้อยแก้วเท่านั้น', 'วรรณคดีคือหนังสือพิมพ์', 'ไม่ต่างกันเลย'], 'วรรณคดีเป็นส่วนหนึ่งของวรรณกรรม แต่ได้รับยกย่องว่ามีคุณค่าทั้งเนื้อหาและภาษา'],
+ ['งานเขียนที่เป็นความเรียงธรรมดา ไม่มีการบังคับจำนวนคำหรือสัมผัส เรียกว่าอะไร', ['ร้อยแก้ว', 'ร้อยกรอง', 'คำประพันธ์', 'ฉันทลักษณ์'], 'ร้อยแก้ว = ความเรียงทั่วไป · ร้อยกรอง = มีฉันทลักษณ์บังคับ'],
+ ['ข้อใดเป็นร้อยกรองทั้งหมด', ['กลอน กาพย์ โคลง ฉันท์ ร่าย', 'นิทาน ข่าว จดหมาย', 'เรียงความ บทความ', 'นวนิยาย เรื่องสั้น'], 'ร้อยกรอง 5 ชนิดหลัก: โคลง ฉันท์ กาพย์ กลอน ร่าย'],
+ ['กาพย์ยานี 11 หนึ่งบาท วรรคหน้าและวรรคหลังมีกี่คำ', ['วรรคหน้า 5 คำ วรรคหลัง 6 คำ', 'วรรคหน้า 6 คำ วรรคหลัง 5 คำ', 'วรรคละ 8 คำ', 'วรรคละ 11 คำ'], 'ยานี 11 = 5 + 6 = 11 คำต่อบาท'],
+ ['กลอนแปด (กลอนสุภาพ) แต่ละวรรคมีประมาณกี่คำ', ['8 คำ (7–9 คำ)', '5 คำ', '11 คำ', '4 คำ'], 'กลอนแปดชื่อบอกอยู่แล้ว วรรคละ 8 คำ อนุโลม 7–9'],
+ ['"ฉันทลักษณ์" หมายถึงอะไร', ['ข้อบังคับในการแต่งคำประพันธ์ เช่น จำนวนคำ สัมผัส', 'ตัวละครในเรื่อง', 'ใจความสำคัญ', 'ผู้แต่ง'], 'ฉันทลักษณ์ = กฎการแต่งร้อยกรอง'],
+ ['สัมผัสบังคับในกลอนแปดเป็นสัมผัสแบบใด', ['คำที่มีเสียงสระและตัวสะกดเดียวกัน (สัมผัสสระ)', 'คำที่มีความหมายตรงข้ามกัน', 'คำที่ยาวที่สุด', 'คำที่ขึ้นต้นด้วยอักษรเดียวกันเท่านั้น'], 'สัมผัสบังคับเป็นสัมผัสสระ (สระ+ตัวสะกดเดียวกัน) เช่น ดี–มี · สัมผัสอักษรเป็นสัมผัสไม่บังคับ'],
+ ['การอ่านวรรณคดี ข้อใดเป็นประโยชน์สำคัญที่สุด', ['ได้ข้อคิดนำมาใช้ในชีวิต และได้ความงามของภาษา', 'ได้รู้ว่าผู้แต่งรวยไหม', 'ได้จำชื่อตัวละครเท่านั้น', 'ได้ฝึกอ่านเร็ว'], 'คุณค่าของวรรณคดี: ด้านเนื้อหา (ข้อคิด) + ด้านภาษา (ความไพเราะ) + สังคม'],
+ ['การวิเคราะห์ตัวละคร ควรดูจากสิ่งใดเป็นหลัก', ['คำพูดและการกระทำของตัวละครในเรื่อง', 'ชื่อของตัวละคร', 'ความยาวของเรื่อง', 'รูปปกหนังสือ'], 'นิสัยตัวละครต้องมีหลักฐานจากพฤติกรรม/คำพูดในเรื่อง'],
+ ['ข้อใดคือใจความสำคัญของย่อหน้า', ['ข้อความที่สำคัญที่สุดซึ่งครอบคลุมเนื้อหาทั้งย่อหน้า', 'ประโยคที่ยาวที่สุด', 'ประโยคสุดท้ายเสมอ', 'คำที่ใช้บ่อยที่สุด'], 'ใจความสำคัญอาจอยู่ต้น กลาง หรือท้ายย่อหน้า ต้องดูว่าประโยคใดครอบคลุมทั้งหมด'],
+];
+
+/* ===================== วิทยาศาสตร์ ===================== */
+const SC_WIND = [
+ ['ลมเกิดจากสาเหตุใด', ['อากาศสองบริเวณมีอุณหภูมิต่างกัน อากาศเคลื่อนจากที่เย็น (ความกดสูง) ไปที่ร้อน (ความกดต่ำ)', 'ต้นไม้โบกกิ่งไปมาทำให้อากาศเคลื่อนที่', 'แรงดึงดูดของดวงจันทร์ดึงอากาศให้เคลื่อนที่', 'คลื่นในทะเลดันอากาศให้เคลื่อนเข้าหาฝั่ง'], 'อากาศร้อนลอยตัวขึ้น อากาศเย็นจากบริเวณข้างเคียงเคลื่อนเข้าแทนที่ = ลม'],
+ ['"ลมทะเล" (sea breeze) เกิดในช่วงเวลาใด และพัดจากไหนไปไหน', ['กลางวัน พัดจากทะเลเข้าสู่ฝั่ง', 'กลางคืน พัดจากทะเลเข้าสู่ฝั่ง', 'กลางวัน พัดจากฝั่งออกสู่ทะเล', 'กลางคืน พัดจากฝั่งออกสู่ทะเล'], 'กลางวันพื้นดินร้อนเร็วกว่าน้ำ อากาศบนบกลอยขึ้น อากาศเย็นจากทะเลพัดเข้าแทน → ลมทะเล'],
+ ['"ลมบก" (land breeze) เกิดในช่วงเวลาใด', ['กลางคืน พัดจากฝั่งออกสู่ทะเล', 'กลางวัน พัดจากฝั่งออกสู่ทะเล', 'กลางวัน พัดจากทะเลเข้าฝั่ง', 'เกิดเฉพาะฤดูหนาว'], 'กลางคืนพื้นดินคายความร้อนเร็ว เย็นกว่าน้ำ อากาศเหนือทะเลอุ่นกว่าลอยขึ้น ลมจากบกพัดออกไปแทน'],
+ ['เหตุใดกลางวันพื้นดินจึงร้อนกว่าน้ำทะเล', ['พื้นดินรับและคายความร้อนได้เร็วกว่าน้ำ', 'น้ำทะเลสะท้อนแสงหมด', 'ดวงอาทิตย์ส่องแต่พื้นดิน', 'พื้นดินมีต้นไม้'], 'น้ำร้อนช้า-เย็นช้า · ดินร้อนเร็ว-เย็นเร็ว'],
+ ['ชาวประมงพื้นบ้านมักออกเรือหาปลาตอนใด เพื่ออาศัยลมช่วยพัดเรือออก', ['ตอนกลางคืนถึงเช้ามืด อาศัยลมบก', 'ตอนกลางวัน อาศัยลมทะเล', 'ตอนบ่าย อาศัยลมบก', 'ไม่เกี่ยวกับลม'], 'ลมบกพัดจากฝั่งออกทะเลตอนกลางคืน → ช่วยพัดเรือออก · กลับเข้าฝั่งตอนกลางวันด้วยลมทะเล'],
+ ['มรสุมตะวันตกเฉียงใต้พัดเข้าประเทศไทยช่วงใด และทำให้เกิดอะไร', ['กลาง พ.ค. – กลาง ต.ค. นำความชื้นจากมหาสมุทรอินเดีย ทำให้เกิดฤดูฝน', 'กลาง ต.ค. – กลาง ก.พ. นำอากาศหนาวและแห้ง ทำให้เกิดฤดูหนาว', 'มี.ค. – เม.ย. นำความร้อนจากทะเลทราย ทำให้เกิดฤดูร้อน', 'กลาง พ.ค. – กลาง ต.ค. นำอากาศแห้งจากประเทศจีน ทำให้ฝนแล้ง'], 'มรสุมตะวันตกเฉียงใต้ผ่านมหาสมุทรอินเดีย → พาไอน้ำ → ฝนตกทั่วไทย'],
+ ['มรสุมตะวันออกเฉียงเหนือพัดเข้าประเทศไทยช่วงใด', ['ประมาณกลาง ต.ค. – กลาง ก.พ.', 'ประมาณกลาง พ.ค. – กลาง ต.ค.', 'ประมาณ มี.ค. – เม.ย.', 'ทุกเดือน'], 'มรสุมตะวันออกเฉียงเหนือนำอากาศหนาวและแห้งจากจีน → ฤดูหนาว'],
+ ['เมื่อมรสุมตะวันออกเฉียงเหนือพัดผ่าน ภาคใต้ฝั่งตะวันออก (อ่าวไทย) มีฝนตกเพราะอะไร', ['ลมพัดผ่านอ่าวไทยแล้วพาความชื้นไปด้วย', 'ภาคใต้อยู่ใกล้ขั้วโลก', 'มีภูเขาไฟ', 'ภาคใต้ไม่มีลมผ่าน'], 'ลมจากจีนแห้ง แต่เมื่อผ่านทะเล (อ่าวไทย) จะเก็บไอน้ำ → ฝนภาคใต้ฝั่งตะวันออก'],
+ ['ข้อใดเปรียบเทียบลมมรสุมกับลมบก-ลมทะเลได้ถูกต้อง', ['มรสุมเปลี่ยนทิศตามฤดู ส่วนลมบก-ลมทะเลเปลี่ยนทิศระหว่างกลางวันกับกลางคืน', 'ทั้งสองเปลี่ยนทิศทุกชั่วโมง', 'มรสุมเกิดเฉพาะกลางคืน', 'ลมบกเกิดปีละครั้ง'], 'มรสุม = ระดับทวีป เปลี่ยนตามฤดู · ลมบก-ทะเล = ระดับชายฝั่ง เปลี่ยนวันละ 2 ครั้ง'],
+ ['ลมที่มีความเร็วสูงมากและเป็นภัยธรรมชาติ ทำให้บ้านเรือนเสียหาย คือข้อใด', ['พายุหมุนเขตร้อน', 'ลมบก', 'ลมทะเล', 'ลมสงบ'], 'พายุหมุนเขตร้อน (พายุโซนร้อน/ไต้ฝุ่น) เกิดเหนือทะเลอุ่น ลมแรง ฝนหนัก'],
+ ['ควรเตรียมตัวรับมือพายุอย่างไร', ['ติดตามประกาศกรมอุตุนิยมวิทยา เก็บสิ่งของที่ปลิวได้ เตรียมไฟฉายและน้ำดื่ม', 'ออกไปถ่ายรูปพายุ', 'หลบใต้ต้นไม้ใหญ่', 'ลงเล่นน้ำทะเล'], 'ใต้ต้นไม้ใหญ่อันตราย (กิ่งหัก/ฟ้าผ่า) · ติดตามข่าวเป็นข้อแรก'],
+];
+const SC_GREEN = [
+ ['ปรากฏการณ์เรือนกระจก (greenhouse effect) คืออะไร', ['แก๊สบางชนิดในบรรยากาศกักเก็บความร้อนไว้ ทำให้โลกอบอุ่น', 'โลกถูกครอบด้วยกระจกจริงๆ', 'ดวงจันทร์บังดวงอาทิตย์', 'น้ำทะเลระเหยหมด'], 'เหมือนเรือนกระจกปลูกต้นไม้ แสงเข้าได้ แต่ความร้อนออกยาก'],
+ ['ข้อใดเป็นแก๊สเรือนกระจก', ['คาร์บอนไดออกไซด์ (CO₂)', 'ออกซิเจน (O₂)', 'ไนโตรเจน (N₂)', 'ฮีเลียม'], 'แก๊สเรือนกระจกสำคัญ: CO₂ มีเทน (CH₄) ไอน้ำ ไนตรัสออกไซด์ CFC'],
+ ['ถ้าไม่มีปรากฏการณ์เรือนกระจกเลย จะเกิดอะไรขึ้นกับโลก', ['โลกจะหนาวเย็นมากจนสิ่งมีชีวิตอยู่ยาก', 'โลกจะร้อนขึ้น', 'โลกจะหมุนเร็วขึ้น', 'ไม่มีอะไรเปลี่ยน'], 'ปรากฏการณ์เรือนกระจกที่พอดีเป็นสิ่งจำเป็น · ปัญหาคือมีแก๊สมากเกินไป'],
+ ['ปัญหาเกิดขึ้นเมื่อแก๊สเรือนกระจกมีปริมาณ "มากเกินไป" ทำให้เกิดอะไร', ['ภาวะโลกร้อน (global warming)', 'สุริยุปราคา', 'ลมบก', 'โลกเย็นลง'], 'แก๊สมาก → กักความร้อนมาก → อุณหภูมิเฉลี่ยของโลกสูงขึ้น'],
+ ['ข้อใดเป็นผลกระทบของภาวะโลกร้อน', ['น้ำแข็งขั้วโลกละลาย ระดับน้ำทะเลสูงขึ้น', 'กลางคืนยาวขึ้น', 'ดวงจันทร์ใหญ่ขึ้น', 'ไม่มีฝนตกอีกเลยทั่วโลก'], 'ผลกระทบอื่น: สภาพอากาศแปรปรวน ปะการังฟอกขาว ภัยแล้ง/น้ำท่วมรุนแรงขึ้น'],
+ ['กิจกรรมใดเพิ่มแก๊สคาร์บอนไดออกไซด์มากที่สุด', ['การเผาเชื้อเพลิงในรถยนต์และโรงงาน', 'การปลูกต้นไม้', 'การปิดไฟเมื่อไม่ใช้', 'การปั่นจักรยาน'], 'เผาไหม้เชื้อเพลิง (น้ำมัน ถ่านหิน) ปล่อย CO₂'],
+ ['การปลูกต้นไม้ช่วยลดภาวะโลกร้อนได้เพราะอะไร', ['ต้นไม้ใช้คาร์บอนไดออกไซด์ในการสังเคราะห์ด้วยแสง', 'ต้นไม้ปล่อยคาร์บอนไดออกไซด์', 'ต้นไม้บังแสงอาทิตย์ทั้งโลก', 'ต้นไม้ทำให้ฝนหยุดตก'], 'สังเคราะห์ด้วยแสง: CO₂ + น้ำ + แสง → น้ำตาล + O₂'],
+ ['ข้อใดช่วยลดแก๊สเรือนกระจกได้', ['ใช้ขนส่งสาธารณะ ปิดไฟ ลดการเผาขยะ', 'เปิดแอร์ทั้งวัน', 'เผาฟางในนา', 'ขับรถคนเดียวทุกที่'], 'ลดการใช้พลังงาน = ลดการเผาเชื้อเพลิง = ลด CO₂'],
+ ['แก๊สมีเทน (แก๊สเรือนกระจก) เกิดจากแหล่งใดได้มาก', ['การย่อยสลายขยะในบ่อขยะ และนาข้าว', 'การหายใจของปลา', 'แผงโซลาร์เซลล์', 'กังหันลม'], 'มีเทนเกิดจากการย่อยสลายแบบไม่ใช้ออกซิเจน: บ่อขยะ นาข้าวที่ขังน้ำ มูลสัตว์'],
+ ['การเผาป่าทำให้แก๊สเรือนกระจกเพิ่มขึ้นสองทาง คือข้อใด', ['เกิด CO₂ จากการเผา และเหลือต้นไม้ช่วยดูด CO₂ น้อยลง', 'เกิดออกซิเจนมากขึ้น', 'ทำให้ฝนตกมากขึ้น', 'ไม่ทำให้แก๊สเพิ่ม'], 'ทั้งเพิ่มแหล่งปล่อย และลดตัวดูดซับ'],
+];
+const SC_ECL = [
+ ['สุริยุปราคา (solar eclipse) เกิดขึ้นเมื่อใด', ['ดวงจันทร์โคจรมาอยู่ระหว่างโลกกับดวงอาทิตย์ บังแสงอาทิตย์', 'โลกอยู่ระหว่างดวงอาทิตย์กับดวงจันทร์', 'ดวงอาทิตย์อยู่ระหว่างโลกกับดวงจันทร์', 'เมฆบังดวงอาทิตย์'], 'สุริยะ = ดวงอาทิตย์ถูกบัง · ลำดับ: ดวงอาทิตย์ – ดวงจันทร์ – โลก'],
+ ['จันทรุปราคา (lunar eclipse) เกิดขึ้นเมื่อใด', ['โลกอยู่ระหว่างดวงอาทิตย์กับดวงจันทร์ เงาโลกบังดวงจันทร์', 'ดวงจันทร์อยู่ระหว่างโลกกับดวงอาทิตย์', 'ดวงจันทร์อยู่ไกลที่สุด', 'ดวงอาทิตย์ดับ'], 'จันทร = ดวงจันทร์ถูกบัง · ลำดับ: ดวงอาทิตย์ – โลก – ดวงจันทร์'],
+ ['จันทรุปราคาเกิดได้เฉพาะคืนใด', ['คืนวันเพ็ญ (ขึ้น 15 ค่ำ) ดวงจันทร์เต็มดวง', 'คืนเดือนดับ (แรม 15 ค่ำ)', 'ทุกคืน', 'คืนขึ้น 8 ค่ำ'], 'โลกอยู่ตรงกลาง ดวงจันทร์อยู่ฝั่งตรงข้ามดวงอาทิตย์ = ตรงกับวันเพ็ญ'],
+ ['สุริยุปราคาเกิดได้เฉพาะวันใด', ['วันเดือนดับ (แรม 14 หรือ 15 ค่ำ)', 'วันเพ็ญ (ขึ้น 15 ค่ำ)', 'วันขึ้น 8 ค่ำ', 'วันแรม 8 ค่ำ'], 'ดวงจันทร์อยู่ข้างดวงอาทิตย์ หันด้านมืดมาหาโลก = เดือนดับ'],
+ ['ทำไมไม่เกิดอุปราคาทุกเดือน', ['เพราะวงโคจรของดวงจันทร์เอียงเล็กน้อยจากวงโคจรของโลก ทั้งสามจึงไม่เรียงตรงกันทุกเดือน', 'เพราะดวงจันทร์โคจรรอบโลกปีละครั้งเท่านั้น', 'เพราะดวงอาทิตย์โคจรรอบโลกช้ากว่าดวงจันทร์', 'เพราะเมฆในบรรยากาศบังทุกเดือนจนมองไม่เห็น'], 'วงโคจรดวงจันทร์เอียงประมาณ 5° จึงเรียงแนวเดียวกันพอดีได้เพียงบางครั้ง'],
+ ['สุริยุปราคาแบบวงแหวน เกิดขึ้นเพราะอะไร', ['ดวงจันทร์อยู่ไกลโลกจึงดูเล็กกว่า บังดวงอาทิตย์ไม่มิด เห็นขอบสว่างรอบนอก', 'ดวงจันทร์อยู่ใกล้โลกที่สุด จึงบังดวงอาทิตย์ได้มิดทั้งดวง', 'โลกบังดวงอาทิตย์ จึงเห็นแสงเป็นวงรอบโลก', 'ดวงอาทิตย์มีวงแหวนล้อมรอบเหมือนดาวเสาร์'], 'ใกล้ = บังมิด (เต็มดวง) · ไกล = บังไม่มิด (วงแหวน)'],
+ ['ข้อใดเป็นวิธีดูสุริยุปราคาที่ปลอดภัย', ['ใช้แว่นกรองแสงสำหรับดูดวงอาทิตย์ หรือดูภาพผ่านรูเข็ม', 'มองด้วยตาเปล่านานๆ', 'ใส่แว่นกันแดดธรรมดา', 'มองผ่านกล้องส่องทางไกลโดยไม่มีแผ่นกรอง'], 'มองดวงอาทิตย์ตรงๆ ทำลายจอตาถาวร แม้ถูกบังบางส่วน'],
+ ['ดูจันทรุปราคาด้วยตาเปล่าได้หรือไม่', ['ได้ ปลอดภัย เพราะแสงจากดวงจันทร์ไม่แรง', 'ไม่ได้ ตาจะบอด', 'ต้องใช้แว่นกรองแสงเท่านั้น', 'มองไม่เห็นจากโลก'], 'แสงจันทร์เป็นแสงสะท้อนอ่อนๆ ดูได้ปลอดภัย'],
+ ['จันทรุปราคาเต็มดวง ดวงจันทร์มักมีสีอะไร', ['สีแดงอิฐ/ส้มแดง', 'สีฟ้าสด', 'สีเขียว', 'มองไม่เห็นเลย'], 'แสงอาทิตย์หักเหผ่านบรรยากาศโลก แสงสีแดงไปตกที่ดวงจันทร์ (Blood Moon)'],
+ ['ปรากฏการณ์ใดเกิดบ่อยกว่าเมื่อมองจากจุดเดียวบนโลก', ['จันทรุปราคา', 'สุริยุปราคาเต็มดวง', 'เท่ากันทุกครั้ง', 'ไม่เคยเกิดทั้งคู่'], 'จันทรุปราคาเห็นได้จากครึ่งโลกที่เป็นกลางคืน · สุริยุปราคาเต็มดวงเห็นได้ในแถบแคบๆ เท่านั้น'],
+ ['คนโบราณเรียกจันทรุปราคาว่า "ราหูอมจันทร์" ในทางวิทยาศาสตร์ อธิบายได้ว่าอะไร', ['เงาของโลกบังดวงจันทร์', 'มีสัตว์ประหลาดกินดวงจันทร์', 'ดวงจันทร์ดับไปเอง', 'เมฆดำบังดวงจันทร์'], 'อธิบายด้วยการเรียงตัวของดวงอาทิตย์-โลก-ดวงจันทร์'],
+];
+const SC_SPACE = [
+ ['ดาวเทียมไทยคมใช้ประโยชน์ด้านใดเป็นหลัก', ['การสื่อสาร ถ่ายทอดสัญญาณโทรทัศน์และโทรศัพท์', 'สำรวจทรัพยากร', 'พยากรณ์อากาศเท่านั้น', 'บอกตำแหน่ง GPS'], 'ไทยคม (THAICOM) = ดาวเทียมสื่อสาร'],
+ ['ดาวเทียมไทยโชต (THEOS) ใช้ประโยชน์ด้านใด', ['สำรวจทรัพยากรธรรมชาติ ถ่ายภาพพื้นที่ เช่น น้ำท่วม ไฟป่า', 'ถ่ายทอดโทรทัศน์', 'ส่งคนไปดวงจันทร์', 'ใช้ทำนายดวง'], 'THEOS = ดาวเทียมสำรวจทรัพยากรดวงแรกของไทย'],
+ ['ระบบ GPS ในโทรศัพท์ใช้ดาวเทียมทำอะไร', ['ระบุตำแหน่งบนโลกและนำทาง', 'ถ่ายภาพดวงดาว', 'ทำให้ฝนตก', 'ชาร์จแบตเตอรี่'], 'GPS = Global Positioning System ระบบบอกพิกัดด้วยดาวเทียมนำทาง'],
+ ['ดาวเทียมอุตุนิยมวิทยาช่วยมนุษย์อย่างไร', ['ถ่ายภาพเมฆ ติดตามพายุ ช่วยพยากรณ์อากาศและเตือนภัย', 'ทำให้พายุหายไป', 'ส่งจดหมาย', 'ขุดน้ำมัน'], 'ใช้เตือนภัยพายุล่วงหน้า ลดความสูญเสีย'],
+ ['จรวด (rocket) มีหน้าที่หลักอะไร', ['ส่งดาวเทียมหรือยานอวกาศขึ้นสู่อวกาศ', 'โคจรรอบโลกตลอดไป', 'สำรวจใต้ทะเล', 'บินระหว่างเมือง'], 'จรวดเอาชนะแรงโน้มถ่วงของโลกพาสิ่งต่างๆ ขึ้นอวกาศ'],
+ ['กล้องโทรทรรศน์ (telescope) ช่วยนักดาราศาสตร์อย่างไร', ['ทำให้มองเห็นวัตถุท้องฟ้าที่อยู่ไกลได้ชัดและใหญ่ขึ้น', 'ทำให้ดาวเคลื่อนที่เร็วขึ้น', 'วัดอุณหภูมิร่างกาย', 'บอกเวลา'], 'กล้องโทรทรรศน์รวมแสงจากวัตถุไกลๆ ให้เห็นรายละเอียด'],
+ ['สถานีอวกาศนานาชาติ (ISS) คืออะไร', ['ห้องทดลองที่โคจรรอบโลก มีนักบินอวกาศอยู่อาศัยและทำการทดลอง', 'ดาวเคราะห์ดวงใหม่', 'จรวดที่จอดบนดวงจันทร์', 'สนามบินบนโลก'], 'ISS = International Space Station หลายประเทศร่วมกันสร้าง'],
+ ['ข้อใดเป็นเทคโนโลยีที่พัฒนามาจากงานอวกาศ แล้วนำมาใช้ในชีวิตประจำวัน', ['อาหารแห้งแบบฟรีซดราย และหมอนเมมโมรีโฟม', 'จักรยาน', 'ร่มกันฝน', 'ดินสอไม้'], 'เทคโนโลยีอวกาศที่เป็น spin-off: ฟรีซดราย เมมโมรีโฟม เทอร์โมมิเตอร์วัดไข้ทางหู ระบบกรองน้ำ ฯลฯ'],
+ ['นักบินอวกาศต้องสวมชุดอวกาศเมื่อออกนอกยาน เพราะอะไร', ['ในอวกาศไม่มีอากาศให้หายใจ และอุณหภูมิสูง-ต่ำมาก', 'เพื่อให้สวยงาม', 'เพราะอวกาศมีฝนตก', 'เพื่อให้บินได้เร็ว'], 'ชุดอวกาศมีออกซิเจน ความดัน และป้องกันความร้อน/รังสี'],
+ ['ภาพถ่ายดาวเทียมช่วยเรื่องภัยธรรมชาติได้อย่างไร', ['ติดตามพื้นที่น้ำท่วม ไฟป่า และวางแผนช่วยเหลือ', 'หยุดแผ่นดินไหวได้', 'ป้องกันไม่ให้ฝนตก', 'ทำให้น้ำลดทันที'], 'ดาวเทียมถ่ายภาพพื้นที่กว้าง ช่วยวางแผนรับมือและช่วยเหลือ'],
+ ['ข้อใดไม่ใช่ประโยชน์ของเทคโนโลยีอวกาศ', ['ทำให้ดวงอาทิตย์ขึ้นเร็วขึ้น', 'การสื่อสารข้ามโลก', 'การพยากรณ์อากาศ', 'การนำทางด้วย GPS'], 'ถาม "ไม่ใช่" · เทคโนโลยีไม่ได้เปลี่ยนการหมุนของโลก'],
+];
+
+const SUBJECTS = [
+ { id: 'en', name: '🇬🇧 ภาษาอังกฤษ', sub: '08.30 · Vocabulary · Grammar · Reading', color: 'var(--en)', topics: [
+   { id: 'en1', name: 'Vocabulary (iWonder6)', sub: 'Accidents & Injuries · The Circulatory System · Ancient Egypt', pool: EN_VOCAB },
+   { id: 'en2', name: 'Modals can/can\'t + Imperatives', sub: 'ability · permission · Don\'t… · Let\'s…', pool: EN_MODAL },
+   { id: 'en3', name: 'Past Simple & Past Continuous', sub: 'V2 · was/were + V-ing · when / while', pool: EN_PAST },
+   { id: 'en4', name: 'Relative Pronouns', sub: 'who · which · where · whose', pool: EN_REL },
+   { id: 'en5', name: 'Reading: Night Sky Flyer + Ancient Egypt', sub: 'หาข้อมูล · NOT · main idea · ความหมายจากบริบท', pool: EN_READ } ] },
+ { id: 'ma', name: '🔢 คณิตศาสตร์', sub: '09.30 · แผนภาพ · อัตราส่วน · ร้อยละ · แบบรูป', color: 'var(--ma)', topics: [
+   { id: 'ma1', name: 'โจทย์ปัญหาแผนภาพ (Diagram)', sub: 'วงกลมซ้อน (Venn) · แผนภาพแท่ง (bar model)', gen: genDiagram },
+   { id: 'ma2', name: 'โจทย์ปัญหาอัตราส่วน', sub: 'แบ่งส่วน · สูตรอาหาร · มาตราส่วนแผนที่', gen: genRatio },
+   { id: 'ma3', name: 'โจทย์ปัญหาร้อยละ', sub: 'ลดราคา · กำไร ขาดทุน · ดอกเบี้ย · ค่านายหน้า', gen: genPercent },
+   { id: 'ma4', name: 'โจทย์แบบรูป', sub: 'บวกเท่ากัน · คูณ · ไม้ขีด · ผลต่างเพิ่มขึ้น', gen: genPattern } ] },
+ { id: 'th', name: '📖 ภาษาไทย', sub: '11.00 · พูดปฏิเสธ/โน้มน้าว · อ่านจับใจความ · วรรณคดี', color: 'var(--th)', topics: [
+   { id: 'th1', name: 'พูดปฏิเสธ & พูดโน้มน้าว', sub: 'สุภาพ รักษาน้ำใจ · ปัญหา → เหตุผล → เชิญชวน', pool: TH_TALK },
+   { id: 'th2', name: 'อ่านเรื่องแล้วตอบคำถาม', sub: 'ใจความสำคัญ · ตัวละคร · ข้อคิด · หลักฐานในเรื่อง', pool: TH_READ },
+   { id: 'th3', name: 'วรรณคดี วรรณกรรม คำประพันธ์', sub: 'ร้อยแก้ว/ร้อยกรอง · กาพย์ยานี · กลอนแปด', pool: TH_LIT } ] },
+ { id: 'sc', name: '🔬 วิทยาศาสตร์', sub: '13.00 · ลม มรสุม · เรือนกระจก · อุปราคา · อวกาศ', color: 'var(--sc)', topics: [
+   { id: 'sc1', name: 'ลมบก ลมทะเล และมรสุม', sub: 'กลางวัน/กลางคืน · มรสุม 2 ฤดู · พายุ', pool: SC_WIND },
+   { id: 'sc2', name: 'ปรากฏการณ์เรือนกระจก', sub: 'แก๊สเรือนกระจก · โลกร้อน · วิธีลด', pool: SC_GREEN },
+   { id: 'sc3', name: 'สุริยุปราคา & จันทรุปราคา', sub: 'ลำดับการเรียงตัว · วันเพ็ญ/เดือนดับ · ดูอย่างปลอดภัย', pool: SC_ECL },
+   { id: 'sc4', name: 'เทคโนโลยีอวกาศ', sub: 'ดาวเทียม · จรวด · กล้องโทรทรรศน์ · ISS', pool: SC_SPACE } ] },
+];
+const ROUND = 10;
+function makeRound(topic) {
+  if (topic.gen) return Array.from({ length: ROUND }, () => safe(topic.gen));
+  const p = shuffle(topic.pool); return p.slice(0, Math.min(ROUND, p.length));
+}
+if (typeof module !== 'undefined') module.exports = { SUBJECTS, makeRound, genDiagram, genRatio, genPercent, genPattern, RESERVED };
+</script>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const KEY = 'p6final-';
+const best = k => { try { return +(localStorage.getItem(KEY + k) || 0); } catch (e) { return 0; } };
+const setBest = (k, v) => { try { localStorage.setItem(KEY + k, String(v)); } catch (e) { } };
+let SUBJ = null, TOP = null, Q = [], i = 0, ok = 0, streak = 0, miss = [];
+function show(id) { ['home', 'topics', 'play', 'done'].forEach(x => $(x).classList.toggle('hidden', x !== id)); window.scrollTo(0, 0); }
+function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+function paintHome() {
+  $('subjects').innerHTML = SUBJECTS.map((s, k) => '<button class="subj" style="border-color:' + s.color + '" data-k="' + k + '"><b>' + s.name + '</b><div class="d">' + s.sub + '</div></button>').join('');
+  document.querySelectorAll('.subj').forEach(b => b.onclick = () => openSubj(SUBJECTS[+b.dataset.k]));
+}
+function openSubj(s) {
+  SUBJ = s; $('sTitle').textContent = s.name; $('sSub').textContent = 'เลือกหัวข้อ · รอบละ ' + ROUND + ' ข้อ';
+  $('topicList').innerHTML = s.topics.map((t, k) => { const b = best(t.id); const n = t.pool ? Math.min(ROUND, t.pool.length) : ROUND; return '<button class="t" data-k="' + k + '"><span class="best">' + (b ? '⭐ ' + b + '/' + n : '') + '</span><b>' + t.name + '</b><div class="d">' + t.sub + '</div></button>'; }).join('');
+  document.querySelectorAll('.t').forEach(b => b.onclick = () => start(s.topics[+b.dataset.k]));
+  show('topics');
+}
+function start(t) { TOP = t; Q = makeRound(t); i = 0; ok = 0; streak = 0; miss = []; show('play'); render(); }
+function render() {
+  const [q, c, w] = Q[i];
+  $('hNo').textContent = i + 1; $('hOk').textContent = ok; $('hStreak').textContent = streak;
+  $('tName').textContent = SUBJ.name + ' · ' + TOP.name;
+  $('hOf').textContent = 'ข้อ / ' + Q.length;
+  $('q').textContent = q; $('q').style.fontWeight = q.startsWith('📖') ? '400' : ''; $('fb').innerHTML = ''; $('next').classList.add('hidden');
+  window.scrollTo(0, 0);
+  const box = $('choices'); box.innerHTML = '';
+  shuffle(c).forEach(t => { const b = document.createElement('button'); b.className = 'ch'; b.textContent = t; b.onclick = () => pick(t, b); box.appendChild(b); });
+}
+function pick(t, btn) {
+  const [q, c, w] = Q[i], right = t === c[0];
+  [...$('choices').children].forEach(b => { b.disabled = true; if (b.textContent === c[0]) b.classList.add('ok'); });
+  if (right) { ok++; streak++; } else { btn.classList.add('bad'); streak = 0; miss.push(q.split('\n').pop().replace(/^❓ /, '') + ' → ' + c[0] + ' (' + w + ')'); }
+  $('fb').innerHTML = '<div class="fb ' + (right ? 'ok' : 'bad') + '">' + (right ? '✅ ถูกต้อง! ' : '❌ คำตอบคือ <b>' + esc(c[0]) + '</b> — ') + esc(w) + '</div>';
+  $('hOk').textContent = ok; $('hStreak').textContent = streak;
+  $('next').textContent = i === Q.length - 1 ? 'ดูคะแนน 🎉' : 'ข้อต่อไป →'; $('next').classList.remove('hidden');
+  try { $('next').scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) { }
+  $('next').onclick = () => { i++; i < Q.length ? render() : finish(); };
+}
+function finish() {
+  const n = Q.length, b = best(TOP.id); if (ok > b) setBest(TOP.id, ok);
+  $('dTitle').textContent = TOP.name; $('dScore').textContent = ok + ' / ' + n;
+  const p = ok / n; $('dStars').textContent = p >= 0.9 ? '⭐⭐⭐' : p >= 0.7 ? '⭐⭐' : p >= 0.5 ? '⭐' : '💪';
+  $('dMsg').textContent = (ok > b ? '🎉 สถิติใหม่! ' : '') + (p >= 0.8 ? 'เก่งมาก พร้อมสอบแล้ว!' : p >= 0.5 ? 'ดีแล้ว เล่นอีกรอบให้ได้ 8 ขึ้นไปนะ' : 'ไม่เป็นไร อ่านคำอธิบายแล้วลองใหม่');
+  $('dMiss').innerHTML = miss.length ? '<p style="color:var(--muted);text-align:center">ข้อที่ผิด — อ่านอีกครั้ง</p>' + miss.map(m => '<div class="miss">' + esc(m) + '</div>').join('') : '';
+  show('done');
+}
+$('backHome').onclick = () => { paintHome(); show('home'); };
+$('quit').onclick = function () { if (i > 0 && this.dataset.arm !== '1') { this.dataset.arm = '1'; this.textContent = 'แตะอีกครั้งเพื่อออก'; setTimeout(() => { this.dataset.arm = ''; this.textContent = '← กลับ'; }, 2500); return; } this.dataset.arm = ''; this.textContent = '← กลับ'; openSubj(SUBJ); };
+$('toTopics').onclick = () => openSubj(SUBJ);
+$('again').onclick = () => start(TOP);
+paintHome();
+</script>
+</body>
+</html>
