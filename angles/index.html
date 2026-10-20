@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>เกมมุม เส้นขนาน สามเหลี่ยม — ฝึกคิดเร็ว</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+--ink:#1a1c1e;--muted:#5b6167;--line:#dfe3e8;--bg:#fbfbfa;--card:#fff;--soft:#f4f6f8;
+--accent:#1f6feb;--accent-bg:#eaf2ff;--warn:#b25000;--warn-bg:#fff4e8;--ok:#136c39;--ok-bg:#e8f6ee;
+--bad:#b3261e;--bad-bg:#fdecea;--vio:#6b46e0}
+@media (prefers-color-scheme:dark){:root{
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#333a42;--bg:#16181b;--card:#1e2126;--soft:#262a30;
+--accent:#69a4ff;--accent-bg:#1a2740;--warn:#f0a163;--warn-bg:#33240f;--ok:#6fd39a;--ok-bg:#13301f;
+--bad:#ff8a80;--bad-bg:#3a1a17;--vio:#a68cff}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:"Sarabun","Noto Sans Thai",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+font-size:17px;line-height:1.75;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:680px;margin:0 auto;padding:22px 16px calc(60px + env(safe-area-inset-bottom))}
+h1{font-size:1.45rem;margin:0 0 6px;line-height:1.35}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.hidden{display:none !important}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+.lv{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);
+border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:11px;transition:.12s}
+.lv:active{border-color:var(--accent)}
+.lv b{font-size:1.06rem}
+.lv .d{color:var(--muted);font-size:.87rem;line-height:1.6}
+.lv .best{float:right;font-size:.8rem;color:var(--ok);font-weight:700}
+.hud{display:flex;gap:10px;margin-bottom:14px}
+.pill{flex:1;background:var(--soft);border:1px solid var(--line);border-radius:11px;padding:7px 4px;text-align:center;line-height:1.3}
+.pill .n{font-size:1.28rem;font-weight:700;font-family:"IBM Plex Mono",monospace}
+.pill .l{font-size:.72rem;color:var(--muted)}
+.bar{height:9px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;width:100%;background:var(--accent);transition:width .25s linear}
+.bar i.low{background:var(--bad)}
+.q{font-size:1.55rem;font-weight:700;text-align:center;margin:18px 0 8px;line-height:1.45;font-family:"IBM Plex Mono","Sarabun",monospace}
+.q.words{font-size:1.1rem;font-weight:600;text-align:left;font-family:"Sarabun",sans-serif;line-height:1.75}
+.q .en{display:block;font-family:"Sarabun",sans-serif;font-size:.82rem;font-weight:400;color:var(--muted);margin-top:6px}
+.ansrow{display:flex;gap:9px;margin:16px 0 6px}
+#ans{flex:1;min-width:0;font-family:"IBM Plex Mono",monospace;font-size:1.5rem;text-align:center;padding:11px;border:2px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink)}
+#ans:focus{outline:none;border-color:var(--accent)}
+.go{background:var(--accent);color:#fff;border:0;border-radius:12px;padding:0 24px;font-weight:700}
+.choices{display:grid;gap:9px;margin:14px 0 4px}
+.choices.two{grid-template-columns:1fr 1fr}
+.ch{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;text-align:left;color:var(--ink);line-height:1.55;font-size:1rem}
+.choices.two .ch{text-align:center;font-size:1.15rem;font-weight:700;padding:16px 8px}
+.ch:active{border-color:var(--accent);background:var(--accent-bg)}
+.ch b{color:var(--accent);margin-right:7px}
+.fb{min-height:62px;border-radius:12px;padding:11px 14px;font-size:.94rem;line-height:1.65;margin-top:6px}
+.fb.ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);color:var(--bad);border:1px solid var(--bad)}
+.fb.idle{background:var(--soft);color:var(--muted)}
+.pop{animation:pop .25s}
+@keyframes pop{0%{transform:scale(.97)}60%{transform:scale(1.02)}100%{transform:scale(1)}}
+.btnrow{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap}
+.btnrow button{flex:1;padding:11px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:600}
+.btnrow button.pri{background:var(--accent);color:#fff;border-color:var(--accent)}
+.big{font-size:2.4rem;font-weight:700;text-align:center;font-family:"IBM Plex Mono",monospace}
+.grade{text-align:center;font-weight:700;margin:4px 0 14px;line-height:1.6}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--soft);font-weight:600;width:38%}
+.tip{background:var(--warn-bg);border:1px solid var(--warn);color:var(--warn);border-radius:12px;padding:10px 14px;font-size:.9rem;line-height:1.65}
+kbd{font-family:"IBM Plex Mono",monospace;background:var(--soft);border:1px solid var(--line);border-radius:5px;padding:0 5px;font-size:.85em}
+footer{margin-top:28px;color:var(--muted);font-size:.78rem;text-align:center;line-height:1.6}
+code{font-family:"IBM Plex Mono",monospace;font-size:.85em}
+.fig{display:block;width:100%;max-width:440px;margin:4px auto 0;color:var(--ink);background:var(--card)}
+.fig .unk{fill:var(--vio);font-weight:700;font-size:20px}
+.cap{text-align:center;color:var(--muted);font-size:.74rem;margin:0 0 4px}
+.nextrow{margin-top:10px}
+.nextrow button{width:100%;padding:11px;border-radius:12px;border:0;background:var(--accent);color:#fff;font-weight:700}
+h2.grp{font-size:.88rem;color:var(--muted);margin:16px 0 8px;font-weight:600}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<!-- ============ เมนู ============ -->
+<section id="menu">
+  <h1>📐 เกมมุม · เส้นขนาน · สามเหลี่ยม</h1>
+  <p class="sub">Angles · Parallel lines · Triangles — เรขาคณิต 2 มิติเป็นหัวข้อใหญ่สุดของ Pretest (~16%) · โจทย์สุ่มใหม่ทุกครั้ง เล่นได้ไม่จำกัด</p>
+
+  <p class="tip">💡 จำ <b>3 ตัวเลข</b> ก่อนเล่น: <b>เส้นตรง = 180°</b> · <b>รอบจุด = 360°</b> · <b>มุมฉาก = 90°</b> · สามเหลี่ยมรวม 180° · สี่เหลี่ยมรวม 360°<br>
+  เส้นขนาน: รูปตัว <b>F</b> (สมนัย) และ <b>Z</b> (แย้ง) → <b>เท่ากัน</b> · รูปตัว <b>C</b> (ภายในข้างเดียวกัน) → <b>รวม 180°</b><br>
+  ✏️ รูปในเกม<b>ไม่ได้วาดตามสัดส่วน</b> — คิดจากกฎ ไม่ใช่กะด้วยตา</p>
+
+  <h2 class="grp">⏱ จับเวลา — ฝึกความเร็ว</h2>
+  <button class="lv" data-lv="1"><span class="best" id="b1"></span><b>ด่าน 1 · คิดเร็ว 180 · 360 · 90</b>
+    <div class="d">มุมบนเส้นตรง · รอบจุด · ตรงข้ามจุดยอด · มุมฉาก · ประกอบมุมฉาก/สองมุมฉาก · ชนิดของมุม · เศษส่วนของมุมตรง — 60 วินาที · เป้า 10 ข้อ</div></button>
+  <button class="lv" data-lv="2"><span class="best" id="b2"></span><b>ด่าน 2 · สามเหลี่ยม</b>
+    <div class="d">มุมที่สาม · หน้าจั่ว (ชั้นเดียว/สองชั้น) · มุมภายนอก (ไป-กลับ) · อัตราส่วน/ความสัมพันธ์ของมุม · มุมแบบ x · ชนิดสามเหลี่ยม · สร้างได้ไหม — 90 วินาที · เป้า 9 ข้อ</div></button>
+  <button class="lv" data-lv="3"><span class="best" id="b3"></span><b>ด่าน 3 · เส้นขนาน F · Z · C</b>
+    <div class="d">มีรูปทุกข้อ · หามุม x · เส้นหักทั้งในและนอกแถบเส้นขนาน · ดูรูปแล้วบอกว่าเป็นมุมคู่แบบไหน — 120 วินาที · เป้า 8 ข้อ</div></button>
+
+  <h2 class="grp">🧠 ไม่จับเวลา — คิดให้ชัวร์</h2>
+  <button class="lv" data-lv="4"><span class="best" id="b4"></span><b>ด่าน 4 · หลายเหลี่ยม · นาฬิกา · สี่เหลี่ยม</b>
+    <div class="d">(n − 2) × 180 · รูปด้านเท่ามุมเท่า + เส้นทแยงมุม · มุมเข็มนาฬิกา (เวลาเดียว/สองเวลา) · มุมสี่เหลี่ยมด้านขนาน · สมบัติและลำดับชั้นของสี่เหลี่ยม — 12 ข้อ · เป้า 10</div></button>
+  <button class="lv" data-lv="5"><span class="best" id="b5"></span><b>ด่าน 5 · กับดักข้อสอบ</b>
+    <div class="d">กับดักที่เด็ก ป.6 พลาดบ่อย: ตอบค่ากลางทาง · "ต้องเพิ่มอีก" · อ่านข้ามคำว่า "ไม่" · ตัว C คิดว่าเท่ากัน · เข็มสั้นตอนครึ่งชั่วโมง · นับสามเหลี่ยม — 12 ข้อ · เป้า 10 · ตัวลวงทุกตัวมีเหตุผลบอก</div></button>
+  <button class="lv" data-lv="6"><span class="best" id="b6"></span><b>ด่าน 6 · มาราธอน 40 ข้อ</b>
+    <div class="d">ผสมทุกด่าน เหมือนทำข้อสอบจริงทั้งหัวข้อ · จบแล้วดูข้อที่พลาดพร้อมเหตุผล · เป้า 34/40</div></button>
+
+  <p class="tip">⌨️ ข้อพิมพ์ตัวเลข: พิมพ์แค่ตัวเลข (ไม่ต้องใส่ °) แล้วกด <kbd>Enter</kbd> · ข้อเลือกตอบ: กดเลข <kbd>1</kbd>–<kbd>4</kbd> ได้<br>
+  ตอบผิดแล้วเกมจะหยุดรอ (ด่านจับเวลา นาฬิกาก็หยุดด้วย) ให้อ่านเหตุผลก่อน กด "ข้อต่อไป" เมื่อพร้อม</p>
+</section>
+
+<!-- ============ เล่น ============ -->
+<section id="play" class="hidden">
+  <div class="hud">
+    <div class="pill"><div class="n" id="hScore">0</div><div class="l">คะแนน</div></div>
+    <div class="pill"><div class="n" id="hStreak">0</div><div class="l">ถูกติดกัน</div></div>
+    <div class="pill"><div class="n" id="hTime">60</div><div class="l" id="hTimeL">วินาที</div></div>
+  </div>
+  <div class="bar"><i id="barFill"></i></div>
+  <div class="card">
+    <div id="fig"></div>
+    <div class="q words" id="qText">—</div>
+    <div class="ansrow" id="inputRow">
+      <input id="ans" inputmode="numeric" autocomplete="off" placeholder="?">
+      <button class="go" id="submit">ตอบ</button>
+    </div>
+    <div class="choices hidden" id="choices"></div>
+    <div class="fb idle" id="fb"></div>
+    <div class="nextrow hidden" id="nextRow"><button id="nextBtn">ข้อต่อไป ▶</button></div>
+  </div>
+  <div class="btnrow"><button id="quit">⏹ หยุดกลับเมนู</button></div>
+</section>
+
+<!-- ============ สรุปผล ============ -->
+<section id="over" class="hidden">
+  <div class="card">
+    <div class="big" id="oScore">—</div>
+    <div class="grade" id="oGrade">—</div>
+    <table id="oStats"></table>
+    <div id="oWrong"></div>
+  </div>
+  <div class="btnrow">
+    <button class="pri" id="again">🔁 เล่นด่านนี้อีกครั้ง</button>
+    <button id="back">📋 เลือกด่านใหม่</button>
+  </div>
+</section>
+
+<footer>Road to Yothin · เกมทบทวนเรขาคณิต 2 มิติ (ชุดทบทวนคณิต 4 — มุม เส้นขนาน สามเหลี่ยม)<br>
+ตัวเลขในเกมสุ่มใหม่ทุกครั้งและไม่ซ้ำกับชุดทบทวน · สถิติที่ดีที่สุดเก็บไว้ในเครื่องนี้</footer>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); } } catch (e) { }
+</script>
+
+<!-- ============ GENERATOR (ไม่แตะ DOM — ดึงไปทดสอบด้วย Node ได้ทั้งก้อน) ============ -->
+<script id="gen">
+"use strict";
+const ri = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+const shuffle = arr => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const D = v => `${v}°`;
+const rad = d => d * Math.PI / 180;
+const f1 = n => Math.round(n * 10) / 10;
+
+/* ตัวเลขที่ "จอง" ไว้ในชุดทบทวนคณิต 4 (rp-04) + ตัวอย่างในสรุปของชุดนั้น — ห้ามโผล่ในเกม
+   (ผู้เรียนต้องกลับไปทำ rp-04 เพื่อวัดผล) */
+const RESERVED = {
+  triples: new Set(['9,40,41', '3,7,7', '1,4,5', '6,6,6', '3,4,8', '4,6,9', '3,4,7']),
+  parAlpha: new Set([75, 105, 65, 115]),          // ข้อ 2 (75/105) · ตัวอย่างสรุป 65/115
+  pairs: new Set(['55,140', '25,40', '35,85', '50,80', '35,55', '72,144']),
+  sums: new Set([65]),                            // ตัวอย่างเส้นหัก 25+40=65
+  clocks: new Set(['10.30', '7.00', '4.30']),
+  segSets: new Set(['2,3,5,7,11']),
+  answers: new Set([13, 23, 33, 43]),             // ตัวเลือกข้อ 7 (ค่า z)
+  apex: new Set([40]),                            // ตัวอย่างหน้าจั่ว มุมยอด 40 → 70
+  isoPerim: new Set([12])                         // ข้อ 10
+};
+const pairKey = (a, b) => [a, b].sort((x, y) => x - y).join(',');
+const triKey = t => t.slice().sort((x, y) => x - y).join(',');
+const badPair = (a, b) => RESERVED.pairs.has(pairKey(a, b));
+const anyBad = list => list.some((x, i) => list.some((y, j) => j > i && badPair(x, y)));
+
+function shuffleChoices(correct, wrongs, unit) {
+  unit = unit === undefined ? '°' : unit;
+  const seen = new Set([String(correct.t)]);
+  const ws = wrongs.filter(w => { const k = String(w.t); if (w.t === undefined || seen.has(k) || /(^|[^\d])-\d/.test(k)) return false; seen.add(k); return true; });
+  const m = String(correct.t).match(/^(\d+)(.*)$/);
+  if (m) {
+    const n = Number(m[1]), suf = m[2];
+    [n + 10, n - 10, n + 5, n - 5, n + 20, n + 1].filter(v => v > 0).forEach(v => {
+      const t = v + suf;
+      if (ws.length < 3 && !seen.has(t)) { seen.add(t); ws.push({ t, why: 'ใกล้เคียงแต่ไม่ตรง — คิดใหม่ทีละขั้น แล้วอ่านคำถามอีกรอบ' }); }
+    });
+  }
+  const all = [Object.assign({ ok: true }, correct)].concat(ws.slice(0, 3).map(w => Object.assign({ ok: false }, w)));
+  return shuffle(all);
+}
+
+/* ================= SVG helpers (พิกัดคณิต: มุมวัดทวนเข็มจากขวา) ================= */
+const P = (cx, cy, r, a) => [f1(cx + r * Math.cos(rad(a))), f1(cy - r * Math.sin(rad(a)))];
+function svg(inner, h) {
+  return `<svg class="fig" viewBox="0 0 480 ${h || 260}" xmlns="http://www.w3.org/2000/svg" role="img" font-family="Sarabun, sans-serif" font-size="17">${inner}</svg>`;
+}
+const line = (a, b, extra) => `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="currentColor" stroke-width="2" ${extra || ''}/>`;
+const dot = p => `<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="currentColor"/>`;
+const txt = (p, s, cls) => `<text x="${p[0]}" y="${p[1]}" text-anchor="middle" dominant-baseline="middle" fill="currentColor"${cls ? ` class="${cls}"` : ''}>${s}</text>`;
+/* label ของมุม: ตัวเลข → "48°" · ตัวแปร → "x" (สีเน้น) */
+const angTxt = (p, lab) => typeof lab === 'number' ? txt(p, lab + '°') : (lab && typeof lab === 'object') ? txt(p, lab.e) : txt(p, lab, 'unk');
+function arc(cx, cy, r, a1, sweep) {
+  if (Math.abs(sweep - 90) < 0.01 && r < 30) {        // มุมฉาก → สี่เหลี่ยมเล็ก
+    const s = 14, p1 = P(cx, cy, s, a1), p2 = P(cx, cy, s * Math.SQRT2, a1 + 45), p3 = P(cx, cy, s, a1 + 90);
+    return `<polyline points="${p1} ${p2} ${p3}" fill="none" stroke="currentColor" stroke-width="1.5"/>`;
+  }
+  const p1 = P(cx, cy, r, a1), p2 = P(cx, cy, r, a1 + sweep);
+  return `<path d="M${p1[0]},${p1[1]} A${r},${r} 0 ${sweep > 180 ? 1 : 0} 0 ${p2[0]},${p2[1]}" fill="none" stroke="currentColor" stroke-width="1.5"/>`;
+}
+const labR = sweep => sweep < 30 ? 62 : sweep < 50 ? 50 : 40;
+function sector(cx, cy, a1, sweep, lab, r) {
+  if (lab === null || lab === undefined) return '';
+  const lr = (lab && typeof lab === 'object') ? 82 : labR(sweep);
+  return arc(cx, cy, r || (sweep < 30 ? 30 : 22), a1, sweep) + angTxt(P(cx, cy, lr, a1 + sweep / 2), lab);
+}
+/* มุมรอบจุด / บนเส้นตรง: rays = มุมทิศของรังสีเรียงจากน้อยไปมาก · labs[i] = label ของช่องระหว่าง ray i กับ ray i+1 */
+function raysFig(rays, labs, full) {
+  const cx = 240, cy = full ? 130 : 190, R = full ? 105 : 150;
+  let s = '';
+  if (!full) s += line(P(cx, cy, R + 20, 0), P(cx, cy, R + 20, 180));
+  rays.forEach(a => { if (full || (a !== 0 && a !== 180)) s += line([cx, cy], P(cx, cy, R, a)); });
+  const n = full ? rays.length : rays.length - 1;
+  for (let i = 0; i < n; i++) {
+    const a1 = rays[i], a2 = full && i === rays.length - 1 ? rays[0] + 360 : rays[i + 1];
+    s += sector(cx, cy, a1, a2 - a1, labs[i]);
+  }
+  s += dot([cx, cy]) + txt([cx + 14, cy + 16], 'O');
+  return svg(s, full ? 260 : 220);
+}
+/* เส้นตรงสองเส้นตัดกัน: มุมของเส้นที่สอง = t · ช่อง 0:[0,t] 1:[t,180] 2:[180,180+t] 3:[180+t,360] */
+function crossFig(t, labs) {
+  const cx = 240, cy = 130, R = 130;
+  let s = line(P(cx, cy, R + 40, 0), P(cx, cy, R + 40, 180)) + line(P(cx, cy, R, t), P(cx, cy, R, t + 180));
+  const st = [0, t, 180, 180 + t], sw = [t, 180 - t, t, 180 - t];
+  for (let i = 0; i < 4; i++) s += sector(cx, cy, st[i], sw[i], labs[i]);
+  return svg(s + dot([cx, cy]), 260);
+}
+/* เส้นขนาน AB ขนานกับ CD ตัดด้วย EF ที่ G (บน) และ H (ล่าง) · α = มุมจากรังสีขวาไปหารังสีขึ้นของเส้นตัด
+   ช่อง: AR=[0,α] AL=[α,180] BL=[180,180+α] BR=[180+α,360] · labs = { 'G-AR': 70, 'H-BL': 'x', ... } */
+const QUAD = { AR: [0, 1], AL: [1, 2], BL: [2, 3], BR: [3, 4] };
+function quadSpan(q, a) { const b = [0, a, 180, 180 + a, 360]; const [i, j] = QUAD[q]; return [b[i], b[j] - b[i]]; }
+const quadVal = (q, a) => (q === 'AR' || q === 'BL') ? a : 180 - a;
+function parFig(a, labs) {
+  const yT = 90, yB = 210, cot = Math.cos(rad(a)) / Math.sin(rad(a));
+  const G = [f1(240 + 60 * cot), yT], H = [f1(240 - 60 * cot), yB];
+  const E = [f1(G[0] + 60 * cot), 30], F = [f1(H[0] - 60 * cot), 270];
+  let s = line([30, yT], [450, yT]) + line([30, yB], [450, yB]) + line(E, F);
+  s += `<polyline points="372,${yT - 6} 380,${yT} 372,${yT + 6}" fill="none" stroke="currentColor" stroke-width="2"/>`;
+  s += `<polyline points="372,${yB - 6} 380,${yB} 372,${yB + 6}" fill="none" stroke="currentColor" stroke-width="2"/>`;
+  s += txt([30, yT - 16], 'A') + txt([450, yT - 16], 'B') + txt([30, yB - 16], 'C') + txt([450, yB - 16], 'D');
+  s += txt([E[0] + 16, E[1]], 'E') + txt([F[0] + 16, F[1]], 'F') + dot(G) + dot(H);
+  s += txt([G[0] + (a < 90 ? -16 : 16), G[1] - 14], 'G') + txt([H[0] + (a < 90 ? 16 : -16), H[1] + 16], 'H');
+  Object.keys(labs).forEach(k => {
+    const [pt, q] = k.split('-'); const C = pt === 'G' ? G : H; const [st, sw] = quadSpan(q, a);
+    s += sector(C[0], C[1], st, sw, labs[k]);
+  });
+  return svg(s, 290);
+}
+/* เส้นหักระหว่างเส้นขนาน: มุม BQP = a, มุม DRP = b, มุม QPR = a + b */
+function bendFig(a, b, labQ, labR, labP) {
+  const yT = 70, yB = 230, half = 80, px = 400, py = 150;
+  const Q = [f1(px - half / Math.tan(rad(a))), yT], Rr = [f1(px - half / Math.tan(rad(b))), yB], Pp = [px, py];
+  let s = line([30, yT], [460, yT]) + line([30, yB], [460, yB]) + line(Q, Pp) + line(Rr, Pp);
+  s += `<polyline points="92,${yT - 6} 100,${yT} 92,${yT + 6}" fill="none" stroke="currentColor" stroke-width="2"/>`;
+  s += `<polyline points="92,${yB - 6} 100,${yB} 92,${yB + 6}" fill="none" stroke="currentColor" stroke-width="2"/>`;
+  s += txt([30, yT - 16], 'A') + txt([460, yT - 16], 'B') + txt([30, yB + 18], 'C') + txt([460, yB + 18], 'D');
+  s += dot(Q) + dot(Rr) + dot(Pp) + txt([Q[0], yT - 16], 'Q') + txt([Rr[0], yB + 18], 'R') + txt([px + 18, py], 'P');
+  s += sector(Q[0], Q[1], 360 - a, a, labQ, 34) + sector(Rr[0], Rr[1], 0, b, labR, 34) + sector(px, py, 180 - a, a + b, labP, 26);
+  return svg(s, 260);
+}
+/* สามเหลี่ยม ABC วาดตามมุมจริง · labs = {A, B, C, ext} · ext = มุมภายนอกที่ B (ต่อฐานไปทางขวา) */
+function triFig(A, B, labs, ext) {
+  const C = 180 - A - B, ac = Math.sin(rad(B)) / Math.sin(rad(C));
+  const apx = ac * Math.cos(rad(A)), apy = ac * Math.sin(rad(A));
+  const xs = [0, 1, apx, ext ? 1.4 : 1], minX = Math.min(...xs), maxX = Math.max(...xs);
+  const s0 = Math.min(380 / (maxX - minX), 170 / apy);
+  const ox = 240 - s0 * (minX + maxX) / 2, oy = 215;
+  const T = (x, y) => [f1(ox + s0 * x), f1(oy - s0 * y)];
+  const pA = T(0, 0), pB = T(1, 0), pC = T(apx, apy);
+  let s = line(pA, pB) + line(pB, pC) + line(pC, pA);
+  if (ext) s += line(pB, T(1.4, 0), 'stroke-dasharray="6 5"');
+  const dirs = (p, q1, q2) => { const d1 = Math.atan2(-(q1[1] - p[1]), q1[0] - p[0]) * 180 / Math.PI, d2 = Math.atan2(-(q2[1] - p[1]), q2[0] - p[0]) * 180 / Math.PI; let a1 = d1, sw = ((d2 - d1) % 360 + 360) % 360; if (sw > 180) { a1 = d2; sw = 360 - sw; } return [a1, sw]; };
+  const put = (p, q1, q2, lab) => { if (lab === undefined || lab === null) return ''; const [a1, sw] = dirs(p, q1, q2); return arc(p[0], p[1], sw < 35 ? 34 : 22, a1, sw) + angTxt(P(p[0], p[1], sw < 35 ? 66 : sw < 60 ? 52 : 42, a1 + sw / 2), lab); };
+  s += put(pA, pB, pC, labs.A) + put(pB, pA, pC, labs.B) + put(pC, pA, pB, labs.C);
+  if (ext) s += put(pB, T(1.4, 0), pC, labs.ext);
+  s += txt([pA[0] - 14, pA[1] + 14], 'A') + txt([pB[0] + (ext ? -4 : 14), pB[1] + 18], 'B') + txt([pC[0], pC[1] - 16], 'C');
+  return svg(s, 240);
+}
+
+/* ================= ด่าน 1: คิดเร็ว 180 / 360 / 90 ================= */
+function splitSum(total, k, lo, hi) {
+  for (let t = 0; t < 200; t++) {
+    const parts = []; let left = total;
+    for (let i = 0; i < k - 1; i++) { const v = ri(lo, hi); parts.push(v); left -= v; }
+    if (left >= lo && left <= hi) { parts.push(left); return parts; }
+  }
+  return null;
+}
+function qStraight() {
+  for (let t = 0; t < 100; t++) {
+    const k = pick([2, 3, 3]);
+    const parts = splitSum(180, k, 22, 130); if (!parts) continue;
+    if (anyBad(parts)) continue;
+    const xi = ri(0, k - 1), ans = parts[xi];
+    if (RESERVED.answers.has(ans)) continue;
+    const rays = [0]; parts.forEach(p => rays.push(rays[rays.length - 1] + p));
+    const labs = parts.map((p, i) => i === xi ? 'x' : p);
+    const given = parts.filter((p, i) => i !== xi);
+    return { kind: 'typed', svg: raysFig(rays, labs, false), text: `มุมบนเส้นตรง (angles on a straight line) — <b>x</b> = กี่องศา`, ans,
+      tip: `บนเส้นตรงรวมกัน 180° → x = 180 − ${given.join(' − ')} = ${ans}`, meta: { type: 'straight', given, ans, total: 180 } };
+  }
+}
+function qAround() {
+  for (let t = 0; t < 100; t++) {
+    const k = pick([3, 4, 4]);
+    const parts = splitSum(360, k, 40, 170); if (!parts || anyBad(parts)) continue;
+    if (parts.includes(180)) continue;
+    const xi = ri(0, k - 1), ans = parts[xi];
+    if (RESERVED.answers.has(ans)) continue;
+    const st = ri(0, 40), rays = [st]; parts.slice(0, -1).forEach(p => rays.push(rays[rays.length - 1] + p));
+    const labs = parts.map((p, i) => i === xi ? 'x' : p);
+    const given = parts.filter((p, i) => i !== xi);
+    return { kind: 'typed', svg: raysFig(rays, labs, true), text: `มุมรอบจุด O (angles around a point) — <b>x</b> = กี่องศา`, ans,
+      tip: `มุมรอบจุดรวมกัน 360° → x = 360 − ${given.join(' − ')} = ${ans}`, meta: { type: 'around', given, ans, total: 360 } };
+  }
+}
+function qCross() {
+  for (let t = 0; t < 100; t++) {
+    const a = ri(30, 150); if (a === 90 || RESERVED.parAlpha.has(a)) continue;
+    const gi = ri(0, 3); const opp = Math.random() < 0.5; const xi = opp ? (gi + 2) % 4 : (gi + pick([1, 3])) % 4;
+    const vals = [a, 180 - a, a, 180 - a], ans = vals[xi];
+    if (RESERVED.answers.has(ans)) continue;
+    const labs = [null, null, null, null]; labs[gi] = vals[gi]; labs[xi] = 'x';
+    return { kind: 'typed', svg: crossFig(a, labs), text: `เส้นตรงสองเส้นตัดกัน — <b>x</b> = กี่องศา`, ans,
+      tip: opp ? `x อยู่ตรงข้ามจุดยอด (vertically opposite) กับ ${vals[gi]}° → เท่ากัน = ${ans}` : `x อยู่ติดกับ ${vals[gi]}° บนเส้นตรงเดียวกัน → 180 − ${vals[gi]} = ${ans}`,
+      meta: { type: 'cross', given: [vals[gi]], ans, opp } };
+  }
+}
+function qRight() {
+  for (let t = 0; t < 50; t++) {
+    const a = ri(15, 75); const ans = 90 - a; if (RESERVED.answers.has(ans) || a === ans || badPair(a, ans)) continue;
+    const st = ri(0, 60), first = Math.random() < 0.5;
+    const rays = [st, st + (first ? a : ans), st + 90];
+    const cx = 200, cy = 200, R = 150;
+    let s = rays.map(r => line([cx, cy], P(cx, cy, R, r))).join('');
+    s += arc(cx, cy, 14, st, 90);
+    s += sector(cx, cy, rays[0], rays[1] - rays[0], first ? a : 'x', 46) + sector(cx, cy, rays[1], rays[2] - rays[1], first ? 'x' : a, 46);
+    s += dot([cx, cy]) + txt([cx - 14, cy + 16], 'O');
+    return { kind: 'typed', svg: svg(s, 230), text: `มุมใหญ่ทั้งมุม (<b>มุมฉาก 90°</b> · right angle) ถูกแบ่งเป็น 2 ส่วน — <b>x</b> มีขนาดกี่องศา`, ans,
+      tip: `มุมฉาก = 90° → x = 90 − ${a} = ${ans}`, meta: { type: 'right', given: [a], ans } };
+  }
+}
+function qSupp() {
+  for (let t = 0; t < 50; t++) {
+    const comp = Math.random() < 0.4, a = comp ? ri(12, 78) : ri(15, 165);
+    const ans = (comp ? 90 : 180) - a;
+    if (a === ans || RESERVED.answers.has(ans) || badPair(a, ans) || RESERVED.parAlpha.has(a)) continue;
+    return { kind: 'typed', text: comp ? `มุม<b>ประกอบมุมฉาก</b>ของ ${a}° คือกี่องศา (สองมุมรวมกันได้ 90°)<span class="en">complement of ${a}°</span>`
+      : `มุม<b>ประกอบสองมุมฉาก</b>ของ ${a}° คือกี่องศา (สองมุมรวมกันได้ 180°)<span class="en">supplement of ${a}°</span>`, ans,
+      tip: comp ? `ประกอบมุมฉาก = รวมกัน 90° → 90 − ${a} = ${ans}` : `ประกอบสองมุมฉาก = รวมกัน 180° → 180 − ${a} = ${ans}`,
+      meta: { type: comp ? 'comp' : 'supp', a, ans } };
+  }
+}
+const KINDS = [
+  { n: 'มุมแหลม (acute)', test: v => v > 0 && v < 90, rule: 'มุมแหลม = มากกว่า 0° แต่น้อยกว่า 90°' },
+  { n: 'มุมฉาก (right)', test: v => v === 90, rule: 'มุมฉาก = 90° พอดี' },
+  { n: 'มุมป้าน (obtuse)', test: v => v > 90 && v < 180, rule: 'มุมป้าน = มากกว่า 90° แต่น้อยกว่า 180°' },
+  { n: 'มุมตรง (straight)', test: v => v === 180, rule: 'มุมตรง = 180° พอดี (เป็นเส้นตรง)' },
+  { n: 'มุมกลับ (reflex)', test: v => v > 180 && v < 360, rule: 'มุมกลับ = มากกว่า 180° แต่น้อยกว่า 360°' }];
+function qKind() {
+  const v = pick([ri(5, 89), ri(5, 89), 90, ri(91, 179), ri(91, 179), 180, ri(181, 355), ri(181, 355)]);
+  const k = KINDS.find(K => K.test(v));
+  const wrongs = shuffle(KINDS.filter(K => K !== k)).slice(0, 3).map(K => ({ t: K.n, why: `${K.rule} — แต่ ${v}° ไม่อยู่ในช่วงนี้` }));
+  return { kind: 'choice', words: `มุมขนาด <b>${v}°</b> เป็นมุมชนิดใด`, ch: shuffleChoices({ t: k.n }, wrongs, ''), why: `${k.rule} → ${v}° เป็น${k.n.split(' ')[0]}`, meta: { type: 'kind', v, ans: k.n } };
+}
+const L1 = [qStraight, qStraight, qAround, qCross, qCross, qRight, qSupp, qKind, () => qChain()];
+
+/* ================= ด่าน 2: สามเหลี่ยม ================= */
+function qThird() {
+  for (let t = 0; t < 100; t++) {
+    const A = ri(25, 110), B = ri(25, 110), C = 180 - A - B;
+    if (C < 20 || anyBad([A, B, C]) || [A, B, C].some(v => RESERVED.answers.has(v))) continue;
+    const ask = pick(['A', 'B', 'C']); const vals = { A, B, C }; const labs = { A, B, C }; labs[ask] = 'x';
+    const given = ['A', 'B', 'C'].filter(k => k !== ask).map(k => vals[k]);
+    if (badPair(given[0], given[1])) continue;
+    return { kind: 'typed', svg: triFig(A, B, labs), text: `สามเหลี่ยม ABC — <b>x</b> = กี่องศา`, ans: vals[ask],
+      tip: `มุมภายในสามเหลี่ยมรวม 180° → x = 180 − ${given[0]} − ${given[1]} = ${vals[ask]}`, meta: { type: 'third', given, ans: vals[ask] } };
+  }
+}
+function qIsoBase() {
+  for (let t = 0; t < 50; t++) {
+    const apex = 2 * ri(10, 80); if (RESERVED.apex.has(apex) || apex === 60) continue;
+    const base = (180 - apex) / 2; if (RESERVED.answers.has(base)) continue;
+    return { kind: 'typed', text: `สามเหลี่ยมหน้าจั่ว (isosceles) มี<b>มุมยอด ${apex}°</b><br>มุมฐานแต่ละมุมเท่ากับกี่องศา`, ans: base,
+      tip: `มุมฐานสองมุมเท่ากัน → (180 − ${apex}) ÷ 2 = ${180 - apex} ÷ 2 = ${base}`, meta: { type: 'isoBase', apex, ans: base } };
+  }
+}
+function qIsoApex() {
+  for (let t = 0; t < 50; t++) {
+    const base = ri(20, 85); const apex = 180 - 2 * base;
+    if (base === 60 || RESERVED.apex.has(apex) || RESERVED.answers.has(apex)) continue;
+    return { kind: 'typed', svg: triFig(base, base, { A: base, B: base, C: 'x' }), text: `สามเหลี่ยมหน้าจั่ว CA = CB — มุมยอด <b>x</b> = กี่องศา`, ans: apex,
+      tip: `มุมฐานเท่ากัน ${base}° สองมุม → x = 180 − ${base} − ${base} = ${apex}`, meta: { type: 'isoApex', base, ans: apex } };
+  }
+}
+function qExt() {
+  for (let t = 0; t < 100; t++) {
+    const A = ri(25, 95), C = ri(25, 95), B = 180 - A - C;
+    if (B < 20 || badPair(A, C) || RESERVED.answers.has(A + C)) continue;
+    return { kind: 'typed', svg: triFig(A, B, { A, C, ext: 'x' }, true), text: `ต่อด้าน AB ออกไป — มุมภายนอก (exterior angle) <b>x</b> = กี่องศา`, ans: A + C,
+      tip: `มุมภายนอก = ผลบวกมุมภายในที่ไม่ติดกัน 2 มุม → ${A} + ${C} = ${A + C}`, meta: { type: 'ext', given: [A, C], ans: A + C } };
+  }
+}
+function qEqui() {
+  const v = pick([['มุมภายในมุมละ', 60, 'สามมุมเท่ากัน → 180 ÷ 3 = 60'], ['มุมภายนอกมุมละ', 120, 'มุมภายใน 60° → มุมภายนอก 180 − 60 = 120'], ['ผลบวกมุมภายในทั้งหมด', 180, 'สามเหลี่ยมทุกชนิดรวม 180°']]);
+  return { kind: 'typed', text: `สามเหลี่ยมด้านเท่า (equilateral) มี${v[0]}กี่องศา`, ans: v[1], tip: v[2], meta: { type: 'equi', ans: v[1] } };
+}
+const RATIOS = [[1, 2, 3], [2, 3, 4], [1, 1, 2], [1, 2, 6], [2, 3, 5], [3, 4, 5], [1, 3, 5], [4, 5, 9], [2, 2, 5], [1, 4, 7], [1, 1, 4], [3, 5, 7], [2, 5, 8], [1, 2, 2], [1, 3, 6], [2, 7, 9], [4, 5, 6], [3, 3, 4]];
+function qRatio() {
+  for (let t = 0; t < 50; t++) {
+    const r = pick(RATIOS), s = r[0] + r[1] + r[2]; if (180 % s) continue;
+    const u = 180 / s, which = pick(['ใหญ่ที่สุด', 'เล็กที่สุด']);
+    const ans = which === 'ใหญ่ที่สุด' ? u * Math.max(...r) : u * Math.min(...r);
+    if (RESERVED.answers.has(ans)) continue;
+    return { kind: 'typed', text: `มุมภายในของสามเหลี่ยมรูปหนึ่งเป็นอัตราส่วน <b>${r.join(' : ')}</b><br>มุมที่<b>${which}</b>กี่องศา`, ans,
+      tip: `รวม ${s} ส่วน = 180° → 1 ส่วน = ${u}° → มุม${which} = ${which === 'ใหญ่ที่สุด' ? Math.max(...r) : Math.min(...r)} × ${u} = ${ans}`, meta: { type: 'ratio', r, which, ans } };
+  }
+}
+function randTriple(kind) {               // kind: ok / eq / no
+  for (let t = 0; t < 200; t++) {
+    const a = ri(2, 15), b = ri(2, 15); let c;
+    if (kind === 'ok') { const lo = Math.abs(a - b) + 1, hi = a + b - 1; if (lo > hi) continue; c = ri(lo, Math.min(hi, 24)); }
+    else if (kind === 'eq') c = a + b;
+    else c = a + b + ri(1, 6);
+    const tri = shuffle([a, b, c]);
+    if (RESERVED.triples.has(triKey(tri))) continue;
+    return tri;
+  }
+}
+const triStat = tri => { const s = tri.slice().sort((x, y) => x - y); return { s, sum: s[0] + s[1], big: s[2], kind: s[0] + s[1] > s[2] ? 'ok' : s[0] + s[1] === s[2] ? 'eq' : 'no' }; };
+function qCanBuild() {
+  const kind = pick(['ok', 'ok', 'eq', 'no']); const tri = randTriple(kind); const st = triStat(tri);
+  const okAns = st.kind === 'ok';
+  const msg = st.kind === 'ok' ? `${st.s[0]} + ${st.s[1]} = ${st.sum} > ${st.big} → สร้างได้` : st.kind === 'eq' ? `${st.s[0]} + ${st.s[1]} = ${st.sum} เท่ากับ ${st.big} พอดี → แบนเป็นเส้นตรง สร้างไม่ได้` : `${st.s[0]} + ${st.s[1]} = ${st.sum} < ${st.big} → ไม่ถึงกัน สร้างไม่ได้`;
+  return { kind: 'choice', two: true, words: `เส้นยาว <b>${tri.join(', ')}</b> ซม. ต่อกันเป็นรูปสามเหลี่ยมได้ไหม`,
+    ch: [{ t: '✔ ได้', ok: okAns, why: okAns ? '' : msg }, { t: '✘ ไม่ได้', ok: !okAns, why: okAns ? msg : '' }],
+    why: `เช็ก 2 ด้านสั้นรวมกัน ต้อง<b>มากกว่า</b>ด้านยาวสุด: ${msg}`, meta: { type: 'canBuild', tri, ans: okAns } };
+}
+function qRightTri() {
+  for (let t = 0; t < 50; t++) {
+    const a = ri(30, 60), ans = 90 - a; if (a === ans || badPair(a, ans) || RESERVED.answers.has(ans)) continue;
+    return { kind: 'typed', svg: triFig(90, a, { A: 90, B: a, C: 'x' }), text: `สามเหลี่ยมมุมฉาก (right triangle) — <b>x</b> = กี่องศา`, ans,
+      tip: `มุมฉาก 90° กินไปแล้ว → อีกสองมุมรวม 90° → x = 90 − ${a} = ${ans}`, meta: { type: 'third', given: [90, a], ans } };
+  }
+}
+const L2 = [qThird, qThird, qIsoBase, qIsoApex, qExt, qExt, qRatio, qCanBuild, qCanBuild, qRightTri, qEqui, () => qExtRev(), () => qRel(), () => qRel(), () => qClassTri(), () => qIso2(), () => qAlg()];
+
+/* ================= ด่าน 3: เส้นขนาน (รูปตัว F / Z / C) ================= */
+const PTS = ['G', 'H'], QS = ['AR', 'AL', 'BL', 'BR'];
+const INTERIOR = { G: ['BL', 'BR'], H: ['AR', 'AL'] };
+function relation(p1, q1, p2, q2) {
+  if (p1 === p2) { const opp = { AR: 'BL', BL: 'AR', AL: 'BR', BR: 'AL' }; return opp[q1] === q2 ? 'vert' : 'linear'; }
+  if (q1 === q2) return 'corr';
+  const in1 = INTERIOR[p1].includes(q1), in2 = INTERIOR[p2].includes(q2);
+  if (in1 && in2) { const side = q => q.endsWith('R') ? 'R' : 'L'; return side(q1) === side(q2) ? 'coint' : 'alt'; }
+  return 'other';
+}
+const REL = {
+  corr: { n: 'มุมสมนัย (corresponding · รูปตัว F)', eq: 'เท่ากัน', rule: 'มุมสมนัย (ตำแหน่งเดียวกันที่จุดตัดบน-ล่าง · รูปตัว F) เท่ากัน' },
+  alt: { n: 'มุมแย้ง (alternate · รูปตัว Z)', eq: 'เท่ากัน', rule: 'มุมแย้ง (อยู่ระหว่างเส้นขนาน คนละฝั่งเส้นตัด · รูปตัว Z) เท่ากัน' },
+  coint: { n: 'มุมภายในบนข้างเดียวกันของเส้นตัด (co-interior · รูปตัว C)', eq: 'รวมกัน 180°', rule: 'มุมภายในบนข้างเดียวกัน (รูปตัว C / U) รวมกัน 180°' },
+  vert: { n: 'มุมตรงข้ามจุดยอด (vertically opposite)', eq: 'เท่ากัน', rule: 'มุมตรงข้ามจุดยอด (เส้นตัดกันเป็นรูป X) เท่ากัน' },
+  linear: { n: 'มุมบนเส้นตรงเดียวกัน (ติดกัน)', eq: 'รวมกัน 180°', rule: 'มุมติดกันบนเส้นตรงรวมกัน 180°' },
+  other: { n: 'สองขั้น', eq: '', rule: 'ย้ายมุมไปอีกจุดตัดด้วยมุมสมนัยก่อน (รูปตัว F) แล้วใช้มุมตรงข้าม/เส้นตรงที่จุดเดียวกัน' }
+};
+function parAlpha() { for (;;) { const a = ri(35, 145); if (a !== 90 && Math.abs(a - 90) > 4 && !RESERVED.parAlpha.has(a) && a !== 140 && a !== 40 && !RESERVED.answers.has(a) && !RESERVED.answers.has(180 - a)) return a; } }
+function parPair(want) {
+  for (let t = 0; t < 400; t++) {
+    const p1 = pick(PTS), q1 = pick(QS), p2 = pick(PTS), q2 = pick(QS);
+    if (p1 === p2 && q1 === q2) continue;
+    if (relation(p1, q1, p2, q2) === want) return [p1, q1, p2, q2];
+  }
+}
+function qPar(want) {
+  want = want || pick(['corr', 'corr', 'alt', 'alt', 'coint', 'coint', 'vert', 'linear', 'other', 'other']);
+  const a = parAlpha(), [p1, q1, p2, q2] = parPair(want);
+  const g = quadVal(q1, a), ans = quadVal(q2, a);
+  const labs = {}; labs[p1 + '-' + q1] = g; labs[p2 + '-' + q2] = 'x';
+  const R = REL[want];
+  const tip = want === 'other' ? `${R.rule} → ${g === ans ? 'ได้มุมเท่าเดิม' : `180 − ${g}`} = ${ans}` : (R.eq === 'เท่ากัน' ? `${R.rule} → x = ${ans}` : `${R.rule} → x = 180 − ${g} = ${ans}`);
+  return { kind: 'typed', svg: parFig(a, labs), text: `AB ขนานกับ CD (parallel) มี EF เป็นเส้นตัด (transversal) — <b>x</b> = กี่องศา`, ans, tip, meta: { type: 'par', rel: want, a, pos: [p1, q1, p2, q2], given: [g], ans } };
+}
+function qBend() {
+  for (let t = 0; t < 100; t++) {
+    const a = ri(20, 70), b = ri(20, 70);
+    if (a + b > 125 || RESERVED.sums.has(a + b) || a + b === 95 || pairKey(a, b) === '40,55' || badPair(a, b) || badPair(a, a + b) || badPair(b, a + b) || RESERVED.answers.has(a + b)) continue;
+    const askP = Math.random() < 0.65;
+    if (askP) return { kind: 'typed', svg: bendFig(a, b, a, b, 'x'), text: `AB ขนานกับ CD · จุด P อยู่ระหว่างเส้นขนาน — มุม QPR = <b>x</b> กี่องศา`, ans: a + b,
+      tip: `ลากเส้นขนานผ่าน P แล้วใช้มุมแย้ง 2 ครั้ง (รูปตัว Z สองตัว) → x = ${a} + ${b} = ${a + b}`, meta: { type: 'bend', given: [a, b], ans: a + b } };
+    if (RESERVED.answers.has(b)) continue;
+    return { kind: 'typed', svg: bendFig(a, b, a, 'x', a + b), text: `AB ขนานกับ CD · มุม QPR = ${a + b}° — <b>x</b> (มุม DRP) = กี่องศา`, ans: b,
+      tip: `มุมที่จุดหัก = ผลบวกสองมุมที่เส้นขนาน → x = ${a + b} − ${a} = ${b}`, meta: { type: 'bend2', given: [a, a + b], ans: b } };
+  }
+}
+function qRecog() {
+  const want = pick(['corr', 'alt', 'coint', 'vert']);
+  const a = parAlpha(), [p1, q1, p2, q2] = parPair(want);
+  const labs = {}; labs[p1 + '-' + q1] = 'a'; labs[p2 + '-' + q2] = 'b';
+  const asEq = Math.random() < 0.5;
+  if (asEq) {
+    const right = REL[want].eq === 'เท่ากัน' ? 'a = b' : 'a + b = 180°';
+    const opts = ['a = b', 'a + b = 180°', 'a + b = 90°', 'a = 2 × b'].filter(o => o !== right);
+    const whyOf = { 'a = b': 'เท่ากันใช้กับรูปตัว F, Z และมุมตรงข้ามจุดยอด', 'a + b = 180°': 'รวม 180° ใช้กับรูปตัว C (ภายในข้างเดียวกัน) หรือมุมติดกันบนเส้นตรง', 'a + b = 90°': 'เส้นขนานไม่มีกฎรวม 90° — รวม 90° คือมุมประกอบมุมฉาก', 'a = 2 × b': 'ไม่มีกฎ 2 เท่าในเส้นขนาน' };
+    return { kind: 'choice', svg: parFig(a, labs), words: `AB ขนานกับ CD — มุม <b>a</b> กับมุม <b>b</b> สัมพันธ์กันแบบใด`,
+      ch: shuffleChoices({ t: right }, opts.map(o => ({ t: o, why: whyOf[o] })), ''), why: `a กับ b เป็น${REL[want].n} → ${REL[want].eq}`, meta: { type: 'recogEq', rel: want, ans: right } };
+  }
+  const right = REL[want].n;
+  const wrongs = ['corr', 'alt', 'coint', 'vert'].filter(r => r !== want).map(r => ({ t: REL[r].n, why: REL[r].rule }));
+  return { kind: 'choice', svg: parFig(a, labs), words: `AB ขนานกับ CD — มุม <b>a</b> กับมุม <b>b</b> เป็นมุมคู่แบบใด`,
+    ch: shuffleChoices({ t: right }, wrongs, ''), why: REL[want].rule, meta: { type: 'recog', rel: want, ans: right } };
+}
+const L3 = [() => qPar(), () => qPar(), () => qPar(), () => qPar('coint'), qBend, qBend, () => qBendOut(), () => qBendOut(), qRecog, qRecog];
+
+/* ================= ด่าน 4: รูปหลายเหลี่ยม · นาฬิกา · สี่เหลี่ยม ================= */
+const NG = { 3: 'สามเหลี่ยม', 4: 'สี่เหลี่ยม', 5: 'ห้าเหลี่ยม', 6: 'หกเหลี่ยม', 8: 'แปดเหลี่ยม', 9: 'เก้าเหลี่ยม', 10: 'สิบเหลี่ยม', 12: 'สิบสองเหลี่ยม' };
+const NS = [3, 4, 5, 6, 8, 9, 10, 12];
+function qPolySum() {
+  const n = pick(NS.slice(1)), ans = (n - 2) * 180;
+  return { kind: 'typed', text: `ผลบวกมุมภายในของรูป<b>${NG[n]}</b> (${n} เหลี่ยม) เท่ากับกี่องศา<span class="en">sum of interior angles = (n − 2) × 180°</span>`, ans,
+    tip: `ลากเส้นทแยงจากมุมเดียวได้สามเหลี่ยม ${n - 2} รูป → (${n} − 2) × 180 = ${ans}`, meta: { type: 'polySum', n, ans } };
+}
+function qPolyEach() {
+  const n = pick(NS.filter(x => x !== 3 && x !== 4 && x !== 6))   // 6 = ตัวอย่างในสรุป rp-04 (120°)
+, sum = (n - 2) * 180, ans = sum / n;
+  return { kind: 'typed', text: `รูป<b>${NG[n]}ด้านเท่ามุมเท่า</b> (regular ${n}-gon) มุมภายในแต่ละมุมกี่องศา`, ans,
+    tip: `ผลบวก (${n} − 2) × 180 = ${sum} → แบ่ง ${n} มุมเท่ากัน = ${sum} ÷ ${n} = ${ans}`, meta: { type: 'polyEach', n, ans } };
+}
+function qPolyExt() {
+  const n = pick(NS.filter(x => x !== 5))   // ห้าเหลี่ยม 72° = คำตอบ rp-04 ข้อ 9
+, ans = 360 / n;
+  return { kind: 'typed', text: `รูป<b>${NG[n]}ด้านเท่ามุมเท่า</b> มุมภายนอกแต่ละมุมกี่องศา<span class="en">exterior angles of any polygon add up to 360°</span>`, ans,
+    tip: `มุมภายนอกทุกมุมรวมกัน 360° เสมอ → 360 ÷ ${n} = ${ans} (หรือ 180 − มุมภายใน ${180 - ans})`, meta: { type: 'polyExt', n, ans } };
+}
+function qPolyMiss() {
+  for (let t = 0; t < 200; t++) {
+    const n = pick([4, 4, 5]), sum = (n - 2) * 180;
+    const parts = splitSum(sum, n, 50, 170); if (!parts || anyBad(parts)) continue;
+    const ans = parts[n - 1], given = parts.slice(0, n - 1);
+    if (RESERVED.answers.has(ans) || (n === 4 && given.includes(35))) continue;
+    return { kind: 'typed', text: `รูป${NG[n]}มีมุมภายใน ${given.map(D).join(', ')} และ <b>x</b><br>x = กี่องศา`, ans,
+      tip: `${NG[n]}รวม (${n} − 2) × 180 = ${sum}° → x = ${sum} − ${given.join(' − ')} = ${ans}`, meta: { type: 'polyMiss', n, given, ans } };
+  }
+}
+function clockAngle(h, m) { const d = Math.abs(30 * (h % 12) - 5.5 * m) % 360; return Math.min(d, 360 - d); }
+const clockStr = (h, m) => `${h}.${String(m).padStart(2, '0')}`;
+function clockTime() {
+  for (;;) {
+    const h = ri(1, 12), m = Math.random() < 0.5 ? pick([0, 30]) : 2 * ri(1, 29);
+    if (RESERVED.clocks.has(clockStr(h, m))) continue;
+    const a = clockAngle(h, m); if (a === 0 || RESERVED.answers.has(a)) continue;
+    return [h, m, a];
+  }
+}
+function qClock() {
+  const [h, m, a] = clockTime();
+  return { kind: 'typed', text: `เวลา <b>${clockStr(h, m)} น.</b> เข็มสั้นกับเข็มยาวทำมุมกัน (มุมที่เล็กกว่า) กี่องศา`, ans: a,
+    tip: `เข็มยาวอยู่ ${m} × 6 = ${6 * m}° · เข็มสั้นอยู่ ${h % 12} × 30 + ${m} × 0.5 = ${30 * (h % 12) + m / 2}° (เข็มสั้นเดินนาทีละครึ่งองศา!) → ห่างกัน ${a}°`, meta: { type: 'clock', h, m, ans: a } };
+}
+/* สมบัติรูปสี่เหลี่ยม (อ่านว่า "ทุกรูปเสมอ"): [ทแยงยาวเท่ากัน, ทแยงตั้งฉาก, ทแยงแบ่งครึ่งซึ่งกันและกัน, ด้านขนาน 2 คู่, ด้านยาวเท่ากันทุกด้าน, มุมฉากทุกมุม]
+   ลำดับชั้น: จัตุรัสเป็นทั้งผืนผ้าและขนมเปียกปูน → ช่องที่ "บางรูปจริง" ถือว่าไม่จริงสำหรับ "ทุกรูป" */
+const QPROPS = ['เส้นทแยงมุมยาวเท่ากัน', 'เส้นทแยงมุมตั้งฉากกัน', 'เส้นทแยงมุมแบ่งครึ่งซึ่งกันและกัน (bisect each other)', 'ด้านขนานกัน 2 คู่', 'ด้านยาวเท่ากันทุกด้าน', 'มุมฉากทุกมุม'];
+const QSHAPES = {
+  'สี่เหลี่ยมจัตุรัส (square)': [1, 1, 1, 1, 1, 1],
+  'สี่เหลี่ยมผืนผ้า (rectangle)': [1, 0, 1, 1, 0, 1],
+  'สี่เหลี่ยมขนมเปียกปูน (rhombus)': [0, 1, 1, 1, 1, 0],
+  'สี่เหลี่ยมด้านขนาน (parallelogram)': [0, 0, 1, 1, 0, 0],
+  'สี่เหลี่ยมคางหมู (trapezoid)': [0, 0, 0, 0, 0, 0],
+  'รูปว่าว (kite)': [0, 1, 0, 0, 0, 0]
+};
+/* ช่องกำกวมที่ตัดทิ้ง: คางหมูหน้าจั่วทแยงเท่ากัน · คางหมูบางรูปทแยงตั้งฉาก · ว่าวบางรูปทแยงเท่ากัน */
+const QSKIP = new Set(['สี่เหลี่ยมคางหมู (trapezoid)|0', 'สี่เหลี่ยมคางหมู (trapezoid)|1', 'รูปว่าว (kite)|0']);
+const QNEVER = new Set(['สี่เหลี่ยมคางหมู (trapezoid)|2', 'สี่เหลี่ยมคางหมู (trapezoid)|3', 'สี่เหลี่ยมคางหมู (trapezoid)|4', 'สี่เหลี่ยมคางหมู (trapezoid)|5']);
+const shapeName = s => { const n = s.split(' (')[0]; return n.startsWith('รูป') ? n : 'รูป' + n; };
+const shortName = s => s.split(' (')[0].replace('สี่เหลี่ยม', '').replace('รูป', '');
+const PROP_FACT = p => `รูปที่มี${QPROPS[p].split(' (')[0]}<b>ทุกรูป</b> คือ ${Object.keys(QSHAPES).filter(s => QSHAPES[s][p]).map(shortName).join(' · ')}`;
+const stmtWhy = (s, p) => QSHAPES[s][p] ? `${shapeName(s)}ทุกรูปมี${QPROPS[p].split(' (')[0]}จริง (${PROP_FACT(p)})`
+  : QNEVER.has(s + '|' + p) ? `${shapeName(s)}ไม่มี${QPROPS[p].split(' (')[0]}เลย (คางหมูมีด้านขนานเพียง 1 คู่) — ${PROP_FACT(p)}`
+  : `${shapeName(s)}<b>ไม่จำเป็นต้อง</b>มี${QPROPS[p].split(' (')[0]} (บางรูปอาจมี แต่ไม่ใช่ทุกรูป) — ${PROP_FACT(p)}`;
+const stmt = (s, p) => ({ text: `${shapeName(s)}ทุกรูปมี${QPROPS[p]}`, truth: !!QSHAPES[s][p], s, p });
+function qQuadProp(neg) {
+  neg = neg === undefined ? Math.random() < 0.5 : neg;
+  const all = []; Object.keys(QSHAPES).forEach(s => QPROPS.forEach((_, p) => { if (!QSKIP.has(s + '|' + p)) all.push(stmt(s, p)); }));
+  for (let t = 0; t < 100; t++) {
+    const target = shuffle(all.filter(x => x.truth === !neg))[0];
+    const others = shuffle(all.filter(x => x.truth === neg && x.s !== target.s)).filter((x, i, arr) => arr.findIndex(y => y.s === x.s) === i).slice(0, 3);
+    if (others.length < 3) continue;
+    const wrongs = others.map(o => ({ t: o.text, why: neg ? `ข้อนี้<b>ถูก</b> — ${stmtWhy(o.s, o.p)} · โจทย์ถามข้อที่<u>ไม่ถูกต้อง</u>` : `ข้อนี้ไม่ถูก — ${stmtWhy(o.s, o.p)}` }));
+    return { kind: 'choice', words: neg ? `ข้อใด<u><b>ไม่ถูกต้อง</b></u> (incorrect)` : `ข้อใด<b>ถูกต้อง</b>`, ch: shuffleChoices({ t: target.text }, wrongs, ''),
+      why: `${target.truth ? 'ข้อนี้ถูก' : 'ข้อนี้ผิด'} — ${stmtWhy(target.s, target.p)}`, meta: { type: 'quadProp', neg, ans: target.text, truths: [target, ...others].map(x => x.truth) } };
+  }
+}
+const SHAPE_NOTE = {
+  'สี่เหลี่ยมคางหมู (trapezoid)': 'คางหมูมีด้านขนานเพียง 1 คู่ เส้นทแยงมุมไม่แบ่งครึ่งกัน',
+  'รูปว่าว (kite)': 'ว่าว: เส้นทแยงตั้งฉากกันเสมอ แต่ไม่จำเป็นต้องแบ่งครึ่งซึ่งกันและกัน และไม่จำเป็นต้องมีด้านขนาน',
+  'สี่เหลี่ยมขนมเปียกปูน (rhombus)': 'ขนมเปียกปูน: ด้านเท่ากันทุกด้าน เส้นทแยงตั้งฉากและแบ่งครึ่งกันเสมอ แต่ไม่จำเป็นต้องยาวเท่ากัน หรือมีมุมฉาก',
+  'สี่เหลี่ยมผืนผ้า (rectangle)': 'ผืนผ้า: มุมฉากทุกมุม เส้นทแยงยาวเท่ากันและแบ่งครึ่งกันเสมอ แต่ไม่จำเป็นต้องตั้งฉากกัน',
+  'สี่เหลี่ยมด้านขนาน (parallelogram)': 'ด้านขนาน: ด้านขนาน 2 คู่ เส้นทแยงแบ่งครึ่งกันเสมอ แต่ไม่จำเป็นต้องยาวเท่ากันหรือตั้งฉาก',
+  'สี่เหลี่ยมจัตุรัส (square)': 'จัตุรัส: มีครบทุกสมบัติ (ทแยงเท่ากัน ตั้งฉาก แบ่งครึ่งกัน)'
+};
+const QRIDDLES = [
+  ['เส้นทแยงมุม<b>ยาวเท่ากัน ตั้งฉากกัน และแบ่งครึ่งซึ่งกันและกัน</b>', 'สี่เหลี่ยมจัตุรัส (square)'],
+  ['เส้นทแยงมุม<b>ยาวเท่ากัน</b> แบ่งครึ่งซึ่งกันและกัน แต่<b>ไม่ตั้งฉาก</b>', 'สี่เหลี่ยมผืนผ้า (rectangle)'],
+  ['ด้าน<b>ยาวเท่ากันทุกด้าน</b> แต่<b>ไม่มีมุมฉาก</b>', 'สี่เหลี่ยมขนมเปียกปูน (rhombus)'],
+  ['มี<b>ด้านขนานกันเพียง 1 คู่</b>', 'สี่เหลี่ยมคางหมู (trapezoid)'],
+  ['เส้นทแยงมุมตั้งฉากกัน แต่<b>ไม่มีด้านขนานเลย</b>', 'รูปว่าว (kite)'],
+  ['มีด้านขนาน 2 คู่ เส้นทแยงมุม<b>ยาวไม่เท่ากันและไม่ตั้งฉาก</b>', 'สี่เหลี่ยมด้านขนาน (parallelogram)']];
+function qQuadRiddle() {
+  const [clue, ans] = pick(QRIDDLES);
+  const wrongs = shuffle(Object.keys(QSHAPES).filter(s => s !== ans)).slice(0, 3).map(s => ({ t: s, why: SHAPE_NOTE[s] }));
+  return { kind: 'choice', words: `รูปสี่เหลี่ยมที่${clue} คือรูปใด`, ch: shuffleChoices({ t: ans }, wrongs, ''), why: SHAPE_NOTE[ans], meta: { type: 'quadRiddle', ans } };
+}
+const L4 = [qPolySum, qPolyEach, qPolyEach, qPolyExt, qPolyMiss, qPolyMiss, qClock, qClock, () => qQuadProp(), () => qQuadProp(true), qQuadRiddle, () => qClockDiff(), () => qClockDiff(), () => qPolyDiag(), () => qPolyDiag(), () => qParallelo(), () => qParallelo(), () => qHier(), () => qRectComp()];
+
+/* ================= รอบรีวิว 1–2: แบบโจทย์เพิ่ม (ชนิดเดียวกับ rp-04 ได้ แต่ตัวเลขต้องใหม่) ================= */
+/* มุมที่จุด p ระหว่างรังสี p→q1 กับ p→q2 (พิกัดจอ) */
+function vAng(p, q1, q2, lab, rr) {
+  if (lab === undefined || lab === null) return '';
+  const d1 = Math.atan2(-(q1[1] - p[1]), q1[0] - p[0]) * 180 / Math.PI, d2 = Math.atan2(-(q2[1] - p[1]), q2[0] - p[0]) * 180 / Math.PI;
+  let a1 = d1, sw = ((d2 - d1) % 360 + 360) % 360; if (sw > 180) { a1 = d2; sw = 360 - sw; }
+  return arc(p[0], p[1], rr || (sw < 35 ? 34 : 22), a1, sw) + angTxt(P(p[0], p[1], Math.max(sw < 35 ? 64 : sw < 60 ? 50 : 40, (rr || 0) + 22), a1 + sw / 2), lab);
+}
+const dotL = (p, name, dx, dy) => dot(p) + txt([f1(p[0] + dx), f1(p[1] + dy)], name);
+
+/* ---------- 1) มุมนาฬิกา "ต่างกัน" ระหว่างสองเวลา (แบบ rp-04 ข้อ 4 — ตัวเลขใหม่) ---------- */
+const clockPos = (h, m) => `${h % 12}.${m}`;
+const RES_CLOCKPOS = new Set(['10.30', '7.0', '4.30']);
+function timeTxt(h, m, use24) { const H = use24 && h < 12 ? h + 12 : h; return `${String(H).padStart(2, '0')}.${String(m).padStart(2, '0')} น.`; }
+const naiveAngle = (h, m) => { const d = Math.abs(30 * (h % 12) - 6 * m); return Math.min(d, 360 - d); };   // เข็มสั้นชี้ตรงเลข
+function clockPair() {
+  for (let t = 0; t < 400; t++) {
+    const h1 = ri(1, 12), h2 = ri(1, 12), m1 = pick([0, 30]), m2 = pick([0, 30]);
+    if (h1 === h2 && m1 === m2) continue;
+    if (RES_CLOCKPOS.has(clockPos(h1, m1)) || RES_CLOCKPOS.has(clockPos(h2, m2))) continue;
+    if (m1 === 0 && m2 === 0) continue;                       // ต้องมีครึ่งชั่วโมงอย่างน้อย 1 เวลา (กับดักเข็มสั้น)
+    const a1 = clockAngle(h1, m1), a2 = clockAngle(h2, m2), d = Math.abs(a1 - a2);
+    if (d === 0 || d === 15 || a1 === 0 || a2 === 0) continue;  // 15 = คำตอบ rp-04 ข้อ 4
+    const n1 = naiveAngle(h1, m1), n2 = naiveAngle(h2, m2), nd = Math.abs(n1 - n2);
+    const u1 = Math.random() < 0.5, u2 = Math.random() < 0.5;
+    return { h1, m1, h2, m2, a1, a2, d, nd, s1: timeTxt(h1, m1, u1), s2: timeTxt(h2, m2, u2) };
+  }
+}
+const clockWhy = (h, m, a) => `${timeTxt(h, m, false)}: เข็มยาว ${6 * m}° · เข็มสั้น ${30 * (h % 12)} + ${m / 2} = ${30 * (h % 12) + m / 2}° → ${a}°`;
+function qClockDiff() {
+  const c = clockPair();
+  return { kind: 'typed', text: `เวลา <b>${c.s1}</b> เข็มสั้นกับเข็มยาวทำมุมกัน (มุมที่เล็กกว่า) <b>ต่างจาก</b>เวลา <b>${c.s2}</b> กี่องศา`, ans: c.d,
+    tip: `${clockWhy(c.h1, c.m1, c.a1)} · ${clockWhy(c.h2, c.m2, c.a2)} → ต่างกัน ${Math.max(c.a1, c.a2)} − ${Math.min(c.a1, c.a2)} = ${c.d} (24 ชม.: 13.00 = บ่ายโมง = เลข 1)`,
+    meta: { type: 'clockDiff', h1: c.h1, m1: c.m1, h2: c.h2, m2: c.m2, ans: c.d } };
+}
+function clockDiffTrap() {
+  for (let t = 0; t < 100; t++) {
+    const c = clockPair();
+    const w = [
+      { t: D(c.nd), why: `คิดว่าเข็มสั้นชี้ตรงเลขตอนครึ่งชั่วโมง — 30 นาทีเข็มสั้นเดินไปแล้ว 15° (นาทีละ 0.5°)` },
+      { t: D(c.a1), why: `${c.a1}° คือมุมของเวลา ${c.s1} อย่างเดียว — โจทย์ถาม "ต่างจาก" ต้องลบกัน (อ่านคำถามซ้ำ)` },
+      { t: D(c.a2), why: `${c.a2}° คือมุมของเวลา ${c.s2} อย่างเดียว — ยังไม่ได้ลบกัน` },
+      { t: D(c.a1 + c.a2), why: `บวกกัน — "ต่างกัน" แปลว่าผลต่าง (difference) ต้องลบ` }];
+    const q = shuffleChoices({ t: D(c.d) }, w);
+    if (q.some(x => !x.ok && /ใกล้เคียง/.test(x.why))) continue;
+    return { words: `เวลา <b>${c.s1}</b> เข็มสั้นกับเข็มยาวทำมุมกัน (มุมที่เล็กกว่า) <b>ต่างจาก</b>เวลา <b>${c.s2}</b> กี่องศา`, ch: q,
+      why: `${clockWhy(c.h1, c.m1, c.a1)} · ${clockWhy(c.h2, c.m2, c.a2)} → ต่างกัน ${c.d}°`, meta: { type: 'clockDiffT', h1: c.h1, m1: c.m1, h2: c.h2, m2: c.m2, ans: D(c.d) } };
+  }
+}
+
+/* ---------- 2) เส้นหัก "นอก" แถบเส้นขนาน: มุม QPR = b − a ---------- */
+function bendOutFig(a, b, labQ, labR, labP) {
+  const yT = 50, yB = 140, py = 235, px = 410;
+  const Q = [f1(px - (py - yT) / Math.tan(rad(a))), yT], Rr = [f1(px - (py - yB) / Math.tan(rad(b))), yB], Pp = [px, py];
+  let s = line([20, yT], [465, yT]) + line([20, yB], [465, yB]) + line(Q, Pp) + line(Rr, Pp);
+  s += `<polyline points="62,${yT - 6} 70,${yT} 62,${yT + 6}" fill="none" stroke="currentColor" stroke-width="2"/>`;
+  s += `<polyline points="62,${yB - 6} 70,${yB} 62,${yB + 6}" fill="none" stroke="currentColor" stroke-width="2"/>`;
+  s += txt([20, yT - 16], 'A') + txt([465, yT - 16], 'B') + txt([20, yB - 16], 'C') + txt([465, yB - 16], 'D');
+  s += dotL(Q, 'Q', 0, -16) + dotL(Rr, 'R', -4, -16) + dotL(Pp, 'P', 16, 6);
+  s += sector(Q[0], Q[1], 360 - a, a, labQ, 34) + sector(Rr[0], Rr[1], 360 - b, b, labR, 26) + sector(px, py, 180 - b, b - a, labP, 34);
+  return svg(s, 260);
+}
+function qBendOut() {
+  for (let t = 0; t < 200; t++) {
+    const a = ri(28, 50), b = ri(a + 14, 80), x = b - a;
+    if (badPair(a, b) || badPair(a, x) || badPair(b, x) || [a, b, x].some(v => v === 55 || v === 140) || x === 40 || RESERVED.answers.has(x) || RESERVED.answers.has(b)) continue;
+    const ext = `ต่อ QP ให้ตัด CD ที่จุดหนึ่ง → มุมตรงนั้น = ${a}° (มุมสมนัย รูปตัว F) → เกิดสามเหลี่ยม · มุมภายนอกที่ R = ${b}° = ${a} + x`;
+    if (Math.random() < 0.6) return { kind: 'typed', svg: bendOutFig(a, b, a, b, 'x'), text: `AB ขนานกับ CD · จุด P อยู่<b>นอก</b>แถบเส้นขนาน — มุม QPR = <b>x</b> กี่องศา`, ans: x,
+      tip: `${ext} → x = ${b} − ${a} = ${x}`, meta: { type: 'bendOut', given: [a, b], ans: x } };
+    return { kind: 'typed', svg: bendOutFig(a, b, a, 'x', x), text: `AB ขนานกับ CD · มุม QPR = ${x}° — <b>x</b> (มุมที่จุด R) = กี่องศา`, ans: b,
+      tip: `${ext.replace(`= ${b}° = ${a} + x`, `= ${a} + ${x}`)} → x = ${b}`, meta: { type: 'bendOut2', given: [a, x], ans: b } };
+  }
+}
+
+/* ---------- 3) รูปหลายเหลี่ยมด้านเท่ามุมเท่า + เส้นทแยงมุม → สามเหลี่ยมหน้าจั่ว (ไม่ใช้ห้าเหลี่ยม — rp-04 ข้อ 9) ---------- */
+function polyFig(n, ask) {
+  const cx = 240, cy = 140, R = 115, L = 'ABCDEFGHIJKL';
+  const V = []; for (let i = 0; i < n; i++) V.push(P(cx, cy, R, 210 + 360 * i / n));   // A ซ้ายล่าง ไล่ทวนเข็ม
+  let s = `<polygon points="${V.map(v => v.join(',')).join(' ')}" fill="none" stroke="currentColor" stroke-width="2"/>` + line(V[0], V[2], 'stroke-dasharray="6 4"');
+  V.forEach((v, i) => { const o = P(cx, cy, R + 18, 210 + 360 * i / n); s += txt(o, L[i]); });
+  const [A, B, C, Dd] = V;
+  const at = { ABC: [B, A, C], BAC: [A, B, C], BCA: [C, B, A], ACD: [C, A, Dd] }[ask];
+  s += vAng(at[0], at[1], at[2], 'x', 34);
+  return svg(s, 290);
+}
+const PNAME = { 6: 'หกเหลี่ยม', 8: 'แปดเหลี่ยม', 10: 'สิบเหลี่ยม', 12: 'สิบสองเหลี่ยม' };
+const polyVals = n => { const I = (n - 2) * 180 / n, b = 180 / n; return { ABC: I, BAC: b, BCA: b, ACD: I - b }; };
+const fmtA = v => Number.isInteger(v) ? D(v) : D(v.toFixed(1));
+function qPolyDiag() {
+  for (let t = 0; t < 50; t++) {
+    const n = pick([6, 10, 12]), ask = pick(['BAC', 'BCA', 'ACD', 'ACD']), v = polyVals(n)[ask];
+    if (RESERVED.answers.has(v)) continue;
+    return { kind: 'typed', svg: polyFig(n, ask), text: `รูป${PNAME[n]}ด้านเท่ามุมเท่า (regular polygon) ลากเส้นทแยงมุม (diagonal) AC — <b>x</b> (มุม ${ask}) = กี่องศา`, ans: v,
+      tip: `มุมภายในแต่ละมุม = ${(n - 2) * 180} ÷ ${n} = ${polyVals(n).ABC}° · AB = BC (ด้านเท่ากัน) → สามเหลี่ยม ABC หน้าจั่ว มุม BAC = มุม BCA = (180 − ${polyVals(n).ABC}) ÷ 2 = ${180 / n}°` + (ask === 'ACD' ? ` → มุม ACD = ${polyVals(n).ABC} − ${180 / n} = ${v}°` : ''),
+      meta: { type: 'polyDiag', n, ask, ans: v } };
+  }
+}
+function polyDiagTrap() {
+  const n = pick([6, 8, 10, 12]), ask = pick(['BAC', 'ACD']), V = polyVals(n), v = V[ask];
+  const w = ask === 'BAC' ? [
+    { t: fmtA(V.ABC), why: `${fmtA(V.ABC)} คือมุมภายในทั้งมุม (มุม ABC) — มุม BAC อยู่ในสามเหลี่ยมหน้าจั่ว ABC` },
+    { t: fmtA(V.ABC / 2), why: `แบ่งครึ่งมุมภายในเฉย ๆ — ต้องใช้ (180 − มุมยอด) ÷ 2 ของสามเหลี่ยม ABC` },
+    { t: fmtA(V.ACD), why: `${fmtA(V.ACD)} คือมุม ACD (มุมที่เหลือที่จุด C) ไม่ใช่มุม BAC` }]
+    : [
+      { t: fmtA(V.ABC), why: `${fmtA(V.ABC)} คือมุมภายในทั้งมุม BCD — ยังไม่ได้หักมุม BCA ออก (หยุดกลางทาง)` },
+      { t: fmtA(V.BAC), why: `${fmtA(V.BAC)} คือมุม BCA (ส่วนเล็ก) — โจทย์ถามส่วนที่เหลือ ACD` },
+      { t: fmtA(180 - V.BAC), why: `เอา 180 ลบ — จุด C ไม่ใช่มุมบนเส้นตรง ต้องใช้มุมภายใน ${fmtA(V.ABC)} ลบ` }];
+  return { svg: polyFig(n, ask), words: `รูป${PNAME[n]}ด้านเท่ามุมเท่า ลากเส้นทแยงมุม AC — <b>x</b> (มุม ${ask}) มีขนาดเท่าใด`,
+    ch: shuffleChoices({ t: fmtA(v) }, w),
+    why: `มุมภายใน ${fmtA(V.ABC)} · สามเหลี่ยม ABC หน้าจั่ว → มุม BAC = มุม BCA = ${fmtA(V.BAC)}` + (ask === 'ACD' ? ` → ACD = ${fmtA(V.ABC)} − ${fmtA(V.BAC)} = ${fmtA(v)}` : ''),
+    meta: { type: 'polyDiagT', n, ask, ans: fmtA(v) } };
+}
+
+/* ---------- 4) โจทย์มุมต่อเนื่อง: เศษส่วนของมุมตรง/มุมฉาก แล้ว ×k หรือ ±d ---------- */
+const FRACS = [[1, 2], [1, 3], [2, 3], [1, 4], [3, 4], [1, 5], [3, 5], [4, 5], [1, 6], [5, 6], [1, 9], [2, 9], [4, 9], [1, 10], [3, 10], [7, 10], [1, 12], [5, 12], [7, 12], [1, 15], [2, 15], [4, 15]];
+function chainParts() {
+  for (let t = 0; t < 300; t++) {
+    const straight = Math.random() < 0.6, base = straight ? 180 : 90, [p, q] = pick(FRACS);
+    if ((base * p) % q) continue;
+    const P1 = base * p / q, op = pick(['k', 'k', '+', '-']);
+    let k = 0, d = 0, Q1;
+    if (op === 'k') { k = pick([2, 3, 4]); Q1 = P1 * k; } else { d = 5 * ri(2, 9); Q1 = op === '+' ? P1 + d : P1 - d; }
+    if (Q1 <= 0 || Q1 >= 360 || Q1 === 180 || Q1 === 90) continue;
+    if (badPair(P1, Q1) || (straight && p === 2 && q === 5) || RESERVED.answers.has(Q1)) continue;   // rp-04 ข้อ 3 (2/5 ของมุมตรง → ×2)
+    const rel = op === 'k' ? `เป็น <b>${k} เท่า</b>ของมุม P` : op === '+' ? `<b>ใหญ่กว่า</b>มุม P อยู่ ${d}°` : `<b>เล็กกว่า</b>มุม P อยู่ ${d}°`;
+    const step = op === 'k' ? `${P1} × ${k} = ${Q1}` : op === '+' ? `${P1} + ${d} = ${Q1}` : `${P1} − ${d} = ${Q1}`;
+    return { base, straight, p, q, P1, op, k, d, Q1, rel, step, bname: straight ? 'มุมตรง (180°)' : 'มุมฉาก (90°)' };
+  }
+}
+function qChain() {
+  const c = chainParts();
+  return { kind: 'typed', text: `มุม P มีขนาด <b>${c.p}/${c.q}</b> ของ${c.straight ? 'มุมตรง' : 'มุมฉาก'} และมุม Q ${c.rel}<br>มุม Q มีขนาดกี่องศา`, ans: c.Q1,
+    tip: `${c.bname} × ${c.p}/${c.q} = มุม P ${c.P1}° → มุม Q = ${c.step}`, meta: { type: 'chain', base: c.base, p: c.p, q: c.q, op: c.op, k: c.k, d: c.d, ans: c.Q1 } };
+}
+function chainTrap() {
+  for (let t = 0; t < 100; t++) {
+    const c = chainParts(); const other = (c.straight ? 90 : 180) * c.p / c.q;
+    const wrongOther = Number.isInteger(other) ? (c.op === 'k' ? other * c.k : c.op === '+' ? other + c.d : other - c.d) : null;
+    const w = [{ t: D(c.P1), why: `${c.P1}° คือมุม P — โจทย์ถามมุม Q ต้องทำต่ออีกขั้น (หยุดกลางทาง)` }];
+    if (wrongOther && wrongOther > 0) w.push({ t: D(wrongOther), why: `ใช้${c.straight ? 'มุมฉาก 90°' : 'มุมตรง 180°'} — โจทย์บอก "${c.straight ? 'มุมตรง' : 'มุมฉาก'}" = ${c.base}°` });
+    if (c.op === 'k') w.push({ t: D(c.P1 + c.k), why: `บวก ${c.k} แทนคูณ — "${c.k} เท่า" แปลว่าคูณ` });
+    else w.push({ t: D(c.op === '+' ? c.P1 - c.d : c.P1 + c.d), why: `บวก/ลบกลับข้าง — "${c.op === '+' ? 'ใหญ่กว่า' : 'เล็กกว่า'}" แปลว่า${c.op === '+' ? 'บวก' : 'ลบ'}` });
+    w.push({ t: D(c.base - c.Q1 > 0 ? c.base - c.Q1 : c.Q1 + c.base), why: c.base - c.Q1 > 0 ? `เอา ${c.base} ลบมุม Q — โจทย์ไม่ได้ถามมุมที่เหลือ` : `บวก ${c.base} เข้าไปเกิน — ไม่มีขั้นนี้ในโจทย์` });
+    const ch = shuffleChoices({ t: D(c.Q1) }, w);
+    if (ch.some(x => !x.ok && /ใกล้เคียง/.test(x.why))) continue;
+    return { words: `มุม P มีขนาด ${c.p}/${c.q} ของ${c.straight ? 'มุมตรง' : 'มุมฉาก'} และมุม Q ${c.rel} มุม Q มีขนาดกี่องศา`, ch,
+      why: `${c.bname} × ${c.p}/${c.q} = ${c.P1}° → มุม Q = ${c.step}°`, meta: { type: 'chainT', base: c.base, p: c.p, q: c.q, op: c.op, k: c.k, d: c.d, ans: D(c.Q1) } };
+  }
+}
+
+/* ---------- 5) สี่เหลี่ยมด้านขนาน / ขนมเปียกปูน: มุมตรงข้ามเท่ากัน · มุมติดกันรวม 180 ---------- */
+function paraFig(a, labs, rhombus, diag) {
+  const L = rhombus ? 210 : 150, base = 210;
+  const vx = L * Math.cos(rad(a)), vy = L * Math.sin(rad(a));
+  const minX = Math.min(0, vx), maxX = Math.max(base, base + vx), ox = 240 - (minX + maxX) / 2 * Math.min(1, 400 / (maxX - minX)), sc = Math.min(1, 400 / (maxX - minX), 190 / vy);
+  const T = (x, y) => [f1(240 + sc * (x - (minX + maxX) / 2)), f1(225 - sc * y)];
+  const A = T(0, 0), B = T(base, 0), C = T(base + vx, vy), Dd = T(vx, vy);
+  let s = `<polygon points="${[A, B, C, Dd].map(v => v.join(',')).join(' ')}" fill="none" stroke="currentColor" stroke-width="2"/>`;
+  if (diag) s += line(A, C, 'stroke-dasharray="6 4"');
+  s += txt([A[0] - 14, A[1] + 12], 'A') + txt([B[0] + 14, B[1] + 12], 'B') + txt([C[0] + 14, C[1] - 10], 'C') + txt([Dd[0] - 14, Dd[1] - 10], 'D');
+  s += vAng(A, B, Dd, labs.A) + vAng(B, A, C, labs.B) + vAng(C, B, Dd, labs.C) + vAng(Dd, A, C, labs.D);
+  if (labs.BAC !== undefined) s += vAng(A, B, C, labs.BAC);
+  if (labs.BCA !== undefined) s += vAng(C, B, A, labs.BCA);
+  if (labs.ACD !== undefined) s += vAng(C, A, Dd, labs.ACD);
+  return svg(s, 245);
+}
+function qParallelo() {
+  for (let t = 0; t < 100; t++) {
+    const a = ri(40, 140); if (Math.abs(a - 90) < 12 || RESERVED.parAlpha.has(a) || a === 72 || a === 108) continue;
+    const rh = Math.random() < 0.5, name = rh ? 'ขนมเปียกปูน (rhombus)' : 'สี่เหลี่ยมด้านขนาน (parallelogram)';
+    if (rh && a % 2 === 0 && a < 90 && Math.random() < 0.5) {
+      const ask = pick(['BAC', 'BCA', 'ACD']), v = a / 2; if (RESERVED.answers.has(v)) continue;
+      const labs = { A: a }; labs[ask] = 'x';
+      return { kind: 'typed', svg: paraFig(a, labs, true, true), text: `ABCD เป็นรูป${name} ลากเส้นทแยงมุม (diagonal) AC — <b>x</b> (มุม ${ask}) = กี่องศา`, ans: v,
+        tip: `ขนมเปียกปูน AB = BC → สามเหลี่ยม ABC หน้าจั่ว · มุม B = 180 − ${a} = ${180 - a} → มุม BAC = มุม BCA = ${a} ÷ 2 = ${v} · มุม ACD = มุม BAC (มุมแย้ง เพราะ AB ขนาน DC) = ${v}`,
+        meta: { type: 'rhombDiag', a, ask, given: [a], ans: v } };
+    }
+    const ask = pick(['B', 'C', 'D']), v = ask === 'C' ? a : 180 - a; if (RESERVED.answers.has(v)) continue;
+    const labs = { A: a }; labs[ask] = 'x';
+    return { kind: 'typed', svg: paraFig(a, labs, rh, false), text: `ABCD เป็นรูป${name} — <b>x</b> (มุม ${ask}) = กี่องศา`, ans: v,
+      tip: ask === 'C' ? `มุมตรงข้ามกันเท่ากัน (opposite angles equal) → มุม C = มุม A = ${a}` : `มุมที่อยู่ติดกันรวม 180° (เป็นมุมภายในข้างเดียวกันของเส้นขนาน รูปตัว C) → 180 − ${a} = ${v}`,
+      meta: { type: 'para', a, ask, given: [a], ans: v } };
+  }
+}
+
+/* ---------- 6) สามเหลี่ยมหน้าจั่วสองชั้น: AB = AC และ BC = BD ---------- */
+function iso2Fig(apex, labs) {
+  const C0 = (180 - apex) / 2, h = 0.5 * Math.tan(rad(C0));
+  const B = [0, 0], C = [1, 0], A = [0.5, h], ux = A[0] - C[0], uy = A[1] - C[1], tt = -2 * ux / (ux * ux + uy * uy);
+  const Dm = [C[0] + tt * ux, C[1] + tt * uy];
+  const sc = Math.min(300, 200 / h), T = p => [f1(240 + sc * (p[0] - 0.5)), f1(230 - sc * p[1])];
+  const pA = T(A), pB = T(B), pC = T(C), pD = T(Dm);
+  let s = line(pA, pB) + line(pB, pC) + line(pC, pA) + line(pB, pD);
+  s += txt([pA[0], pA[1] - 14], 'A') + txt([pB[0] - 14, pB[1] + 10], 'B') + txt([pC[0] + 14, pC[1] + 10], 'C') + txt([pD[0] + 14, pD[1] - 4], 'D');
+  s += vAng(pA, pB, pC, labs.A);
+  if (labs.DBC !== undefined) s += vAng(pB, pC, pD, labs.DBC);
+  if (labs.ABD !== undefined) s += vAng(pB, pA, pD, labs.ABD);
+  if (labs.BDC !== undefined) s += vAng(pD, pB, pC, labs.BDC);
+  if (labs.ADB !== undefined) s += vAng(pD, pA, pB, labs.ADB);
+  return svg(s, 250);
+}
+function qIso2() {
+  for (let t = 0; t < 100; t++) {
+    const apex = 2 * ri(10, 28); if (RESERVED.apex.has(apex)) continue;
+    const C0 = (180 - apex) / 2, V = { DBC: apex, ABD: C0 - apex, BDC: C0, ADB: 180 - C0 };
+    const ask = pick(['DBC', 'ABD', 'ABD', 'BDC', 'ADB']), v = V[ask];
+    if (v <= 0 || RESERVED.answers.has(v) || badPair(apex, v)) continue;
+    const labs = { A: apex }; labs[ask] = 'x';
+    return { kind: 'typed', svg: iso2Fig(apex, labs), text: `AB = AC และ BC = BD (จุด D อยู่บน AC) — <b>x</b> (มุม ${ask}) = กี่องศา`, ans: v,
+      tip: `① AB = AC → มุม B = มุม C = (180 − ${apex}) ÷ 2 = ${C0} · ② BC = BD → สามเหลี่ยม BCD หน้าจั่ว มุม BDC = มุม C = ${C0} → มุม DBC = 180 − ${C0} − ${C0} = ${apex}` +
+        (ask === 'ABD' ? ` · ③ มุม ABD = ${C0} − ${apex} = ${v}` : ask === 'ADB' ? ` · ③ มุม ADB = 180 − ${C0} = ${v} (บนเส้นตรง AC)` : ''),
+      meta: { type: 'iso2', apex, ask, given: [apex], ans: v } };
+  }
+}
+
+/* ---------- 7) ลำดับชั้นของรูปสี่เหลี่ยม (จัตุรัสเป็นผืนผ้า + ขนมเปียกปูน) ---------- */
+const HSH = ['สี่เหลี่ยมจัตุรัส', 'สี่เหลี่ยมผืนผ้า', 'สี่เหลี่ยมขนมเปียกปูน', 'สี่เหลี่ยมด้านขนาน', 'สี่เหลี่ยมคางหมู'];
+const HIS = { 'สี่เหลี่ยมจัตุรัส': ['สี่เหลี่ยมผืนผ้า', 'สี่เหลี่ยมขนมเปียกปูน', 'สี่เหลี่ยมด้านขนาน'], 'สี่เหลี่ยมผืนผ้า': ['สี่เหลี่ยมด้านขนาน'], 'สี่เหลี่ยมขนมเปียกปูน': ['สี่เหลี่ยมด้านขนาน'], 'สี่เหลี่ยมด้านขนาน': [], 'สี่เหลี่ยมคางหมู': [] };
+const NEED = { 'สี่เหลี่ยมจัตุรัส': 'มุมฉากทุกมุมและด้านยาวเท่ากันทุกด้าน', 'สี่เหลี่ยมผืนผ้า': 'มุมฉากทุกมุม', 'สี่เหลี่ยมขนมเปียกปูน': 'ด้านยาวเท่ากันทุกด้าน', 'สี่เหลี่ยมด้านขนาน': 'ด้านขนานกัน 2 คู่', 'สี่เหลี่ยมคางหมู': 'ด้านขนานกันเพียง 1 คู่' };
+function hierWhy(x, y) {
+  return HIS[x].includes(y) ? `ถูก — ${x}ทุกรูปมี${NEED[y]} จึงนับเป็น${y}ได้เสมอ`
+    : `ไม่ถูก — ${y}ต้องมี${NEED[y]} แต่${x}${y === 'สี่เหลี่ยมคางหมู' || x === 'สี่เหลี่ยมคางหมู' ? 'ไม่มีแบบนั้นเลย' : 'บางรูปไม่มี'}`;
+}
+function qHier() {
+  const kind = pick(['true', 'false', 'never', 'never']);
+  if (kind === 'never') {
+    const x = pick(['สี่เหลี่ยมด้านขนาน', 'สี่เหลี่ยมขนมเปียกปูน', 'สี่เหลี่ยมผืนผ้า']);
+    const can = { 'สี่เหลี่ยมด้านขนาน': ['สี่เหลี่ยมจัตุรัส', 'สี่เหลี่ยมผืนผ้า', 'สี่เหลี่ยมขนมเปียกปูน'], 'สี่เหลี่ยมขนมเปียกปูน': ['สี่เหลี่ยมจัตุรัส', 'สี่เหลี่ยมด้านขนาน'], 'สี่เหลี่ยมผืนผ้า': ['สี่เหลี่ยมจัตุรัส', 'สี่เหลี่ยมด้านขนาน'] }[x];
+    const ws = can.map(y => ({ t: y, why: `เป็นได้ — ${y === 'สี่เหลี่ยมด้านขนาน' ? `${x}ทุกรูปเป็นสี่เหลี่ยมด้านขนานอยู่แล้ว` : `${x}บางรูปที่มี${NEED[y]}ก็คือ${y}`}` }));
+    return { kind: 'choice', three: ws.length === 2, words: `<b>${x}</b>อาจเป็นรูปใด<u><b>ไม่ได้</b></u>`, ch: shuffleChoices({ t: 'สี่เหลี่ยมคางหมู' }, ws, ''),
+      why: `${x}มีด้านขนาน 2 คู่เสมอ แต่คางหมูมีด้านขนาน<b>เพียง 1 คู่</b> → เป็นคางหมูไม่ได้`, meta: { type: 'hierNever', x, ans: 'สี่เหลี่ยมคางหมู' } };
+  }
+  const pairs = []; HSH.forEach(x => HSH.forEach(y => { if (x !== y) pairs.push([x, y, HIS[x].includes(y)]); }));
+  const want = kind === 'true';
+  for (let t = 0; t < 50; t++) {
+    const target = pick(pairs.filter(p => p[2] === want));
+    const others = shuffle(pairs.filter(p => p[2] !== want && !(p[0] === target[0] && p[1] === target[1]))).slice(0, 3);
+    const s = p => `${p[0]}ทุกรูปเป็น${p[1]}`;
+    return { kind: 'choice', words: want ? `ข้อใด<b>ถูกต้อง</b>` : `ข้อใด<u><b>ไม่ถูกต้อง</b></u> (incorrect)`,
+      ch: shuffleChoices({ t: s(target) }, others.map(o => ({ t: s(o), why: hierWhy(o[0], o[1]) + (want ? '' : ' · โจทย์ถามข้อที่ไม่ถูกต้อง') })), ''),
+      why: hierWhy(target[0], target[1]), meta: { type: 'hier', want, pairs: [target, ...others].map(p => p.slice(0, 2)), ans: s(target) } };
+  }
+}
+
+/* ---------- 8) ความสัมพันธ์ของมุมในสามเหลี่ยม (นอกจากอัตราส่วน) ---------- */
+function qRel() {
+  for (let t = 0; t < 200; t++) {
+    const kind = pick(['k', 'kd', 'diff']);
+    if (kind === 'k') {
+      const c = ri(30, 120), k = pick([2, 3, 4]), rest = 180 - c; if (rest % (k + 1)) continue;
+      const s = rest / (k + 1), L = k * s; if (s < 10 || badPair(s, L) || [s, L].includes(c)) continue;
+      const askBig = Math.random() < 0.5, v = askBig ? L : s; if (RESERVED.answers.has(v)) continue;
+      return { kind: 'typed', text: `สามเหลี่ยมรูปหนึ่งมีมุมหนึ่ง ${c}° อีกสองมุมที่เหลือ มุมหนึ่งเป็น <b>${k} เท่า</b>ของอีกมุม<br>มุมที่<b>${askBig ? 'ใหญ่กว่า' : 'เล็กกว่า'}</b>ในสองมุมนั้นกี่องศา`, ans: v,
+        tip: `สองมุมที่เหลือรวม 180 − ${c} = ${rest} = ${k + 1} ส่วน (1 + ${k}) → 1 ส่วน = ${s} → มุมเล็ก ${s} · มุมใหญ่ ${L}`, meta: { type: 'rel', angles: [c, s, L], ans: v } };
+    }
+    if (kind === 'kd') {
+      const k = pick([2, 3]), d = pick([10, 20, 30]), m = ri(30, 90); const num = 180 - d - m; if (num % (k + 1)) continue;
+      const s = num / (k + 1), L = k * s + d; if (!(s < m && m < L) || badPair(s, L) || RESERVED.answers.has(s) || RESERVED.answers.has(L)) continue;
+      const askL = Math.random() < 0.5, v = askL ? L : s;
+      return { kind: 'typed', text: `มุมที่ใหญ่ที่สุดของสามเหลี่ยมเท่ากับ <b>${k} เท่าของมุมที่เล็กที่สุดบวก ${d}°</b> และอีกมุมหนึ่งเท่ากับ ${m}°<br>มุมที่<b>${askL ? 'ใหญ่' : 'เล็ก'}ที่สุด</b>กี่องศา`, ans: v,
+        tip: `ให้มุมเล็กสุด = □ → □ + (${k}□ + ${d}) + ${m} = 180 → ${k + 1}□ = ${180 - d - m} → □ = ${s} · มุมใหญ่สุด = ${k} × ${s} + ${d} = ${L}`, meta: { type: 'rel', angles: [s, m, L], ans: v } };
+    }
+    const c = ri(30, 110), d = 2 * ri(3, 20), num = 180 - c - d; if (num <= 0 || num % 2) continue;
+    const A = num / 2, B = A + d; if (A < 15 || badPair(A, B) || RESERVED.answers.has(A) || RESERVED.answers.has(B) || A === c || B === c) continue;
+    const askB = Math.random() < 0.5;
+    return { kind: 'typed', text: `สามเหลี่ยม ABC มีมุม C = ${c}° และมุม B <b>ใหญ่กว่า</b>มุม A อยู่ ${d}°<br>มุม <b>${askB ? 'B' : 'A'}</b> กี่องศา`, ans: askB ? B : A,
+      tip: `มุม A + มุม B = 180 − ${c} = ${180 - c} · เอาส่วนเกิน ${d} ออกก่อน → ${180 - c - d} ÷ 2 = ${A} = มุม A → มุม B = ${A} + ${d} = ${B}`, meta: { type: 'rel', angles: [A, B, c], ans: askB ? B : A } };
+  }
+}
+
+/* ---------- 9) นับสามเหลี่ยมด้านเป็นจำนวนเต็ม ความยาวรอบรูป P (P ≠ 10, 12) ---------- */
+function perimTrap() {
+  for (;;) {
+    const Pm = pick([7, 8, 9, 11, 13, 14, 15, 16, 17, 18]);
+    const good = [], flat = [];
+    for (let a = 1; a <= Pm; a++) for (let b = a; b <= Pm; b++) { const c = Pm - a - b; if (c < b) continue; if (a + b > c) good.push([a, b, c]); else if (a + b === c) flat.push([a, b, c]); }
+    if (good.length < 2 || good.length === 2 || !flat.length) continue;   // 2 = คำตอบ rp-04 ข้อ 6 · ต้องมีชุดแบนเป็นตัวลวงจริง
+    const w = [
+      { t: `${good.length + flat.length} รูป`, why: `นับชุดที่รวมเท่ากันพอดีด้วย (${flat.map(f => f.join(', ')).join(' · ')}) — แบนเป็นเส้นตรง ไม่ใช่สามเหลี่ยม` },
+      { t: `${good.length - 1} รูป`, why: `ตกไป 1 ชุด — ไล่ให้เป็นระบบ: เรียงด้าน a ≤ b ≤ c แล้วเริ่ม a = 1, 2, 3, …` },
+      { t: `${good.length * 2} รูป`, why: `นับชุดเดียวกันที่สลับลำดับซ้ำ (เช่น 2, 3, 4 กับ 3, 2, 4 คือรูปเดียวกัน)` }];
+    return { words: `สามเหลี่ยมที่มีความยาวด้านเป็นจำนวนเต็ม (ซม.) และความยาวรอบรูป <b>${Pm} ซม.</b> มีได้ทั้งหมดกี่รูปที่แตกต่างกัน`,
+      ch: shuffleChoices({ t: `${good.length} รูป` }, w, ''),
+      why: `เรียง a ≤ b ≤ c และต้อง a + b > c → ${good.map(g => '(' + g.join(', ') + ')').join(' ')} = ${good.length} รูป`, meta: { type: 'perimCount', P: Pm, ans: `${good.length} รูป` } };
+  }
+}
+
+/* ---------- 10) สี่เหลี่ยมในรูปประกอบ: ผืนผ้า + เส้นขนาน (ตัวเลขใหม่ ไม่ใช่ 35/55) ---------- */
+function rectFig(p) {
+  const A = [60, 40], B = [420, 40], C = [420, 220], Dd = [60, 220], ae = f1(180 * Math.tan(rad(p)));
+  const E = [f1(60 + ae), 40], F = [f1(420 - ae), 220];
+  let s = `<polygon points="${[A, B, C, Dd].map(v => v.join(',')).join(' ')}" fill="none" stroke="currentColor" stroke-width="2"/>` + line(Dd, E) + line(B, F);
+  s += txt([A[0] - 14, A[1] - 8], 'A') + txt([B[0] + 14, B[1] - 8], 'B') + txt([C[0] + 14, C[1] + 12], 'C') + txt([Dd[0] - 14, Dd[1] + 12], 'D') + txt([E[0], E[1] - 14], 'E') + txt([F[0], F[1] + 18], 'F');
+  s += vAng(Dd, A, E, p, 30) + vAng(B, C, F, p, 30);
+  return svg(s, 250);
+}
+const RECT_ST = p => [
+  { id: 'par', t: 'DE ขนานกับ FB', truth: true, why: `มุม AED = 90 − ${p} = ${90 - p}° และมุม ABF = 90 − ${p} = ${90 - p}° เป็นมุมสมนัย (รูปตัว F) บนเส้นตัด AB → DE ขนานกับ FB` },
+  { id: 'pgram', t: 'DEBF เป็นรูปสี่เหลี่ยมด้านขนาน', truth: true, why: `EB ขนาน DF (อยู่บนด้านผืนผ้า) และ DE ขนาน FB → ด้านขนาน 2 คู่` },
+  { id: 'aed', t: `มุม AED = ${90 - p}°`, truth: true, why: `สามเหลี่ยม ADE มีมุม A = 90° → มุม AED = 180 − 90 − ${p} = ${90 - p}°` },
+  { id: 'trap', t: 'AEFD มีด้านขนานกันเพียง 1 คู่ (เป็นคางหมู)', truth: true, why: `AE ขนาน DF แต่ AD ไม่ขนาน EF → ด้านขนาน 1 คู่` },
+  { id: 'rect', t: 'DEBF เป็นรูปสี่เหลี่ยมผืนผ้า', truth: false, why: `มุม DEB = 180 − ${90 - p} = ${90 + p}° ไม่ใช่มุมฉาก → ไม่ใช่ผืนผ้า` },
+  { id: 'aedp', t: `มุม AED = ${p}°`, truth: false, why: `${p}° คือมุม ADE — มุม AED = 90 − ${p} = ${90 - p}°` },
+  { id: 'perp', t: 'DE ตั้งฉากกับ FB', truth: false, why: `DE ขนานกับ FB จึงตั้งฉากกันไม่ได้` },
+  { id: 'deb', t: 'มุม DEB = 90°', truth: false, why: `มุม DEB = 180 − ${90 - p} = ${90 + p}° (มุมป้าน)` }];
+function qRectComp(neg) {
+  neg = neg === undefined ? Math.random() < 0.5 : neg;
+  for (let t = 0; t < 50; t++) {
+    const p = ri(18, 42); if (p === 35 || p === 30 || RESERVED.answers.has(p) || RESERVED.answers.has(90 - p)) continue;
+    const st = RECT_ST(p); const target = pick(st.filter(x => x.truth === !neg)), others = shuffle(st.filter(x => x.truth === neg)).slice(0, 3);
+    return { kind: 'choice', svg: rectFig(p), words: `ABCD เป็นรูปสี่เหลี่ยมผืนผ้า มุม ADE = มุม CBF = ${p}° ข้อใด${neg ? '<u><b>ไม่ถูกต้อง</b></u>' : '<b>ถูกต้อง</b>'}`,
+      ch: shuffleChoices({ t: target.t }, others.map(o => ({ t: o.t, why: (neg ? 'ข้อนี้ถูก — ' : 'ข้อนี้ไม่ถูก — ') + o.why })), ''),
+      why: target.why, meta: { type: 'rectComp', p, neg, ids: [target.id, ...others.map(o => o.id)], svgGiven: [p, p], ans: target.t } };
+  }
+}
+
+/* ---------- 11) "ต้องเพิ่มอีก / หมุนอีก" — ตอบค่าปลายทางแทนส่วนที่เพิ่ม ---------- */
+function moreTrap() {
+  for (let t = 0; t < 100; t++) {
+    if (Math.random() < 0.55) {
+      const T = pick([90, 180, 360]), a = ri(15, Math.min(T - 10, 170)), ans = T - a; if ((T === 90 && a >= 80) || RESERVED.parAlpha.has(a)) continue;
+      const tn = { 90: 'มุมฉาก', 180: 'มุมตรง', 360: 'มุมรอบจุด (หนึ่งรอบ)' }[T];
+      const w = [{ t: D(T), why: `${T}° คือขนาด<b>สุดท้าย</b>ที่อยากได้ — โจทย์ถามว่าต้องเพิ่ม<b>อีก</b>เท่าไร (more) ต้องลบของที่มีอยู่ออก` },
+        { t: D(a), why: `${a}° คือขนาดที่มีอยู่แล้ว ไม่ใช่ส่วนที่ต้องเพิ่ม` }];
+      const alt = T === 180 ? 90 : 180; if (alt - a > 0) w.push({ t: D(alt - a), why: `ใช้ ${alt}° — ${tn} = ${T}°` }); else w.push({ t: D(T + a), why: `บวกกัน — ต้องหาส่วนที่ขาด ใช้ลบ` });
+      if (ans === a || RESERVED.answers.has(ans)) continue;
+      return { words: `มุม ABC มีขนาด ${a}° ต้องขยายมุมนี้<b>เพิ่มอีก</b>กี่องศา จึงจะเป็น${tn}`, ch: shuffleChoices({ t: D(ans) }, w),
+        why: `${tn} = ${T}° → ต้องเพิ่มอีก ${T} − ${a} = ${ans}° · วงคำว่า "อีก" ก่อนคิด`, meta: { type: 'more', T, a, ans: D(ans) } };
+    }
+    const n1 = ri(1, 12), n2 = ri(1, 12); if (n1 === n2) continue;
+    const steps = ((n2 - n1) % 12 + 12) % 12, ans = steps * 30, pos = (n2 % 12) * 30;
+    if (pos === ans || ans === 180 || RESERVED.answers.has(ans)) continue;
+    const w = [{ t: D(pos), why: `${pos}° คือตำแหน่งเลข ${n2} วัดจากเลข 12 — แต่เข็มเริ่มที่เลข ${n1} ต้องนับช่องที่หมุน<b>อีก</b>จาก ${n1} ไป ${n2}` },
+      { t: D(360 - ans), why: `หมุนทวนเข็ม — โจทย์ให้หมุนตามเข็มนาฬิกา (clockwise)` },
+      { t: D(steps * 6), why: `ใช้ 6° ต่อช่อง (นั่นคือ 1 นาที) — เลขหนึ่งช่องบนหน้าปัด = 30°` },
+      { t: D((steps + 1) * 30), why: `นับตัวเลขรวมเลขต้นทาง ${n1} ด้วย — ต้องนับช่องที่หมุนผ่าน (${steps} ช่อง)` }];
+    return { words: `เข็มยาวชี้ที่เลข ${n1} ต้องหมุน<b>ตามเข็มนาฬิกาอีก</b>กี่องศา จึงจะชี้ที่เลข ${n2}`, ch: shuffleChoices({ t: D(ans) }, w),
+      why: `จาก ${n1} ไป ${n2} ตามเข็ม = ${steps} ช่อง × 30° = ${ans}°`, meta: { type: 'moreClock', n1, n2, ans: D(ans) } };
+  }
+}
+
+/* ---------- 12) มุมภายนอกย้อนกลับ: ภายนอก + มุมภายในหนึ่งมุม → อีกมุม ---------- */
+function qExtRev() {
+  for (let t = 0; t < 100; t++) {
+    const A = ri(25, 95), C = ri(25, 95), B = 180 - A - C; if (B < 20 || anyBad([A, C, A + C]) || RESERVED.answers.has(C)) continue;
+    return { kind: 'typed', svg: triFig(A, B, { A, C: 'x', ext: A + C }, true), text: `ต่อด้าน AB ออกไป — มุมภายนอกที่ B = ${A + C}° · <b>x</b> = กี่องศา`, ans: C,
+      tip: `มุมภายนอก = ผลบวกมุมภายในที่ไม่ติดกัน → ${A + C} = ${A} + x → x = ${A + C} − ${A} = ${C}`, meta: { type: 'extRev', given: [A, A + C], ans: C } };
+  }
+}
+
+/* ---------- 13) มุมแบบพีชคณิตง่าย (ไม่ใช้ชุด 2x กับ 3x+10 ของ rp-04 · คำตอบ ≠ 13/23/33/43) ---------- */
+const ex = (k, c) => `${k === 1 ? '' : k}x${c ? ' + ' + c : ''}`;
+const exLab = e => e.includes('+') ? `(${e})°` : `${e}°`;
+function qAlg() {
+  for (let t = 0; t < 300; t++) {
+    const tri = Math.random() < 0.45, total = tri ? 180 : 180;
+    const n = tri ? 3 : 2, ks = [], cs = [];
+    for (let i = 0; i < n; i++) { ks.push(ri(1, 4)); cs.push(pick([0, 0, 5, 10, 15, 20, 25, 30])); }
+    const K = ks.reduce((a, b) => a + b, 0), Cc = cs.reduce((a, b) => a + b, 0); if ((total - Cc) % K) continue;
+    const x = (total - Cc) / K; if (x < 8 || RESERVED.answers.has(x)) continue;
+    const vals = ks.map((k, i) => k * x + cs[i]); if (vals.some(v => v < (tri ? 35 : 25) || v > (tri ? 105 : 155)) || anyBad(vals)) continue;
+    const exprs = ks.map((k, i) => ex(k, cs[i]));
+    if (exprs.includes('2x') && exprs.includes('3x + 10')) continue;
+    let svgS;
+    if (tri) svgS = triFig(vals[0], vals[1], { A: { e: exLab(exprs[0]) }, B: { e: exLab(exprs[1]) }, C: { e: exLab(exprs[2]) } });
+    else { const rays = [0, vals[0], 180]; svgS = raysFig(rays, [{ e: exLab(exprs[0]) }, { e: exLab(exprs[1]) }], false); }
+    const askAngle = Math.random() < 0.35; const bi = vals.indexOf(Math.max(...vals)); const ans = askAngle ? vals[bi] : x;
+    if (RESERVED.answers.has(ans)) continue;
+    return { kind: 'typed', svg: svgS, text: (tri ? 'สามเหลี่ยม ABC' : 'มุมบนเส้นตรง') + ` — ${askAngle ? `มุมที่<b>ใหญ่ที่สุด</b>มีขนาดกี่องศา` : `<b>x</b> มีค่าเท่าใด`}`, ans,
+      tip: `${exprs.map(e => '(' + e + ')').join(' + ')} = 180 → ${K}x + ${Cc} = 180 → ${K}x = ${180 - Cc} → x = ${x}` + (askAngle ? ` → มุมใหญ่สุด ${exprs[bi]} = ${vals[bi]} (อย่าตอบแค่ค่า x!)` : ''),
+      meta: { type: 'alg', ks, cs, askAngle, exprs, ans } };
+  }
+}
+
+/* ---------- 15) จำแนกสามเหลี่ยม: ตามมุม / ตามด้าน (scalene) ---------- */
+function qClassTri() {
+  if (Math.random() < 0.5) {
+    for (let t = 0; t < 100; t++) {
+      const kind = pick(['แหลม', 'ฉาก', 'ป้าน']); let A, B, C;
+      if (kind === 'ฉาก') { A = 90; B = ri(20, 70); C = 90 - B; } else if (kind === 'ป้าน') { A = ri(95, 150); B = ri(10, 180 - A - 10); C = 180 - A - B; } else { A = ri(50, 85); B = ri(Math.max(10, 95 - A), 85); C = 180 - A - B; if (C >= 90 || C <= 0) continue; }
+      if (anyBad([A, B, C])) continue;
+      const ang = shuffle([A, B, C]);
+      const names = { 'แหลม': 'สามเหลี่ยมมุมแหลม (acute triangle)', 'ฉาก': 'สามเหลี่ยมมุมฉาก (right triangle)', 'ป้าน': 'สามเหลี่ยมมุมป้าน (obtuse triangle)' };
+      const rule = { 'แหลม': 'ทุกมุมเล็กกว่า 90°', 'ฉาก': 'มีมุมหนึ่ง = 90° พอดี', 'ป้าน': 'มีมุมหนึ่งใหญ่กว่า 90°' };
+      return { kind: 'choice', three: true, words: `สามเหลี่ยมที่มีมุม ${ang.map(D).join(', ')} เป็นสามเหลี่ยมชนิดใด`,
+        ch: shuffleChoices({ t: names[kind] }, Object.keys(names).filter(k => k !== kind).map(k => ({ t: names[k], why: `${names[k].split(' (')[0]} = ${rule[k]} — ดูมุมที่ใหญ่ที่สุด ${Math.max(A, B, C)}°` })), ''),
+        why: `มุมใหญ่สุด ${Math.max(A, B, C)}° → ${rule[kind]} → ${names[kind]}`, meta: { type: 'classAng', angles: [A, B, C], ans: names[kind] } };
+    }
+  }
+  for (let t = 0; t < 100; t++) {
+    const kind = pick(['เท่า', 'จั่ว', 'ไม่เท่า', 'ไม่เท่า']); let s;
+    if (kind === 'เท่า') { const v = ri(3, 15); s = [v, v, v]; } else if (kind === 'จั่ว') { const a = ri(3, 12), b = ri(2, 2 * a - 1); if (b === a) continue; s = shuffle([a, a, b]); } else { s = randTriple('ok'); if (new Set(s).size < 3) continue; }
+    if (RESERVED.triples.has(triKey(s))) continue;
+    const names = { 'เท่า': 'สามเหลี่ยมด้านเท่า (equilateral)', 'จั่ว': 'สามเหลี่ยมหน้าจั่ว (isosceles)', 'ไม่เท่า': 'สามเหลี่ยมด้านไม่เท่า (scalene)' };
+    const rule = { 'เท่า': 'ด้านยาวเท่ากันทั้ง 3 ด้าน', 'จั่ว': 'ด้านยาวเท่ากัน 2 ด้าน', 'ไม่เท่า': 'ด้านยาวไม่เท่ากันเลย' };
+    return { kind: 'choice', three: true, words: `สามเหลี่ยมที่มีด้านยาว ${s.join(', ')} ซม. เป็นสามเหลี่ยมชนิดใด`,
+      ch: shuffleChoices({ t: names[kind] }, Object.keys(names).filter(k => k !== kind).map(k => ({ t: names[k], why: `${names[k].split(' (')[0]} = ${rule[k]}` })), ''),
+      why: `${s.join(', ')} → ${rule[kind]} → ${names[kind]}`, meta: { type: 'classSide', sides: s, ans: names[kind] } };
+  }
+}
+
+/* ================= ด่าน 5: กับดัก (ตัวลวงทุกตัวมีเหตุผล) ================= */
+const TRAPS_RAW = [
+  function triDiff() {                       // read-back-the-question: หยุดที่มุม C
+    for (let t = 0; t < 100; t++) {
+      const A = ri(30, 90), B = ri(30, 90), C = 180 - A - B;
+      if (C < 20 || C === A || A === 90 || B === 90 || C === 90 || badPair(A, B)) continue;
+      const more = C > A, d = Math.abs(C - A); if (RESERVED.answers.has(d)) continue;
+      return { words: `สามเหลี่ยม ABC มีมุม A = ${A}° และมุม B = ${B}° มุม C <b>${more ? 'มากกว่า' : 'น้อยกว่า'}มุม A กี่องศา</b>`,
+        ch: shuffleChoices({ t: D(d) }, [
+          { t: D(C), why: `${C}° คือขนาดมุม C — ยังไม่ได้เทียบกับมุม A (หยุดคิดกลางทาง · อ่านคำถามซ้ำ)` },
+          { t: D(A + B), why: `${A} + ${B} คือผลบวกสองมุม ยังไม่ได้ลบออกจาก 180` },
+          { t: D(180 - A), why: `180 − ${A} ลืมลบมุม B` },
+          { t: D(Math.abs(B - A)), why: `เอามุม B ไปเทียบ — โจทย์ถามมุม C เทียบกับมุม A` }]),
+        why: `มุม C = 180 − ${A} − ${B} = ${C}° → ${more ? `${C} − ${A}` : `${A} − ${C}`} = ${d}°`, meta: { type: 'triDiff', A, B, ans: D(d) } };
+    }
+  },
+  function parDiff() {                        // read-back บนเส้นขนาน: x − y
+    const a = parAlpha(); let pos;
+    for (;;) { const p1 = pick(PTS), q1 = pick(QS), p2 = pick(PTS), q2 = pick(QS), p3 = pick(PTS), q3 = pick(QS);
+      const ks = new Set([p1 + q1, p2 + q2, p3 + q3]); if (ks.size < 3) continue;
+      if (quadVal(q2, a) === quadVal(q3, a)) continue; pos = [p1, q1, p2, q2, p3, q3]; break; }
+    const g = quadVal(pos[1], a), x = quadVal(pos[3], a), y = quadVal(pos[5], a);
+    const labs = {}; labs[pos[0] + '-' + pos[1]] = g; labs[pos[2] + '-' + pos[3]] = 'x'; labs[pos[4] + '-' + pos[5]] = 'y';
+    const big = Math.max(x, y), d = big - Math.min(x, y), bigName = x > y ? 'x' : 'y', smName = x > y ? 'y' : 'x';
+    return { svg: parFig(a, labs), words: `AB ขนานกับ CD — <b>${bigName} มากกว่า ${smName} กี่องศา</b>`,
+      ch: shuffleChoices({ t: D(d) }, [
+        { t: D(x), why: `${x}° คือค่าของ x อย่างเดียว — โจทย์ถาม "มากกว่ากันเท่าไร" ต้องลบกัน` },
+        { t: D(y), why: `${y}° คือค่าของ y อย่างเดียว — ยังไม่ได้ลบกัน` },
+        { t: D(180), why: `x + y = 180° คือผลบวก โจทย์ถามผลต่าง` },
+        { t: D(0), why: `x กับ y ไม่ได้เท่ากัน — ดูว่าอันไหนเป็นมุมแหลม อันไหนเป็นมุมป้าน` }]),
+      why: `มุมที่นี่มีแค่ 2 ค่า: ${a}° กับ ${180 - a}° → ${bigName} = ${big}, ${smName} = ${Math.min(x, y)} → ผลต่าง ${d}°`, meta: { type: 'parDiff', a, x, y, ans: D(d), svgGiven: [g] } };
+  },
+  function notTriangle() {                    // อ่านข้ามคำว่า "ไม่ใช่"
+    const bad = randTriple(pick(['eq', 'no'])), oks = []; while (oks.length < 3) { const t = randTriple('ok'); if (!oks.some(o => triKey(o) === triKey(t))) oks.push(t); }
+    const sb = triStat(bad);
+    return { words: `ข้อใด<u><b>ไม่ใช่</b></u> (NOT) ความยาวด้านของรูปสามเหลี่ยม`,
+      ch: shuffleChoices({ t: bad.join(', ') }, oks.map(o => { const s = triStat(o); return { t: o.join(', '), why: `${s.s[0]} + ${s.s[1]} = ${s.sum} > ${s.big} สร้างได้ — โจทย์ถามข้อที่<u>ไม่ใช่</u> (วงคำว่า "ไม่" ก่อนเลือก)` }; }), ''),
+      why: `${sb.s[0]} + ${sb.s[1]} = ${sb.sum} ${sb.kind === 'eq' ? 'เท่ากับ' : 'น้อยกว่า'} ${sb.big} → สร้างไม่ได้`, meta: { type: 'notTri', ans: bad.join(', '), tris: [bad, ...oks] } };
+  },
+  function canTriangle() {                    // เท่ากันพอดี ≠ สามเหลี่ยม
+    const good = randTriple('ok'), eq = randTriple('eq'), no1 = randTriple('no'); let eq2 = randTriple('eq');
+    while (triKey(eq2) === triKey(eq)) eq2 = randTriple('eq');
+    const sg = triStat(good);
+    const w = tri => { const s = triStat(tri); return { t: tri.join(', '), why: s.kind === 'eq' ? `${s.s[0]} + ${s.s[1]} = ${s.big} เท่ากันพอดี → แบนเป็นเส้นตรง ไม่ใช่สามเหลี่ยม (ต้อง "มากกว่า" เท่านั้น)` : `${s.s[0]} + ${s.s[1]} = ${s.sum} < ${s.big} ด้านสั้นสองด้านเอื้อมไม่ถึงกัน` }; };
+    return { words: `ข้อใด<b>สร้างเป็นรูปสามเหลี่ยมได้</b>`, ch: shuffleChoices({ t: good.join(', ') }, [w(eq), w(eq2), w(no1)], ''),
+      why: `${sg.s[0]} + ${sg.s[1]} = ${sg.sum} > ${sg.big} → สร้างได้`, meta: { type: 'canTri', ans: good.join(', '), tris: [good, eq, eq2, no1] } };
+  },
+  function cointTrap() {                      // รูปตัว C คิดว่าเท่ากัน
+    const q = qPar('coint'); const g = q.meta.given[0];
+    return { svg: q.svg, words: `AB ขนานกับ CD — <b>x</b> = กี่องศา`,
+      ch: shuffleChoices({ t: D(q.ans) }, [
+        { t: D(g), why: `คิดว่าเท่ากัน — มุมคู่นี้เป็นรูปตัว C (ภายในบนข้างเดียวกัน) ต้อง<b>รวมกัน 180°</b> · เท่ากันใช้กับตัว F, Z` },
+        { t: D(360 - g), why: `360 ใช้กับมุมรอบจุด ไม่ใช่มุมคู่ระหว่างเส้นขนาน` },
+        { t: D(Math.abs(90 - g)), why: `90 ใช้กับมุมฉาก — ที่นี่ไม่มีมุมฉาก` }]),
+      why: q.tip, meta: { type: 'cointTrap', a: q.meta.a, pos: q.meta.pos, ans: D(q.ans), svgGiven: [g] } };
+  },
+  function halfHour() {                       // 30 นาที เข็มสั้นไม่ได้ชี้ตรงเลข
+    for (;;) {
+      const h = ri(1, 12); if (h === 6 || h === 12 || RESERVED.clocks.has(clockStr(h, 30))) continue;   // 6.30/12.30 ตัวลวงชนกัน
+      const a = clockAngle(h, 30), onNum = Math.min(Math.abs(30 * (h % 12) - 180), 360 - Math.abs(30 * (h % 12) - 180));
+      if (RESERVED.answers.has(a)) continue;
+      return { words: `เวลา <b>${clockStr(h, 30)} น.</b> เข็มสั้นกับเข็มยาวทำมุมกัน (มุมที่เล็กกว่า) กี่องศา`,
+        ch: shuffleChoices({ t: D(a) }, [
+          { t: D(onNum), why: `คิดว่าเข็มสั้นชี้ตรงเลข ${h} — แต่ 30 นาทีผ่านไป เข็มสั้นเดินไปแล้ว 15° (นาทีละ 0.5°) อยู่กึ่งกลางระหว่าง ${h} กับ ${h % 12 + 1}` },
+          { t: D(360 - a), why: `${360 - a}° คือมุมด้านนอก (มุมกลับ) — โจทย์ถามมุมที่เล็กกว่า` },
+          { t: D(a + 30), why: `นับช่องเกินไป 1 ช่อง — ช่องละ 30°` },
+          { t: D(Math.min(Math.abs(30 * (h % 12 + 1) - 180), 360 - Math.abs(30 * (h % 12 + 1) - 180))), why: `คิดว่าเข็มสั้นเดินไปถึงเลข ${h % 12 + 1} แล้ว — ตอนครึ่งชั่วโมงเข็มสั้นอยู่<b>กึ่งกลาง</b>ระหว่างสองเลข` }]),
+        why: `เข็มยาวชี้เลข 6 (180°) · เข็มสั้นอยู่ ${h % 12} × 30 + 15 = ${30 * (h % 12) + 15}° → ห่างกัน ${a}°`, meta: { type: 'halfHour', h, ans: D(a) } };
+    }
+  },
+  function isoSwap() {                        // สลับมุมยอดกับมุมฐาน
+    for (let t = 0; t < 100; t++) {
+      if (Math.random() < 0.5) {
+        const b = 2 * ri(13, 40), apex = 180 - 2 * b; if (b === 60 || RESERVED.apex.has(apex)) continue;
+        return { words: `สามเหลี่ยมหน้าจั่วรูปหนึ่งมี<b>มุมฐาน</b>มุมละ ${b}° มุมยอดมีขนาดกี่องศา`,
+          ch: shuffleChoices({ t: D(apex) }, [
+            { t: D((180 - b) / 2), why: `เอา ${b}° ไปเป็นมุมยอดแล้วแบ่งครึ่ง — แต่ ${b}° คือมุมฐาน และมุมฐานมี 2 มุม` },
+            { t: D(180 - b), why: `ลบมุมฐานแค่มุมเดียว — หน้าจั่วมีมุมฐานเท่ากัน 2 มุม` },
+            { t: D(b), why: `มุมยอดไม่จำเป็นต้องเท่ามุมฐาน (เท่ากันทั้งหมดเฉพาะด้านเท่า)` }]),
+          why: `มุมฐาน 2 มุมเท่ากัน → มุมยอด = 180 − ${b} − ${b} = ${apex}°`, meta: { type: 'isoSwap', base: b, ans: D(apex) } };
+      }
+      const apex = 2 * ri(12, 44); if (RESERVED.apex.has(apex) || apex === 60) continue;   // ≤ 88 → 180 − 2×ยอด ยังเป็นบวก
+      const base = (180 - apex) / 2;
+      return { words: `สามเหลี่ยมหน้าจั่วรูปหนึ่งมี<b>มุมยอด</b> ${apex}° มุมฐานแต่ละมุมมีขนาดกี่องศา`,
+        ch: shuffleChoices({ t: D(base) }, [
+          { t: D(180 - 2 * apex), why: `เอา ${apex}° ไปเป็นมุมฐาน 2 มุม — แต่โจทย์ให้มุมยอด (มีมุมเดียว)` },
+          { t: D(180 - apex), why: `${180 - apex}° คือมุมฐานสองมุมรวมกัน ยังไม่ได้แบ่งครึ่ง (หยุดกลางทาง)` },
+          { t: D(apex), why: `มุมฐานไม่จำเป็นต้องเท่ามุมยอด` }]),
+        why: `มุมฐานรวมกัน 180 − ${apex} = ${180 - apex} → แบ่งครึ่ง = ${base}°`, meta: { type: 'isoSwap', apex, ans: D(base) } };
+    }
+  },
+  function extTrap() {                        // มุมภายนอก vs มุมภายใน
+    for (let t = 0; t < 100; t++) {
+      const A = ri(30, 85), B = ri(30, 85); if (A + B > 150 || badPair(A, B)) continue;
+      const C = 180 - A - B;
+      return { words: `สามเหลี่ยม ABC มีมุม A = ${A}° และมุม B = ${B}° ถ้าต่อด้าน BC ออกไปทาง C <b>มุมภายนอก</b>ที่จุด C มีขนาดกี่องศา`,
+        ch: shuffleChoices({ t: D(A + B) }, [
+          { t: D(C), why: `${C}° คือมุมภายในที่ C — มุมภายนอกอยู่ติดกันบนเส้นตรง ต้อง 180 − ${C}` },
+          { t: D(180 - A), why: `180 − ${A} คือมุมภายนอกที่จุด A — โจทย์ถามที่จุด C (= ผลบวกมุม A กับ B)` },
+          { t: D(360 - A - B), why: `ไม่มีกฎ 360 ในสามเหลี่ยม — 360 ใช้กับสี่เหลี่ยมหรือรอบจุด` }]),
+        why: `มุมภายนอกที่ C = มุม A + มุม B = ${A} + ${B} = ${A + B}° (หรือ 180 − มุมภายใน ${C})`, meta: { type: 'extTrap', A, B, ans: D(A + B) } };
+    }
+  },
+  function polyTrap() {                       // ผลบวก vs แต่ละมุม vs มุมภายนอก
+    const n = pick([8, 9, 10, 12]), sum = (n - 2) * 180, each = sum / n, ext = 360 / n, askEach = Math.random() < 0.6;
+    return { words: askEach ? `รูป${NG[n]}ด้านเท่ามุมเท่า มี<b>มุมภายในแต่ละมุม</b>กี่องศา` : `รูป${NG[n]} มี<b>ผลบวกของมุมภายในทั้งหมด</b>กี่องศา`,
+      ch: askEach ? shuffleChoices({ t: D(each) }, [
+        { t: D(sum), why: `${sum}° คือผลบวกทุกมุม — โจทย์ถาม "แต่ละมุม" ต้องหาร ${n} ต่อ` },
+        { t: D(ext), why: `${ext}° คือมุมภายนอก (360 ÷ ${n}) ไม่ใช่มุมภายใน` },
+        { t: D(180), why: `180° คือผลบวกมุมของสามเหลี่ยม ไม่ใช่มุมของ${NG[n]}` }])
+        : shuffleChoices({ t: D(sum) }, [
+          { t: D(n * 180), why: `${n} × 180 ลืมลบ 2 — ลากเส้นทแยงจากมุมเดียวได้สามเหลี่ยม ${n} − 2 = ${n - 2} รูป` },
+          { t: D(each), why: `${each}° คือมุมแต่ละมุม (ถ้าด้านเท่ามุมเท่า) — โจทย์ถามผลบวกทั้งหมด` },
+          { t: D(360), why: `360° คือผลบวกของสี่เหลี่ยม (หรือมุมภายนอกทุกรูป) ไม่ใช่ ${n} เหลี่ยม` }]),
+      why: `ผลบวก = (${n} − 2) × 180 = ${sum}°${askEach ? ` → แต่ละมุม ${sum} ÷ ${n} = ${each}°` : ''}`, meta: { type: 'polyTrap', n, askEach, ans: D(askEach ? each : sum) } };
+  },
+  function countTri() {                       // นับรูปสามเหลี่ยมที่สร้างได้ — ไล่เป็นระบบ
+    for (let t = 0; t < 400; t++) {
+      const set = []; while (set.length < 5) { const v = ri(2, 15); if (!set.includes(v)) set.push(v); }
+      set.sort((x, y) => x - y); if (RESERVED.segSets.has(set.join(','))) continue;
+      let hit = false; for (let i = 0; i < 5; i++) for (let j = i + 1; j < 5; j++) for (let k = j + 1; k < 5; k++) if (RESERVED.triples.has([set[i], set[j], set[k]].join(','))) hit = true;
+      if (hit) continue;
+      const ok = [], eq = [];
+      for (let i = 0; i < 5; i++) for (let j = i + 1; j < 5; j++) for (let k = j + 1; k < 5; k++) {
+        const s = set[i] + set[j]; if (s > set[k]) ok.push([set[i], set[j], set[k]]); else if (s === set[k]) eq.push([set[i], set[j], set[k]]);
+      }
+      if (ok.length < 1 || ok.length > 8 || ok.length === 2 || eq.length < 1) continue;   // 2 รูป = คำตอบ rp-04 ข้อ 6
+      return { words: `มีไม้ยาว ${set.join(', ')} ซม. อย่างละ 1 อัน เลือกมา 3 อันต่อเป็นรูปสามเหลี่ยม จะสร้างได้ทั้งหมด<b>กี่รูป</b>`,
+        ch: shuffleChoices({ t: `${ok.length} รูป` }, [
+          { t: `${ok.length + eq.length} รูป`, why: `นับชุดที่รวมเท่ากันพอดีด้วย (${eq.map(e => e.join('+').replace(/\+(\d+)$/, ' → $1')).join(', ')}) — เท่ากันพอดีแบนเป็นเส้นตรง ไม่นับ` },
+          { t: `10 รูป`, why: `เลือก 3 จาก 5 ได้ 10 แบบ แต่ไม่ใช่ทุกแบบสร้างได้ — ต้องเช็กกฎทีละชุด` },
+          { t: `${ok.length - 1} รูป`, why: `ตกไป 1 ชุด — ไล่เป็นระบบ: ยึดอันเล็กสุดก่อน แล้วเลื่อนไปทีละอัน` },
+          { t: `${ok.length + 1} รูป`, why: `นับเกิน — เช็กใหม่ว่า 2 อันสั้นรวมกัน "มากกว่า" อันยาวจริงไหม` }], ''),
+        why: `ไล่ทั้ง 10 ชุด ชุดที่สร้างได้: ${ok.map(o => '(' + o.join(', ') + ')').join(' ')} = ${ok.length} รูป`, meta: { type: 'countTri', set, ans: `${ok.length} รูป` } };
+    }
+  },
+  function ratioTrap() {                      // อัตราส่วนมุม: ตอบ 1 ส่วน / มุมผิดตัว / หาร 3
+    for (let t = 0; t < 200; t++) {
+      const r = pick(RATIOS), sum = r[0] + r[1] + r[2]; if (180 % sum) continue;
+      const u = 180 / sum, sr = r.slice().sort((x, y) => x - y), mx = sr[2] * u, mn = sr[0] * u, md = sr[1] * u;
+      if (mx === mn || u === 10 || sr[0] === 1 || md === mx || md === mn || [u, mn, md, 60, sum].includes(mx)) continue;
+      const w = [
+        { t: D(u), why: `${u}° คือ "1 ส่วน" — ยังไม่ได้คูณจำนวนส่วนของมุมใหญ่ (หยุดกลางทาง)` },
+        { t: D(mn), why: `${mn}° คือมุมที่เล็กที่สุด — อ่านคำถามซ้ำ: ถามมุมใหญ่ที่สุด` },
+        { t: D(md), why: `${md}° คือมุมกลาง — มุมใหญ่สุดคือส่วนที่มีตัวเลขอัตราส่วนมากที่สุด (${sr[2]})` },
+        { t: D(60), why: `180 ÷ 3 = 60 คือกรณีทุกมุมเท่ากัน — ต้องหารด้วยจำนวนส่วนรวม ${sum} ไม่ใช่จำนวนมุม` }];
+      const ch = shuffleChoices({ t: D(mx) }, w);
+      if (ch.some(x => !x.ok && /ใกล้เคียง/.test(x.why))) continue;
+      return { words: `มุมภายในของสามเหลี่ยมเป็นอัตราส่วน ${r.join(' : ')} มุมที่<b>ใหญ่ที่สุด</b>กี่องศา`, ch,
+        why: `รวม ${sum} ส่วน = 180° → 1 ส่วน = ${u}° → มุมใหญ่สุด ${sr[2]} × ${u} = ${mx}°`, meta: { type: 'ratioTrap', r, ans: D(mx) } };
+    }
+  },
+  function isoCount() {                       // สามเหลี่ยมหน้าจั่ว ความยาวรอบรูป P
+    for (;;) {
+      const Pm = pick([9, 10, 11, 13, 14, 15, 16, 17, 18, 20]); if (RESERVED.isoPerim.has(Pm)) continue;
+      const good = [], equi = [], flat = [];
+      for (let a = 1; 2 * a < Pm; a++) { const b = Pm - 2 * a; if (b === a) equi.push([a, a, b]); else if (b < 2 * a) good.push([a, a, b]); else if (b === 2 * a) flat.push([a, a, b]); }
+      if (good.length < 2) continue;   // 1 รูป = คำตอบ rp-04 ข้อ 10
+      const w = [{ t: `${good.length + equi.length} รูป`, why: equi.length ? `นับ ${equi[0].join(', ')} ด้วย — นั่นคือสามเหลี่ยมด้านเท่า โจทย์ให้ "ไม่ใช่ด้านเท่า"` : '' },
+        { t: `${good.length + flat.length} รูป`, why: flat.length ? `นับ ${flat[0].join(', ')} ด้วย — ${flat[0][0]} + ${flat[0][1]} = ${flat[0][2]} เท่ากันพอดี แบนเป็นเส้นตรง` : '' },
+        { t: `${good.length - 1} รูป`, why: `ตกไป 1 แบบ — ไล่ด้านที่เท่ากันตั้งแต่ 1, 2, 3, … ให้ครบ` },
+        { t: `${good.length + 1} รูป`, why: `นับเกิน — เช็กกฎสามเหลี่ยมทุกชุด` },
+        { t: `${Math.floor((Pm - 1) / 2)} รูป`, why: `นับทุกแบบที่ 2a + b = ${Pm} โดยไม่เช็กว่าสร้างได้จริง` }].filter(x => x.why);
+      return { words: `สามเหลี่ยมหน้าจั่วที่<b>ไม่ใช่</b>สามเหลี่ยมด้านเท่า มีความยาวด้านเป็นจำนวนเต็ม และความยาวรอบรูป ${Pm} ซม. มีได้ทั้งหมดกี่รูป`,
+        ch: shuffleChoices({ t: `${good.length} รูป` }, w, ''),
+        why: `ด้านเท่า a, a, ฐาน b = ${Pm} − 2a ต้องได้ b < 2a และ b ≠ a → ${good.map(g => '(' + g.join(', ') + ')').join(' ')} = ${good.length} รูป`, meta: { type: 'isoCount', P: Pm, ans: `${good.length} รูป` } };
+    }
+  },
+  function clockDiffT() { return clockDiffTrap(); },
+  function polyDiagT() { return polyDiagTrap(); },
+  function chainT() { return chainTrap(); },
+  function perimT() { return perimTrap(); },
+  function moreT() { return moreTrap(); },
+  function moreT2() { return moreTrap(); },
+  function hierT() { for (;;) { const q = qHier(); if (q.meta.type === 'hierNever' || !q.meta.want) return q; } },
+  function rectNotT() { return qRectComp(true); },
+  function quadNot() { const q = qQuadProp(true); return Object.assign(q, { meta: Object.assign(q.meta, { type: 'quadProp' }) }); }
+];
+/* กันรั่ว: สแกนข้อความทั้งข้อ (โจทย์ + รูป + ช้อยส์ + เฉลย) หาชุดตัวเลขของ rp-04 แล้วสุ่มใหม่ */
+function leaky(q) {
+  const full = [q.text, q.words, q.svg, q.tip, q.why].concat(q.ch ? q.ch.map(c => c.t + ' ' + (c.why || '')) : []).join(' ');
+  const has = re => re.test(full);
+  return (has(/ขนาน/) && has(/(^|[^\d])75°/)) || (has(/(^|[^\d])140°/) && has(/(^|[^\d])55°/)) || (has(/(^|[^\d])35°/) && has(/(^|[^\d])55°/)) ||
+    has(/(^|[^\d])(10\.30|07\.00|7\.00|04\.30|4\.30|22\.30|19\.00|16\.30) น/) || (has(/2\/5/) && has(/มุมตรง/) && has(/2 เท่า/)) || (has(/(^|[^\d])2x°/) && has(/3x \+ 10/));
+}
+/* ป้ายมุมในรูปห้ามทับกัน (ประมาณกล่องข้อความ 8.6px/ตัวอักษร · สูง 18px) — ทับ = สุ่มใหม่ */
+function labelOverlap(svgS) {
+  if (!svgS) return false;
+  const labs = [...svgS.matchAll(/<text x="([\d.]+)" y="([\d.]+)"[^>]*>([^<]*)<\/text>/g)].map(m => ({ x: +m[1], y: +m[2], s: m[3] })).filter(l => /°|^[xyab]$/.test(l.s));
+  for (let i = 0; i < labs.length; i++) for (let j = i + 1; j < labs.length; j++) {
+    const A = labs[i], B = labs[j];
+    if (Math.abs(A.x - B.x) < (A.s.length + B.s.length) * 8.6 / 2 && Math.abs(A.y - B.y) < 18) return true;
+  }
+  return false;
+}
+const hasFiller = q => !!(q.ch && q.ch.some(c => !c.ok && /ใกล้เคียงแต่ไม่ตรง/.test(c.why || '')));
+const TRAPS = TRAPS_RAW.map(f => function () { for (let t = 0; t < 80; t++) { const q = f(); if (q && !leaky(q) && !hasFiller(q) && !labelOverlap(q.svg)) return q; } return null; });
+function qTrap() { for (let t = 0; t < 30; t++) { const q = pick(TRAPS)(); if (q && q.ch.length === 4) return Object.assign({ kind: 'choice' }, q); } return Object.assign({ kind: 'choice' }, TRAPS[0]()); }
+
+/* ================= ด่าน 6: มาราธอนผสม ================= */
+const MIX = [...L1, ...L2, ...L3, ...L4, qTrap, qTrap, qTrap, qTrap, qTrap];
+const gen = arr => () => { for (let t = 0; t < 60; t++) { const q = pick(arr)(); if (q && !leaky(q) && !labelOverlap(q.svg) && (q.kind === 'typed' || q.ch.length >= 2)) return q; } };
+
+const LEVELS = {
+  1: { name: 'ด่าน 1 คิดเร็ว 180 · 360 · 90', sec: 60, goal: 10, gen: gen(L1) },
+  2: { name: 'ด่าน 2 สามเหลี่ยม', sec: 90, goal: 9, gen: gen(L2) },
+  3: { name: 'ด่าน 3 เส้นขนาน F · Z · C', sec: 120, goal: 8, gen: gen(L3) },
+  4: { name: 'ด่าน 4 หลายเหลี่ยม · นาฬิกา · สี่เหลี่ยม', sec: 0, total: 12, goal: 10, gen: gen(L4) },
+  5: { name: 'ด่าน 5 กับดักข้อสอบ', sec: 0, total: 12, goal: 10, gen: qTrap },
+  6: { name: 'ด่าน 6 มาราธอน 40 ข้อ', sec: 0, total: 40, goal: 34, gen: gen(MIX) }
+};
+if (typeof module !== 'undefined') module.exports = { LEVELS, L1, L2, L3, L4, TRAPS, qTrap, MIX, RESERVED, clockAngle, quadVal, relation, QSHAPES, triKey };
+</script>
+
+<!-- ============ UI ============ -->
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+let S = null, tick = null, nextTimer = null;
+const KEY = 'angles-best-';
+function best(lv) { try { return +(localStorage.getItem(KEY + lv) || 0); } catch (e) { return 0; } }
+function setBest(lv, v) { try { localStorage.setItem(KEY + lv, String(v)); } catch (e) { } }
+function paintBests() {
+  for (let i = 1; i <= 6; i++) { const b = best(i), c = LEVELS[i]; $('b' + i).textContent = b ? (c.total ? 'สถิติ ' + b + '/' + c.total : 'สถิติ ' + b + ' ข้อ') : ''; }
+}
+const plain = h => String(h || '').replace(/<span class="en">.*?<\/span>/g, '').replace(/<br>/g, ' ').replace(/<[^>]+>/g, '');
+function start(lv) {
+  const cfg = LEVELS[lv];
+  S = { lv, cfg, quiz: !cfg.sec, score: 0, streak: 0, asked: 0, wrong: [], t0: Date.now(), q: null, locked: false };
+  $('menu').classList.add('hidden'); $('over').classList.add('hidden'); $('play').classList.remove('hidden');
+  $('hScore').textContent = '0'; $('hStreak').textContent = '0';
+  $('hTimeL').textContent = S.quiz ? 'ข้อที่' : 'วินาที'; $('hTime').textContent = S.quiz ? 1 : cfg.sec;
+  $('barFill').style.width = S.quiz ? '0%' : '100%';
+  clearInterval(tick); tick = setInterval(step, S.quiz ? 1000 : 100);
+  next();
+}
+function step() {
+  if (!S || S.quiz || S.pausedAt) return;
+  const left = S.cfg.sec - (Date.now() - S.t0) / 1000;
+  if (left <= 0) { finish(); return; }
+  $('hTime').textContent = Math.ceil(left);
+  const p = left / S.cfg.sec * 100; const f = $('barFill'); f.style.width = p + '%'; f.classList.toggle('low', p < 25);
+}
+function next() {
+  clearTimeout(nextTimer);
+  if (!S) return;
+  if (S.pausedAt) { S.t0 += Date.now() - S.pausedAt; S.pausedAt = null; }
+  S.locked = false; $('fb').className = 'fb idle'; $('fb').textContent = ''; $('nextRow').classList.add('hidden');
+  if (S.quiz && S.asked >= S.cfg.total) { finish(); return; }
+  const q = S.cfg.gen(); S.q = q;
+  $('fig').innerHTML = q.svg ? q.svg + '<p class="cap">รูปไม่ได้วาดตามสัดส่วนจริง</p>' : '';
+  $('qText').innerHTML = (S.quiz ? 'ข้อ ' + (S.asked + 1) + '. ' : '') + (q.kind === 'typed' ? q.text : q.words);
+  const typed = q.kind === 'typed';
+  $('inputRow').classList.toggle('hidden', !typed);
+  $('choices').classList.toggle('hidden', typed);
+  if (typed) { $('ans').value = ''; $('ans').focus(); }
+  else {
+    const box = $('choices'); box.innerHTML = ''; box.classList.toggle('two', !!q.two);
+    q.ch.forEach((c, i) => {
+      const b = document.createElement('button'); b.className = 'ch';
+      b.innerHTML = (q.two ? '' : '<b>' + (i + 1) + '.</b> ') + c.t;
+      b.onclick = () => answerChoice(i); box.appendChild(b);
+    });
+  }
+  if (S.quiz) { $('hTime').textContent = S.asked + 1; $('barFill').style.width = (S.asked / S.cfg.total * 100) + '%'; }
+}
+function flash(ok, html) {
+  const f = $('fb'); f.className = 'fb ' + (ok ? 'ok' : 'bad'); f.innerHTML = html;
+  $('qText').classList.remove('pop'); void $('qText').offsetWidth; $('qText').classList.add('pop');
+}
+function after(ok) {
+  $('hScore').textContent = S.score; $('hStreak').textContent = S.streak;
+  if (!ok) { if (!S.quiz) S.pausedAt = Date.now(); $('nextRow').classList.remove('hidden'); $('nextBtn').focus(); return; }
+  nextTimer = setTimeout(() => { if (S) next(); }, ok ? (S.quiz ? 1300 : 450) : 2600);
+}
+function good() { S.score++; S.streak++; if (!S.quiz && S.streak % 5 === 0) S.score++; return S.streak % 5 === 0 ? ' 🔥 ถูกติดกัน ' + S.streak + ' ข้อ!' : ''; }
+function answerTyped() {
+  if (!S || S.locked || !S.q || S.q.kind !== 'typed') return;
+  const raw = $('ans').value.trim().replace(/[,°\s]/g, ''); if (raw === '') return;
+  const v = Number(raw); if (!isFinite(v)) return;
+  S.locked = true; S.asked++;
+  const ok = Math.abs(v - S.q.ans) < 0.001;
+  if (ok) flash(true, '✓ ถูกต้อง!' + good() + (S.quiz ? '<br>' + S.q.tip : ''));
+  else { S.streak = 0; S.wrong.push({ q: plain(S.q.text), your: raw, ans: S.q.ans + '°', why: S.q.tip }); flash(false, '✗ คำตอบคือ <b>' + S.q.ans + '°</b><br>' + S.q.tip); }
+  after(ok);
+}
+function answerChoice(i) {
+  if (!S || S.locked || !S.q || S.q.kind === 'typed') return;
+  S.locked = true; S.asked++;
+  const c = S.q.ch[i], right = S.q.ch.find(x => x.ok), why = S.q.why || '';
+  if (c.ok) flash(true, '✓ ถูกต้อง!' + good() + '<br>' + why);
+  else { S.streak = 0; S.wrong.push({ q: plain(S.q.words), your: plain(c.t), ans: plain(right.t), why: (c.why ? c.why + ' · ' : '') + why }); flash(false, '✗ ที่ถูกคือ <b>' + right.t + '</b><br>' + (c.why ? c.why + '<br>' : '') + why); }
+  after(c.ok);
+}
+function finish() {
+  clearInterval(tick); clearTimeout(nextTimer);
+  if (S.pausedAt) { S.t0 += Date.now() - S.pausedAt; S.pausedAt = null; }
+  const lv = S.lv, cfg = S.cfg, secs = (Date.now() - S.t0) / 1000, per = S.asked ? secs / S.asked : 0;
+  $('play').classList.add('hidden'); $('over').classList.remove('hidden');
+  $('oScore').textContent = S.quiz ? (S.score + ' / ' + cfg.total) : (S.score + ' คะแนน');
+  const passed = S.score >= cfg.goal;
+  $('oGrade').innerHTML = passed ? '🟢 ผ่านเป้าแล้ว! (เป้า ' + cfg.goal + ') เก่งมาก 🎉'
+    : (S.score >= cfg.goal * 0.6 ? '🟡 ใกล้แล้ว! เป้าคือ ' + cfg.goal + ' — ลองอีกรอบน่าจะถึง'
+      : '🔴 ยังไม่ถึงเป้า ' + cfg.goal + ' — อ่านข้อที่พลาดด้านล่างก่อน แล้วลองใหม่ ผิดตอนซ้อมดีกว่าผิดตอนสอบนะ');
+  const b = best(lv); if (S.score > b) setBest(lv, S.score);
+  $('oStats').innerHTML = '<tr><th>ตอบไปทั้งหมด</th><td>' + S.asked + ' ข้อ</td></tr>' +
+    '<tr><th>ถูก</th><td>' + (S.asked - S.wrong.length) + ' ข้อ' + (S.wrong.length ? ' · ผิด ' + S.wrong.length + ' ข้อ' : '') + '</td></tr>' +
+    '<tr><th>เฉลี่ยต่อข้อ</th><td>' + per.toFixed(1) + ' วินาที</td></tr>' +
+    '<tr><th>สถิติดีที่สุด</th><td>' + Math.max(b, S.score) + (S.quiz ? ' / ' + cfg.total : '') + (S.score > b ? ' 🆕 ทำลายสถิติ!' : '') + '</td></tr>';
+  $('oWrong').innerHTML = S.wrong.length
+    ? '<h3 style="font-size:1rem;margin:18px 0 6px">ข้อที่พลาด — อ่านสักนิดก่อนเล่นรอบหน้า</h3><table><tr><th>โจทย์</th><th>ตอบไป</th><th>ที่ถูก</th></tr>' +
+      S.wrong.map(w => '<tr><td>' + w.q + (w.why ? '<br><span style="color:var(--muted)">' + w.why + '</span>' : '') + '</td><td>' + w.your + '</td><td><b>' + w.ans + '</b></td></tr>').join('') + '</table>'
+    : (S.asked ? '<p style="text-align:center;color:var(--ok);font-weight:700;margin-top:16px">ไม่ผิดเลยสักข้อ! 🏆</p>' : '');
+  paintBests();
+}
+function toMenu() { clearInterval(tick); clearTimeout(nextTimer); S = null; $('play').classList.add('hidden'); $('over').classList.add('hidden'); $('menu').classList.remove('hidden'); paintBests(); }
+document.querySelectorAll('.lv').forEach(b => b.onclick = () => start(+b.dataset.lv));
+$('submit').onclick = answerTyped;
+$('ans').addEventListener('keydown', e => { if (e.key === 'Enter') answerTyped(); });
+$('nextBtn').onclick = () => next();
+$('quit').onclick = () => { if (S) finish(); };
+$('again').onclick = () => start(S ? S.lv : 1);
+$('back').onclick = toMenu;
+document.addEventListener('keydown', e => {
+  if (!S || !S.q) return;
+  if (S.locked) { if (e.key === 'Enter' && !$('nextRow').classList.contains('hidden')) { e.preventDefault(); next(); } return; }
+  if (S.q.kind === 'typed') return;
+  const n = +e.key; if (n >= 1 && n <= S.q.ch.length) answerChoice(n - 1);
+});
+paintBests();
+</script>
+</body>
+</html>
