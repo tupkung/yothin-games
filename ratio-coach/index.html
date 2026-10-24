@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ห้องเรียนพี่ AI — อัตราส่วน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+--ink:#1a1c1e;--muted:#5b6167;--line:#dfe3e8;--bg:#fbfbfa;--card:#fff;--soft:#f4f6f8;
+--accent:#1f6feb;--accent-bg:#eaf2ff;--warn:#b25000;--warn-bg:#fff4e8;--ok:#136c39;--ok-bg:#e8f6ee;
+--bad:#b3261e;--bad-bg:#fdecea;--vio:#6b46e0;--vio-bg:#efeaff}
+@media (prefers-color-scheme:dark){:root{
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#333a42;--bg:#16181b;--card:#1e2126;--soft:#262a30;
+--accent:#69a4ff;--accent-bg:#1a2740;--warn:#f0a163;--warn-bg:#33240f;--ok:#6fd39a;--ok-bg:#13301f;
+--bad:#ff8a80;--bad-bg:#3a1a17;--vio:#a68cff;--vio-bg:#2a2140}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:"Sarabun","Noto Sans Thai",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+font-size:17px;line-height:1.75;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:680px;margin:0 auto;padding:22px 16px calc(60px + env(safe-area-inset-bottom))}
+h1{font-size:1.45rem;margin:0 0 6px;line-height:1.35}
+h2{font-size:1.15rem;margin:0 0 8px}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px}
+.hidden{display:none !important}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+.day{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:11px}
+.day b{font-size:1.05rem}
+.day .d{color:var(--muted);font-size:.87rem;line-height:1.6}
+.day .st{float:right;font-size:.82rem;font-weight:700;color:var(--ok)}
+.day.intro{border-color:var(--vio);background:var(--vio-bg)}
+.tbl{width:100%;border-collapse:collapse;font-family:"IBM Plex Mono",monospace;font-size:.95rem;margin:8px 0}
+.tbl td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+.tbl td:first-child{font-family:"Sarabun",sans-serif;text-align:left;color:var(--muted)}
+.prob{background:var(--soft);border-radius:12px;padding:12px 14px;margin-bottom:12px;font-size:1rem}
+.mode{display:inline-block;font-size:.8rem;font-weight:700;border-radius:99px;padding:2px 10px;margin-bottom:6px}
+.mode.guide{background:var(--vio-bg);color:var(--vio)}
+.mode.self{background:var(--warn-bg);color:var(--warn)}
+.teach{background:var(--vio-bg);border-left:4px solid var(--vio);border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:.95rem}
+.q{font-weight:600;font-size:1.06rem;margin:4px 0 10px}
+.ch{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;margin-bottom:9px;font-family:"IBM Plex Mono","Sarabun",monospace}
+.ch.ok{border-color:var(--ok);background:var(--ok-bg)}
+.ch.bad{border-color:var(--bad);background:var(--bad-bg)}
+.fb{border-radius:12px;padding:10px 14px;margin:4px 0 12px;font-size:.96rem}
+.fb.ok{background:var(--ok-bg);border:1px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);border:1px solid var(--bad)}
+.go{display:block;width:100%;background:var(--accent);color:#fff;border:0;border-radius:12px;padding:12px;font-weight:700;margin-top:6px}
+.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:.88rem}
+.ladder{font-family:"IBM Plex Mono",monospace;background:var(--soft);border-radius:10px;padding:8px 12px;margin:8px 0;white-space:pre-wrap;font-size:.92rem}
+.big{font-size:2.2rem;font-weight:700;text-align:center;margin:6px 0}
+.paper{background:var(--warn-bg);border:1px solid var(--warn);border-radius:12px;padding:10px 14px;margin-top:12px}
+.dots{display:flex;gap:6px;margin-bottom:12px}
+.dots i{flex:1;height:7px;border-radius:99px;background:var(--soft)}
+.dots i.on{background:var(--accent)}
+footer{color:var(--muted);font-size:.8rem;text-align:center;margin-top:24px}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<section id="menu">
+  <h1>🧑‍🏫 ห้องเรียนพี่ AI — อัตราส่วน มาตราส่วน</h1>
+  <p class="sub">วันละ 2 ข้อ · ~15 นาที · กดตอบทีละขั้น ผิดตรงไหนพี่อธิบายตรงนั้น · ทำเองได้ ไม่ต้องมีคนสอน</p>
+  <button class="day intro" data-day="0"><span class="st" id="s0"></span><b>⭐ เริ่มตรงนี้: กฎ 3 ข้อ + กับดัก</b><div class="d">อ่าน 3 นาที ก่อนวันที่ 1</div></button>
+  <div id="days"></div>
+</section>
+
+<section id="intro" class="hidden">
+  <div class="card">
+    <h2>กฎ 1 — หา "1 ส่วน" ก่อนเสมอ</h2>
+    อัตราส่วน (ratio) ชาย : หญิง = 2 : 3 · ทั้งหมด 50 คน → รวม 5 ส่วน = 50 → <b>1 ส่วน = 10</b> → ชาย 20 หญิง 30<br>
+    ถามอะไรก็คูณจาก 1 ส่วน: ผลต่าง (difference) = 3 − 2 = 1 ส่วน = 10 คน
+  </div>
+  <div class="card">
+    <h2>กฎ 2 — มาตราส่วน (scale) ต้อง "หน่วยเดียวกัน"</h2>
+    <b>1 : 400</b> (ไม่มีหน่วย) = 1 ซม. แทน 400 ซม. = 1 ซม. แทน 4 ม.<br>
+    เขียนแบบมีหน่วยได้ว่า <b>1 ซม. : 4 ม.</b> · แต่ <b>1 : 4</b> ผิด (ซม. กับ ม. คนละหน่วย)<br>
+    ทางลัด: <b>100,000 ซม. = 1 กม.</b> → ÷ 100,000 = เลื่อนจุดทศนิยมไปทางซ้าย 5 ตำแหน่ง (360000. → 3.6)
+  </div>
+  <div class="card">
+    <h2>กฎ 3 — หา "ของที่ไม่เปลี่ยน" แล้วยึดไว้</h2>
+    เติมน้ำ → ตัวที่ไม่เปลี่ยนคือ <u>ของอีกอย่าง</u> · อายุผ่านไป → ตัวที่ไม่เปลี่ยนคือ <u>ผลต่างอายุ</u> · ต่อโซ่ A:B:C → ตัวที่ต้องทำให้เท่ากันคือ <u>ตัวกลาง</u>
+  </div>
+  <div class="card">
+    <h2>⚠️ กับดักที่ข้อสอบชอบ</h2>
+    • เขาถาม "ต้องเติมอีกเท่าไร" → <b>ไม่ใช่</b>จำนวนทั้งหมดหลังเติม<br>
+    • เขาถาม "อีก 3 ปีข้างหน้า" → <b>ไม่ใช่</b>อายุตอนนี้<br>
+    • ระดับสายตา: หักออกก่อนเทียบ แล้ว<b>บวกกลับ</b>ตอนท้าย<br>
+    👉 นิสัยเดียวที่แก้ได้ทุกข้อ: <b>ก่อนกดคำตอบสุดท้าย ชี้คำถามแล้วอ่านออกเสียง "เขาถาม ___"</b>
+  </div>
+  <button class="go" id="introDone">เข้าใจแล้ว → ไปวันที่ 1</button>
+  <p style="text-align:center;margin-top:10px"><button class="ghost" data-home>← กลับเมนู</button></p>
+</section>
+
+<section id="play" class="hidden">
+  <div class="dots" id="dots"></div>
+  <div class="card">
+    <span class="mode" id="mode"></span>
+    <div class="prob" id="prob"></div>
+    <div class="ladder" id="ladder"></div>
+    <div id="teach"></div>
+    <div class="q" id="q"></div>
+    <div id="choices"></div>
+    <div id="fb"></div>
+    <button class="go hidden" id="next">ขั้นต่อไป →</button>
+  </div>
+  <p style="text-align:center"><button class="ghost" data-home>← กลับเมนู</button></p>
+</section>
+
+<section id="done" class="hidden">
+  <div class="card">
+    <h1 id="dTitle"></h1>
+    <div class="big" id="dScore"></div>
+    <p id="dMsg" style="text-align:center;color:var(--muted)"></p>
+    <div class="paper" id="dPaper"></div>
+    <button class="go" id="again">ทำวันนี้ซ้ำ</button>
+    <p style="text-align:center;margin-top:10px"><button class="ghost" data-home>← กลับเมนู</button></p>
+  </div>
+</section>
+
+<footer>Road to Yothin · ห้องเรียนพี่ AI อัตราส่วน · ตัวเลขแต่งใหม่ ไม่ซ้ำชุด rp-02 / rp-02B / rp-02C (เก็บไว้วัดผล) · ความคืบหน้าเก็บในเครื่องนี้</footer>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); } } catch (e) { }
+</script>
+
+<!-- ============ DATA (ไม่แตะ DOM — ทดสอบด้วย Node ได้) ============ -->
+<script id="gen">
+"use strict";
+/* แต่ละขั้น: q = คำถาม, c = ตัวเลือก (ตัวแรกคือคำตอบถูก — สลับตอนแสดง), w = เหตุผล, t = คำสอนก่อนตอบ (โหมดพี่พาทำ), L = บรรทัดตารางหลังตอบถูก
+   rp = ข้อ rp-02C คู่ของวันนั้น (ให้ทำบนกระดาษหลังจบวัน) */
+const DAYS = [
+ { title: 'วันที่ 1 · มาตราส่วน: ซม. → กม. และหน่วยต้องเท่ากัน', rp: [1], probs: [
+  { p: 'แผนที่ใช้มาตราส่วน <b>1 : 40,000</b> วัดระยะจากวัดถึงตลาดบนแผนที่ได้ <b>9 เซนติเมตร</b> ระยะทางจริงกี่กิโลเมตร', steps: [
+    { t: '1 : 40,000 แปลว่า 1 ซม. บนแผนที่ = 40,000 ซม. ของจริง (หน่วยเดียวกันทั้งสองข้าง)', q: '9 ซม. บนแผนที่ = กี่ ซม. ของจริง?', c: ['360,000', '36,000', '40,009', '3,600,000'], w: '9 × 40,000 = 360,000 ซม.', L: '9 ซม. → 360,000 ซม.' },
+    { t: 'ซม. → ม. หารด้วย 100 (100 ซม. = 1 ม.)', q: '360,000 ซม. = กี่ ม.?', c: ['3,600', '36,000', '360', '36'], w: '360,000 ÷ 100 = 3,600 ม.', L: '360,000 ซม. → 3,600 ม.' },
+    { t: 'ม. → กม. หารด้วย 1,000 (1,000 ม. = 1 กม.)', q: '3,600 ม. = กี่ กม.?', c: ['3.6', '36', '0.36', '360'], w: '3,600 ÷ 1,000 = 3.6 กม. · ตัวลวง 36 = หารแค่ 10,000 (ตัด 0 ไม่ครบ — จุดที่เคยพลาด)', L: 'จริง 3.6 กม.' },
+    { t: 'ทางลัด: ซม. → กม. หาร 100,000 ทีเดียว = เลื่อนจุดทศนิยมไปทางซ้าย 5 ตำแหน่ง (360000. → 3.6)', q: 'ถ้าใช้ทางลัด 360,000 ÷ 100,000 = ?', c: ['3.6', '36', '0.036', '360'], w: 'ได้ 3.6 กม. เท่าเดิม ✔ ต่อไปใช้ทางลัดนี้ได้เลย' } ] },
+  { p: 'สนามยาว <b>45 เมตร</b> กว้าง <b>30 เมตร</b> วาดในแผนผังได้ยาว <b>9 เซนติเมตร</b> กว้าง <b>6 เซนติเมตร</b> แผนผังนี้ใช้มาตราส่วนเท่าใด', steps: [
+    { t: 'หาว่า 1 ซม. ในแผนผังแทนของจริงกี่ ม.', q: '9 ซม. แทน 45 ม. → 1 ซม. แทนกี่ ม.?', c: ['5', '9', '45', '0.2'], w: '45 ÷ 9 = 5 ม.', L: '1 ซม. แทน 5 ม.' },
+    { q: 'เขียนแบบ "มีหน่วย" ได้ว่าอะไร?', c: ['1 ซม. : 5 ม.', '1 ซม. : 45 ม.', '1 ซม. : 0.5 ม.', '5 ซม. : 1 ม.'], w: '1 ซม. แทน 5 ม. → 1 ซม. : 5 ม.' },
+    { t: 'ถ้าเขียนแบบไม่มีหน่วย สองข้างต้องเป็น ซม. ทั้งคู่ → แปลง 5 ม. เป็น ซม.', q: 'เขียนแบบ "ไม่มีหน่วย" ได้ว่าอะไร?', c: ['1 : 500', '1 : 5', '1 : 50', '1 : 5,000'], w: '5 ม. = 500 ซม. → 1 : 500 · ตัวลวง 1 : 5 = ลืมว่าซ้ายเป็น ซม. ขวาเป็น ม. (กับดักที่เคยพลาด)' },
+    { t: 'นิสัยดี: เช็กกับอีกด้านเสมอ', q: 'เช็กด้านกว้าง: 6 ซม. แทนกี่ ม.? (6 × 5)', c: ['30', '11', '25', '300'], w: '6 × 5 = 30 ม. ตรงกับกว้างจริง ✔' } ] } ] },
+ { title: 'วันที่ 2 · ต่อโซ่ A : B : C : D', rp: [2], probs: [
+  { p: 'กำหนด <b>A : B = 3 : 4</b>, <b>B : C = 6 : 5</b> และ <b>C : D = 2 : 3</b> จงหา A : B : C : D', steps: [
+    { t: 'ตัวที่อยู่ทั้งสองคู่ (ตัวกลาง) ต้องเท่ากันก่อนต่อ · คู่แรก ตัวกลางคือ B (4 กับ 6)', q: 'ทำ B ให้เท่ากัน ใช้ ค.ร.น. ของ 4 กับ 6 = ?', c: ['12', '24', '10', '2'], w: 'ค.ร.น. ของ 4, 6 = 12' },
+    { q: 'A : B = 3 : 4 → คูณ 3 ทั้งสองข้าง = ?', c: ['9 : 12', '3 : 12', '7 : 12', '6 : 8'], w: '3 × 3 = 9, 4 × 3 = 12 → 9 : 12 · ตัวลวง 3 : 12 = คูณข้างเดียว' },
+    { q: 'B : C = 6 : 5 → คูณ 2 → A : B : C = ?', c: ['9 : 12 : 10', '9 : 12 : 5', '3 : 4 : 5', '9 : 12 : 15'], w: '6 × 2 = 12, 5 × 2 = 10 → 9 : 12 : 10', L: 'A : B : C = 9 : 12 : 10' },
+    { t: 'ยังไม่จบ! คู่ที่สอง ตัวกลางคือ C · ตอนนี้ C = 10 แต่ในคู่ C : D = 2 : 3 · C = 2', q: 'C : D = 2 : 3 → ทำ C ให้เป็น 10 ต้องคูณ 5 → C : D = ?', c: ['10 : 15', '10 : 3', '2 : 15', '10 : 13'], w: '2 × 5 = 10, 3 × 5 = 15 → 10 : 15' },
+    { q: 'A : B : C : D = ?', c: ['9 : 12 : 10 : 15', '9 : 12 : 10 : 3', '3 : 4 : 5 : 3', '9 : 12 : 5 : 15'], w: '9 : 12 : 10 : 15 · ตัวลวง 9 : 12 : 10 : 3 = ทำตัวกลางคู่แรกแล้วลืมคู่ที่สอง (จุดที่เคยพลาด)', L: 'A : B : C : D = 9 : 12 : 10 : 15' },
+    { t: 'นิสัยดี: เช็กกลับทุกคู่', q: 'เช็ก C : D = 10 : 15 ทอนแล้วได้ 2 : 3 ไหม?', c: ['ได้ ✔', 'ไม่ได้'], w: '10 ÷ 5 = 2, 15 ÷ 5 = 3 ✔' } ] },
+  { p: 'กำหนด <b>A : B = 5 : 2</b>, <b>B : C = 3 : 4</b> และ <b>C : D = 6 : 5</b> จงหา A : B : C : D', steps: [
+    { t: 'ตัวกลางคู่แรกคือ B (2 กับ 3) → ใช้ ค.ร.น.', q: 'ทำ B ให้เท่ากัน ใช้ ค.ร.น. ของ 2 กับ 3 = ?', c: ['6', '5', '12', '1'], w: 'ค.ร.น. ของ 2, 3 = 6' },
+    { q: 'A : B : C = ?', c: ['15 : 6 : 8', '5 : 6 : 8', '15 : 6 : 4', '10 : 6 : 8'], w: 'A : B = 15 : 6 (คูณ 3) · B : C = 6 : 8 (คูณ 2) → 15 : 6 : 8', L: 'A : B : C = 15 : 6 : 8' },
+    { t: 'คู่ที่สอง ตัวกลางคือ C (8 กับ 6) → ใช้ ค.ร.น. อีกครั้ง', q: 'ทำ C ให้เท่ากัน ใช้ ค.ร.น. ของ 8 กับ 6 = ?', c: ['24', '48', '14', '12'], w: 'ค.ร.น. ของ 8, 6 = 24' },
+    { q: 'C เป็น 24 ต้องคูณ 15 : 6 : 8 ด้วย 3 → A : B : C = ?', c: ['45 : 18 : 24', '15 : 6 : 24', '45 : 18 : 8', '18 : 9 : 24'], w: 'คูณทุกตัวด้วย 3 = 45 : 18 : 24 · ตัวลวง 15 : 6 : 24 = คูณแค่ C ตัวเดียว' },
+    { q: 'C : D = 6 : 5 คูณ 4 → A : B : C : D = ?', c: ['45 : 18 : 24 : 20', '15 : 6 : 8 : 5', '5 : 2 : 4 : 5', '45 : 18 : 24 : 15'], w: '6 × 4 = 24, 5 × 4 = 20 → 45 : 18 : 24 : 20 · ตัวลวง 15 : 6 : 8 : 5 = ไม่ได้ทำ C ให้เท่ากัน' } ] } ] },
+ { title: 'วันที่ 3 · เติมของ: ยึด "ของที่ไม่เปลี่ยน"', rp: [3], probs: [
+  { p: 'น้ำหวาน <b>36 ลิตร</b> มีอัตราส่วนน้ำหวานเข้มข้น : น้ำเปล่า = <b>2 : 1</b> ถ้าต้องการให้เป็น <b>2 : 3</b> ต้องเติมน้ำเปล่าลงไปอีกกี่ลิตร', steps: [
+    { t: 'กฎ 1: รวมส่วนแล้วหา 1 ส่วนก่อน', q: 'รวม 3 ส่วน = 36 ลิตร → 1 ส่วน = ?', c: ['12', '18', '36', '6'], w: '36 ÷ 3 = 12 ลิตร' },
+    { q: 'ตอนนี้ มีน้ำหวานเข้มข้น และน้ำเปล่าอย่างละกี่ลิตร?', c: ['เข้มข้น 24 · น้ำ 12', 'เข้มข้น 12 · น้ำ 24', 'เข้มข้น 18 · น้ำ 18', 'เข้มข้น 24 · น้ำ 36'], w: '2 ส่วน = 24 · 1 ส่วน = 12', L: 'ตอนนี้: เข้มข้น 24 · น้ำ 12' },
+    { t: 'เราเติมแค่น้ำเปล่า → ตัวที่ "ไม่เปลี่ยน" คือน้ำหวานเข้มข้น · ยึดตัวนี้ไว้', q: 'ตัวไหนไม่เปลี่ยน?', c: ['น้ำหวานเข้มข้น (24 ลิตร)', 'น้ำเปล่า (12 ลิตร)', 'น้ำทั้งหมด (36 ลิตร)'], w: 'เติมน้ำเปล่า เข้มข้นยังเท่าเดิม 24 ลิตร' },
+    { q: 'อัตราส่วนใหม่ 2 : 3 · เข้มข้น 24 = 2 ส่วน → น้ำเปล่าใหม่ 3 ส่วน = ?', c: ['36', '24', '12', '18'], w: '1 ส่วนใหม่ = 24 ÷ 2 = 12 → 3 ส่วน = 36 ลิตร', L: 'หลังเติม: เข้มข้น 24 · น้ำ 36' },
+    { t: 'ชี้คำถาม อ่านออกเสียง: "เขาถาม ต้องเติม<u>อีก</u>กี่ลิตร"', q: 'ต้องเติมน้ำเปล่าอีกกี่ลิตร?', c: ['24', '36', '60', '12'], w: '36 − 12 = 24 ลิตร · ตัวลวง 36 = น้ำเปล่าทั้งหมดหลังเติม ไม่ใช่ส่วนที่ต้องเติม (จุดที่เคยพลาด)' } ] },
+  { p: 'ถุงลูกอม <b>45 เม็ด</b> มีสีแดง : สีเขียว = <b>4 : 5</b> แม่เติมแต่สีแดงลงไป จนอัตราส่วนเป็น <b>2 : 1</b> แม่เติมสีแดงกี่เม็ด', steps: [
+    { q: 'รวม 9 ส่วน = 45 → ตอนนี้แดง และเขียวกี่เม็ด?', c: ['แดง 20 · เขียว 25', 'แดง 25 · เขียว 20', 'แดง 4 · เขียว 5', 'แดง 36 · เขียว 45'], w: '1 ส่วน = 5 → แดง 4 × 5 = 20 · เขียว 5 × 5 = 25', L: 'ตอนนี้: แดง 20 · เขียว 25' },
+    { t: 'เติมแต่สีแดง → สีเขียวไม่เปลี่ยน', q: 'ตัวไหนไม่เปลี่ยน?', c: ['สีเขียว (25 เม็ด)', 'สีแดง (20 เม็ด)', 'ทั้งถุง (45 เม็ด)'], w: 'เขียวยังเป็น 25 เม็ด' },
+    { t: 'ระวัง! อัตราส่วนใหม่ เขียวเหลือแค่ 1 ส่วน → 1 ส่วนใหม่ไม่เท่ากับ 5 แล้ว ต้องหาใหม่จากของที่ไม่เปลี่ยน', q: 'ใหม่ 2 : 1 · เขียว 25 = 1 ส่วน → 1 ส่วนใหม่ = ?', c: ['25', '5', '12.5', '50'], w: 'เขียว 25 เม็ด = 1 ส่วน → 1 ส่วนใหม่ = 25 · ตัวลวง 5 = ใช้ 1 ส่วนเดิม (ส่วนเปลี่ยนแล้ว!)' },
+    { q: 'แดงใหม่ 2 ส่วน = ?', c: ['50', '25', '40', '10'], w: '2 × 25 = 50 เม็ด', L: 'หลังเติม: แดง 50 · เขียว 25' },
+    { t: 'ชี้คำถาม: "เขาถาม <u>เติม</u>สีแดงกี่เม็ด"', q: 'แม่เติมสีแดงกี่เม็ด?', c: ['30', '50', '5', '75'], w: '50 − 20 = 30 เม็ด · ตัวลวง 50 = แดงทั้งหมด · 75 = ทั้งถุงหลังเติม' } ] } ] },
+ { title: 'วันที่ 4 · อายุ 2 ช่วงเวลา + ระดับสายตา', rp: [4], probs: [
+  { p: 'ปัจจุบันอายุของ A ต่อ B เป็น <b>4 : 7</b> เมื่อ <b>5 ปีที่แล้ว</b> อายุของ A ต่อ B เป็น <b>1 : 2</b> อีก <b>3 ปีข้างหน้า</b> B จะอายุกี่ปี', steps: [
+    { t: 'กฎ 3: หาของที่ไม่เปลี่ยน · เวลาผ่านไป ทั้งคู่แก่ขึ้นเท่ากัน', q: 'ผลต่างอายุของ A กับ B เปลี่ยนไหมเมื่อเวลาผ่านไป?', c: ['ไม่เปลี่ยน (เท่าเดิมตลอด)', 'เพิ่มขึ้นทุกปี', 'ลดลงทุกปี'], w: 'ทั้งคู่ +1 ปีพร้อมกัน ผลต่างเท่าเดิม' },
+    { q: 'ตอนนี้ 4 : 7 ผลต่างกี่ส่วน? · เมื่อ 5 ปีที่แล้ว 1 : 2 ผลต่างกี่ส่วน?', c: ['ตอนนี้ 3 ส่วน · 5 ปีที่แล้ว 1 ส่วน', 'ตอนนี้ 11 ส่วน · 5 ปีที่แล้ว 3 ส่วน', 'ตอนนี้ 3 ส่วน · 5 ปีที่แล้ว 3 ส่วน', 'ตอนนี้ 4 ส่วน · 5 ปีที่แล้ว 1 ส่วน'], w: '7 − 4 = 3 · 2 − 1 = 1' },
+    { t: 'ผลต่างจริงเท่ากัน → ทำ "ส่วนของผลต่าง" ให้เท่ากันด้วย ค.ร.น. ของผลต่าง (คูณฝั่งไหนก็ได้ ข้อนี้ 3 กับ 1 → 3) · พอผลต่างเป็นกี่ส่วนเท่ากัน 1 ส่วนของทั้งสองปีก็ขนาดเท่ากัน', q: 'คูณ 1 : 2 ด้วย 3 ให้ผลต่างเป็น 3 ส่วน → ได้?', c: ['3 : 6', '2 : 4', '1 : 6', '4 : 7'], w: '1 × 3 = 3, 2 × 3 = 6 → 3 : 6 (ผลต่าง 3 ส่วน ✔)', L: 'ตอนนี้ 4 : 7 · ก่อน 3 : 6' },
+    { q: 'A ตอนนี้ 4 ส่วน · เมื่อ 5 ปีก่อน 3 ส่วน → 1 ส่วน = กี่ปี?', c: ['5', '1', '3', '15'], w: 'ต่างกัน 1 ส่วน = 5 ปีที่ผ่านไป → 1 ส่วน = 5 ปี' },
+    { q: 'B ตอนนี้อายุกี่ปี?', c: ['35', '20', '30', '7'], w: '7 × 5 = 35 ปี (A = 4 × 5 = 20) · เช็ก 5 ปีก่อน 15 : 30 = 1 : 2 ✔ · เช็กด้วย B ก็ได้: 7 − 6 = 1 ส่วน = 5 ปี ✔', L: 'ตอนนี้ A 20 · B 35' },
+    { t: 'ชี้คำถาม: "เขาถาม <u>อีก 3 ปีข้างหน้า</u> B อายุเท่าไร"', q: 'อีก 3 ปีข้างหน้า B อายุกี่ปี?', c: ['38', '35', '32', '23'], w: '35 + 3 = 38 ปี · ตัวลวง 35 = อายุตอนนี้ (ลืม "อีก 3 ปี") · 23 = อายุ A อีก 3 ปี (อ่านผิดคน)' } ] },
+  { p: 'มิ้นท์ยืนห่างจากรั้ว <b>2 เมตร</b> และห่างจากต้นมะพร้าว <b>8 เมตร</b> เห็นยอดรั้วและยอดต้นมะพร้าวอยู่ในแนวเส้นตรงเดียวกันพอดี กำหนดให้อัตราส่วนของระยะที่มิ้นท์ยืนห่างจากรั้ว ต่อระยะที่ยืนห่างจากต้นมะพร้าว เท่ากับอัตราส่วนความสูงของรั้วต่อความสูงของต้นมะพร้าว<b>ที่วัดจากระดับสายตาของมิ้นท์ขึ้นไป</b> ถ้ารั้วสูง <b>2.5 เมตร</b> และระดับสายตาของมิ้นท์สูงจากพื้น <b>1.4 เมตร</b> ต้นมะพร้าวสูงกี่เมตร', steps: [
+    { t: 'สัดส่วนใช้ความสูง "เหนือระดับสายตา" → หักระดับสายตาออกก่อน', q: 'รั้วสูงเหนือระดับสายตากี่เมตร?', c: ['1.1', '3.9', '2.5', '1.4'], w: '2.5 − 1.4 = 1.1 ม.', L: 'รั้วเหนือตา 1.1 ม.' },
+    { q: 'ระยะ 2 ม. → 8 ม. ขยายกี่เท่า?', c: ['4', '6', '10', '16'], w: '8 ÷ 2 = 4 เท่า' },
+    { q: 'มะพร้าวสูงเหนือระดับสายตากี่เมตร?', c: ['4.4', '10.0', '4.0', '5.6'], w: '1.1 × 4 = 4.4 ม. · ตัวลวง 10.0 = 2.5 × 4 (ไม่หักระดับสายตา)', L: 'มะพร้าวเหนือตา 4.4 ม.' },
+    { t: 'ชี้คำถาม: "เขาถาม มะพร้าว<u>สูงทั้งต้น</u>" → บวกระดับสายตากลับ', q: 'ต้นมะพร้าวสูงกี่เมตร?', c: ['5.8', '4.4', '8.6', '10.0'], w: '4.4 + 1.4 = 5.8 ม. · ตัวลวง 4.4 = ลืมบวกระดับสายตาคืน · 8.6 = 10.0 − 1.4 (หักผิดขั้น)' } ] } ] },
+ { title: 'วันที่ 5 · อัตราส่วน + ร้อยละที่เพิ่มขึ้น', rp: [5], probs: [
+  { p: 'ห้องสมุดมีหนังสือ <b>120 เล่ม</b> เป็นการ์ตูน : นิยาย : สารคดี = <b>1 : 2 : 3</b> ซื้อหนังสือเพิ่มอีก <b>26 เล่ม</b> ทำให้การ์ตูนเพิ่มขึ้นร้อยละ 25 นิยายเพิ่มขึ้นร้อยละ 30 สารคดีเพิ่มขึ้นร้อยละเท่าใด', steps: [
+    { t: 'กฎ 1: หา 1 ส่วนก่อน แล้วแยกจำนวนแต่ละแบบ', q: 'รวม 6 ส่วน = 120 → การ์ตูน : นิยาย : สารคดี = กี่เล่ม?', c: ['20 · 40 · 60', '40 · 40 · 40', '10 · 20 · 30', '20 · 40 · 80'], w: '1 ส่วน = 20 → 20 · 40 · 60', L: 'เดิม: การ์ตูน 20 · นิยาย 40 · สารคดี 60' },
+    { t: 'ร้อยละที่เพิ่มคิดจาก "ของเดิมของแต่ละแบบ" ไม่ใช่จากทั้งห้อง', q: 'การ์ตูนเพิ่ม 25% ของ 20 = กี่เล่ม?', c: ['5', '25', '30', '6.5'], w: '20 × 25 ÷ 100 = 5 เล่ม' },
+    { q: 'นิยายเพิ่ม 30% ของ 40 = กี่เล่ม?', c: ['12', '30', '36', '10'], w: '40 × 30 ÷ 100 = 12 เล่ม', L: 'เพิ่ม: การ์ตูน 5 · นิยาย 12' },
+    { t: 'เพิ่มทั้งหมด 26 เล่ม → ที่เหลือคือของสารคดี (หักทั้งสองแบบ)', q: 'สารคดีเพิ่มกี่เล่ม?', c: ['9', '21', '14', '26'], w: '26 − 5 − 12 = 9 เล่ม · ตัวลวง 21 = หักแค่การ์ตูน ลืมหักนิยาย' },
+    { t: 'ชี้คำถาม: "เขาถาม <u>ร้อยละ</u>" → ไม่ใช่จำนวนเล่ม', q: 'สารคดีเพิ่มขึ้นร้อยละเท่าใด?', c: ['15%', '9%', '35%', '7.5%'], w: '9 ÷ 60 × 100 = 15% · ตัวลวง 9% = ตอบจำนวนเล่ม · 35% = 21 ÷ 60 (ลืมหักนิยาย) · 7.5% = 9 ÷ 120 (ใช้ฐานทั้งห้อง)' } ] },
+  { p: 'ตู้ปลามีปลา <b>90 ตัว</b> เป็นปลาทอง : ปลาหางนกยูง = <b>4 : 5</b> ซื้อปลาเพิ่ม <b>22 ตัว</b> ทำให้ปลาทองเพิ่มขึ้นร้อยละ 20 ปลาหางนกยูงเพิ่มขึ้นร้อยละเท่าใด', steps: [
+    { q: 'เดิมมีปลาทอง และปลาหางนกยูงอย่างละกี่ตัว?', c: ['ทอง 40 · หางนกยูง 50', 'ทอง 50 · หางนกยูง 40', 'ทอง 45 · หางนกยูง 45', 'ทอง 36 · หางนกยูง 54'], w: '9 ส่วน = 90 → 1 ส่วน = 10 → 40 · 50' },
+    { q: 'ปลาทองเพิ่ม 20% ของ 40 = กี่ตัว?', c: ['8', '20', '4', '10'], w: '40 × 20 ÷ 100 = 8 ตัว' },
+    { q: 'ปลาหางนกยูงเพิ่มกี่ตัว?', c: ['14', '22', '12', '30'], w: '22 − 8 = 14 ตัว' },
+    { q: 'ปลาหางนกยูงเพิ่มขึ้นร้อยละเท่าใด?', c: ['28%', '14%', '44%', '20%'], w: '14 ÷ 50 × 100 = 28% · ตัวลวง 14% = ตอบจำนวนตัว · 44% = 22 ÷ 50 (ลืมหักปลาทอง) · 20% = คิดว่าเพิ่มเท่ากันทุกแบบ' } ] } ] },
+];
+function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+if (typeof module !== 'undefined') module.exports = { DAYS, shuffle };
+</script>
+
+<!-- ============ UI ============ -->
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const KEY = 'ratiocoach-';
+const get = k => { try { return localStorage.getItem(KEY + k); } catch (e) { return null; } };
+const set = (k, v) => { try { localStorage.setItem(KEY + k, v); } catch (e) { } };
+let S = null;
+function show(id) { ['menu', 'intro', 'play', 'done'].forEach(x => $(x).classList.toggle('hidden', x !== id)); window.scrollTo(0, 0); }
+function paintMenu() {
+  $('s0').textContent = get('intro') ? '✅ อ่านแล้ว' : '';
+  $('days').innerHTML = DAYS.map((d, i) => { const r = get('day' + (i + 1));
+    return '<button class="day" data-day="' + (i + 1) + '"><span class="st">' + (r ? '✅ ' + r : '') + '</span><b>' + d.title + '</b><div class="d">ข้อ 1 พี่พาทำ · ข้อ 2 ลองเอง · จบแล้วทำ rp-02C ข้อ ' + d.rp.join(', ') + ' บนกระดาษ</div></button>'; }).join('');
+  document.querySelectorAll('.day').forEach(b => b.onclick = () => { const d = +b.dataset.day; d === 0 ? show('intro') : start(d); });
+}
+function start(d) { S = { d, pi: 0, si: 0, ok: 0, total: 0, firstTry: true, lad: [] }; DAYS[d - 1].probs.forEach(p => S.total += p.steps.length); render(); show('play'); }
+function render() {
+  const day = DAYS[S.d - 1], pr = day.probs[S.pi], st = pr.steps[S.si];
+  const guide = S.pi === 0;
+  $('mode').className = 'mode ' + (guide ? 'guide' : 'self');
+  $('mode').textContent = (guide ? '🧑‍🏫 พี่พาทำ' : '✍️ ลองเอง') + ' · ข้อ ' + (S.pi + 1) + '/2 · ขั้น ' + (S.si + 1) + '/' + pr.steps.length;
+  $('prob').innerHTML = pr.p;
+  $('ladder').textContent = S.lad.length ? '📝 จดไว้: ' + S.lad[S.lad.length - 1] : '📝 จดในกระดาษไปด้วยนะ';
+  $('teach').innerHTML = (guide && st.t) ? '<div class="teach">💡 ' + st.t + '</div>' : '';
+  $('q').textContent = st.q; $('fb').innerHTML = ''; $('next').classList.add('hidden');
+  let done = 0; for (let i = 0; i < S.pi; i++) done += day.probs[i].steps.length; done += S.si;
+  $('dots').innerHTML = Array.from({ length: S.total }, (_, i) => '<i class="' + (i < done ? 'on' : '') + '"></i>').join('');
+  S.firstTry = true;
+  const box = $('choices'); box.innerHTML = '';
+  shuffle(st.c).forEach(t => { const b = document.createElement('button'); b.className = 'ch'; b.textContent = t; b.onclick = () => pick(t, b, st); box.appendChild(b); });
+}
+function pick(t, btn, st) {
+  const right = t === st.c[0];
+  if (!right) {
+    btn.classList.add('bad'); btn.disabled = true; S.firstTry = false;
+    $('fb').innerHTML = '<div class="fb bad">❌ ยังไม่ใช่ ลองอีกครั้ง' + (S.pi === 1 && st.t ? '<br>💡 ' + st.t : '') + '</div>';
+    return;
+  }
+  if (S.firstTry) S.ok++;
+  [...$('choices').children].forEach(b => { b.disabled = true; if (b.textContent === t) b.classList.add('ok'); });
+  if (st.L) S.lad.push(st.L);
+  $('fb').innerHTML = '<div class="fb ok">✅ ' + st.w + '</div>';
+  const pr = DAYS[S.d - 1].probs[S.pi];
+  const lastStep = S.si === pr.steps.length - 1, lastProb = S.pi === DAYS[S.d - 1].probs.length - 1;
+  $('next').textContent = lastStep ? (lastProb ? 'จบวันนี้ 🎉' : 'ไปข้อ 2 (ลองเอง) →') : 'ขั้นต่อไป →';
+  $('next').classList.remove('hidden');
+  $('next').onclick = () => { if (!lastStep) { S.si++; } else if (!lastProb) { S.pi++; S.si = 0; S.lad = []; } else return finish(); render(); };
+}
+function finish() {
+  const day = DAYS[S.d - 1];
+  set('day' + S.d, S.ok + '/' + S.total);
+  $('dTitle').textContent = '🎉 จบ' + day.title.split('·')[0];
+  $('dScore').textContent = S.ok + ' / ' + S.total;
+  $('dMsg').textContent = 'ตอบถูกครั้งแรก ' + S.ok + ' จาก ' + S.total + ' ขั้น · ' + (S.ok / S.total >= 0.8 ? 'เก่งมาก! 🟢' : 'ดีแล้ว ทำซ้ำอีกรอบได้นะ 🟡');
+  $('dPaper').innerHTML = '📝 <b>ต่อด้วยกระดาษ (ทำเอง ไม่มีคนช่วย):</b> rp-02C ข้อ <b>' + day.rp.join(' และ ') + '</b> · หา 1 ส่วนก่อน · ชี้คำถามอ่านออกเสียงก่อนวงคำตอบ · จดเวลา · แล้ว<b>แคปหน้าจอนี้ + ส่งคำตอบในบอท</b>';
+  $('again').onclick = () => start(S.d);
+  paintMenu(); show('done');
+}
+$('introDone').onclick = () => { set('intro', '1'); paintMenu(); start(1); };
+document.querySelectorAll('[data-home]').forEach(b => b.onclick = () => { paintMenu(); show('menu'); });
+paintMenu();
+</script>
+</body>
+</html>
