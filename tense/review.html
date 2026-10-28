@@ -76,20 +76,20 @@ footer{margin-top:28px;color:var(--muted);font-size:.78rem;text-align:center;lin
 
 <section id="menu">
   <h1>🔁 ทบทวนจุดพลาด — อังกฤษ</h1>
-  <p class="sub">5 เรื่องที่เคยพลาดในชุดอังกฤษ 01–04 และการ์ดซ่อม · ประโยคใหม่ทั้งหมด · ตัวเลือกผิดทำจากคำตอบที่เคยตอบจริง (ติด ★)</p>
+  <p class="sub">5 เรื่องที่น้องเคยพลาดในชุดอังกฤษ 01–04 และการ์ดซ่อม ประโยคใหม่ทั้งหมด ช้อยส์ผิดบางข้อมาจากคำตอบที่น้องเคยตอบจริง</p>
 
   <button class="lv lead" data-lv="0"><span class="best" id="b0"></span><b>🎯 ชุดผสม 10 ข้อ (เหมือนข้อสอบจริง)</b>
-    <div class="d">คละ 5 เรื่อง · จับเวลา เป้า ≤ 6 นาที (0.6 นาที/ข้อ) · จบแล้วบอกว่าเรื่องไหนยังพลาด</div></button>
+    <div class="d">คละ 5 เรื่อง จับเวลา เป้าไม่เกิน 6 นาที (ข้อละ 0.6 นาที) เล่นจบแล้วบอกว่าเรื่องไหนยังพลาด</div></button>
   <button class="lv" data-lv="1"><span class="best" id="b1"></span><b>ด่าน 1 · ประตูก่อน คำบอกเวลาทีหลัง</b>
-    <div class="d">when / before / after / as soon as / until → หลังคำนั้นห้าม will <b>ถึงจะมี tomorrow / next ก็ห้าม</b></div></button>
+    <div class="d">เจอ when / before / after / as soon as / until ท่อนหลังคำนั้นห้ามใช้ will <b>ถึงจะมี tomorrow / next ก็ห้าม</b></div></button>
   <button class="lv" data-lv="2"><span class="best" id="b2"></span><b>ด่าน 2 · A since B</b>
-    <div class="d">ฝั่งที่ลากถึงตอนนี้ = have + V3 · ฝั่งหลัง since = จุดเริ่ม = อดีต</div></button>
+    <div class="d">ท่อนที่ทำต่อเนื่องถึงตอนนี้ใช้ have + กริยาช่อง 3 ท่อนหลัง since เป็นจุดเริ่ม ใช้อดีต</div></button>
   <button class="lv" data-lv="3"><span class="best" id="b3"></span><b>ด่าน 3 · will หรือ going to</b>
-    <div class="d">เห็นหลักฐาน / วางแผนไว้แล้ว → going to · ตัดสินใจตอนพูด / เสนอช่วย → will</div></button>
+    <div class="d">เห็นหลักฐาน หรือวางแผนไว้แล้ว ใช้ going to ส่วนตัดสินใจตอนพูด หรือเสนอช่วย ใช้ will</div></button>
   <button class="lv" data-lv="4"><span class="best" id="b4"></span><b>ด่าน 4 · question tag ตรวจ 2 อย่าง</b>
-    <div class="d">คำช่วยต้องตรงกัน + กลับบวก/ลบ · มีข้อ "หาส่วนที่ผิด" ปน — tag อาจถูกก็ได้</div></button>
+    <div class="d">คำช่วยต้องตรงกัน และกลับบวกเป็นลบ มีข้อ "หาส่วนที่ผิด" ปนด้วย ระวัง tag อาจถูกก็ได้</div></button>
   <button class="lv" data-lv="5"><span class="best" id="b5"></span><b>ด่าน 5 · adjective หรือ adverb</b>
-    <div class="d">ขยายคำนาม / ตามหลัง look · smell · feel → adj · ขยายกริยา → adv (-ly)</div></button>
+    <div class="d">ขยายคำนาม หรือตามหลัง look, smell, feel ใช้ adjective ส่วนขยายกริยาใช้ adverb (-ly)</div></button>
 
   <p class="tip">💡 ตอบผิดไม่เป็นไร — อ่านกล่องสีแดงให้จบก่อนกด "ข้อต่อไป" ทุกครั้ง เพราะมันบอกว่า<b>ผิดแบบไหน</b><br>
   ⌨️ กดเลข <kbd>1</kbd>–<kbd>4</kbd> เลือกช้อยส์ · <kbd>Enter</kbd> ข้อต่อไป</p>
@@ -141,152 +141,152 @@ try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegra
 "use strict";
 /* ทุกข้อ: a = ตัวถูก · wrong = [{t, why}] 3 ตัว · ★ = รูปที่น้องเคยตอบจริง (อ้างใน OKF คู่เกม)
    type 'fill' = เติมคำ (จำนวน ___ ต้องเท่ากับจำนวนส่วนที่คั่นด้วย " / ") · type 'id' = หาส่วนที่ผิด (ขีดเส้นใต้ด้วย [[...]]) */
-const GATE = 'เจอ when / before / after / as soon as / until → หลังคำนั้นใช้ present ห้าม will แม้มีคำอนาคต · อีกฝั่งค่อยเป็น will';
-const SINCE = 'ฝั่งที่ลากถึงตอนนี้ = have/has + V3 · ฝั่งหลัง since = จุดเริ่มที่จบแล้ว = อดีต (V2)';
-const WG = 'หลักฐานตรงหน้า / แผนที่ตัดสินไว้แล้ว → be going to · ตัดสินใจตอนพูด / เสนอช่วย → will';
-const TAG = 'ตรวจ 2 อย่าง: ① คำช่วยตรงกับประโยค (ไม่มีคำช่วย → do/does/did) ② กลับด้าน บวก → ลบ · ลบ → บวก';
-const ADJ = 'ขยายคำนาม หรือตามหลัง look / smell / feel / taste / sound → adjective · ขยายกริยา (ทำอย่างไร) → adverb (-ly)';
+const GATE = 'ถ้าเจอ when / before / after / as soon as / until ท่อนหลังคำนั้นใช้ present ห้ามใช้ will ถึงจะมีคำบอกอนาคตก็ตาม อีกท่อนหนึ่งค่อยใช้ will';
+const SINCE = 'ท่อนที่ทำต่อเนื่องถึงตอนนี้ใช้ have / has + กริยาช่อง 3 ส่วนท่อนหลัง since เป็นจุดเริ่มที่จบแล้ว ใช้กริยาช่อง 2 (อดีต)';
+const WG = 'เห็นหลักฐานตรงหน้า หรือวางแผนไว้แล้ว ใช้ be going to ส่วนตัดสินใจตอนพูด หรือเสนอช่วย ใช้ will';
+const TAG = 'ตรวจ 2 อย่าง ข้อ 1 คำช่วยต้องตรงกับประโยค (ถ้าไม่มีคำช่วย ใช้ do / does / did) ข้อ 2 กลับด้าน ประโยคบวกใช้ tag ลบ ประโยคลบใช้ tag บวก';
+const ADJ = 'ขยายคำนาม หรือตามหลัง look / smell / feel / taste / sound ใช้คุณศัพท์ (adjective) ส่วนขยายกริยา (ทำอย่างไร) ใช้คำวิเศษณ์ (adverb) ที่มักลงท้าย -ly';
 
 const P = {
   1: { name: 'ประตู time clause', slug: 'will-in-time-clause', rule: GATE, items: [
     { s: 'When the new library ___ next week, I ___ a card there.', a: 'opens / will get', wrong: [
-      { t: 'will open / will get', why: '★ will ทั้งคู่ — เห็น next week แล้วใส่ will ทุกช่อง แต่ next week อยู่หลัง When (ในประตู) → opens' },
-      { t: 'opens / get', why: 'ผ่านประตูแล้ว แต่ลืมว่าอีกฝั่งยังเป็นอนาคต → will get' },
-      { t: 'will open / get', why: 'สลับฝั่ง — will ไปอยู่ในประตู' }] },
+      { t: 'will open / will get', why: 'will ทั้งสองช่อง (น้องเคยตอบแบบนี้) next week อยู่หลัง When ซึ่งห้ามใช้ will จึงต้องเป็น opens' },
+      { t: 'opens / get', why: 'ช่อง 1 ถูกแล้ว แต่ช่อง 2 ยังเป็นเรื่องอนาคต ต้องใช้ will get' },
+      { t: 'will open / get', why: 'สลับกัน will ไปอยู่หลัง When ซึ่งห้ามใช้ will' }] },
     { s: 'Before Dad ___ for work tomorrow morning, he ___ us to school.', a: 'leaves / will drive', wrong: [
-      { t: 'will leave / will drive', why: '★ will ทั้งคู่ — tomorrow อยู่หลัง Before (ในประตู) → leaves' },
-      { t: 'leaves / drives', why: 'อีกฝั่งเป็นเรื่องพรุ่งนี้ ต้อง will drive' },
-      { t: 'will leave / drives', why: 'สลับฝั่ง — will ไปอยู่ในประตู' }] },
+      { t: 'will leave / will drive', why: 'will ทั้งสองช่อง (น้องเคยตอบแบบนี้) tomorrow อยู่หลัง Before ซึ่งห้ามใช้ will จึงต้องเป็น leaves' },
+      { t: 'leaves / drives', why: 'ช่อง 2 เป็นเรื่องพรุ่งนี้ ต้องใช้ will drive' },
+      { t: 'will leave / drives', why: 'สลับกัน will ไปอยู่หลัง Before ซึ่งห้ามใช้ will' }] },
     { s: 'After we ___ lunch tomorrow, we ___ the zoo.', a: 'have / will visit', wrong: [
-      { t: 'will have / will visit', why: '★ will ทั้งคู่ — หลัง After ห้าม will แม้มี tomorrow' },
-      { t: 'have / visit', why: 'อีกฝั่งเป็นอนาคต → will visit' },
-      { t: 'will have / visit', why: 'สลับฝั่ง' }] },
+      { t: 'will have / will visit', why: 'will ทั้งสองช่อง (น้องเคยตอบแบบนี้) หลัง After ห้ามใช้ will ถึงจะมี tomorrow ก็ตาม' },
+      { t: 'have / visit', why: 'ช่อง 2 เป็นเรื่องอนาคต ต้องใช้ will visit' },
+      { t: 'will have / visit', why: 'สลับกัน will ไปอยู่หลัง After ซึ่งห้ามใช้ will' }] },
     { s: 'I ___ you a postcard as soon as I ___ in Japan next month.', a: 'will send / arrive', wrong: [
-      { t: 'will send / will arrive', why: '★ will ทั้งคู่ — next month อยู่หลัง as soon as (ในประตู) → arrive' },
-      { t: 'send / arrive', why: 'ฝั่งหน้าเป็นอนาคต ไม่มีประตู → will send' },
-      { t: 'send / will arrive', why: 'สลับฝั่ง — ประตูอยู่กลางประโยค ดูว่าคำไหนอยู่หลัง as soon as' }] },
+      { t: 'will send / will arrive', why: 'will ทั้งสองช่อง (น้องเคยตอบแบบนี้) next month อยู่หลัง as soon as ซึ่งห้ามใช้ will จึงต้องเป็น arrive' },
+      { t: 'send / arrive', why: 'ท่อนหน้าเป็นเรื่องอนาคต และไม่มีคำต้องห้ามนำหน้า จึงใช้ will send' },
+      { t: 'send / will arrive', why: 'สลับกัน คำที่อยู่หลัง as soon as ห้ามใช้ will ดูให้ดีว่าคำไหนอยู่หลัง' }] },
     { s: 'We ___ inside until the storm ___ tonight.', a: 'will stay / ends', wrong: [
-      { t: 'will stay / will end', why: '★ will ทั้งคู่ — tonight อยู่หลัง until (ในประตู) → ends' },
-      { t: 'stay / will end', why: 'สลับฝั่ง' },
-      { t: 'stayed / ends', why: 'เรื่องคืนนี้ยังไม่เกิด ใช้อดีตไม่ได้ → will stay' }] },
+      { t: 'will stay / will end', why: 'will ทั้งสองช่อง (น้องเคยตอบแบบนี้) tonight อยู่หลัง until ซึ่งห้ามใช้ will จึงต้องเป็น ends' },
+      { t: 'stay / will end', why: 'สลับกัน will ไปอยู่หลัง until ซึ่งห้ามใช้ will' },
+      { t: 'stayed / ends', why: 'เรื่องคืนนี้ยังไม่เกิด ใช้อดีตไม่ได้ ต้องใช้ will stay' }] },
     { s: 'When Pim ___ thirteen next year, she ___ a phone of her own.', a: 'is / will get', wrong: [
-      { t: 'will be / will get', why: '★ will ทั้งคู่ — next year อยู่หลัง When → is' },
-      { t: 'is / gets', why: 'อีกฝั่งเป็นอนาคต → will get' },
-      { t: 'will be / gets', why: 'สลับฝั่ง' }] },
+      { t: 'will be / will get', why: 'will ทั้งสองช่อง (น้องเคยตอบแบบนี้) next year อยู่หลัง When ซึ่งห้ามใช้ will จึงต้องเป็น is' },
+      { t: 'is / gets', why: 'ช่อง 2 เป็นเรื่องอนาคต ต้องใช้ will get' },
+      { t: 'will be / gets', why: 'สลับกัน will ไปอยู่หลัง When ซึ่งห้ามใช้ will' }] },
     { s: 'I think our new computer room ___ ready next month.', a: 'will be', wrong: [
-      { t: 'is', why: 'ข้อนี้ไม่มีประตู (ไม่มี when / before / after / until) + next month + I think → will be' },
+      { t: 'is', why: 'ข้อนี้ไม่มี when / before / after / until และมี next month กับ I think จึงใช้ will be' },
       { t: 'was', why: 'next month ยังไม่เกิด ใช้อดีตไม่ได้' },
-      { t: 'has been', why: 'ไม่มี since / for ลากถึงตอนนี้ และเป็นเรื่องอนาคต' }] }
+      { t: 'has been', why: 'ไม่มี since หรือ for ที่ลากถึงตอนนี้ และเป็นเรื่องอนาคต' }] }
   ] },
   2: { name: 'A since B', slug: 'time-marker-per-blank', rule: SINCE, items: [
     { s: 'Ploy ___ in Chiang Rai since her family ___ there in 2020.', a: 'has lived / moved', wrong: [
-      { t: 'lived / moved', why: '★ อดีตทั้งคู่ — ฝั่งหน้า since ยังอยู่ถึงตอนนี้ → has lived' },
-      { t: 'has lived / has moved', why: '★ perfect ทั้งคู่ — ย้ายมา "ปี 2020" จบแล้ว → moved' },
-      { t: 'lived / has moved', why: '★ สลับ — have ไปอยู่หลัง since (จุดเริ่มต้องเป็นอดีต)' }] },
+      { t: 'lived / moved', why: 'อดีตทั้งสองช่อง (น้องเคยตอบแบบนี้) ท่อนหน้า since ยังอยู่ถึงตอนนี้ ต้องเป็น has lived' },
+      { t: 'has lived / has moved', why: 'have ทั้งสองช่อง (น้องเคยตอบแบบนี้) การย้ายมาในปี 2020 จบไปแล้ว ต้องเป็น moved' },
+      { t: 'lived / has moved', why: 'สลับกัน (น้องเคยตอบแบบนี้) have ไปอยู่หลัง since แต่หลัง since เป็นจุดเริ่ม ต้องใช้อดีต' }] },
     { s: 'I ___ a single cold since I ___ drinking warm water every morning.', a: "haven't had / started", wrong: [
-      { t: "didn't have / started", why: '★ อดีตทั้งคู่ — "ไม่เป็นหวัดเลยจนถึงตอนนี้" → haven\'t had' },
-      { t: "haven't had / have started", why: '★ perfect ทั้งคู่ — จุดเริ่ม (ตอนเริ่มดื่ม) จบแล้ว → started' },
-      { t: "didn't have / have started", why: '★ สลับ — have ไปอยู่หลัง since' }] },
+      { t: "didn't have / started", why: 'อดีตทั้งสองช่อง (น้องเคยตอบแบบนี้) "ไม่เป็นหวัดเลยจนถึงตอนนี้" ต้องเป็น haven\'t had' },
+      { t: "haven't had / have started", why: 'have ทั้งสองช่อง (น้องเคยตอบแบบนี้) ตอนเริ่มดื่มน้ำอุ่นจบไปแล้ว ต้องเป็น started' },
+      { t: "didn't have / have started", why: 'สลับกัน (น้องเคยตอบแบบนี้) have ไปอยู่หลัง since' }] },
     { s: 'Our teacher ___ happier since she ___ her new puppy.', a: 'has been / got', wrong: [
-      { t: 'was / got', why: '★ อดีตทั้งคู่ — มีความสุขขึ้นจนถึงตอนนี้ → has been' },
-      { t: 'has been / has got', why: '★ perfect ทั้งคู่ — ได้ลูกหมาเป็นจุดเริ่ม จบแล้ว → got' },
-      { t: 'was / has got', why: '★ สลับ' }] },
+      { t: 'was / got', why: 'อดีตทั้งสองช่อง (น้องเคยตอบแบบนี้) ครูมีความสุขขึ้นจนถึงตอนนี้ ต้องเป็น has been' },
+      { t: 'has been / has got', why: 'have ทั้งสองช่อง (น้องเคยตอบแบบนี้) ได้ลูกหมาเป็นจุดเริ่มที่จบแล้ว ต้องเป็น got' },
+      { t: 'was / has got', why: 'สลับกัน (น้องเคยตอบแบบนี้) have ไปอยู่หลัง since' }] },
     { s: 'The twins ___ best friends ever since they ___ on the first day of kindergarten.', a: 'have been / met', wrong: [
-      { t: 'were / met', why: '★ อดีตทั้งคู่ — ยังเป็นเพื่อนกันถึงตอนนี้ → have been' },
-      { t: 'have been / have met', why: '★ perfect ทั้งคู่ — วันแรกของอนุบาลจบแล้ว → met' },
-      { t: 'were / have met', why: '★ สลับ' }] },
+      { t: 'were / met', why: 'อดีตทั้งสองช่อง (น้องเคยตอบแบบนี้) ยังเป็นเพื่อนกันถึงตอนนี้ ต้องเป็น have been' },
+      { t: 'have been / have met', why: 'have ทั้งสองช่อง (น้องเคยตอบแบบนี้) วันแรกของอนุบาลจบไปแล้ว ต้องเป็น met' },
+      { t: 'were / have met', why: 'สลับกัน (น้องเคยตอบแบบนี้) have ไปอยู่หลัง since' }] },
     { s: 'Mr. Chai ___ at this hospital since he ___ medical school.', a: 'has worked / finished', wrong: [
-      { t: 'worked / finished', why: '★ อดีตทั้งคู่ — ยังทำงานอยู่ถึงตอนนี้ → has worked' },
-      { t: 'has worked / has finished', why: '★ perfect ทั้งคู่ — เรียนจบเป็นจุดเริ่ม → finished' },
-      { t: 'worked / has finished', why: '★ สลับ' }] },
+      { t: 'worked / finished', why: 'อดีตทั้งสองช่อง (น้องเคยตอบแบบนี้) ยังทำงานอยู่ถึงตอนนี้ ต้องเป็น has worked' },
+      { t: 'has worked / has finished', why: 'have ทั้งสองช่อง (น้องเคยตอบแบบนี้) เรียนจบเป็นจุดเริ่มที่จบแล้ว ต้องเป็น finished' },
+      { t: 'worked / has finished', why: 'สลับกัน (น้องเคยตอบแบบนี้) have ไปอยู่หลัง since' }] },
     { s: 'Since Ton ___ the football team, he ___ to every practice.', a: 'joined / has gone', wrong: [
-      { t: 'has joined / has gone', why: '★ perfect ทั้งคู่ — ข้อนี้ since อยู่หน้าประโยค คำที่ติด since คือจุดเริ่ม → joined' },
-      { t: 'joined / went', why: 'ไปซ้อมทุกครั้งจนถึงตอนนี้ → has gone' },
-      { t: 'has joined / went', why: '★ สลับ — "since อยู่ติดคำไหน คำนั้น perfect" ไม่จริง · ติด since = จุดเริ่ม = อดีต' }] }
+      { t: 'has joined / has gone', why: 'have ทั้งสองช่อง (น้องเคยตอบแบบนี้) ข้อนี้ since อยู่ต้นประโยค คำที่ติด since เป็นจุดเริ่ม ต้องเป็น joined' },
+      { t: 'joined / went', why: 'ไปซ้อมทุกครั้งจนถึงตอนนี้ ต้องเป็น has gone' },
+      { t: 'has joined / went', why: 'สลับกัน (น้องเคยตอบแบบนี้) "คำที่ติด since ต้องใช้ have" ไม่จริง คำที่ติด since เป็นจุดเริ่ม ต้องใช้อดีต' }] }
   ] },
   3: { name: 'will / going to', slug: 'will-vs-going-to', rule: WG, items: [
     { ctx: 'A: Why are you carrying a ladder?', s: 'B: I ___ the lamp in the kitchen. A: Wait, I ___ you hold it.', a: 'am going to fix / will help', wrong: [
-      { t: 'will fix / will help', why: '★ will ทั้งคู่ — ถือบันไดมาแล้ว = วางแผนไว้แล้ว → am going to fix' },
-      { t: 'am going to fix / am going to help', why: '★ going to ทั้งคู่ — "Wait, I…" = ตัดสินใจเสนอช่วยตอนนั้นเลย → will help' },
-      { t: 'will fix / am going to help', why: '★ สลับด้าน' }] },
+      { t: 'will fix / will help', why: 'will ทั้งสองช่อง (น้องเคยตอบแบบนี้) ถือบันไดมาแล้ว แปลว่าวางแผนไว้แล้ว ต้องเป็น am going to fix' },
+      { t: 'am going to fix / am going to help', why: 'going to ทั้งสองช่อง (น้องเคยตอบแบบนี้) "Wait, I…" คือเพิ่งตัดสินใจเสนอช่วยตอนนั้น ต้องเป็น will help' },
+      { t: 'will fix / am going to help', why: 'สลับกัน (น้องเคยตอบแบบนี้) แผนที่คิดไว้แล้วใช้ going to ส่วนเสนอช่วยตอนนั้นใช้ will' }] },
     { ctx: 'Look! That glass is too close to the edge of the table.', s: 'A: It ___. B: Oh, thanks! I ___ it right now.', a: 'is going to fall / will move', wrong: [
-      { t: 'will fall / will move', why: '★ will ทั้งคู่ — Look! + แก้วอยู่ริมโต๊ะ = เห็นหลักฐานตรงหน้า → is going to fall' },
-      { t: 'is going to fall / am going to move', why: '★ going to ทั้งคู่ — "right now" หลังเพิ่งรู้ = ตัดสินใจตอนพูด → will move' },
-      { t: 'will fall / am going to move', why: '★ สลับด้าน' }] },
+      { t: 'will fall / will move', why: 'will ทั้งสองช่อง (น้องเคยตอบแบบนี้) Look! และแก้วอยู่ริมโต๊ะ คือเห็นหลักฐานตรงหน้า ต้องเป็น is going to fall' },
+      { t: 'is going to fall / am going to move', why: 'going to ทั้งสองช่อง (น้องเคยตอบแบบนี้) "right now" หลังเพิ่งรู้ คือตัดสินใจตอนพูด ต้องเป็น will move' },
+      { t: 'will fall / am going to move', why: 'สลับกัน (น้องเคยตอบแบบนี้) เห็นหลักฐานใช้ going to ส่วนตัดสินใจตอนพูดใช้ will' }] },
     { ctx: 'A: The phone is ringing!', s: 'B: OK, I ___ it.', a: 'will answer', wrong: [
-      { t: 'am going to answer', why: 'เพิ่งได้ยินเสียงโทรศัพท์ ตัดสินใจตอนนั้น → will (ไม่ใช่แผน)' },
-      { t: 'answer', why: 'present simple ไม่ใช้บอกการตัดสินใจทำเดี๋ยวนี้' },
-      { t: 'answered', why: 'ยังไม่ได้รับ ใช้อดีตไม่ได้' }] },
+      { t: 'am going to answer', why: 'เพิ่งได้ยินเสียงโทรศัพท์ เลยตัดสินใจตอนนั้น ต้องใช้ will เพราะไม่ใช่แผน' },
+      { t: 'answer', why: 'present simple ไม่ใช้บอกว่าตัดสินใจจะทำเดี๋ยวนี้' },
+      { t: 'answered', why: 'ยังไม่ได้รับสาย ใช้อดีตไม่ได้' }] },
     { ctx: 'My brother has saved money for months and has already chosen the model he wants.', s: 'He ___ a new bike this weekend.', a: 'is going to buy', wrong: [
-      { t: 'will buy', why: '★ เก็บเงินหลายเดือน + เลือกรุ่นไว้แล้ว = แผนที่ตัดสินไว้ก่อน → is going to buy' },
-      { t: 'buys', why: 'present simple ไม่ใช้กับแผนส่วนตัว' },
-      { t: 'bought', why: 'this weekend ยังไม่ถึง ใช้อดีตไม่ได้' }] },
+      { t: 'will buy', why: '(น้องเคยตอบแบบนี้) เก็บเงินหลายเดือนและเลือกรุ่นไว้แล้ว คือแผนที่คิดไว้ก่อน ต้องเป็น is going to buy' },
+      { t: 'buys', why: 'present simple ไม่ใช้กับแผนของตัวเอง' },
+      { t: 'bought', why: 'this weekend ยังมาไม่ถึง ใช้อดีตไม่ได้' }] },
     { ctx: "A: Oh no, I don't have a pen for the test!", s: "B: Don't worry. I ___ you one of mine.", a: 'will lend', wrong: [
-      { t: 'am going to lend', why: '★ เสนอช่วยตอนเพิ่งรู้ปัญหา = ตัดสินใจตอนพูด → will' },
+      { t: 'am going to lend', why: '(น้องเคยตอบแบบนี้) เสนอช่วยตอนเพิ่งรู้ปัญหา คือตัดสินใจตอนพูด ต้องใช้ will' },
       { t: 'lend', why: 'present simple ไม่ใช้เสนอช่วย' },
       { t: 'lent', why: 'ยังไม่ได้ให้ยืม ใช้อดีตไม่ได้' }] },
     { ctx: 'A: What are your plans for the long weekend?', s: 'B: We ___ our grandparents in Nan. Dad has already booked the hotel.', a: 'are going to visit', wrong: [
-      { t: 'will visit', why: '★ จองโรงแรมแล้ว = แผนที่ตัดสินไว้ก่อน → are going to visit (หลักฐานอยู่ประโยคหลัง อ่านให้จบ)' },
-      { t: 'visit', why: 'present simple ไม่ใช้กับแผนส่วนตัว' },
+      { t: 'will visit', why: '(น้องเคยตอบแบบนี้) จองโรงแรมแล้ว คือแผนที่คิดไว้ก่อน ต้องเป็น are going to visit (หลักฐานอยู่ประโยคหลัง อ่านให้จบ)' },
+      { t: 'visit', why: 'present simple ไม่ใช้กับแผนของตัวเอง' },
       { t: 'visited', why: 'ยังไม่ได้ไป ใช้อดีตไม่ได้' }] }
   ] },
   4: { name: 'question tag', slug: 'question-tag-two-checks', rule: TAG, items: [
     { s: 'Your sister can ride a horse, ___?', a: "can't she", wrong: [
-      { t: 'can she', why: '★ คำช่วยถูก (can) แต่ลืมกลับด้าน — ประโยคบวก → tag ลบ can\'t' },
+      { t: 'can she', why: '(น้องเคยตอบแบบนี้) คำช่วย can ถูกแล้ว แต่ลืมกลับด้าน ประโยคบวกต้องใช้ tag ลบ can\'t' },
       { t: "doesn't she", why: 'มีคำช่วย can อยู่แล้ว ห้ามเปลี่ยนเป็น do' },
-      { t: "isn't she", why: 'คำช่วยไม่ตรง — ประโยคใช้ can ไม่ใช่ is' }] },
+      { t: "isn't she", why: 'คำช่วยไม่ตรง ประโยคใช้ can ไม่ใช่ is' }] },
     { s: 'The boys went to the zoo yesterday, ___?', a: "didn't they", wrong: [
-      { t: 'did they', why: 'คำช่วยถูก (went → did) แต่ลืมกลับด้าน' },
-      { t: "weren't they", why: 'went ไม่มีคำช่วย be → ใช้ did' },
-      { t: "don't they", why: 'went เป็นอดีต → did ไม่ใช่ do' }] },
+      { t: 'did they', why: 'คำช่วยถูก (went ใช้ did) แต่ลืมกลับด้าน' },
+      { t: "weren't they", why: 'went ไม่มีคำช่วย be จึงใช้ did' },
+      { t: "don't they", why: 'went เป็นอดีต จึงใช้ did ไม่ใช่ do' }] },
     { s: "You haven't seen my glasses, ___?", a: 'have you', wrong: [
-      { t: "haven't you", why: 'ประโยคลบ (haven\'t) → tag บวก have you' },
+      { t: "haven't you", why: 'ประโยคลบ (haven\'t) ต้องใช้ tag บวก have you' },
       { t: 'did you', why: 'คำช่วยคือ have ห้ามเปลี่ยนเป็น did' },
       { t: 'do you', why: 'คำช่วยคือ have ห้ามเปลี่ยนเป็น do' }] },
     { s: 'Mr. Lee teaches art, ___?', a: "doesn't he", wrong: [
-      { t: 'does he', why: 'ลืมกลับด้าน — ประโยคบวก → doesn\'t' },
-      { t: "isn't he", why: 'teaches ไม่มีคำช่วย be → ใช้ does' },
-      { t: "don't he", why: 'he → does (เอกพจน์) ไม่ใช่ do' }] },
+      { t: 'does he', why: 'ลืมกลับด้าน ประโยคบวกต้องใช้ doesn\'t' },
+      { t: "isn't he", why: 'teaches ไม่มีคำช่วย be จึงใช้ does' },
+      { t: "don't he", why: 'he เป็นเอกพจน์ ใช้ does ไม่ใช่ do' }] },
     { s: 'It was very hot last night, ___?', a: "wasn't it", wrong: [
-      { t: 'was it', why: 'ลืมกลับด้าน — ประโยคบวก → wasn\'t' },
+      { t: 'was it', why: 'ลืมกลับด้าน ประโยคบวกต้องใช้ wasn\'t' },
       { t: "didn't it", why: 'มีคำช่วย was อยู่แล้ว ห้ามเปลี่ยนเป็น did' },
-      { t: "isn't it", why: 'last night เป็นอดีต → was ไม่ใช่ is' }] },
+      { t: "isn't it", why: 'last night เป็นอดีต จึงใช้ was ไม่ใช่ is' }] },
     { s: "Kanya isn't coming to the party, ___?", a: 'is she', wrong: [
-      { t: "isn't she", why: 'ประโยคลบ (isn\'t) → tag บวก is she' },
+      { t: "isn't she", why: 'ประโยคลบ (isn\'t) ต้องใช้ tag บวก is she' },
       { t: 'does she', why: 'คำช่วยคือ is ห้ามเปลี่ยนเป็น does' },
       { t: 'will she', why: 'คำช่วยคือ is ห้ามเปลี่ยนเป็น will' }] },
     { type: 'id', s: 'Tom [[have]] lived here [[for]] two years, [[hasn\'t]] [[he]]?', a: 'have', wrong: [
       { t: 'for', why: 'for + ช่วงเวลา ถูกแล้ว' },
-      { t: "hasn't", why: '★ tag ถูกแล้ว (has → hasn\'t) — อย่าเห็น tag แล้วตอบ tag เลย ต้องตรวจคำอื่นด้วย' },
-      { t: 'he', why: 'Tom → he ถูกแล้ว' }], fix: 'Tom → has lived (ประธานเอกพจน์)' },
+      { t: "hasn't", why: '(น้องเคยตอบแบบนี้) tag ถูกแล้ว (has คู่กับ hasn\'t) อย่าเห็น tag แล้วตอบ tag เลย ต้องตรวจคำอื่นด้วย' },
+      { t: 'he', why: 'Tom ใช้ he ถูกแล้ว' }], fix: 'Tom has lived (ประธานเอกพจน์ ใช้ has)' },
     { type: 'id', s: 'My parents [[enjoy]] cooking [[together]] on Sundays, [[do]] [[they]]?', a: 'do', wrong: [
-      { t: 'enjoy', why: 'parents พหูพจน์ → enjoy ถูกแล้ว' },
+      { t: 'enjoy', why: 'parents เป็นพหูพจน์ ใช้ enjoy ถูกแล้ว' },
       { t: 'together', why: 'together ถูกแล้ว' },
-      { t: 'they', why: 'parents → they ถูกแล้ว' }], fix: "ประโยคบวก → tag ต้องเป็น don't they" }
+      { t: 'they', why: 'parents ใช้ they ถูกแล้ว' }], fix: 'ประโยคบวก tag ต้องเป็นลบ คือ don\'t they' }
   ] },
   5: { name: 'adj / adv', slug: 'adjective-for-adverb', rule: ADJ, items: [
     { s: 'Please speak ___. The baby is sleeping.', a: 'quietly', wrong: [
-      { t: 'quiet', why: 'ขยายกริยา speak (พูดอย่างไร) → adverb quietly' },
+      { t: 'quiet', why: 'ขยายกริยา speak (พูดอย่างไร) ต้องใช้ adverb คือ quietly' },
       { t: 'quieter', why: 'ไม่มีการเปรียบเทียบ และยังเป็น adjective' },
       { t: 'quietness', why: 'เป็นคำนาม ขยายกริยาไม่ได้' }] },
     { s: 'The soup smells ___.', a: 'delicious', wrong: [
-      { t: 'deliciously', why: 'smell เป็นกริยาบอกความรู้สึก (เหมือน look / taste) → ตามด้วย adjective' },
+      { t: 'deliciously', why: 'smell เป็นกริยาบอกความรู้สึก (เหมือน look / taste) ต้องตามด้วย adjective' },
       { t: 'deliciousness', why: 'เป็นคำนาม' },
       { t: 'more deliciously', why: 'ยังเป็น adverb และไม่มีการเปรียบเทียบ' }] },
     { s: 'Nat finished the test very ___.', a: 'quickly', wrong: [
-      { t: 'quick', why: 'ขยายกริยา finished (ทำเสร็จอย่างไร) → quickly' },
+      { t: 'quick', why: 'ขยายกริยา finished (ทำเสร็จอย่างไร) ต้องใช้ quickly' },
       { t: 'quicker', why: 'very ใช้กับขั้นกว่าไม่ได้ และยังเป็น adjective' },
       { t: 'quickness', why: 'เป็นคำนาม' }] },
     { s: 'My dad is a ___ driver.', a: 'careful', wrong: [
-      { t: 'carefully', why: 'ขยายคำนาม driver → adjective careful' },
-      { t: 'care', why: 'เป็นคำนาม/กริยา ขยายคำนามแบบนี้ไม่ได้' },
+      { t: 'carefully', why: 'ขยายคำนาม driver ต้องใช้ adjective คือ careful' },
+      { t: 'care', why: 'เป็นคำนามหรือกริยา ขยายคำนามแบบนี้ไม่ได้' },
       { t: 'carefulness', why: 'เป็นคำนาม' }] },
     { s: 'The children played ___ in the garden.', a: 'happily', wrong: [
-      { t: 'happy', why: 'ขยายกริยา played (เล่นอย่างไร) → happily' },
+      { t: 'happy', why: 'ขยายกริยา played (เล่นอย่างไร) ต้องใช้ happily' },
       { t: 'happiness', why: 'เป็นคำนาม' },
       { t: 'happier', why: 'ไม่มีการเปรียบเทียบ และยังเป็น adjective' }] },
     { s: 'This question looks ___, but it is actually hard.', a: 'easy', wrong: [
-      { t: 'easily', why: 'look (ดูเหมือน) → ตามด้วย adjective' },
+      { t: 'easily', why: 'look (ดูเหมือน) ต้องตามด้วย adjective' },
       { t: 'ease', why: 'เป็นคำนาม' },
       { t: 'easiness', why: 'เป็นคำนาม' }] }
   ] }
@@ -360,7 +360,7 @@ function answer(k) {
   S.locked = true;
   const btns = $('choices').querySelectorAll('.ch');
   q.opts.forEach((x, j) => { if (x.ok) btns[j].classList.add('right'); });
-  const fix = q.it.fix ? ' · แก้เป็น: ' + esc(q.it.fix) : '';
+  const fix = q.it.fix ? '<br>แก้เป็น: ' + esc(q.it.fix) : '';
   if (o.ok) {
     S.score++;
     $('fb').className = 'fb ok';
@@ -394,7 +394,7 @@ function finish() {
     '<tr><td>' + esc(P[k].name) + '</td><td>' + by[k][0] + '/' + by[k][1] + (by[k][0] < by[k][1] ? ' ⚠️ เล่นด่าน ' + k + ' ซ้ำ' : ' ✔') + '</td></tr>').join('');
   const wrong = S.log.filter(r => !r.ok);
   $('oWrong').innerHTML = wrong.length ? '<b>ข้อที่พลาด</b>' + wrong.map(r =>
-    '<div class="wl">' + esc(r.s.replace(/\[\[|\]\]/g, '')) + '<br>ตอบ <b>' + esc(r.pick) + '</b> → ที่ถูก <b>' + esc(r.a) + '</b><br><span style="color:var(--muted)">' + esc(r.why) + '</span></div>').join('') : '<p>ไม่พลาดเลย 🎉</p>';
+    '<div class="wl">' + esc(r.s.replace(/\[\[|\]\]/g, '')) + '<br>ตอบ <b>' + esc(r.pick) + '</b> ที่ถูกคือ <b>' + esc(r.a) + '</b><br><span style="color:var(--muted)">' + esc(r.why) + '</span></div>').join('') : '<p>ไม่พลาดเลย 🎉</p>';
 }
 function toMenu() { clearInterval(timer); S = null; $('play').classList.add('hidden'); $('over').classList.add('hidden'); $('menu').classList.remove('hidden'); paintBests(); }
 document.querySelectorAll('.lv').forEach(b => b.addEventListener('click', () => start(+b.dataset.lv)));

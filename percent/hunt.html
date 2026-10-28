@@ -140,26 +140,26 @@ function fmt(x){
   return p.join('.');
 }
 var KINDS = [
-  {p:10,  d:10,  t:'easy', nmax:400, hint:function(n,a){return 'เลื่อนจุดทศนิยม 1 ตำแหน่ง → '+fmt(a);}},
-  {p:50,  d:2,   t:'easy', nmax:400, hint:function(n,a){return 'ครึ่งหนึ่งของ '+fmt(n)+' = '+fmt(a);}},
-  {p:25,  d:4,   t:'easy', nmax:400, hint:function(n,a){return '25% คือ ÷ 4 → '+fmt(n)+' ÷ 4 = '+fmt(a);}},
-  {p:1,   d:100, t:'easy', nmax:5000,hint:function(n,a){return '1% = เลื่อนจุด 2 ตำแหน่ง → '+fmt(a);}},
-  {p:20,  d:5,   t:'easy', nmax:400, hint:function(n,a){return '10% = '+fmt(n/10)+' → ×2 = '+fmt(a);}},
-  {p:5,   d:20,  t:'easy', nmax:800, hint:function(n,a){return '10% = '+fmt(n/10)+' → ครึ่งหนึ่ง = '+fmt(a);}},
-  {p:75,  d:4,   t:'mid',  nmax:400, hint:function(n,a){return '25% = '+fmt(n/4)+' → ×3 = '+fmt(a);}},
-  {p:30,  d:10,  t:'mid',  nmax:400, hint:function(n,a){return '10% = '+fmt(n/10)+' → ×3 = '+fmt(a);}},
-  {p:15,  d:20,  t:'mid',  nmax:600, hint:function(n,a){return '10% = '+fmt(n/10)+' บวกครึ่งของมัน ('+fmt(n/20)+') = '+fmt(a);}},
-  {p:40,  d:5,   t:'mid',  nmax:400, hint:function(n,a){return '10% = '+fmt(n/10)+' → ×4 = '+fmt(a);}},
-  {p:60,  d:5,   t:'mid',  nmax:400, hint:function(n,a){return '10% = '+fmt(n/10)+' → ×6 = '+fmt(a);}},
-  {p:90,  d:10,  t:'mid',  nmax:400, hint:function(n,a){return 'เต็ม '+fmt(n)+' ลบ 10% ('+fmt(n/10)+') = '+fmt(a);}},
-  {p:35,  d:20,  t:'mid',  nmax:600, hint:function(n,a){return '10% = '+fmt(n/10)+' → ×3.5 = '+fmt(a);}},
-  {p:45,  d:20,  t:'mid',  nmax:600, hint:function(n,a){return '50% = '+fmt(n/2)+' ลบ 5% ('+fmt(n/20)+') = '+fmt(a);}},
-  {p:12.5,d:8,   t:'hard', nmax:800, hint:function(n,a){return '12.5% คือ ⅛ → '+fmt(n)+' ÷ 8 = '+fmt(a);}},
-  {p:150, d:2,   t:'hard', nmax:300, hint:function(n,a){return 'เต็ม '+fmt(n)+' + ครึ่ง ('+fmt(n/2)+') = '+fmt(a);}},
-  {p:2,   d:50,  t:'hard', nmax:4000,hint:function(n,a){return '1% = '+fmt(n/100)+' → ×2 = '+fmt(a);}},
-  {p:0.5, d:200, t:'hard', nmax:4000,hint:function(n,a){return '1% = '+fmt(n/100)+' → ครึ่งหนึ่ง = '+fmt(a);}},
-  {p:8,   d:25,  t:'hard', nmax:150, flip:true, hint:function(n,a){return 'พลิกกลับ! 8% ของ '+fmt(n)+' = '+fmt(n)+'% ของ 8 = '+fmt(a);}},
-  {p:16,  d:25,  t:'hard', nmax:150, flip:true, hint:function(n,a){return 'พลิกกลับ! 16% ของ '+fmt(n)+' = '+fmt(n)+'% ของ 16 = '+fmt(a);}}
+  {p:10,  d:10,  t:'easy', nmax:400, hint:function(n,a){return 'หา 10% ให้เลื่อนจุดทศนิยมไปทางซ้าย 1 ตำแหน่ง ได้ '+fmt(a);}},
+  {p:50,  d:2,   t:'easy', nmax:400, hint:function(n,a){return '50% คือครึ่งหนึ่ง: '+fmt(n)+' ÷ 2 = '+fmt(a);}},
+  {p:25,  d:4,   t:'easy', nmax:400, hint:function(n,a){return '25% คือ 1 ใน 4: '+fmt(n)+' ÷ 4 = '+fmt(a);}},
+  {p:1,   d:100, t:'easy', nmax:5000,hint:function(n,a){return 'หา 1% ให้เลื่อนจุดทศนิยมไปทางซ้าย 2 ตำแหน่ง ได้ '+fmt(a);}},
+  {p:20,  d:5,   t:'easy', nmax:400, hint:function(n,a){return '1. 10% = '+fmt(n/10)+'<br>2. 20% = '+fmt(n/10)+' × 2 = '+fmt(a);}},
+  {p:5,   d:20,  t:'easy', nmax:800, hint:function(n,a){return '1. 10% = '+fmt(n/10)+'<br>2. 5% คือครึ่งของ 10% = '+fmt(n/10)+' ÷ 2 = '+fmt(a);}},
+  {p:75,  d:4,   t:'mid',  nmax:400, hint:function(n,a){return '1. 25% = '+fmt(n)+' ÷ 4 = '+fmt(n/4)+'<br>2. 75% = '+fmt(n/4)+' × 3 = '+fmt(a);}},
+  {p:30,  d:10,  t:'mid',  nmax:400, hint:function(n,a){return '1. 10% = '+fmt(n/10)+'<br>2. 30% = '+fmt(n/10)+' × 3 = '+fmt(a);}},
+  {p:15,  d:20,  t:'mid',  nmax:600, hint:function(n,a){return '1. 10% = '+fmt(n/10)+'<br>2. 5% คือครึ่งของ 10% = '+fmt(n/20)+'<br>3. 15% = '+fmt(n/10)+' + '+fmt(n/20)+' = '+fmt(a);}},
+  {p:40,  d:5,   t:'mid',  nmax:400, hint:function(n,a){return '1. 10% = '+fmt(n/10)+'<br>2. 40% = '+fmt(n/10)+' × 4 = '+fmt(a);}},
+  {p:60,  d:5,   t:'mid',  nmax:400, hint:function(n,a){return '1. 10% = '+fmt(n/10)+'<br>2. 60% = '+fmt(n/10)+' × 6 = '+fmt(a);}},
+  {p:90,  d:10,  t:'mid',  nmax:400, hint:function(n,a){return '1. 10% = '+fmt(n/10)+'<br>2. 90% = ทั้งหมด ลบ 10% = '+fmt(n)+' − '+fmt(n/10)+' = '+fmt(a);}},
+  {p:35,  d:20,  t:'mid',  nmax:600, hint:function(n,a){return '1. 10% = '+fmt(n/10)+'<br>2. 35% = '+fmt(n/10)+' × 3.5 = '+fmt(a);}},
+  {p:45,  d:20,  t:'mid',  nmax:600, hint:function(n,a){return '1. 50% = '+fmt(n/2)+'<br>2. 5% = '+fmt(n/20)+'<br>3. 45% = '+fmt(n/2)+' − '+fmt(n/20)+' = '+fmt(a);}},
+  {p:12.5,d:8,   t:'hard', nmax:800, hint:function(n,a){return '12.5% คือ 1 ใน 8: '+fmt(n)+' ÷ 8 = '+fmt(a);}},
+  {p:150, d:2,   t:'hard', nmax:300, hint:function(n,a){return '150% = ทั้งหมด บวกอีกครึ่ง = '+fmt(n)+' + '+fmt(n/2)+' = '+fmt(a);}},
+  {p:2,   d:50,  t:'hard', nmax:4000,hint:function(n,a){return '1. 1% = '+fmt(n/100)+'<br>2. 2% = '+fmt(n/100)+' × 2 = '+fmt(a);}},
+  {p:0.5, d:200, t:'hard', nmax:4000,hint:function(n,a){return '1. 1% = '+fmt(n/100)+'<br>2. 0.5% คือครึ่งของ 1% = '+fmt(n/100)+' ÷ 2 = '+fmt(a);}},
+  {p:8,   d:25,  t:'hard', nmax:150, flip:true, hint:function(n,a){return 'สลับเลขได้! 8% ของ '+fmt(n)+' เท่ากับ '+fmt(n)+'% ของ 8 ซึ่งคิดง่ายกว่า ได้ '+fmt(a);}},
+  {p:16,  d:25,  t:'hard', nmax:150, flip:true, hint:function(n,a){return 'สลับเลขได้! 16% ของ '+fmt(n)+' เท่ากับ '+fmt(n)+'% ของ 16 ซึ่งคิดง่ายกว่า ได้ '+fmt(a);}}
 ];
 function rnd(a,b){ return a + Math.floor(Math.random()*(b-a+1)); }
 function pickBase(k){

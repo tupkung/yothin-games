@@ -85,7 +85,7 @@ try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegra
     <b>กฎ 3 ข้อ (เหมือนการ์ดของคุณแม่)</b>
     <ol>
       <li><b>เขียนชื่อหัวคอลัมน์ก่อน</b> แล้วเลขต้องอยู่ <b>ใต้ชื่อของมันเอง</b></li>
-      <li>เลขไหนอยู่ <b>ทแยง</b> กับ ? → ตัวนั้นเอาไป <b>หาร</b> อีก 2 ตัวคูณกัน</li>
+      <li>เลขไหนอยู่ <b>ทแยง</b> กับ ? ตัวนั้นเอาไป <b>หาร</b> ส่วนอีก 2 ตัวเอามาคูณกัน</li>
       <li>ก่อนคิดเลข ถามตัวเองว่าคำตอบควร <b>มากกว่า</b> หรือ <b>น้อยกว่า</b></li>
     </ol>
   </div>
@@ -245,13 +245,13 @@ var GEN = (function () {
       for (var i = 0; i < opts.length; i++) if (opts[i].v === v) return;
       opts.push({ v: v, why: why });
     }
-    add(t.wrongPair, 'วางเลข ' + fmt(t.k) + ' ผิดคอลัมน์ (เอาไปไว้ใต้ "' + t.cols[1 - t.kc] + '") ได้คำตอบกลับทิศ');
-    add(t.flipMul, 'คูณกลับ — เอาตัวที่ทแยงกับ ? ไปคูณ แทนที่จะหาร');
+    add(t.wrongPair, 'ถ้าเลือกข้อนี้ = น้องวาง ' + fmt(t.k) + ' ผิดช่อง (ไปไว้ใต้ "' + t.cols[1 - t.kc] + '") เลยได้คำตอบกลับทิศ');
+    add(t.flipMul, 'ถ้าเลือกข้อนี้ = น้องเอาตัวที่ทแยงกับ ? ไปคูณ แต่ตัวทแยงต้องเอาไปหาร');
     var guard = 0;
     while (opts.length < 4 && guard++ < 50) {
       var d = pick([2, 3, 4, 5, 10]) * (rnd() < .5 ? 1 : -1);
       var v = t.ans + d * Math.max(1, Math.round(t.ans / 20));
-      add(v, 'คิดเลขพลาด — ลองคูณ-หารใหม่ทีละขั้น');
+      add(v, 'ถ้าเลือกข้อนี้ = คิดเลขพลาด ลองคูณ หาร ใหม่ทีละขั้น');
     }
     return opts;
   }
@@ -278,11 +278,11 @@ var GEN = (function () {
           ' ถ้ามี' + c[0] + ' ' + fmt(k) + ' ' + c[3] + ' จะมี' + c[2] + 'กี่' + c[3],
         ans: ans,
         opts: [{ v: ans, why: '' },
-          { v: stop, why: 'หยุดที่ตัวเชื่อม — ' + fmt(stop) + ' คือจำนวน' + c[1] + ' แต่โจทย์ถาม' + c[2] + ' (อ่านคำถามซ้ำก่อนตอบ)' },
-          { v: wrong, why: 'รวมอัตราส่วนถูก แต่วาง ' + fmt(k) + ' ไว้ใต้ "' + c[2] + '" ทั้งที่มันคือ' + c[0] + ' → ได้คำตอบกลับทิศ' },
-          { v: skip, why: 'ข้ามตัวเชื่อม — เอา ' + cc + ' : ' + d + ' มาใช้กับ' + c[0] + 'ตรง ๆ ทั้งที่คู่นี้เทียบกับ' + c[1] }],
+          { v: stop, why: 'ถ้าเลือกข้อนี้ = น้องหยุดที่ตัวกลาง ' + fmt(stop) + ' คือจำนวน' + c[1] + ' แต่โจทย์ถาม' + c[2] + ' (อ่านคำถามซ้ำก่อนตอบ)' },
+          { v: wrong, why: 'ถ้าเลือกข้อนี้ = รวมอัตราส่วนถูก แต่วาง ' + fmt(k) + ' ไว้ใต้ "' + c[2] + '" ทั้งที่มันคือ' + c[0] + ' เลยได้คำตอบกลับทิศ' },
+          { v: skip, why: 'ถ้าเลือกข้อนี้ = น้องข้ามตัวกลาง เอา ' + cc + ' : ' + d + ' มาใช้กับ' + c[0] + 'ตรง ๆ แต่คู่นี้เทียบกับ' + c[1] }],
         tbl: Object.assign(table([c[0], c[2]], [X, Z], 0, k), { unit: c[3] }),
-        steps: 'ทำ' + c[1] + 'ให้เท่ากัน: ' + c[0] + ' : ' + c[1] + ' : ' + c[2] + ' = ' + X + ' : ' + L + ' : ' + Z
+        steps: '1. ' + c[1] + 'อยู่ในทั้งสองคู่ ต้องทำให้เท่ากันก่อน (ใช้ ค.ร.น.)<br>2. ได้ ' + c[0] + ' : ' + c[1] + ' : ' + c[2] + ' = ' + X + ' : ' + L + ' : ' + Z + '<br>3. เอา' + c[0] + 'กับ' + c[2] + 'มาเขียนตารางข้างล่าง'
       };
     }
   }
@@ -295,10 +295,10 @@ var GEN = (function () {
       if (!isInt(cost) || !isInt(G) || reservedNums([P, S, cost, G])) continue;
       var opts = [{ v: pct, why: '' }];
       function add(v, why) { if (v > 0 && isInt(v) && !opts.some(function (o) { return o.v === v; })) opts.push({ v: v, why: why }); }
-      add(r, 'ตอบเลขส่วนลด — ' + r + '% คือที่ร้านลดให้ ไม่ใช่กำไร');
-      if (S > P) add((S - P) * 100 / P, 'ใช้ราคาป้ายเป็นทุน — แต่เราจ่ายจริงแค่ราคาหลังลด ' + fmt(cost) + ' บาท');
-      add(G * 100 / S, 'หารด้วยราคาขาย — กำไรร้อยละต้องเทียบกับทุนเสมอ');
-      add(G * cost / 100, 'คูณกลับ — ' + fmt(G) + ' × ' + fmt(cost) + ' ÷ 100 · กำไรเกินร้อยละ 100 ต้องสะดุดทันที');
+      add(r, 'ถ้าเลือกข้อนี้ = นี่คือส่วนลด ' + r + '% ที่ร้านลดให้ ไม่ใช่กำไร');
+      if (S > P) add((S - P) * 100 / P, 'ถ้าเลือกข้อนี้ = น้องใช้ราคาป้ายเป็นทุน แต่แม่ค้าจ่ายจริงแค่ราคาหลังลด ' + fmt(cost) + ' บาท');
+      add(G * 100 / S, 'ถ้าเลือกข้อนี้ = น้องหารด้วยราคาขาย แต่กำไรร้อยละต้องเทียบกับทุนเสมอ');
+      add(G * cost / 100, 'ถ้าเลือกข้อนี้ = น้องคูณกลับ (' + fmt(G) + ' × ' + fmt(cost) + ' ÷ 100) ถ้าได้กำไรเกินร้อยละ 100 แบบนี้ ต้องสงสัยไว้ก่อน');
       if (opts.length < 4) continue;
       opts = opts.slice(0, 4);
       return {
@@ -306,7 +306,7 @@ var GEN = (function () {
         story: 'แม่ค้าซื้อของราคาป้าย ' + fmt(P) + ' บาท ได้ส่วนลด ' + r + '% แล้วนำไปขายต่อได้ ' + fmt(S) + ' บาท แม่ค้าได้กำไรร้อยละเท่าไร',
         ans: pct, opts: opts,
         tbl: Object.assign(table(['ทุน (บาท)', 'กำไร (บาท)'], [cost, G], 0, 100), { unit: '%' }),
-        steps: 'ทุน = ' + fmt(P) + ' − ' + r + '% = ' + fmt(cost) + ' บาท · กำไร = ' + fmt(S) + ' − ' + fmt(cost) + ' = ' + fmt(G) + ' บาท'
+        steps: '1. ทุน = ราคาป้ายหลังลด ' + r + '% = ' + fmt(P) + ' × ' + (100 - r) + '/100 = ' + fmt(cost) + ' บาท<br>2. กำไร = ขาย − ทุน = ' + fmt(S) + ' − ' + fmt(cost) + ' = ' + fmt(G) + ' บาท<br>3. เอาทุนกับกำไรมาเขียนตารางข้างล่าง'
       };
     }
   }
@@ -400,7 +400,7 @@ function render1() {
       [].forEach.call(document.querySelectorAll('.ch'), function (x) { x.disabled = true; });
       score(ok, t.story);
       var why = ok ? '✔ ถูก! ' + fmt(t.k) + ' คือ "' + t.cols[t.kc] + '" เลยอยู่ใต้ชื่อนี้'
-        : '✘ ' + fmt(t.k) + ' ในโจทย์คือ <b>' + t.cols[t.kc] + '</b> — ต้องอยู่ใต้ชื่อของมันเอง ถ้าวางผิดช่อง คำตอบจะกลับทิศ (ได้ ' + fmt(+t.wrongPair.toFixed(2)) + ' แทน ' + fmt(t.ans) + ')';
+        : '✘ ' + fmt(t.k) + ' ในโจทย์คือ <b>' + t.cols[t.kc] + '</b> ต้องอยู่ใต้ชื่อของมันเอง<br>ถ้าวางผิดช่อง คำตอบจะกลับทิศ (ได้ ' + fmt(+t.wrongPair.toFixed(2)) + ' แทน ' + fmt(t.ans) + ')';
       $('stage').querySelector('table').outerHTML = tableHTML(t, 'full', { k: ok ? 'pick' : 'wrongpick' });
       $('fbx').innerHTML = feedback(ok, why);
       bindNext();
@@ -425,8 +425,8 @@ function render2() {
       b.classList.add(ok ? 'right' : 'wrong');
       [].forEach.call(document.querySelectorAll('.ch'), function (x) { x.disabled = true; });
       score(ok, t.story);
-      var why = (ok ? '✔ ใช่เลย! ' + fmt(t.divisor) + ' อยู่ทแยงกับ ? → เอาไปหาร' :
-        '✘ ตัวทแยงคือ <b>' + fmt(t.divisor) + '</b> (มุมตรงข้ามกับ ?) — ' + (v === t.k ? fmt(v) + ' อยู่แถวเดียวกับ ? ' : fmt(v) + ' อยู่คอลัมน์เดียวกับ ? ') + 'จึงเป็นตัวคูณ') +
+      var why = (ok ? '✔ ใช่เลย! ' + fmt(t.divisor) + ' อยู่ทแยงกับ ? เลยเอาไปหาร' :
+        '✘ ตัวทแยงคือ <b>' + fmt(t.divisor) + '</b> (มุมตรงข้ามกับ ?)<br>' + (v === t.k ? fmt(v) + ' อยู่แถวเดียวกับ ? ' : fmt(v) + ' อยู่คอลัมน์เดียวกับ ? ') + 'เลยเป็นตัวคูณ') +
         '<span class="calc">' + calcLine(t) + '</span>';
       $('stage').querySelector('table').outerHTML = tableHTML(t, 'full', { div: 1, ans: t.ans });
       $('fbx').innerHTML = feedback(ok, why);
@@ -453,7 +453,7 @@ function render3() {
         b.classList.add(S.dirOk ? 'right' : 'wrong');
         var oc = 1 - t.kc;
         $('fbx').innerHTML = '<div class="fb ' + (S.dirOk ? 'ok' : 'bad') + '">' + (S.dirOk ? '✔ ' : '✘ ') +
-          'แถวบน ' + fmt(t.row1[t.kc]) + ' → ' + fmt(t.row1[oc]) + ' ' + (t.more ? 'ฝั่ง ? ใหญ่กว่า → คำตอบ<b>มากกว่า</b> ' : 'ฝั่ง ? เล็กกว่า → คำตอบ<b>น้อยกว่า</b> ') + fmt(t.k) + '</div>';
+          'แถวบน ' + fmt(t.row1[t.kc]) + ' กับ ' + fmt(t.row1[oc]) + ' ' + (t.more ? 'ฝั่ง ? ใหญ่กว่า เลยคำตอบ<b>มากกว่า</b> ' : 'ฝั่ง ? เล็กกว่า เลยคำตอบ<b>น้อยกว่า</b> ') + fmt(t.k) + '</div>';
         S.step = 1;
         setTimeout(render3, 900);
       };
@@ -496,7 +496,7 @@ function render4() {
       [].forEach.call(document.querySelectorAll('.ch'), function (x) { x.disabled = true; if (opts[+x.dataset.i].v === p.ans) x.classList.add('right'); });
       if (!ok) b.classList.add('wrong');
       score(ok, p.story);
-      var why = (ok ? '✔ ไม่ติดกับดัก เก่งมาก!' : '✘ กับดัก: ' + o.why) +
+      var why = (ok ? '✔ ไม่ติดกับดัก เก่งมาก!' : '✘ ' + o.why) +
         (p.steps ? '<span class="calc">' + p.steps + '</span>' : '') +
         tableHTML(p.tbl, 'full', { div: 1, ans: p.tbl.ans }) + '<span class="calc">' + calcLine(p.tbl) + '</span>';
       $('fbx').innerHTML = feedback(ok, why);

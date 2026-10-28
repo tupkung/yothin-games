@@ -78,16 +78,16 @@ footer{margin-top:28px;color:var(--muted);font-size:.78rem;text-align:center;lin
 
 <section id="menu">
   <h1>🔍 สแกน Error ID + tag + NOT</h1>
-  <p class="sub">3 เรื่องที่ไม่ใช่ไวยากรณ์ยาก แต่เป็น<b>นิสัยก่อนตอบ</b>: สแกน 6 จุดตามลำดับ · เช็ก tag 2 อย่าง · วงคำว่า NOT ก่อนอ่านช้อยส์ — ทุกข้อ 2 ขั้น ขั้นแรกคือ "ทำนิสัย" ขั้นสองค่อยตอบ ถูกทั้งสองขั้นถึงได้คะแนน</p>
+  <p class="sub">3 เรื่องนี้ไม่ใช่ไวยากรณ์ยาก แต่เป็น<b>นิสัยก่อนตอบ</b> คือ สแกน 6 จุดตามลำดับ, เช็ก tag 2 อย่าง, วงคำว่า NOT ก่อนอ่านช้อยส์<br>ทุกข้อมี 2 ขั้น ขั้น 1 ทำนิสัย ขั้น 2 ค่อยตอบ ต้องถูกทั้งสองขั้นถึงได้คะแนน</p>
 
   <button class="lv" data-lv="1"><span class="best" id="b1"></span><b>ด่าน 1 · Error ID — สแกน 6 จุด</b>
-    <div class="d">ขั้น 1 บอกว่าจุดสแกนไหนที่ผิด (ประธาน–กริยา · tense · adj/adv · -ed/-ing · tag · เปรียบเทียบ) · ขั้น 2 ชี้ส่วนที่ผิดพร้อมวิธีแก้ — 10 ข้อ เป้า 8</div></button>
+    <div class="d">ขั้น 1 บอกว่าผิดที่จุดไหน (ประธานกับกริยา, tense, adj/adv, -ed/-ing, tag, เปรียบเทียบ) ขั้น 2 ชี้คำที่ผิดพร้อมวิธีแก้ 10 ข้อ เป้า 8</div></button>
   <button class="lv" data-lv="2"><span class="best" id="b2"></span><b>ด่าน 2 · Question tag — เช็ก 2 อย่าง</b>
-    <div class="d">ขั้น 1 ขั้ว (บวก↔ลบ หรือกรณีพิเศษ I am / Let's / There is) · ขั้น 2 เลือก tag ที่กริยาช่วยตรงกับประโยคหน้า — 10 ข้อ เป้า 8</div></button>
+    <div class="d">ขั้น 1 ดูว่าประโยคหน้าเป็นบวก ลบ หรือกรณีพิเศษ (I am / Let's / There is) ขั้น 2 เลือก tag ที่คำช่วยตรงกับประโยคหน้า 10 ข้อ เป้า 8</div></button>
   <button class="lv" data-lv="3"><span class="best" id="b3"></span><b>ด่าน 3 · NOT / EXCEPT / INCORRECT — วงก่อนอ่าน</b>
-    <div class="d">ขั้น 1 บอกว่าคำถามให้หา "ข้อที่ไม่ตรง" หรือ "ข้อที่ตรง" (มีข้อปกติปนอยู่ ต้องอ่านจริง) · ขั้น 2 ติ๊ก ✔ ข้อจริงทีละข้อ แล้วตอบ — 8 ข้อ เป้า 7</div></button>
+    <div class="d">ขั้น 1 บอกว่าคำถามให้หา "ข้อที่ไม่ตรง" หรือ "ข้อที่ตรง" (มีคำถามปกติปนอยู่ ต้องอ่านจริง) ขั้น 2 ติ๊ก ✔ ข้อจริงทีละข้อ แล้วตอบ 8 ข้อ เป้า 7</div></button>
 
-  <p class="tip">💡 กฎเดียวก่อนเล่น: <b>ข้อสอบพวกนี้ตอบผิดเพราะ "ข้ามนิสัย" ไม่ใช่เพราะไม่รู้</b> — ขั้น 1 ของทุกข้อคือนิสัยที่ต้องทำในห้องสอบจริง (ในกระดาษจริงให้ขีด/วงด้วยดินสอ)<br>
+  <p class="tip">💡 กฎข้อเดียวก่อนเล่น: <b>ข้อแบบนี้มักผิดเพราะ "ข้ามนิสัย" ไม่ใช่เพราะไม่รู้</b> ขั้น 1 ของทุกข้อคือนิสัยที่ต้องทำในห้องสอบจริง (ในกระดาษจริงให้ขีดหรือวงด้วยดินสอ)<br>
   ⌨️ กดเลข <kbd>1</kbd>–<kbd>4</kbd> เลือกช้อยส์ได้</p>
 </section>
 
@@ -135,48 +135,48 @@ try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegra
 /* ---------- ด่าน 1: Error ID — จุดสแกน 6 จุด (ลำดับตาม itembank 01 § Computation) ---------- */
 const SCAN = ['ประธาน–กริยา (ปิดวลี of… ก่อน)', 'รูปกริยา / tense', 'adjective หรือ adverb', '-ed / -ing ในคำคุณศัพท์', 'question tag', 'เปรียบเทียบ / โครงสร้างขนาน'];
 const ERR = [
-  { cat: 0, s: 'The price of these shoes <u><b>1</b>are</u> <u><b>2</b>too</u> <u><b>3</b>high</u> for <u><b>4</b>me</u>.', a: '1 — are → is', wrong: ['2 — too (ถูกแล้ว)', '3 — high (ถูกแล้ว)', '4 — me (ถูกแล้ว)'], why: 'ปิดวลี "of these shoes" → ประธานคือ The price (เอกพจน์) → is' },
-  { cat: 0, s: 'Each of the students <u><b>1</b>have</u> <u><b>2</b>to</u> bring <u><b>3</b>their</u> own <u><b>4</b>lunch</u>.', a: '1 — have → has', wrong: ['2 — to (ถูกแล้ว)', '3 — their (ถูกแล้ว)', '4 — lunch (ถูกแล้ว)'], why: 'ปิด "of the students" → ประธานคือ Each (เอกพจน์) → has' },
-  { cat: 2, s: 'Grace speaks English <u><b>1</b>very</u> <u><b>2</b>fluent</u>, so she <u><b>3</b>rarely</u> <u><b>4</b>makes</u> mistakes.', a: '2 — fluent → fluently', wrong: ['1 — very (ถูกแล้ว)', '3 — rarely (ถูกแล้ว)', '4 — makes (ถูกแล้ว)'], why: 'ขยายกริยา speaks → adverb fluently · rarely ขยาย makes ถูกแล้ว' },
-  { cat: 2, s: 'It was a <u><b>1</b>terribly</u> storm, and the wind <u><b>2</b>blew</u> <u><b>3</b>strongly</u> all <u><b>4</b>night</u>.', a: '1 — terribly → terrible', wrong: ['2 — blew (ถูกแล้ว)', '3 — strongly (ถูกแล้ว)', '4 — night (ถูกแล้ว)'], why: 'ขยายคำนาม storm → adjective terrible (กับดักกลับด้าน) · strongly ขยาย blew ถูกแล้ว' },
-  { cat: 1, s: 'Last night we <u><b>1</b>watch</u> a movie <u><b>2</b>that</u> <u><b>3</b>was</u> really <u><b>4</b>exciting</u>.', a: '1 — watch → watched', wrong: ['2 — that (ถูกแล้ว)', '3 — was (ถูกแล้ว)', '4 — exciting (ถูกแล้ว)'], why: 'Last night → past simple watched · exciting (หนังทำให้ตื่นเต้น) ถูกแล้ว' },
-  { cat: 1, s: 'My brother <u><b>1</b>has visited</u> Japan <u><b>2</b>in</u> 2022 <u><b>3</b>with</u> <u><b>4</b>his</u> class.', a: '1 — has visited → visited', wrong: ['2 — in (ถูกแล้ว)', '3 — with (ถูกแล้ว)', '4 — his (ถูกแล้ว)'], why: 'in 2022 = เวลาอดีตชัด → past simple ห้าม present perfect' },
-  { cat: 3, s: 'I was very <u><b>1</b>exciting</u> <u><b>2</b>about</u> the trip, so I <u><b>3</b>packed</u> my bag <u><b>4</b>early</u>.', a: '1 — exciting → excited', wrong: ['2 — about (ถูกแล้ว)', '3 — packed (ถูกแล้ว)', '4 — early (ถูกแล้ว)'], why: 'คน "รู้สึก" → -ed (excited) · สิ่งที่ทำให้รู้สึก → -ing' },
-  { cat: 3, s: 'The movie was <u><b>1</b>really</u> <u><b>2</b>bored</u>, so we <u><b>3</b>left</u> <u><b>4</b>before</u> the end.', a: '2 — bored → boring', wrong: ['1 — really (ถูกแล้ว)', '3 — left (ถูกแล้ว)', '4 — before (ถูกแล้ว)'], why: 'หนังเป็นสิ่งที่ทำให้เบื่อ → boring · คนที่รู้สึกเบื่อ → bored' },
-  { cat: 4, s: 'Your parents <u><b>1</b>have</u> <u><b>2</b>lived</u> here for years, <u><b>3</b>didn\'t</u> <u><b>4</b>they</u>?', a: '3 — didn\'t → haven\'t', wrong: ['1 — have (ถูกแล้ว)', '2 — lived (ถูกแล้ว)', '4 — they (ถูกแล้ว)'], why: 'กริยาช่วยของ tag ต้องตรงกับประโยคหน้า (have) → haven\'t they' },
-  { cat: 4, s: 'Nobody <u><b>1</b>called</u> <u><b>2</b>while</u> I was <u><b>3</b>out</u>, <u><b>4</b>didn\'t they</u>?', a: '4 — didn\'t they → did they', wrong: ['1 — called (ถูกแล้ว)', '2 — while (ถูกแล้ว)', '3 — out (ถูกแล้ว)'], why: 'Nobody = ประโยคลบ → tag ต้องเป็นบวก did they' },
-  { cat: 5, s: '<u><b>1</b>This</u> exam was <u><b>2</b>more easier</u> <u><b>3</b>than</u> the <u><b>4</b>last</u> one.', a: '2 — more easier → easier', wrong: ['1 — This (ถูกแล้ว)', '3 — than (ถูกแล้ว)', '4 — last (ถูกแล้ว)'], why: 'easy สั้น → easier อย่างเดียว ห้ามใส่ more ซ้อน' },
-  { cat: 5, s: 'Tom likes <u><b>1</b>swimming</u>, <u><b>2</b>running</u>, and <u><b>3</b>to ride</u> <u><b>4</b>his</u> bike.', a: '3 — to ride → riding', wrong: ['1 — swimming (ถูกแล้ว)', '2 — running (ถูกแล้ว)', '4 — his (ถูกแล้ว)'], why: 'โครงสร้างขนาน: รายการเดียวกันต้องรูปเดียวกัน (-ing ทั้งหมด)' },
+  { cat: 0, s: 'The price of these shoes <u><b>1</b>are</u> <u><b>2</b>too</u> <u><b>3</b>high</u> for <u><b>4</b>me</u>.', a: '1 — are → is', wrong: ['2 — too (ถูกแล้ว)', '3 — high (ถูกแล้ว)', '4 — me (ถูกแล้ว)'], why: 'ปิดวลี "of these shoes" ก่อน ประธานคือ The price ซึ่งเป็นเอกพจน์ จึงแก้ are เป็น is ที่ถูก: The price of these shoes is too high for me.' },
+  { cat: 0, s: 'Each of the students <u><b>1</b>have</u> <u><b>2</b>to</u> bring <u><b>3</b>their</u> own <u><b>4</b>lunch</u>.', a: '1 — have → has', wrong: ['2 — to (ถูกแล้ว)', '3 — their (ถูกแล้ว)', '4 — lunch (ถูกแล้ว)'], why: 'ปิดวลี "of the students" ก่อน ประธานคือ Each ซึ่งเป็นเอกพจน์ จึงแก้ have เป็น has ที่ถูก: Each of the students has to bring their own lunch.' },
+  { cat: 2, s: 'Grace speaks English <u><b>1</b>very</u> <u><b>2</b>fluent</u>, so she <u><b>3</b>rarely</u> <u><b>4</b>makes</u> mistakes.', a: '2 — fluent → fluently', wrong: ['1 — very (ถูกแล้ว)', '3 — rarely (ถูกแล้ว)', '4 — makes (ถูกแล้ว)'], why: 'คำที่ขยายกริยา speaks ต้องเป็นคำวิเศษณ์ (adverb) จึงแก้ fluent เป็น fluently ส่วน rarely ขยาย makes ถูกแล้ว ที่ถูก: Grace speaks English very fluently.' },
+  { cat: 2, s: 'It was a <u><b>1</b>terribly</u> storm, and the wind <u><b>2</b>blew</u> <u><b>3</b>strongly</u> all <u><b>4</b>night</u>.', a: '1 — terribly → terrible', wrong: ['2 — blew (ถูกแล้ว)', '3 — strongly (ถูกแล้ว)', '4 — night (ถูกแล้ว)'], why: 'คำที่ขยายคำนาม storm ต้องเป็นคุณศัพท์ (adjective) จึงแก้ terribly เป็น terrible (ข้อนี้กลับด้านกับปกติ) ส่วน strongly ขยาย blew ถูกแล้ว ที่ถูก: It was a terrible storm.' },
+  { cat: 1, s: 'Last night we <u><b>1</b>watch</u> a movie <u><b>2</b>that</u> <u><b>3</b>was</u> really <u><b>4</b>exciting</u>.', a: '1 — watch → watched', wrong: ['2 — that (ถูกแล้ว)', '3 — was (ถูกแล้ว)', '4 — exciting (ถูกแล้ว)'], why: 'มี Last night จึงต้องใช้ past simple แก้ watch เป็น watched ส่วน exciting ถูกแล้ว เพราะหนังทำให้ตื่นเต้น ที่ถูก: Last night we watched a movie that was really exciting.' },
+  { cat: 1, s: 'My brother <u><b>1</b>has visited</u> Japan <u><b>2</b>in</u> 2022 <u><b>3</b>with</u> <u><b>4</b>his</u> class.', a: '1 — has visited → visited', wrong: ['2 — in (ถูกแล้ว)', '3 — with (ถูกแล้ว)', '4 — his (ถูกแล้ว)'], why: 'in 2022 บอกเวลาอดีตชัด ๆ ต้องใช้ past simple ห้ามใช้ present perfect จึงแก้ has visited เป็น visited ที่ถูก: My brother visited Japan in 2022 with his class.' },
+  { cat: 3, s: 'I was very <u><b>1</b>exciting</u> <u><b>2</b>about</u> the trip, so I <u><b>3</b>packed</u> my bag <u><b>4</b>early</u>.', a: '1 — exciting → excited', wrong: ['2 — about (ถูกแล้ว)', '3 — packed (ถูกแล้ว)', '4 — early (ถูกแล้ว)'], why: 'คนเป็นคน "รู้สึก" ใช้ -ed (excited) ส่วนสิ่งที่ทำให้รู้สึก ใช้ -ing ที่ถูก: I was very excited about the trip.' },
+  { cat: 3, s: 'The movie was <u><b>1</b>really</u> <u><b>2</b>bored</u>, so we <u><b>3</b>left</u> <u><b>4</b>before</u> the end.', a: '2 — bored → boring', wrong: ['1 — really (ถูกแล้ว)', '3 — left (ถูกแล้ว)', '4 — before (ถูกแล้ว)'], why: 'หนังเป็นสิ่งที่ทำให้เบื่อ ใช้ boring ส่วนคนที่รู้สึกเบื่อ ใช้ bored ที่ถูก: The movie was really boring.' },
+  { cat: 4, s: 'Your parents <u><b>1</b>have</u> <u><b>2</b>lived</u> here for years, <u><b>3</b>didn\'t</u> <u><b>4</b>they</u>?', a: '3 — didn\'t → haven\'t', wrong: ['1 — have (ถูกแล้ว)', '2 — lived (ถูกแล้ว)', '4 — they (ถูกแล้ว)'], why: 'คำช่วยใน tag ต้องตรงกับประโยคหน้า ซึ่งใช้ have จึงแก้ didn\'t เป็น haven\'t ที่ถูก: Your parents have lived here for years, haven\'t they?' },
+  { cat: 4, s: 'Nobody <u><b>1</b>called</u> <u><b>2</b>while</u> I was <u><b>3</b>out</u>, <u><b>4</b>didn\'t they</u>?', a: '4 — didn\'t they → did they', wrong: ['1 — called (ถูกแล้ว)', '2 — while (ถูกแล้ว)', '3 — out (ถูกแล้ว)'], why: 'Nobody ทำให้ประโยคเป็นปฏิเสธ (ลบ) tag ต้องเป็นบวก ที่ถูก: Nobody called while I was out, did they?' },
+  { cat: 5, s: '<u><b>1</b>This</u> exam was <u><b>2</b>more easier</u> <u><b>3</b>than</u> the <u><b>4</b>last</u> one.', a: '2 — more easier → easier', wrong: ['1 — This (ถูกแล้ว)', '3 — than (ถูกแล้ว)', '4 — last (ถูกแล้ว)'], why: 'easy เป็นคำสั้น ใช้ easier อย่างเดียว ห้ามใส่ more ซ้อน ที่ถูก: This exam was easier than the last one.' },
+  { cat: 5, s: 'Tom likes <u><b>1</b>swimming</u>, <u><b>2</b>running</u>, and <u><b>3</b>to ride</u> <u><b>4</b>his</u> bike.', a: '3 — to ride → riding', wrong: ['1 — swimming (ถูกแล้ว)', '2 — running (ถูกแล้ว)', '4 — his (ถูกแล้ว)'], why: 'ของในรายการเดียวกันต้องเป็นรูปเดียวกัน (โครงสร้างขนาน) คือเติม -ing ทั้งหมด ที่ถูก: Tom likes swimming, running, and riding his bike.' },
 ];
 
 /* ---------- ด่าน 2: question tag — ขั้ว + กริยาช่วย ---------- */
-const POS = 'ประโยคหน้าบวก → tag ลบ', NEG = 'ประโยคหน้าลบ (not / never / nobody) → tag บวก', SPC = 'กรณีพิเศษ (I am → aren\'t I · Let\'s → shall we · There is → isn\'t there)';
+const POS = 'ประโยคหน้าบวก ใช้ tag ลบ', NEG = 'ประโยคหน้าลบ (not / never / nobody) ใช้ tag บวก', SPC = 'กรณีพิเศษ (I am ใช้ aren\'t I, Let\'s ใช้ shall we, There is ใช้ isn\'t there)';
 const TAG = [
-  { s: 'Your brother plays football, ___?', pol: POS, a: 'doesn\'t he', wrong: ['does he', 'isn\'t he', 'didn\'t he'], why: 'บวก → ลบ · ไม่มีกริยาช่วย + plays → doesn\'t' },
-  { s: 'They weren\'t at school yesterday, ___?', pol: NEG, a: 'were they', wrong: ['weren\'t they', 'did they', 'are they'], why: 'ลบ → บวก · กริยาช่วย were' },
-  { s: 'I\'m late again, ___?', pol: SPC, a: 'aren\'t I', wrong: ['amn\'t I', 'am I', 'isn\'t I'], why: 'I am … → aren\'t I (ไม่มีคำว่า amn\'t)' },
-  { s: 'Let\'s order pizza tonight, ___?', pol: SPC, a: 'shall we', wrong: ['don\'t we', 'will we', 'do we'], why: 'Let\'s … → shall we เสมอ' },
-  { s: 'There is a test tomorrow, ___?', pol: SPC, a: 'isn\'t there', wrong: ['isn\'t it', 'is there', 'doesn\'t there'], why: 'ประธานคือ there → isn\'t there (ไม่ใช่ it)' },
-  { s: 'She has never been to Japan, ___?', pol: NEG, a: 'has she', wrong: ['hasn\'t she', 'does she', 'is she'], why: 'never = ลบ → tag บวก · กริยาช่วย has' },
-  { s: 'You can\'t swim, ___?', pol: NEG, a: 'can you', wrong: ['can\'t you', 'do you', 'are you'], why: 'ลบ → บวก · กริยาช่วย can' },
-  { s: 'We should leave now, ___?', pol: POS, a: 'shouldn\'t we', wrong: ['should we', 'don\'t we', 'will we'], why: 'บวก → ลบ · กริยาช่วย should' },
-  { s: 'Grandma made this cake, ___?', pol: POS, a: 'didn\'t she', wrong: ['did she', 'doesn\'t she', 'wasn\'t she'], why: 'บวก → ลบ · made (past) ไม่มีกริยาช่วย → didn\'t' },
-  { s: 'Nobody knows the answer, ___?', pol: NEG, a: 'do they', wrong: ['don\'t they', 'does he', 'doesn\'t he'], why: 'Nobody = ลบ → บวก · nobody ใช้สรรพนาม they' },
-  { s: 'It will be sunny tomorrow, ___?', pol: POS, a: 'won\'t it', wrong: ['will it', 'isn\'t it', 'doesn\'t it'], why: 'บวก → ลบ · กริยาช่วย will → won\'t' },
-  { s: 'You have to wear a uniform, ___?', pol: POS, a: 'don\'t you', wrong: ['haven\'t you', 'do you', 'have you'], why: 'have to เป็นกริยาแท้ (ไม่ใช่กริยาช่วย) → don\'t you' },
+  { s: 'Your brother plays football, ___?', pol: POS, a: 'doesn\'t he', wrong: ['does he', 'isn\'t he', 'didn\'t he'], why: 'ประโยคบวก tag ต้องลบ และไม่มีคำช่วย แต่มี plays จึงใช้ doesn\'t' },
+  { s: 'They weren\'t at school yesterday, ___?', pol: NEG, a: 'were they', wrong: ['weren\'t they', 'did they', 'are they'], why: 'ประโยคลบ tag ต้องบวก และคำช่วยคือ were' },
+  { s: 'I\'m late again, ___?', pol: SPC, a: 'aren\'t I', wrong: ['amn\'t I', 'am I', 'isn\'t I'], why: 'I am ใช้ tag ว่า aren\'t I (ไม่มีคำว่า amn\'t)' },
+  { s: 'Let\'s order pizza tonight, ___?', pol: SPC, a: 'shall we', wrong: ['don\'t we', 'will we', 'do we'], why: 'Let\'s ใช้ tag ว่า shall we เสมอ' },
+  { s: 'There is a test tomorrow, ___?', pol: SPC, a: 'isn\'t there', wrong: ['isn\'t it', 'is there', 'doesn\'t there'], why: 'ประธานคือ there จึงใช้ isn\'t there ไม่ใช่ it' },
+  { s: 'She has never been to Japan, ___?', pol: NEG, a: 'has she', wrong: ['hasn\'t she', 'does she', 'is she'], why: 'never ทำให้ประโยคเป็นลบ tag ต้องบวก และคำช่วยคือ has' },
+  { s: 'You can\'t swim, ___?', pol: NEG, a: 'can you', wrong: ['can\'t you', 'do you', 'are you'], why: 'ประโยคลบ tag ต้องบวก และคำช่วยคือ can' },
+  { s: 'We should leave now, ___?', pol: POS, a: 'shouldn\'t we', wrong: ['should we', 'don\'t we', 'will we'], why: 'ประโยคบวก tag ต้องลบ และคำช่วยคือ should' },
+  { s: 'Grandma made this cake, ___?', pol: POS, a: 'didn\'t she', wrong: ['did she', 'doesn\'t she', 'wasn\'t she'], why: 'ประโยคบวก tag ต้องลบ made เป็นอดีตและไม่มีคำช่วย จึงใช้ didn\'t' },
+  { s: 'Nobody knows the answer, ___?', pol: NEG, a: 'do they', wrong: ['don\'t they', 'does he', 'doesn\'t he'], why: 'Nobody ทำให้ประโยคเป็นลบ tag ต้องบวก และ nobody ใช้สรรพนาม they' },
+  { s: 'It will be sunny tomorrow, ___?', pol: POS, a: 'won\'t it', wrong: ['will it', 'isn\'t it', 'doesn\'t it'], why: 'ประโยคบวก tag ต้องลบ คำช่วย will เปลี่ยนเป็น won\'t' },
+  { s: 'You have to wear a uniform, ___?', pol: POS, a: 'don\'t you', wrong: ['haven\'t you', 'do you', 'have you'], why: 'have to เป็นกริยาแท้ ไม่ใช่คำช่วย จึงใช้ don\'t you' },
 ];
 
 /* ---------- ด่าน 3: NOT / EXCEPT / INCORRECT — วงก่อนอ่านช้อยส์ ---------- */
-const FIND_NOT = 'หา "ข้อที่ไม่ตรง" (NOT / EXCEPT / INCORRECT) → ติ๊ก ✔ ข้อจริงทีละข้อ ข้อที่เหลือคือคำตอบ', FIND_TRUE = 'หา "ข้อที่ตรงกับเรื่อง" (คำถามปกติ)';
+const FIND_NOT = 'หา "ข้อที่ไม่ตรง" (NOT / EXCEPT / INCORRECT) ติ๊ก ✔ ข้อจริงทีละข้อ ข้อที่เหลือคือคำตอบ', FIND_TRUE = 'หา "ข้อที่ตรงกับเรื่อง" (คำถามปกติ)';
 const NOTQ = [
-  { p: 'Mint gets up at six every day except Sunday. On Sundays she sleeps until nine and has a big breakfast with her family.', q: 'Which sentence is NOT true?', neg: true, a: 'Mint gets up at six on Sundays.', wrong: ['Mint usually gets up at six.', 'Mint sleeps late on Sundays.', 'Mint has breakfast with her family on Sundays.'], why: 'วันอาทิตย์นอนถึงเก้าโมง — ข้ออื่นจริงหมด' },
-  { p: 'The school bus leaves at 7.15. Students who are late must take the public bus, which costs 15 baht.', q: 'All of the following are true EXCEPT ___.', neg: true, a: 'The public bus is free.', wrong: ['The school bus leaves at 7.15.', 'Late students take the public bus.', 'The public bus costs 15 baht.'], why: 'รถเมล์สาธารณะ 15 บาท ไม่ฟรี — ข้ออื่นจริงหมด' },
-  { p: 'Pim\'s cat is black with white paws. It sleeps on her bed and likes fish, but it hates water.', q: 'Which sentence is TRUE?', neg: false, a: 'The cat does not like water.', wrong: ['The cat is completely black.', 'The cat sleeps in the kitchen.', 'The cat hates fish.'], why: 'คำถามปกติ — หาข้อที่ตรง: hates water = does not like water' },
-  { p: 'Our science club meets on Wednesdays after school. New members are welcome, but they must bring a notebook.', q: 'Which statement is INCORRECT?', neg: true, a: 'The club meets before school.', wrong: ['The club meets on Wednesdays.', 'New members can join.', 'Members need a notebook.'], why: 'after school ไม่ใช่ before — ข้ออื่นจริงหมด' },
-  { p: 'Dad cooks on weekdays, and Mom cooks at the weekend. On Fridays the family orders food from a restaurant.', q: 'Which is NOT correct?', neg: true, a: 'Mom cooks on Fridays.', wrong: ['Dad cooks on Mondays.', 'The family orders food on Fridays.', 'Mom cooks on Saturdays.'], why: 'ศุกร์สั่งอาหาร ไม่มีใครทำ — ข้ออื่นจริงหมด' },
-  { p: 'The museum is free for children under 12. Adults pay 100 baht, and students with a card pay half price.', q: 'According to the text, which is NOT true?', neg: true, a: 'Students with a card pay 100 baht.', wrong: ['Children under 12 do not pay.', 'Adults pay 100 baht.', 'Students with a card pay 50 baht.'], why: 'half price = 50 บาท — ข้ออื่นจริงหมด' },
-  { p: 'Ton wants to be a pilot. He studies English every night and plays football at weekends to stay fit.', q: 'What does Ton do at weekends?', neg: false, a: 'He plays football.', wrong: ['He studies English.', 'He flies planes.', 'He sleeps late.'], why: 'คำถามปกติ — at weekends → plays football (English คือทุกคืน)' },
-  { p: 'It rained all week, so the sports day was moved to next Monday. The art show will still be on Friday as planned.', q: 'Which sentence is NOT true?', neg: true, a: 'The art show was moved to Monday.', wrong: ['It rained all week.', 'Sports day is now on Monday.', 'The art show is on Friday.'], why: 'ที่ย้ายคือ sports day ไม่ใช่ art show — ข้ออื่นจริงหมด' },
+  { p: 'Mint gets up at six every day except Sunday. On Sundays she sleeps until nine and has a big breakfast with her family.', q: 'Which sentence is NOT true?', neg: true, a: 'Mint gets up at six on Sundays.', wrong: ['Mint usually gets up at six.', 'Mint sleeps late on Sundays.', 'Mint has breakfast with her family on Sundays.'], why: 'วันอาทิตย์ Mint นอนถึงเก้าโมง ข้ออื่นจริงหมด' },
+  { p: 'The school bus leaves at 7.15. Students who are late must take the public bus, which costs 15 baht.', q: 'All of the following are true EXCEPT ___.', neg: true, a: 'The public bus is free.', wrong: ['The school bus leaves at 7.15.', 'Late students take the public bus.', 'The public bus costs 15 baht.'], why: 'รถเมล์สาธารณะราคา 15 บาท ไม่ฟรี ข้ออื่นจริงหมด' },
+  { p: 'Pim\'s cat is black with white paws. It sleeps on her bed and likes fish, but it hates water.', q: 'Which sentence is TRUE?', neg: false, a: 'The cat does not like water.', wrong: ['The cat is completely black.', 'The cat sleeps in the kitchen.', 'The cat hates fish.'], why: 'ข้อนี้เป็นคำถามปกติ ให้หาข้อที่ตรง hates water แปลว่า does not like water' },
+  { p: 'Our science club meets on Wednesdays after school. New members are welcome, but they must bring a notebook.', q: 'Which statement is INCORRECT?', neg: true, a: 'The club meets before school.', wrong: ['The club meets on Wednesdays.', 'New members can join.', 'Members need a notebook.'], why: 'ชมรมเจอกัน after school ไม่ใช่ before ข้ออื่นจริงหมด' },
+  { p: 'Dad cooks on weekdays, and Mom cooks at the weekend. On Fridays the family orders food from a restaurant.', q: 'Which is NOT correct?', neg: true, a: 'Mom cooks on Fridays.', wrong: ['Dad cooks on Mondays.', 'The family orders food on Fridays.', 'Mom cooks on Saturdays.'], why: 'วันศุกร์ครอบครัวสั่งอาหาร ไม่มีใครทำ ข้ออื่นจริงหมด' },
+  { p: 'The museum is free for children under 12. Adults pay 100 baht, and students with a card pay half price.', q: 'According to the text, which is NOT true?', neg: true, a: 'Students with a card pay 100 baht.', wrong: ['Children under 12 do not pay.', 'Adults pay 100 baht.', 'Students with a card pay 50 baht.'], why: 'half price แปลว่าครึ่งราคา คือ 50 บาท ข้ออื่นจริงหมด' },
+  { p: 'Ton wants to be a pilot. He studies English every night and plays football at weekends to stay fit.', q: 'What does Ton do at weekends?', neg: false, a: 'He plays football.', wrong: ['He studies English.', 'He flies planes.', 'He sleeps late.'], why: 'ข้อนี้เป็นคำถามปกติ at weekends Ton เล่นฟุตบอล ส่วนเรียนอังกฤษเป็นทุกคืน' },
+  { p: 'It rained all week, so the sports day was moved to next Monday. The art show will still be on Friday as planned.', q: 'Which sentence is NOT true?', neg: true, a: 'The art show was moved to Monday.', wrong: ['It rained all week.', 'Sports day is now on Monday.', 'The art show is on Friday.'], why: 'ที่ถูกย้ายคือ sports day ไม่ใช่ art show ข้ออื่นจริงหมด' },
 ];
 
 function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
@@ -184,13 +184,13 @@ const opts = (a, wrong) => shuffle([{ t: a, ok: true }].concat(wrong.map(w => ({
 function build(lv, it) {
   if (lv === 1) {
     const others = shuffle(SCAN.filter((_, i) => i !== it.cat)).slice(0, 3);
-    return { html: it.s, steps: [{ prompt: 'ขั้น 1 — สแกน 6 จุดตามลำดับ: ประโยคนี้ผิดที่จุดไหน', ch: opts(SCAN[it.cat], others), why: 'จุดที่ผิดคือ "' + SCAN[it.cat] + '" — ' + it.why }, { prompt: 'ขั้น 2 — ส่วนไหนผิด และแก้เป็นอะไร', ch: opts(it.a, it.wrong), why: it.why }], why: it.why, tag: 'สแกน: ' + SCAN[it.cat] };
+    return { html: it.s, steps: [{ prompt: 'ขั้น 1 — สแกน 6 จุดตามลำดับ: ประโยคนี้ผิดที่จุดไหน', ch: opts(SCAN[it.cat], others), why: 'จุดที่ผิดคือ "' + SCAN[it.cat] + '" ลองหาต่อว่าคำไหนผิดในจุดนี้' }, { prompt: 'ขั้น 2 — ส่วนไหนผิด และแก้เป็นอะไร', ch: opts(it.a, it.wrong), why: it.why }], why: it.why, tag: 'สแกน: ' + SCAN[it.cat] };
   }
   if (lv === 2) {
     const pols = [POS, NEG, SPC].filter(p => p !== it.pol);
-    return { text: it.s, steps: [{ prompt: 'ขั้น 1 — ขั้ว: ประโยคหน้าเป็นแบบไหน', ch: opts(it.pol, pols), why: it.pol + ' — ' + it.why }, { prompt: 'ขั้น 2 — กริยาช่วยต้องตรงกับประโยคหน้า: tag คือ?', ch: opts(it.a, it.wrong), why: it.why }], why: it.why, tag: 'tag: ขั้ว + กริยาช่วย' };
+    return { text: it.s, steps: [{ prompt: 'ขั้น 1 — ขั้ว: ประโยคหน้าเป็นแบบไหน', ch: opts(it.pol, pols), why: it.pol }, { prompt: 'ขั้น 2 — กริยาช่วยต้องตรงกับประโยคหน้า: tag คือ?', ch: opts(it.a, it.wrong), why: it.why }], why: it.why, tag: 'tag: ขั้ว + กริยาช่วย' };
   }
-  return { pass: it.p, ask: it.q, steps: [{ prompt: 'ขั้น 1 — อ่านคำถามก่อน: ให้หาข้ออะไร', ch: opts(it.neg ? FIND_NOT : FIND_TRUE, [it.neg ? FIND_TRUE : FIND_NOT]), why: it.neg ? 'มีคำว่า NOT / EXCEPT / INCORRECT → วงไว้ แล้วติ๊ก ✔ ข้อจริงทีละข้อ' : 'ไม่มีคำว่า NOT — คำถามปกติ หาข้อที่ตรงกับเรื่อง' }, { prompt: it.neg ? 'ขั้น 2 — ติ๊ก ✔ ข้อที่จริงทีละข้อ → ข้อที่เหลือคือคำตอบ' : 'ขั้น 2 — เลือกข้อที่ตรงกับเรื่อง', ch: opts(it.a, it.wrong), why: it.why }], why: it.why, tag: it.neg ? 'NOT: วงก่อนอ่านช้อยส์' : 'คำถามปกติ (ต้องอ่านจริง)' };
+  return { pass: it.p, ask: it.q, steps: [{ prompt: 'ขั้น 1 — อ่านคำถามก่อน: ให้หาข้ออะไร', ch: opts(it.neg ? FIND_NOT : FIND_TRUE, [it.neg ? FIND_TRUE : FIND_NOT]), why: it.neg ? 'มีคำว่า NOT / EXCEPT / INCORRECT ให้วงไว้ แล้วติ๊ก ✔ ข้อจริงทีละข้อ' : 'ไม่มีคำว่า NOT เป็นคำถามปกติ หาข้อที่ตรงกับเรื่อง' }, { prompt: it.neg ? 'ขั้น 2 — ติ๊ก ✔ ข้อที่จริงทีละข้อ ข้อที่เหลือคือคำตอบ' : 'ขั้น 2 — เลือกข้อที่ตรงกับเรื่อง', ch: opts(it.a, it.wrong), why: it.why }], why: it.why, tag: it.neg ? 'NOT: วงก่อนอ่านช้อยส์' : 'คำถามปกติ (ต้องอ่านจริง)' };
 }
 const POOLS = { 1: ERR, 2: TAG, 3: NOTQ };
 const decks = {};
@@ -256,7 +256,7 @@ function answer(i) {
     flash(false, '✗ ที่ถูกคือ <b>' + esc(right.t) + '</b><br>' + esc(st.why));
   }
   if (last) { S.asked++; if (S.itemOk) S.score++; $('hScore').textContent = S.score; }
-  setTimeout(() => { if (!S) return; if (last) nextItem(); else { S.si = 1; renderStep(); } }, c.ok ? (last ? 1600 : 900) : 4200);
+  setTimeout(() => { if (!S) return; if (last) nextItem(); else { S.si = 1; renderStep(); } }, c.ok ? (last ? 1600 : 900) : 7000);
 }
 function finish() {
   const lv = S.lv, cfg = S.cfg, secs = (Date.now() - S.t0) / 1000, per = S.asked ? secs / S.asked : 0;

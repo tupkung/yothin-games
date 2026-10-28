@@ -1306,7 +1306,7 @@ function flash(ok, html) {
 function after(ok) {
   $('hScore').textContent = S.score; $('hStreak').textContent = S.streak;
   if (!ok) { if (!S.quiz) S.pausedAt = Date.now(); $('nextRow').classList.remove('hidden'); $('nextBtn').focus(); return; }
-  nextTimer = setTimeout(() => { if (S) next(); }, ok ? (S.quiz ? 1300 : 450) : 2600);
+  nextTimer = setTimeout(() => { if (S) next(); }, ok ? (S.quiz ? 1300 : 450) : 5000);
 }
 function good() { S.score++; S.streak++; if (!S.quiz && S.streak % 5 === 0) S.score++; return S.streak % 5 === 0 ? ' 🔥 ถูกติดกัน ' + S.streak + ' ข้อ!' : ''; }
 function answerTyped() {

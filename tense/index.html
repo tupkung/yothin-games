@@ -77,18 +77,18 @@ footer{margin-top:28px;color:var(--muted);font-size:.78rem;text-align:center;lin
 
 <section id="menu">
   <h1>⏱️ Tense Game</h1>
-  <p class="sub">ระบบกาล (tense system) — ข้อสอบสามเสนเปิดชุดด้วย 5 ข้อนี้ทุกปี · เด็ก EP "ฟังออก" แต่ต้องฝึกให้ "เห็น time marker แล้วเลือกได้" โดยไม่มีเสียงช่วย</p>
+  <p class="sub">ฝึกเลือกกาล (tense) ให้เร็ว ข้อสอบสามเสนเปิดชุดด้วยเรื่องนี้ทุกปี น้องฟังออกอยู่แล้ว เกมนี้ฝึกให้ "เห็นคำบอกเวลา (time marker) แล้วเลือกได้เลย"</p>
 
   <button class="lv" data-lv="1"><span class="best" id="b1"></span><b>ด่าน 1 · จับ time marker</b>
-    <div class="d">เห็นคำบอกเวลา → เลือก tense ให้ทันใน 60 วินาที · เป้า 14 คำ</div></button>
+    <div class="d">เห็นคำบอกเวลา แล้วเลือก tense ให้ทันใน 60 วินาที เป้า 14 คำ</div></button>
   <button class="lv" data-lv="2"><span class="best" id="b2"></span><b>ด่าน 2 · เติมช่องเดียว</b>
-    <div class="d">ประโยคละ 1 ช่อง 90 วินาที · เป้า 12 ข้อ</div></button>
+    <div class="d">ประโยคละ 1 ช่อง ใน 90 วินาที เป้า 12 ข้อ</div></button>
   <button class="lv" data-lv="3"><span class="best" id="b3"></span><b>ด่าน 3 · สองช่อง — ตรวจทั้งคู่</b>
-    <div class="d">10 ข้อแบบสามเสน (2 ช่องในประโยคเดียว) ไม่จับเวลา · ตัวลวง "ช่องแรกถูก ช่องสองผิด" · เป้า 8/10</div></button>
+    <div class="d">10 ข้อแบบสามเสน ประโยคละ 2 ช่อง ไม่จับเวลา ระวังช้อยส์ที่ "ช่องแรกถูก แต่ช่องสองผิด" เป้า 8/10</div></button>
   <button class="lv" data-lv="4"><span class="best" id="b4"></span><b>ด่าน 4 · กับดักของน้อง</b>
-    <div class="d">10 ข้อสร้างจากที่พลาดจริงในชุดอังกฤษ 01 (will/going to สลับด้าน · recently · while · if…would · One of… · adverb) · เป้า 8/10</div></button>
+    <div class="d">10 ข้อจากเรื่องที่น้องเคยพลาดในชุดอังกฤษ 01 เช่น will กับ going to, recently, while, if…would, One of…, adverb เป้า 8/10</div></button>
 
-  <p class="tip">💡 กฎเดียวก่อนเล่น: <b>หา time marker ของ "แต่ละช่อง" แยกกัน</b> แล้วค่อยเลือก — ช่องแรกถูกยังไม่ได้คะแนน ต้องถูกทั้งคู่<br>
+  <p class="tip">💡 กฎข้อเดียวก่อนเล่น: <b>หาคำบอกเวลาของ "แต่ละช่อง" แยกกัน</b> แล้วค่อยเลือก ต้องถูกทั้งสองช่องถึงจะได้คะแนน<br>
   ⌨️ กดเลข <kbd>1</kbd>–<kbd>4</kbd> เลือกช้อยส์ได้</p>
 </section>
 
@@ -139,108 +139,108 @@ const T = { ps: 'Present Simple', pc: 'Present Continuous', pa: 'Past Simple', p
 
 /* ---------- ด่าน 1: time marker → tense ---------- */
 const MARKERS = [
-  { m: 'every day', a: T.ps, wrong: [T.pc, T.pa, T.pp], why: 'กิจวัตร/นิสัย → present simple' },
-  { m: 'usually', a: T.ps, wrong: [T.pc, T.pp, T.pa], why: 'ความถี่ (usually/always/often) → present simple' },
-  { m: 'once a week', a: T.ps, wrong: [T.pc, T.pp, T.pa], why: 'ความถี่ → present simple' },
-  { m: 'always (นิสัย)', a: T.ps, wrong: [T.pc, T.pp, T.pac], why: 'นิสัยประจำ → present simple' },
-  { m: 'at the moment', a: T.pc, wrong: [T.ps, T.pp, T.pac], why: 'กำลังเกิดตอนนี้ → present continuous' },
-  { m: 'right now', a: T.pc, wrong: [T.ps, T.pa, T.pp], why: 'ตอนนี้เลย → present continuous' },
-  { m: 'Look! …', a: T.pc, wrong: [T.ps, T.fw, T.pa], why: '"Look! / Listen!" ชี้สิ่งที่กำลังเกิด → present continuous' },
-  { m: 'yesterday', a: T.pa, wrong: [T.pp, T.ppf, T.ps], why: 'เวลาอดีตชัดเจน จบแล้ว → past simple' },
-  { m: 'two days ago', a: T.pa, wrong: [T.pp, T.ppf, T.pac], why: '"ago" = เวลาอดีตชัดเจน → past simple (ห้าม present perfect)' },
-  { m: 'last month', a: T.pa, wrong: [T.pp, T.ppf, T.ps], why: '"last …" → past simple' },
-  { m: 'in 1990', a: T.pa, wrong: [T.pp, T.ppf, T.ps], why: 'ปีในอดีต → past simple' },
-  { m: 'since 2019', a: T.pp, wrong: [T.pa, T.ps, T.pc], why: '"since + จุดเริ่ม" ต่อเนื่องถึงตอนนี้ → present perfect' },
-  { m: 'for three years (ยังอยู่)', a: T.pp, wrong: [T.pa, T.pc, T.ps], why: '"for + ช่วงเวลา" และยังต่อเนื่อง → present perfect' },
-  { m: 'ever since', a: T.pp, wrong: [T.pa, T.pc, T.ps], why: '"ever since" = ตั้งแต่นั้นจนถึงตอนนี้ → present perfect' },
-  { m: 'already / yet', a: T.pp, wrong: [T.pa, T.ps, T.ppf], why: 'already / yet / just (ผลถึงปัจจุบัน) → present perfect' },
-  { m: 'so far', a: T.pp, wrong: [T.pa, T.ps, T.fw], why: '"so far" = จนถึงตอนนี้ → present perfect' },
-  { m: 'never … before (จนถึงตอนนี้)', a: T.pp, wrong: [T.pa, T.ps, T.pc], why: 'ประสบการณ์จนถึงตอนนี้ → present perfect' },
-  { m: 'How long … ? (ยังทำอยู่)', a: T.pp, wrong: [T.pa, T.ps, T.pc], why: 'ถามระยะเวลาที่ต่อเนื่องถึงตอนนี้ → present perfect' },
-  { m: 'recently', a: T.pp, wrong: [T.pa, T.ps, T.pc], why: '"recently" (เมื่อไม่นานมานี้ ไม่ระบุเวลาชัด) → present perfect ★ น้องเคยพลาดข้อนี้' },
-  { m: 'while … (เหตุการณ์ยาวในอดีต)', a: T.pac, wrong: [T.pa, T.pc, T.ppf], why: '"while" + เหตุการณ์ที่กำลังดำเนิน → past continuous' },
-  { m: 'at 8 o\'clock last night (กำลังทำอยู่)', a: T.pac, wrong: [T.pa, T.pc, T.ppf], why: 'กำลังทำ ณ เวลาหนึ่งในอดีต → past continuous' },
-  { m: 'when … (เหตุการณ์สั้นที่แทรก)', a: T.pa, wrong: [T.pac, T.pp, T.ppf], why: 'เหตุการณ์สั้นที่แทรกเข้ามา → past simple (ตัวยาวเป็น past continuous)' },
-  { m: 'by the time … (เกิดก่อนอีกเหตุการณ์ในอดีต)', a: T.ppf, wrong: [T.pa, T.pp, T.pac], why: 'เกิดก่อนเหตุการณ์อดีตอีกอัน → past perfect (had + V3)' },
-  { m: 'before I arrived, she …', a: T.ppf, wrong: [T.pa, T.pp, T.pac], why: 'ก่อนเหตุการณ์อดีตอีกอัน → past perfect' },
-  { m: 'I promise I … tomorrow', a: T.fw, wrong: [T.pp, T.pa, T.ps], why: 'สัญญา/ตัดสินใจตอนพูด → will' },
-  { m: 'Look at those clouds! It …', a: T.fg, wrong: [T.fw, T.pp, T.pa], why: 'มี "หลักฐาน" ตรงหน้า → going to (ไม่ใช่ will) ★ น้องเคยพลาด' },
-  { m: 'next week (วางแผนไว้แล้ว)', a: T.fg, wrong: [T.pp, T.pa, T.ps], why: 'แผนที่ตัดสินใจไว้ก่อนแล้ว → going to' },
-  { m: 'The phone is ringing. — OK, I … get it.', a: T.fw, wrong: [T.fg, T.pp, T.pa], why: 'ตัดสินใจเดี๋ยวนั้น → will (going to ใช้กับแผนที่คิดไว้ก่อน)' },
+  { m: 'every day', a: T.ps, wrong: [T.pc, T.pa, T.pp], why: 'ทำทุกวัน เป็นกิจวัตร ใช้ present simple' },
+  { m: 'usually', a: T.ps, wrong: [T.pc, T.pp, T.pa], why: 'บอกว่าทำบ่อยแค่ไหน (usually / always / often) ใช้ present simple' },
+  { m: 'once a week', a: T.ps, wrong: [T.pc, T.pp, T.pa], why: 'บอกว่าทำบ่อยแค่ไหน ใช้ present simple' },
+  { m: 'always (นิสัย)', a: T.ps, wrong: [T.pc, T.pp, T.pac], why: 'เป็นนิสัยประจำ ใช้ present simple' },
+  { m: 'at the moment', a: T.pc, wrong: [T.ps, T.pp, T.pac], why: 'กำลังเกิดอยู่ตอนนี้ ใช้ present continuous' },
+  { m: 'right now', a: T.pc, wrong: [T.ps, T.pa, T.pp], why: 'กำลังเกิดตอนนี้เลย ใช้ present continuous' },
+  { m: 'Look! …', a: T.pc, wrong: [T.ps, T.fw, T.pa], why: '"Look!" หรือ "Listen!" ชี้ให้ดูสิ่งที่กำลังเกิด ใช้ present continuous' },
+  { m: 'yesterday', a: T.pa, wrong: [T.pp, T.ppf, T.ps], why: 'เมื่อวานเป็นอดีตที่จบแล้ว ใช้ past simple' },
+  { m: 'two days ago', a: T.pa, wrong: [T.pp, T.ppf, T.pac], why: '"ago" บอกเวลาอดีตชัด ๆ ใช้ past simple ห้ามใช้ present perfect' },
+  { m: 'last month', a: T.pa, wrong: [T.pp, T.ppf, T.ps], why: '"last …" แปลว่าครั้งที่แล้ว เป็นอดีต ใช้ past simple' },
+  { m: 'in 1990', a: T.pa, wrong: [T.pp, T.ppf, T.ps], why: 'เป็นปีที่ผ่านไปแล้ว ใช้ past simple' },
+  { m: 'since 2019', a: T.pp, wrong: [T.pa, T.ps, T.pc], why: '"since" + จุดเริ่ม แปลว่าทำต่อเนื่องจนถึงตอนนี้ ใช้ present perfect' },
+  { m: 'for three years (ยังอยู่)', a: T.pp, wrong: [T.pa, T.pc, T.ps], why: '"for" + ช่วงเวลา และยังทำอยู่ ใช้ present perfect' },
+  { m: 'ever since', a: T.pp, wrong: [T.pa, T.pc, T.ps], why: '"ever since" แปลว่าตั้งแต่ตอนนั้นจนถึงตอนนี้ ใช้ present perfect' },
+  { m: 'already / yet', a: T.pp, wrong: [T.pa, T.ps, T.ppf], why: 'already / yet / just บอกว่าผลยังอยู่ถึงตอนนี้ ใช้ present perfect' },
+  { m: 'so far', a: T.pp, wrong: [T.pa, T.ps, T.fw], why: '"so far" แปลว่าจนถึงตอนนี้ ใช้ present perfect' },
+  { m: 'never … before (จนถึงตอนนี้)', a: T.pp, wrong: [T.pa, T.ps, T.pc], why: 'เล่าประสบการณ์จนถึงตอนนี้ ใช้ present perfect' },
+  { m: 'How long … ? (ยังทำอยู่)', a: T.pp, wrong: [T.pa, T.ps, T.pc], why: 'ถามว่าทำมานานแค่ไหน และยังทำอยู่ ใช้ present perfect' },
+  { m: 'recently', a: T.pp, wrong: [T.pa, T.ps, T.pc], why: '"recently" แปลว่าเมื่อไม่นานมานี้ ไม่บอกเวลาชัด ใช้ present perfect (น้องเคยพลาดข้อนี้)' },
+  { m: 'while … (เหตุการณ์ยาวในอดีต)', a: T.pac, wrong: [T.pa, T.pc, T.ppf], why: '"while" + เรื่องที่กำลังทำอยู่นาน ๆ ในอดีต ใช้ past continuous' },
+  { m: 'at 8 o\'clock last night (กำลังทำอยู่)', a: T.pac, wrong: [T.pa, T.pc, T.ppf], why: 'กำลังทำอยู่ ณ เวลาหนึ่งในอดีต ใช้ past continuous' },
+  { m: 'when … (เหตุการณ์สั้นที่แทรก)', a: T.pa, wrong: [T.pac, T.pp, T.ppf], why: 'เรื่องสั้นที่แทรกเข้ามา ใช้ past simple ส่วนเรื่องยาวใช้ past continuous' },
+  { m: 'by the time … (เกิดก่อนอีกเหตุการณ์ในอดีต)', a: T.ppf, wrong: [T.pa, T.pp, T.pac], why: 'เกิดก่อนอีกเรื่องหนึ่งในอดีต ใช้ past perfect (had + กริยาช่อง 3)' },
+  { m: 'before I arrived, she …', a: T.ppf, wrong: [T.pa, T.pp, T.pac], why: 'เกิดก่อนอีกเรื่องหนึ่งในอดีต ใช้ past perfect' },
+  { m: 'I promise I … tomorrow', a: T.fw, wrong: [T.pp, T.pa, T.ps], why: 'สัญญา หรือตัดสินใจตอนที่พูด ใช้ will' },
+  { m: 'Look at those clouds! It …', a: T.fg, wrong: [T.fw, T.pp, T.pa], why: 'มีหลักฐานให้เห็นตรงหน้า ใช้ going to ไม่ใช่ will (น้องเคยพลาดข้อนี้)' },
+  { m: 'next week (วางแผนไว้แล้ว)', a: T.fg, wrong: [T.pp, T.pa, T.ps], why: 'เป็นแผนที่ตัดสินใจไว้ก่อนแล้ว ใช้ going to' },
+  { m: 'The phone is ringing. — OK, I … get it.', a: T.fw, wrong: [T.fg, T.pp, T.pa], why: 'ตัดสินใจตอนนั้นเลย ใช้ will ส่วน going to ใช้กับแผนที่คิดไว้ก่อน' },
 ];
 
 /* ---------- ด่าน 2: ช่องเดียว ---------- */
 const SINGLE = [
-  { s: 'Water ___ at 100 °C.', a: 'boils', wrong: ['is boiling', 'boiled', 'has boiled'], why: 'ความจริงทั่วไป → present simple' },
-  { s: 'Be quiet! The baby ___.', a: 'is sleeping', wrong: ['sleeps', 'slept', 'has slept'], why: '"Be quiet!" = กำลังเกิดตอนนี้ → present continuous' },
-  { s: 'We ___ to Chiang Mai last April.', a: 'went', wrong: ['have gone', 'go', 'had gone'], why: '"last April" เวลาอดีตชัด → past simple' },
-  { s: 'She ___ in Bangkok since 2020.', a: 'has lived', wrong: ['lived', 'lives', 'is living'], why: '"since 2020" → present perfect' },
-  { s: 'My dad ___ coffee every morning.', a: 'drinks', wrong: ['is drinking', 'drank', 'has drunk'], why: '"every morning" → present simple' },
-  { s: 'While we ___ dinner, the lights went out.', a: 'were having', wrong: ['had', 'have', 'have had'], why: '"while" + เหตุการณ์ยาว → past continuous · ไฟดับ = ตัวสั้น past simple' },
-  { s: 'When the teacher came in, everyone ___ talking.', a: 'stopped', wrong: ['was stopping', 'stops', 'has stopped'], why: 'เหตุการณ์สั้นที่เกิดตอนครูเข้ามา → past simple' },
-  { s: 'I ___ that movie three times so far.', a: 'have seen', wrong: ['saw', 'see', 'am seeing'], why: '"so far" → present perfect' },
-  { s: 'Look at the sky! It ___ rain.', a: 'is going to', wrong: ['will', 'is', 'has'], why: 'มีหลักฐาน (ท้องฟ้า) → going to' },
-  { s: 'The phone is ringing. — OK, I ___ answer it.', a: 'will', wrong: ['am going to', 'am', 'have'], why: 'ตัดสินใจเดี๋ยวนั้น → will' },
-  { s: 'By the time we got home, the movie ___.', a: 'had ended', wrong: ['ended', 'has ended', 'was ending'], why: '"by the time + past" → เหตุการณ์ที่จบก่อน = past perfect' },
-  { s: 'At 5 p.m. yesterday he ___ tennis, so he didn\'t hear the phone.', a: 'was playing', wrong: ['plays', 'has played', 'is playing'], why: 'กำลังทำ ณ เวลาหนึ่งในอดีต → past continuous' },
-  { s: 'Nan ___ English for six years and she is still learning.', a: 'has been studying', wrong: ['studied', 'studies', 'is studying'], why: '"for six years" + ยังทำอยู่ → present perfect (continuous)' },
-  { s: 'Columbus ___ America in 1492.', a: 'discovered', wrong: ['has discovered', 'discovers', 'had discovered'], why: 'ปีในอดีต → past simple' },
-  { s: 'I have never ___ sushi before.', a: 'eaten', wrong: ['eat', 'ate', 'eating'], why: 'have never + V3 (past participle)' },
-  { s: 'Hurry up! The bus ___.', a: 'is leaving', wrong: ['leaves', 'left', 'has left'], why: '"Hurry up!" = กำลังจะออกตอนนี้ → present continuous' },
-  { s: 'The train ___ at 9.15 every morning.', a: 'leaves', wrong: ['is leaving', 'left', 'has left'], why: 'ตารางเวลา + every morning → present simple' },
-  { s: 'She ___ her homework yet.', a: 'hasn\'t finished', wrong: ['didn\'t finish', 'doesn\'t finish', 'isn\'t finishing'], why: '"yet" → present perfect (ปฏิเสธ)' },
-  { s: 'Tom ___ to the gym twice a week.', a: 'goes', wrong: ['is going', 'went', 'has gone'], why: '"twice a week" ความถี่ → present simple' },
-  { s: 'I ___ you as soon as I arrive.', a: 'will call', wrong: ['call', 'called', 'am calling'], why: 'ประโยคหลักของ time clause ใช้ will · "as soon as I arrive" ใช้ present simple' },
-  { s: 'When I ___ young, I lived in a small village.', a: 'was', wrong: ['am', 'have been', 'had been'], why: 'อดีตที่จบแล้ว คู่กับ lived → past simple' },
-  { s: 'We ___ here since 7 o\'clock and you are only arriving now!', a: 'have been waiting', wrong: ['wait', 'are waiting', 'waited'], why: '"since 7 o\'clock" + ยังรออยู่ → present perfect (continuous)' },
-  { s: 'My sister ___ born in 2014.', a: 'was', wrong: ['is', 'has been', 'had been'], why: '"born" ใช้ was/were + born · ปีอดีต → was' },
-  { s: 'The sun ___ in the east.', a: 'rises', wrong: ['is rising', 'rose', 'has risen'], why: 'ความจริงทั่วไป → present simple' },
-  { s: 'They ___ the new bridge in 2023 and it still looks great.', a: 'built', wrong: ['have built', 'build', 'had built'], why: '"in 2023" เวลาอดีตชัด → past simple (แม้ผลยังอยู่)' },
-  { s: 'It ___ since this morning — the streets are all wet.', a: 'has been raining', wrong: ['rains', 'rained', 'is raining'], why: '"since this morning" → present perfect (continuous)' },
-  { s: 'Listen! Someone ___ at the door.', a: 'is knocking', wrong: ['knocks', 'knocked', 'has knocked'], why: '"Listen!" = กำลังเกิด → present continuous' },
-  { s: 'Last night I ___ a strange noise while I was reading.', a: 'heard', wrong: ['was hearing', 'have heard', 'hear'], why: 'เหตุการณ์สั้นแทรกตัวยาว (was reading) → past simple' },
-  { s: 'If it rains tomorrow, we ___ at home.', a: 'will stay', wrong: ['stay', 'stayed', 'would stay'], why: 'First conditional: if + present, will + V' },
-  { s: 'If I ___ a bird, I would fly to school.', a: 'were', wrong: ['am', 'will be', 'have been'], why: 'Second conditional (เป็นไปไม่ได้): if + past (were), would + V' },
+  { s: 'Water ___ at 100 °C.', a: 'boils', wrong: ['is boiling', 'boiled', 'has boiled'], why: 'เป็นความจริงทั่วไป ใช้ present simple' },
+  { s: 'Be quiet! The baby ___.', a: 'is sleeping', wrong: ['sleeps', 'slept', 'has slept'], why: '"Be quiet!" บอกว่าเด็กกำลังหลับอยู่ตอนนี้ ใช้ present continuous' },
+  { s: 'We ___ to Chiang Mai last April.', a: 'went', wrong: ['have gone', 'go', 'had gone'], why: '"last April" เป็นอดีตชัด ๆ ใช้ past simple' },
+  { s: 'She ___ in Bangkok since 2020.', a: 'has lived', wrong: ['lived', 'lives', 'is living'], why: '"since 2020" แปลว่าตั้งแต่ปี 2020 จนถึงตอนนี้ ใช้ present perfect' },
+  { s: 'My dad ___ coffee every morning.', a: 'drinks', wrong: ['is drinking', 'drank', 'has drunk'], why: '"every morning" แปลว่าทำทุกเช้า ใช้ present simple' },
+  { s: 'While we ___ dinner, the lights went out.', a: 'were having', wrong: ['had', 'have', 'have had'], why: '"while" + เรื่องยาว (กินข้าว) ใช้ past continuous ส่วนไฟดับเป็นเรื่องสั้น ใช้ past simple' },
+  { s: 'When the teacher came in, everyone ___ talking.', a: 'stopped', wrong: ['was stopping', 'stops', 'has stopped'], why: 'หยุดคุยตอนครูเดินเข้ามา เป็นเรื่องสั้น ใช้ past simple' },
+  { s: 'I ___ that movie three times so far.', a: 'have seen', wrong: ['saw', 'see', 'am seeing'], why: '"so far" แปลว่าจนถึงตอนนี้ ใช้ present perfect' },
+  { s: 'Look at the sky! It ___ rain.', a: 'is going to', wrong: ['will', 'is', 'has'], why: 'เห็นท้องฟ้าเป็นหลักฐาน ใช้ going to' },
+  { s: 'The phone is ringing. — OK, I ___ answer it.', a: 'will', wrong: ['am going to', 'am', 'have'], why: 'ตัดสินใจตอนนั้นเลย ใช้ will' },
+  { s: 'By the time we got home, the movie ___.', a: 'had ended', wrong: ['ended', 'has ended', 'was ending'], why: '"by the time" + อดีต แปลว่าหนังจบไปก่อนแล้ว ใช้ past perfect' },
+  { s: 'At 5 p.m. yesterday he ___ tennis, so he didn\'t hear the phone.', a: 'was playing', wrong: ['plays', 'has played', 'is playing'], why: 'กำลังเล่นอยู่ ณ เวลาหนึ่งในอดีต ใช้ past continuous' },
+  { s: 'Nan ___ English for six years and she is still learning.', a: 'has been studying', wrong: ['studied', 'studies', 'is studying'], why: '"for six years" และยังเรียนอยู่ ใช้ present perfect (continuous)' },
+  { s: 'Columbus ___ America in 1492.', a: 'discovered', wrong: ['has discovered', 'discovers', 'had discovered'], why: 'เป็นปีที่ผ่านไปแล้ว ใช้ past simple' },
+  { s: 'I have never ___ sushi before.', a: 'eaten', wrong: ['eat', 'ate', 'eating'], why: 'have never ต้องตามด้วยกริยาช่อง 3 (past participle)' },
+  { s: 'Hurry up! The bus ___.', a: 'is leaving', wrong: ['leaves', 'left', 'has left'], why: '"Hurry up!" บอกว่ารถกำลังจะออกตอนนี้ ใช้ present continuous' },
+  { s: 'The train ___ at 9.15 every morning.', a: 'leaves', wrong: ['is leaving', 'left', 'has left'], why: 'เป็นตารางเวลาที่เกิดทุกเช้า ใช้ present simple' },
+  { s: 'She ___ her homework yet.', a: 'hasn\'t finished', wrong: ['didn\'t finish', 'doesn\'t finish', 'isn\'t finishing'], why: '"yet" ใช้กับ present perfect ในประโยคปฏิเสธ' },
+  { s: 'Tom ___ to the gym twice a week.', a: 'goes', wrong: ['is going', 'went', 'has gone'], why: '"twice a week" บอกว่าทำบ่อยแค่ไหน ใช้ present simple' },
+  { s: 'I ___ you as soon as I arrive.', a: 'will call', wrong: ['call', 'called', 'am calling'], why: 'ประโยคหลักใช้ will ส่วนท่อน "as soon as I arrive" ใช้ present simple' },
+  { s: 'When I ___ young, I lived in a small village.', a: 'was', wrong: ['am', 'have been', 'had been'], why: 'ตอนเด็กเป็นอดีตที่จบแล้ว และคู่กับ lived จึงใช้ past simple' },
+  { s: 'We ___ here since 7 o\'clock and you are only arriving now!', a: 'have been waiting', wrong: ['wait', 'are waiting', 'waited'], why: '"since 7 o\'clock" และยังรออยู่ ใช้ present perfect (continuous)' },
+  { s: 'My sister ___ born in 2014.', a: 'was', wrong: ['is', 'has been', 'had been'], why: 'คำว่า born ใช้คู่กับ was / were และปีนั้นผ่านไปแล้ว จึงใช้ was' },
+  { s: 'The sun ___ in the east.', a: 'rises', wrong: ['is rising', 'rose', 'has risen'], why: 'เป็นความจริงทั่วไป ใช้ present simple' },
+  { s: 'They ___ the new bridge in 2023 and it still looks great.', a: 'built', wrong: ['have built', 'build', 'had built'], why: '"in 2023" เป็นอดีตชัด ๆ ใช้ past simple ถึงสะพานจะยังอยู่ก็ตาม' },
+  { s: 'It ___ since this morning — the streets are all wet.', a: 'has been raining', wrong: ['rains', 'rained', 'is raining'], why: '"since this morning" และฝนยังตกอยู่ ใช้ present perfect (continuous)' },
+  { s: 'Listen! Someone ___ at the door.', a: 'is knocking', wrong: ['knocks', 'knocked', 'has knocked'], why: '"Listen!" บอกว่ากำลังเกิดตอนนี้ ใช้ present continuous' },
+  { s: 'Last night I ___ a strange noise while I was reading.', a: 'heard', wrong: ['was hearing', 'have heard', 'hear'], why: 'ได้ยินเสียงเป็นเรื่องสั้น ที่แทรกตอนกำลังอ่าน (was reading) ใช้ past simple' },
+  { s: 'If it rains tomorrow, we ___ at home.', a: 'will stay', wrong: ['stay', 'stayed', 'would stay'], why: 'If แบบที่ 1 (first conditional) ท่อน if ใช้ present ส่วนอีกท่อนใช้ will + กริยา' },
+  { s: 'If I ___ a bird, I would fly to school.', a: 'were', wrong: ['am', 'will be', 'have been'], why: 'If แบบสมมติที่เป็นไปไม่ได้ (second conditional) ท่อน if ใช้ were ส่วนอีกท่อนใช้ would + กริยา' },
 ];
 
 /* ---------- ด่าน 3: สองช่อง — ตัวลวงส่วนใหญ่ "ช่องแรกถูก ช่องสองผิด" ---------- */
 const PAIRED = [
-  { s: 'Dad ___ to work by car every day, but right now he ___ the train because the car is broken.', a: 'drives / is taking', wrong: ['drives / takes', 'is driving / is taking', 'drives / took'], why: 'every day → drives · right now → is taking' },
-  { s: 'My aunt ___ to Japan in 2018 and she ___ there ever since.', a: 'moved / has lived', wrong: ['moved / lived', 'has moved / has lived', 'moved / lives'], why: 'in 2018 → moved · ever since → has lived' },
-  { s: 'I ___ my leg while I ___ football last Saturday.', a: 'broke / was playing', wrong: ['broke / played', 'was breaking / was playing', 'broke / have played'], why: 'ตัวสั้น (broke) แทรกตัวยาว (was playing)' },
-  { s: 'Watch out! You ___ off that ladder! — Don\'t worry, I ___ down now.', a: 'are going to fall / will come', wrong: ['are going to fall / am going to come', 'will fall / will come', 'fall / come'], why: 'หลักฐานตรงหน้า → going to · ตัดสินใจเดี๋ยวนั้น → will' },
-  { s: 'If we ___ the early bus, we ___ school on time.', a: 'catch / will reach', wrong: ['catch / would reach', 'will catch / will reach', 'caught / will reach'], why: 'First conditional: if + present simple, will + V' },
-  { s: 'If I ___ taller, I ___ the basketball team. But I\'m short.', a: 'were / would join', wrong: ['were / will join', 'am / would join', 'am / will join'], why: 'เป็นไปไม่ได้ตอนนี้ (But I\'m short) → second conditional: were … would' },
-  { s: 'Ploy ___ Chinese for five years, so she ___ very well now.', a: 'has been learning / speaks', wrong: ['has been learning / is speaking', 'is learning / speaks', 'learned / speaks'], why: 'for five years + now → present perfect · ความสามารถทั่วไป → speaks' },
-  { s: 'By the time the guests ___, we ___ everything.', a: 'arrived / had prepared', wrong: ['arrived / prepared', 'arrived / have prepared', 'had arrived / prepared'], why: 'by the time + past simple → อีกเหตุการณ์ที่จบก่อน = past perfect' },
-  { s: 'This temple ___ 300 years ago, and thousands of people ___ it every year.', a: 'was built / visit', wrong: ['was built / are visiting', 'built / visit', 'has been built / visit'], why: 'ago → past simple (passive: was built) · every year → visit' },
-  { s: 'I ___ you an email as soon as I ___ the results.', a: 'will send / get', wrong: ['will send / will get', 'send / get', 'will send / got'], why: 'ประโยคหลัก will · time clause (as soon as) ใช้ present simple' },
-  { s: 'She said, "I am practising the piano now." → She said that she ___ the piano ___.', a: 'was practising / then', wrong: ['was practising / now', 'is practising / then', 'practised / then'], why: 'Reported speech: am practising → was practising · now → then' },
-  { s: 'Grandpa ___ up at five every morning, but this week he ___ until nine because he\'s ill.', a: 'gets / is sleeping', wrong: ['gets / sleeps', 'is getting / is sleeping', 'gets / slept'], why: 'every morning → gets · this week (ชั่วคราว) → is sleeping' },
-  { s: 'Somchai ___ his homework at 8 p.m. yesterday; that\'s why he ___ the phone.', a: 'was doing / didn\'t hear', wrong: ['was doing / wasn\'t hearing', 'did / didn\'t hear', 'was doing / hasn\'t heard'], why: 'กำลังทำ ณ เวลาอดีต → past continuous · hear เป็น stative → didn\'t hear' },
-  { s: 'Anna ___ a new phone last week and she ___ it every day since then.', a: 'bought / has used', wrong: ['bought / used', 'has bought / has used', 'bought / uses'], why: 'last week → bought · since then → has used' },
-  { s: 'Look! The kids ___ in the garden — they ___ there every afternoon.', a: 'are playing / play', wrong: ['are playing / are playing', 'play / play', 'play / are playing'], why: 'Look! → are playing · every afternoon → play' },
-  { s: 'By 9 p.m. last night I ___ my project, so I ___ TV.', a: 'had finished / watched', wrong: ['finished / watched', 'had finished / had watched', 'have finished / watched'], why: 'เสร็จก่อน 9 p.m. → past perfect · แล้วดูทีวี → past simple' },
-  { s: 'Whenever it ___ heavily, our street ___ flooded.', a: 'rains / gets', wrong: ['rains / is getting', 'is raining / gets', 'rained / gets'], why: 'whenever = ทุกครั้ง → present simple ทั้งสองช่อง' },
+  { s: 'Dad ___ to work by car every day, but right now he ___ the train because the car is broken.', a: 'drives / is taking', wrong: ['drives / takes', 'is driving / is taking', 'drives / took'], why: 'ช่อง 1 มี every day จึงใช้ drives ช่อง 2 มี right now จึงใช้ is taking' },
+  { s: 'My aunt ___ to Japan in 2018 and she ___ there ever since.', a: 'moved / has lived', wrong: ['moved / lived', 'has moved / has lived', 'moved / lives'], why: 'ช่อง 1 มี in 2018 จึงใช้ moved ช่อง 2 มี ever since จึงใช้ has lived' },
+  { s: 'I ___ my leg while I ___ football last Saturday.', a: 'broke / was playing', wrong: ['broke / played', 'was breaking / was playing', 'broke / have played'], why: 'ขาหัก (broke) เป็นเรื่องสั้น ที่แทรกตอนกำลังเล่นบอล (was playing) ซึ่งเป็นเรื่องยาว' },
+  { s: 'Watch out! You ___ off that ladder! — Don\'t worry, I ___ down now.', a: 'are going to fall / will come', wrong: ['are going to fall / am going to come', 'will fall / will come', 'fall / come'], why: 'ช่อง 1 เห็นหลักฐานตรงหน้า ใช้ going to ช่อง 2 ตัดสินใจตอนนั้นเลย ใช้ will' },
+  { s: 'If we ___ the early bus, we ___ school on time.', a: 'catch / will reach', wrong: ['catch / would reach', 'will catch / will reach', 'caught / will reach'], why: 'If แบบที่ 1 (first conditional) ท่อน if ใช้ present simple ส่วนอีกท่อนใช้ will + กริยา' },
+  { s: 'If I ___ taller, I ___ the basketball team. But I\'m short.', a: 'were / would join', wrong: ['were / will join', 'am / would join', 'am / will join'], why: '"But I\'m short" แปลว่าตอนนี้เป็นไปไม่ได้ จึงใช้ If แบบสมมติ (second conditional) คือ were คู่กับ would' },
+  { s: 'Ploy ___ Chinese for five years, so she ___ very well now.', a: 'has been learning / speaks', wrong: ['has been learning / is speaking', 'is learning / speaks', 'learned / speaks'], why: 'ช่อง 1 มี for five years จึงใช้ present perfect ช่อง 2 พูดถึงความสามารถทั่วไป จึงใช้ speaks' },
+  { s: 'By the time the guests ___, we ___ everything.', a: 'arrived / had prepared', wrong: ['arrived / prepared', 'arrived / have prepared', 'had arrived / prepared'], why: '"by the time" + past simple แปลว่าอีกเรื่องเสร็จไปก่อนแล้ว จึงใช้ past perfect' },
+  { s: 'This temple ___ 300 years ago, and thousands of people ___ it every year.', a: 'was built / visit', wrong: ['was built / are visiting', 'built / visit', 'has been built / visit'], why: 'ช่อง 1 มี ago จึงใช้ past simple แบบถูกกระทำ (passive) คือ was built ช่อง 2 มี every year จึงใช้ visit' },
+  { s: 'I ___ you an email as soon as I ___ the results.', a: 'will send / get', wrong: ['will send / will get', 'send / get', 'will send / got'], why: 'ประโยคหลักใช้ will ส่วนท่อน as soon as ใช้ present simple' },
+  { s: 'She said, "I am practising the piano now." → She said that she ___ the piano ___.', a: 'was practising / then', wrong: ['was practising / now', 'is practising / then', 'practised / then'], why: 'เล่าคำพูดคนอื่น (reported speech) ต้องถอยกาล am practising เป็น was practising และ now เป็น then' },
+  { s: 'Grandpa ___ up at five every morning, but this week he ___ until nine because he\'s ill.', a: 'gets / is sleeping', wrong: ['gets / sleeps', 'is getting / is sleeping', 'gets / slept'], why: 'ช่อง 1 มี every morning จึงใช้ gets ช่อง 2 มี this week ซึ่งเป็นแค่ช่วงสั้น ๆ จึงใช้ is sleeping' },
+  { s: 'Somchai ___ his homework at 8 p.m. yesterday; that\'s why he ___ the phone.', a: 'was doing / didn\'t hear', wrong: ['was doing / wasn\'t hearing', 'did / didn\'t hear', 'was doing / hasn\'t heard'], why: 'ช่อง 1 กำลังทำอยู่ ณ เวลาในอดีต ใช้ past continuous ช่อง 2 hear เป็นกริยาที่ไม่เติม -ing (stative) จึงใช้ didn\'t hear' },
+  { s: 'Anna ___ a new phone last week and she ___ it every day since then.', a: 'bought / has used', wrong: ['bought / used', 'has bought / has used', 'bought / uses'], why: 'ช่อง 1 มี last week จึงใช้ bought ช่อง 2 มี since then จึงใช้ has used' },
+  { s: 'Look! The kids ___ in the garden — they ___ there every afternoon.', a: 'are playing / play', wrong: ['are playing / are playing', 'play / play', 'play / are playing'], why: 'ช่อง 1 มี Look! จึงใช้ are playing ช่อง 2 มี every afternoon จึงใช้ play' },
+  { s: 'By 9 p.m. last night I ___ my project, so I ___ TV.', a: 'had finished / watched', wrong: ['finished / watched', 'had finished / had watched', 'have finished / watched'], why: 'ทำงานเสร็จก่อน 9 p.m. ใช้ past perfect แล้วค่อยดูทีวีทีหลัง ใช้ past simple' },
+  { s: 'Whenever it ___ heavily, our street ___ flooded.', a: 'rains / gets', wrong: ['rains / is getting', 'is raining / gets', 'rained / gets'], why: '"whenever" แปลว่าทุกครั้งที่ ใช้ present simple ทั้งสองช่อง' },
 ];
 
 /* ---------- ด่าน 4: กับดักของน้อง (สร้างจาก error pattern จริง ชุดอังกฤษ 01) ---------- */
 const TRAPS = [
-  { tag: 'time marker แยกช่อง', s: 'Recently my cousin ___ a new job, and she ___ work last Monday.', a: 'has found / started', wrong: ['found / started', 'has found / has started', 'finds / started'], why: 'recently → present perfect · last Monday → past simple — คนละช่อง คนละ marker' },
-  { tag: 'time marker แยกช่อง', s: 'I ___ this book last week and I ___ it twice already.', a: 'read / have read', wrong: ['have read / read', 'read / read', 'have read / have read'], why: 'last week → past simple · already → present perfect' },
-  { tag: 'ตัวสั้นแทรกตัวยาว', s: 'While the students ___ the exam, the fire alarm ___.', a: 'were taking / rang', wrong: ['were taking / was ringing', 'took / rang', 'took / was ringing'], why: 'while + ตัวยาว (were taking) · ตัวสั้นที่แทรก (rang) = past simple' },
-  { tag: 'ตัวสั้นแทรกตัวยาว', s: 'The guests ___ while we ___ the table.', a: 'arrived / were setting', wrong: ['were arriving / were setting', 'arrived / set', 'have arrived / were setting'], why: 'มาถึง = ตัวสั้น past simple · กำลังจัดโต๊ะ = ตัวยาว past continuous' },
-  { tag: 'will / going to สลับด้าน', s: 'I\'ve already decided: I ___ a doctor. — Oh, then I ___ you my old biology books.', a: 'am going to be / will give', wrong: ['will be / am going to give', 'am going to be / am going to give', 'will be / will give'], why: 'ตัดสินใจไว้แล้ว → going to · เสนอเดี๋ยวนั้น → will (น้องเคยตอบสลับด้านพอดี)' },
-  { tag: 'will / going to สลับด้าน', s: 'Look at the time! We ___ late. — Don\'t worry, I ___ Dad to drive us.', a: 'are going to be / will ask', wrong: ['will be / am going to ask', 'are going to be / are going to ask', 'will be / will ask'], why: 'หลักฐาน (ดูเวลา) → going to · ตัดสินใจเดี๋ยวนั้น → will' },
-  { tag: 'if … would (คู่ conditional)', s: 'If I ___ you, I ___ the truth.', a: 'were / would tell', wrong: ['were / will tell', 'am / would tell', 'was / will tell'], why: 'If I were you = สมมติ → would (ไม่ใช่ will) — ช่องแรกถูกยังไม่พอ' },
-  { tag: 'if … would (คู่ conditional)', s: 'If Nok ___ harder, she ___ the test. But she never studies.', a: 'studied / would pass', wrong: ['studied / will pass', 'studies / would pass', 'studies / will pass'], why: '"But she never studies" = สมมติที่ไม่จริง → studied … would pass' },
-  { tag: 'gerund / infinitive', s: 'We decided ___ the trip because Mom was too busy ___ with us.', a: 'to postpone / to come', wrong: ['postponing / to come', 'to postpone / coming', 'postponing / coming'], why: 'decide + to V · too busy + to V' },
-  { tag: 'gerund / infinitive', s: 'I enjoy ___ badminton, but I can\'t afford ___ a new racket.', a: 'playing / to buy', wrong: ['to play / to buy', 'playing / buying', 'to play / buying'], why: 'enjoy + V-ing · afford + to V (ท่องลิสต์วันละ 2 นาที)' },
-  { tag: 'ประธานจริงอยู่หน้า of', err: true, s: 'One of my <u><b>1</b>best</u> friends <u><b>2</b>live</u> near the <u><b>3</b>oldest</u> temple <u><b>4</b>in</u> town.', a: '2 — live → lives', wrong: ['1 — best', '3 — oldest', '4 — in'], why: 'ประธานคือ One (เอกพจน์) ไม่ใช่ friends → lives · best/oldest เป็น superlative ถูกแล้ว · in town ถูก' },
-  { tag: 'ประธานจริงอยู่หน้า of', err: true, s: 'The box of <u><b>1</b>chocolates</u> <u><b>2</b>were</u> <u><b>3</b>on</u> the table <u><b>4</b>this</u> morning.', a: '2 — were → was', wrong: ['1 — chocolates', '3 — on', '4 — this'], why: 'ประธานคือ The box (เอกพจน์) ไม่ใช่ chocolates → was' },
-  { tag: 'adverb ขยายกริยา', err: true, s: 'The children <u><b>1</b>ran</u> <u><b>2</b>very</u> <u><b>3</b>quick</u> to the <u><b>4</b>bus stop</u>.', a: '3 — quick → quickly', wrong: ['1 — ran', '2 — very', '4 — bus stop'], why: 'ขยายกริยา ran ต้องเป็น adverb → quickly (กับดัก FORM อันดับ 2 ของทุกโรงเรียน)' },
-  { tag: 'adverb ขยายกริยา', err: true, s: 'She <u><b>1</b>sings</u> <u><b>2</b>beautiful</u>, and everyone <u><b>3</b>listens</u> <u><b>4</b>carefully</u>.', a: '2 — beautiful → beautifully', wrong: ['1 — sings', '3 — listens', '4 — carefully'], why: 'ขยายกริยา sings → beautifully · carefully ถูกแล้ว (ขยาย listens)' },
-  { tag: 'ตรวจทั้งสองช่อง', s: 'Every weekend we ___ to the beach, but this weekend we ___ at home because of the storm.', a: 'go / are staying', wrong: ['go / stay', 'are going / are staying', 'go / stayed'], why: 'every weekend → go · this weekend (ชั่วคราว, แผน) → are staying — ช้อยส์ "go / stay" คือกับดักช่องแรกถูก ช่องสองผิด' },
+  { tag: 'time marker แยกช่อง', s: 'Recently my cousin ___ a new job, and she ___ work last Monday.', a: 'has found / started', wrong: ['found / started', 'has found / has started', 'finds / started'], why: 'ช่อง 1 มี recently ใช้ present perfect ช่อง 2 มี last Monday ใช้ past simple แต่ละช่องดูคำบอกเวลาของตัวเอง' },
+  { tag: 'time marker แยกช่อง', s: 'I ___ this book last week and I ___ it twice already.', a: 'read / have read', wrong: ['have read / read', 'read / read', 'have read / have read'], why: 'ช่อง 1 มี last week ใช้ past simple ช่อง 2 มี already ใช้ present perfect' },
+  { tag: 'ตัวสั้นแทรกตัวยาว', s: 'While the students ___ the exam, the fire alarm ___.', a: 'were taking / rang', wrong: ['were taking / was ringing', 'took / rang', 'took / was ringing'], why: 'while + เรื่องยาว (were taking) ส่วนกริ่งดังเป็นเรื่องสั้นที่แทรกเข้ามา ใช้ past simple (rang)' },
+  { tag: 'ตัวสั้นแทรกตัวยาว', s: 'The guests ___ while we ___ the table.', a: 'arrived / were setting', wrong: ['were arriving / were setting', 'arrived / set', 'have arrived / were setting'], why: 'แขกมาถึงเป็นเรื่องสั้น ใช้ past simple ส่วนกำลังจัดโต๊ะเป็นเรื่องยาว ใช้ past continuous' },
+  { tag: 'will / going to สลับด้าน', s: 'I\'ve already decided: I ___ a doctor. — Oh, then I ___ you my old biology books.', a: 'am going to be / will give', wrong: ['will be / am going to give', 'am going to be / am going to give', 'will be / will give'], why: 'ช่อง 1 ตัดสินใจไว้แล้ว ใช้ going to ช่อง 2 เสนอให้ตอนนั้นเลย ใช้ will (น้องเคยตอบสลับกันพอดี)' },
+  { tag: 'will / going to สลับด้าน', s: 'Look at the time! We ___ late. — Don\'t worry, I ___ Dad to drive us.', a: 'are going to be / will ask', wrong: ['will be / am going to ask', 'are going to be / are going to ask', 'will be / will ask'], why: 'ช่อง 1 ดูเวลาแล้วเห็นหลักฐาน ใช้ going to ช่อง 2 ตัดสินใจตอนนั้นเลย ใช้ will' },
+  { tag: 'if … would (คู่ conditional)', s: 'If I ___ you, I ___ the truth.', a: 'were / would tell', wrong: ['were / will tell', 'am / would tell', 'was / will tell'], why: '"If I were you" เป็นการสมมติ อีกท่อนต้องใช้ would ไม่ใช่ will ถูกแค่ช่องแรกยังไม่พอ' },
+  { tag: 'if … would (คู่ conditional)', s: 'If Nok ___ harder, she ___ the test. But she never studies.', a: 'studied / would pass', wrong: ['studied / will pass', 'studies / would pass', 'studies / will pass'], why: '"But she never studies" แปลว่าเป็นการสมมติที่ไม่จริง จึงใช้ studied คู่กับ would pass' },
+  { tag: 'gerund / infinitive', s: 'We decided ___ the trip because Mom was too busy ___ with us.', a: 'to postpone / to come', wrong: ['postponing / to come', 'to postpone / coming', 'postponing / coming'], why: 'decide ตามด้วย to + กริยา และ too busy ก็ตามด้วย to + กริยา' },
+  { tag: 'gerund / infinitive', s: 'I enjoy ___ badminton, but I can\'t afford ___ a new racket.', a: 'playing / to buy', wrong: ['to play / to buy', 'playing / buying', 'to play / buying'], why: 'enjoy ตามด้วยกริยาเติม -ing ส่วน afford ตามด้วย to + กริยา (ท่องลิสต์วันละ 2 นาที)' },
+  { tag: 'ประธานจริงอยู่หน้า of', err: true, s: 'One of my <u><b>1</b>best</u> friends <u><b>2</b>live</u> near the <u><b>3</b>oldest</u> temple <u><b>4</b>in</u> town.', a: '2 — live → lives', wrong: ['1 — best', '3 — oldest', '4 — in'], why: 'ประธานคือ One เป็นเอกพจน์ (singular) ไม่ใช่ friends จึงแก้ live เป็น lives ส่วน best กับ oldest เป็นขั้นสูงสุด (superlative) ถูกแล้ว ที่ถูก: One of my best friends lives near the oldest temple in town.' },
+  { tag: 'ประธานจริงอยู่หน้า of', err: true, s: 'The box of <u><b>1</b>chocolates</u> <u><b>2</b>were</u> <u><b>3</b>on</u> the table <u><b>4</b>this</u> morning.', a: '2 — were → was', wrong: ['1 — chocolates', '3 — on', '4 — this'], why: 'ประธานคือ The box เป็นเอกพจน์ ไม่ใช่ chocolates จึงแก้ were เป็น was ที่ถูก: The box of chocolates was on the table this morning.' },
+  { tag: 'adverb ขยายกริยา', err: true, s: 'The children <u><b>1</b>ran</u> <u><b>2</b>very</u> <u><b>3</b>quick</u> to the <u><b>4</b>bus stop</u>.', a: '3 — quick → quickly', wrong: ['1 — ran', '2 — very', '4 — bus stop'], why: 'คำที่ขยายกริยา ran ต้องเป็นคำวิเศษณ์ (adverb) จึงแก้ quick เป็น quickly ที่ถูก: The children ran very quickly to the bus stop.' },
+  { tag: 'adverb ขยายกริยา', err: true, s: 'She <u><b>1</b>sings</u> <u><b>2</b>beautiful</u>, and everyone <u><b>3</b>listens</u> <u><b>4</b>carefully</u>.', a: '2 — beautiful → beautifully', wrong: ['1 — sings', '3 — listens', '4 — carefully'], why: 'คำที่ขยายกริยา sings ต้องเป็น adverb จึงแก้ beautiful เป็น beautifully ส่วน carefully ถูกแล้วเพราะขยาย listens ที่ถูก: She sings beautifully, and everyone listens carefully.' },
+  { tag: 'ตรวจทั้งสองช่อง', s: 'Every weekend we ___ to the beach, but this weekend we ___ at home because of the storm.', a: 'go / are staying', wrong: ['go / stay', 'are going / are staying', 'go / stayed'], why: 'ช่อง 1 มี every weekend ใช้ go ช่อง 2 มี this weekend เป็นแผนช่วงสั้น ๆ ใช้ are staying ถ้าเลือก "go / stay" = ถูกแค่ช่องแรก' },
 ];
 
 const POOLS = { 1: MARKERS, 2: SINGLE, 3: PAIRED, 4: TRAPS };
@@ -332,7 +332,7 @@ function answerChoice(i) {
     flash(false, '✗ ที่ถูกคือ <b>' + esc(right.t) + '</b><br>' + esc(S.q.why) + tag);
   }
   $('hScore').textContent = S.score; $('hStreak').textContent = S.streak;
-  setTimeout(() => { if (S) next(); }, c.ok ? (quiz ? 1500 : 450) : (quiz ? 4200 : 2000));
+  setTimeout(() => { if (S) next(); }, c.ok ? (quiz ? 1500 : 450) : (quiz ? 7000 : 4500));
 }
 function finish() {
   clearInterval(tick);
