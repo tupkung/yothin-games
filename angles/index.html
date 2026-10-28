@@ -841,8 +841,8 @@ function qIso2() {
     if (v <= 0 || RESERVED.answers.has(v) || badPair(apex, v)) continue;
     const labs = { A: apex }; labs[ask] = 'x';
     return { kind: 'typed', svg: iso2Fig(apex, labs), text: `AB = AC และ BC = BD (จุด D อยู่บน AC) — <b>x</b> (มุม ${ask}) = กี่องศา`, ans: v,
-      tip: `① AB = AC เลยได้ มุม B = มุม C = (180 − ${apex}) ÷ 2 = ${C0}<br>② BC = BD สามเหลี่ยม BCD จึงเป็นหน้าจั่ว มุม BDC = มุม C = ${C0}<br>มุม DBC = 180 − ${C0} − ${C0} = ${apex}` +
-        (ask === 'ABD' ? `<br>③ มุม ABD = ${C0} − ${apex} = ${v}` : ask === 'ADB' ? `<br>③ มุม ADB = 180 − ${C0} = ${v} (บนเส้นตรง AC)` : ''),
+      tip: `1. AB = AC เลยได้ มุม B = มุม C = (180 − ${apex}) ÷ 2 = ${C0}<br>2. BC = BD สามเหลี่ยม BCD จึงเป็นหน้าจั่ว มุม BDC = มุม C = ${C0}<br>มุม DBC = 180 − ${C0} − ${C0} = ${apex}` +
+        (ask === 'ABD' ? `<br>3. มุม ABD = ${C0} − ${apex} = ${v}` : ask === 'ADB' ? `<br>3. มุม ADB = 180 − ${C0} = ${v} (บนเส้นตรง AC)` : ''),
       meta: { type: 'iso2', apex, ask, given: [apex], ans: v } };
   }
 }
