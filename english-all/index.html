@@ -1,0 +1,2437 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>อังกฤษครบทุกหัวข้อ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+--ink:#1a1c1e;--muted:#5b6167;--line:#dfe3e8;--bg:#fbfbfa;--card:#fff;--soft:#f4f6f8;
+--accent:#1f6feb;--accent-bg:#eaf2ff;--on-accent:#fff;--warn:#b25000;--warn-bg:#fff4e8;--ok:#136c39;--ok-bg:#e8f6ee;
+--bad:#b3261e;--bad-bg:#fdecea;--vio:#6b46e0;--vio-bg:#efeaff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#333a42;--bg:#16181b;--card:#1e2126;--soft:#262a30;
+--accent:#69a4ff;--accent-bg:#1a2740;--on-accent:#0d1420;--warn:#f0a163;--warn-bg:#33240f;--ok:#6fd39a;--ok-bg:#13301f;
+--bad:#ff8a80;--bad-bg:#3a1a17;--vio:#a68cff;--vio-bg:#2a2140}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:"Sarabun","Noto Sans Thai",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+font-size:17px;line-height:1.7;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:680px;margin:0 auto;padding:22px 16px calc(60px + env(safe-area-inset-bottom))}
+h1{font-size:1.4rem;margin:0 0 6px;line-height:1.35}
+h2{font-size:1.05rem;margin:18px 0 8px;color:var(--muted)}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.hidden{display:none !important}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+.tip{background:var(--vio-bg);border:1px solid var(--vio);border-radius:14px;padding:12px 16px;margin-bottom:16px;font-size:.95rem}
+.tip b{color:var(--vio)}
+.lv{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);
+border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin-bottom:10px}
+.lv:active{border-color:var(--accent)}
+.lv b{font-size:1.04rem}
+.lv .d{color:var(--muted);font-size:.86rem;line-height:1.55;display:block}
+.lv .best{float:right;font-size:.8rem;color:var(--ok);font-weight:700}
+.lv.mock{border-color:var(--warn);background:var(--warn-bg)}
+.lv.trap{border-color:var(--vio);background:var(--vio-bg)}
+.hud{display:flex;gap:8px;margin-bottom:12px}
+.pill{flex:1;background:var(--soft);border:1px solid var(--line);border-radius:11px;padding:6px 4px;text-align:center;line-height:1.3}
+.pill .n{font-size:1.2rem;font-weight:700;font-family:"IBM Plex Mono",monospace}
+.pill .l{font-size:.72rem;color:var(--muted)}
+.pill.late .n{color:var(--bad)}
+.bar{height:8px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:14px}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+.tname{color:var(--muted);font-size:.85rem;margin-bottom:6px}
+.txt{background:var(--soft);border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:.95rem;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.txt.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.82rem;overflow-x:auto;white-space:pre}
+.q{font-size:1.08rem;font-weight:600;margin:4px 0 12px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}
+.q u{text-decoration:none;border-bottom:2px solid var(--vio);padding-bottom:1px}
+.q u b{color:var(--vio);font-size:.72em;margin-right:2px;vertical-align:super}
+.ch{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);border:1.5px solid var(--line);
+border-radius:12px;padding:10px 14px;margin-bottom:8px;line-height:1.55}
+.ch:active{border-color:var(--accent)}
+.ch .k{display:inline-block;min-width:1.6em;font-weight:700;color:var(--muted)}
+.ch.ok{border-color:var(--ok);background:var(--ok-bg)}
+.ch.bad{border-color:var(--bad);background:var(--bad-bg)}
+.ch.pick{border-color:var(--accent);background:var(--accent-bg)}
+.ch[disabled]{cursor:default}
+.fb{border-radius:12px;padding:10px 14px;margin:6px 0 12px;font-size:.95rem;line-height:1.65;white-space:pre-line}
+.fb.ok{background:var(--ok-bg);border:1px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);border:1px solid var(--bad)}
+.fb .t{font-weight:700;display:block;margin-bottom:4px}
+.go{display:block;width:100%;background:var(--accent);color:var(--on-accent);border:0;border-radius:12px;padding:12px;font-weight:700}
+.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:.88rem}
+.big{font-size:2.3rem;font-weight:700;text-align:center}
+.stars{font-size:1.8rem;text-align:center}
+.res{text-align:center;color:var(--muted)}
+.miss{font-size:.92rem;background:var(--soft);border-radius:10px;padding:10px 12px;margin:8px 0;white-space:pre-line;overflow-wrap:anywhere}
+.miss .mq{font-weight:600}
+.row{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:5px 0;font-size:.93rem}
+.row .v{font-family:"IBM Plex Mono",monospace}
+footer{color:var(--muted);font-size:.8rem;text-align:center;margin-top:24px;line-height:1.6}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<section id="home">
+  <h1>🇬🇧 อังกฤษครบทุกหัวข้อ</h1>
+  <p class="sub">ฝึกทุกแบบที่ออกสอบเข้า ม.1 · เลือกหัวข้อ เล่นรอบละ 10 ข้อ · ผิดข้อไหนมีคำอธิบายทุกตัวเลือก</p>
+  <div class="tip"><b>ก่อนตอบทุกข้อ ถามตัวเองก่อน 1 คำถาม</b><br>
+  "โจทย์ถามอะไร?" → หาคำสำคัญก่อน<br>
+  เช่น NOT · INCORRECT · When · If · ช่องว่าง 2 ช่อง<br>
+  แล้วค่อยดูตัวเลือก</div>
+  <button class="lv mock" id="mockBtn"><span class="best" id="best-mock"></span><b>🏁 สอบจำลอง 40 ข้อ · 24 นาที</b><span class="d">คละทุกหัวข้อเหมือนข้อสอบจริง · ไม่บอกถูก/ผิดจนจบ · เป้า 36 วินาที/ข้อ</span></button>
+  <button class="lv" id="mixBtn"><span class="best" id="best-mix"></span><b>🔀 สุ่มคละทุกหัวข้อ 15 ข้อ</b><span class="d">บอกถูก/ผิดทันทีทุกข้อ</span></button>
+  <h2>เลือกหัวข้อ</h2>
+  <div id="topicList"></div>
+</section>
+
+<section id="play" class="hidden">
+  <div class="hud">
+    <div class="pill"><div class="n" id="hNo">1</div><div class="l" id="hOf">ข้อ</div></div>
+    <div class="pill"><div class="n" id="hOk">0</div><div class="l" id="hOkL">ถูก</div></div>
+    <div class="pill" id="pTime"><div class="n" id="hTime">0:00</div><div class="l" id="hTimeL">เวลา</div></div>
+  </div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="card">
+    <div class="tname" id="tName"></div>
+    <div id="txt"></div>
+    <div class="q" id="q"></div>
+    <div id="choices"></div>
+    <div id="fb"></div>
+    <button class="go hidden" id="next">ข้อต่อไป →</button>
+  </div>
+  <p style="text-align:center;margin-top:12px"><button class="ghost" id="quit">← กลับเมนู</button></p>
+</section>
+
+<section id="done" class="hidden">
+  <div class="card">
+    <h1 id="dTitle" style="text-align:center"></h1>
+    <div class="stars" id="dStars"></div>
+    <div class="big" id="dScore"></div>
+    <p class="res" id="dMsg"></p>
+    <div id="dSkill"></div>
+    <div id="dMiss"></div>
+    <button class="go" id="again">เล่นอีกรอบ</button>
+    <p style="text-align:center;margin-top:10px"><button class="ghost" id="toHome">← กลับเมนู</button></p>
+  </div>
+</section>
+
+<footer>ข้อในเกมแต่งใหม่ทั้งหมดตามแนวข้อสอบจริง (ไม่ซ้ำชุดฝึก) · โจทย์ที่ต้องดูรูป (แผนที่ · การ์ตูน) ไม่มีในเกม · สถิติเก็บในเครื่องนี้</footer>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); if (Telegram.WebApp.disableVerticalSwipes) Telegram.WebApp.disableVerticalSwipes(); } } catch (e) { }
+</script>
+
+<script id="pools">
+"use strict";
+const POOLS = {};
+
+// stage: conv
+POOLS['conv'] = [
+  { id: "conv-01", skill: "conv", trap: null, ep: null, lv: "e",
+    q: "Mom: Here is your lunch box. Don't forget it today!\nSon: ___",
+    ch: ["Thanks, Mom. I won't.", "You're welcome.", "Never mind.", "Same to you."],
+    why: ["แม่ยื่นของให้ + เตือน\nลูกต้องขอบคุณ (Thanks) + รับปากว่าจะไม่ลืม (I won't.)",
+          "You're welcome ใช้ตอบตอนคนอื่นขอบคุณเรา\nแต่แม่ไม่ได้ขอบคุณ",
+          "Never mind ใช้ตอบตอนคนอื่นขอโทษเรา\nแม่ไม่ได้ขอโทษ",
+          "Same to you ใช้อวยพรกลับ (เช่น Happy New Year)\nแม่ไม่ได้อวยพร"] },
+
+  { id: "conv-02", skill: "conv", trap: null, ep: null, lv: "e",
+    q: "Student: Thank you for explaining the homework again, Miss Lee.\nTeacher: ___",
+    ch: ["You're welcome.", "Never mind.", "Congratulations!", "I'm sorry to hear that."],
+    why: ["นักเรียนขอบคุณครู\nตอบคำขอบคุณ = You're welcome. (ยินดีจ้ะ)",
+          "Never mind = ไม่เป็นไร ใช้ตอบคำขอโทษ\nไม่ใช่ตอบคำขอบคุณ",
+          "Congratulations ใช้แสดงความยินดีเมื่อมีเรื่องดี เช่น ได้รางวัล",
+          "I'm sorry to hear that ใช้เมื่อได้ยินเรื่องไม่ดี\nแต่นี่คือคำขอบคุณ"] },
+
+  { id: "conv-03", skill: "conv", trap: null, ep: null, lv: "e",
+    q: "Nat: Oops! I'm sorry I stepped on your foot.\nBen: ___",
+    ch: ["That's all right.", "You're welcome.", "Same to you.", "Congratulations!"],
+    why: ["Nat ขอโทษ (I'm sorry)\nตอบคำขอโทษ = That's all right. (ไม่เป็นไร)",
+          "You're welcome ใช้ตอบคำขอบคุณ ไม่ใช่คำขอโทษ",
+          "Same to you = ขอให้เป็นเหมือนกันนะ ใช้อวยพรกลับ\nแปลว่าให้ Nat โดนเหยียบเท้าด้วย ไม่สุภาพ",
+          "Congratulations ใช้แสดงความยินดี\nการโดนเหยียบเท้าไม่ใช่เรื่องน่ายินดี"] },
+
+  { id: "conv-04", skill: "conv", trap: null, ep: null, lv: "e",
+    q: "Pim: I got first prize in the drawing contest!\nNan: ___",
+    ch: ["Congratulations! Well done.", "I'm sorry to hear that.", "Never mind.", "Get well soon."],
+    why: ["Pim ได้รางวัลที่ 1 = เรื่องดี\nแสดงความยินดี = Congratulations!",
+          "I'm sorry to hear that ใช้กับเรื่องไม่ดี เช่น ป่วย ของหาย",
+          "Never mind ใช้ตอบคำขอโทษ หรือปลอบตอนพลาด\nแต่ Pim ชนะ",
+          "Get well soon = หายไวๆ นะ ใช้กับคนป่วย"] },
+
+  { id: "conv-05", skill: "conv", trap: null, ep: null, lv: "e",
+    q: "Tom: I can't play football today. I hurt my leg.\nAmy: ___",
+    ch: ["Oh, I'm sorry to hear that.", "Congratulations!", "You're welcome.", "Have a good time!"],
+    why: ["Tom เจ็บขา = เรื่องไม่ดี\nแสดงความเห็นใจ (sympathy) = I'm sorry to hear that.",
+          "Congratulations ใช้กับเรื่องดี ไม่ใช่ตอนเพื่อนเจ็บ",
+          "You're welcome ใช้ตอบคำขอบคุณ\nTom ไม่ได้ขอบคุณ",
+          "Have a good time ใช้ตอนเพื่อนจะไปเที่ยว/ไปสนุก\nแต่ Tom บอกว่าเล่นไม่ได้"] },
+
+  { id: "conv-06", skill: "conv", trap: null, ep: null, lv: "m",
+    q: "Neighbor: Happy New Year, Ploy!\nPloy: ___",
+    ch: ["Thank you. Same to you!", "You're welcome.", "Get well soon!", "Never mind."],
+    why: ["ปีใหม่เป็นของทุกคน อวยพรกลับได้\nขอบคุณ + Same to you! (ขอให้คุณเหมือนกัน)",
+          "You're welcome ตอบคำขอบคุณ\nแต่เพื่อนบ้านอวยพร ไม่ได้ขอบคุณ",
+          "Get well soon ใช้กับคนป่วย",
+          "Never mind ใช้ตอบคำขอโทษ"] },
+
+  { id: "conv-07", skill: "conv", trap: null, ep: null, lv: "m",
+    q: "Lisa: Happy birthday, Ben!\nBen: ___",
+    ch: ["Thank you! Come to my party on Saturday.", "Same to you!", "You're welcome.", "I'm sorry to hear that."],
+    why: ["มีคนอวยพรวันเกิด → ขอบคุณ (Thank you!)",
+          "วันนี้เป็นวันเกิดของ Ben คนเดียว\nอวยพรกลับ Same to you ไม่ได้ (Lisa ไม่ได้เกิดวันนี้)",
+          "You're welcome ตอบคำขอบคุณ\nLisa อวยพร ไม่ได้ขอบคุณ",
+          "I'm sorry to hear that ใช้กับเรื่องไม่ดี\nวันเกิดเป็นเรื่องดี"] },
+
+  { id: "conv-08", skill: "conv", trap: null, ep: null, lv: "m",
+    q: "Salesperson: Good afternoon. Can I help you?\nCustomer: ___",
+    ch: ["Yes, please. I'm looking for a blue T-shirt.", "Yes, I can help you.", "No, you can't.", "You're welcome."],
+    why: ["Can I help you? = มีอะไรให้ช่วยไหมคะ (พนักงานเสนอความช่วยเหลือ)\nรับ = Yes, please. + บอกว่าหาอะไร",
+          "พนักงานถามว่า \"ให้ฉันช่วยไหม\"\nตอบว่า \"ฉันช่วยคุณได้\" = สลับคนช่วย ผิดความหมาย",
+          "No, you can't = คุณช่วยไม่ได้หรอก\nแปลตรงตัวจาก can แต่ไม่สุภาพ และไม่ใช่คำตอบข้อเสนอ\nถ้าไม่ต้องการให้ตอบ No, thank you. I'm just looking.",
+          "You're welcome ตอบคำขอบคุณ\nพนักงานยังไม่ได้ขอบคุณ"] },
+
+  { id: "conv-09", skill: "conv", trap: null, ep: null, lv: "m",
+    q: "Customer: How much is this cap?\nShopkeeper: ___",
+    ch: ["It's 150 baht.", "It's very much.", "There are many caps.", "I'd like this one."],
+    why: ["How much = ราคาเท่าไร\nตอบเป็นราคา = It's 150 baht.",
+          "How much ถามราคา ไม่ได้ถามว่า \"มากไหม\"\nIt's very much เป็นภาษาไทยแปลตรง ฝรั่งไม่พูด",
+          "ตอบเรื่องจำนวนหมวก (many)\nแต่โจทย์ถามราคา",
+          "I'd like this one = ขอเอาอันนี้\nเป็นคำพูดของลูกค้า ไม่ใช่คนขาย"] },
+
+  { id: "conv-10", skill: "conv", trap: null, ep: null, lv: "m",
+    q: "(Jane's brother answers the phone.)\nCaller: Hi. Could I talk to Jane, please?\nJane's brother: ___",
+    ch: ["Hold on, please. I'll get her.", "Speaking.", "You're welcome.", "Yes, you may. Goodbye."],
+    why: ["คนรับสายคือพี่/น้องชายของ Jane ไม่ใช่ Jane\nต้องบอกให้รอ แล้วไปเรียก Jane = Hold on, please.",
+          "Speaking. = \"พูดอยู่ค่ะ/ครับ\" แปลว่า \"ฉันคือ Jane\"\nแต่คนรับสายไม่ใช่ Jane",
+          "You're welcome ตอบคำขอบคุณ\nผู้โทรยังไม่ได้ขอบคุณ",
+          "บอกว่าคุยได้ แล้ววางสายเลย (Goodbye)\nไม่ได้ไปเรียก Jane มาคุย ไม่สมเหตุผล"] },
+
+  { id: "conv-11", skill: "conv", trap: null, ep: null, lv: "h",
+    q: "Caller: Hi, is Mr. Somchai there?\nSecretary: I'm sorry, he's out at the moment. ___",
+    ch: ["Do you want to leave a message for him?", "Do you want to take a message for him?", "He will call you back yesterday.", "Please call me Mr. Somchai."],
+    why: ["คุณสมชายไม่อยู่ เลขาถามว่าจะฝากข้อความไหม\nผู้โทร = leave a message (ฝาก)\nคนรับสาย = take a message (รับฝาก)",
+          "take a message = รับข้อความไว้ เป็นงานของเลขา\nถามผู้โทรว่า \"จะรับข้อความไหม\" สลับบทบาท",
+          "call back = โทรกลับ ต้องเป็นอนาคต\nyesterday (เมื่อวาน) ใช้กับ will ไม่ได้",
+          "Please call me Mr. Somchai = เรียกฉันว่าคุณสมชาย\nแต่เลขาไม่ใช่คุณสมชาย"] },
+
+  { id: "conv-12", skill: "conv", trap: null, ep: null, lv: "e",
+    q: "Doctor: What's the matter?\nPatient: ___",
+    ch: ["I have a bad headache.", "I'm fine, thank you. And you?", "I'm a student.", "It's on Monday."],
+    why: ["What's the matter? = เป็นอะไรมา / มีปัญหาอะไร\nบอกอาการ = I have a bad headache. (ปวดหัวมาก)",
+          "I'm fine, thank you ตอบคำถาม How are you?\nและถ้าสบายดีจะมาหาหมอทำไม",
+          "I'm a student ตอบคำถาม What do you do? (ทำอาชีพอะไร)",
+          "It's on Monday ตอบคำถามว่า \"วันไหน\" (When)"] },
+
+  { id: "conv-13", skill: "conv", trap: null, ep: null, lv: "m",
+    q: "Patient: I've had a cough for three days.\nDoctor: ___",
+    ch: ["You should drink warm water and get some rest.", "You'd better eat lots of ice cream.", "Congratulations!", "You're welcome."],
+    why: ["คนไข้ไอมา 3 วัน หมอให้คำแนะนำ (advice)\nYou should ... = ควรจะ...\nดื่มน้ำอุ่น + พักผ่อน เหมาะกับคนไอ",
+          "You'd better ใช้ให้คำแนะนำได้ถูกแบบ\nแต่เนื้อหาผิด: ไอแล้วกินไอศกรีมเยอะๆ ทำให้แย่ลง",
+          "Congratulations ใช้กับเรื่องดี\nการป่วยไม่ใช่เรื่องน่ายินดี",
+          "You're welcome ตอบคำขอบคุณ\nคนไข้ยังไม่ได้ขอบคุณ"] },
+
+  { id: "conv-14", skill: "conv", trap: null, ep: null, lv: "e",
+    q: "Tourist: Excuse me. Where is the post office?\nLocal: ___",
+    ch: ["Go straight and turn left. It's next to the bank.", "It's at three o'clock.", "I go to the post office by bus.", "Yes, it is a post office."],
+    why: ["Where = ที่ไหน → บอกทาง\nGo straight (ตรงไป) + turn left (เลี้ยวซ้าย) + next to (ข้างๆ)",
+          "at three o'clock = เวลา ตอบคำถาม What time",
+          "บอกว่าตัวเองไปยังไง (by bus)\nตอบคำถาม How do you go...? ไม่ได้บอกทาง",
+          "Yes ใช้ตอบคำถาม Yes/No\nแต่ Where ต้องตอบสถานที่"] },
+
+  { id: "conv-15", skill: "conv", trap: null, ep: null, lv: "m",
+    q: "Tourist: ___\nPolice officer: It's about ten minutes on foot. Just walk along this road.",
+    ch: ["How far is the train station from here?", "What time does the train leave?", "How much is a train ticket?", "Do you like your job?"],
+    why: ["ดูคำตอบก่อน: \"เดินประมาณ 10 นาที เดินไปตามถนนนี้\"\nคำตอบบอกระยะทาง → ถามว่า How far (ไกลแค่ไหน)",
+          "What time ถามเวลารถไฟออก\nต้องตอบเช่น At 9:30 ไม่ใช่ \"เดิน 10 นาที\"",
+          "How much ถามราคา\nต้องตอบเป็นเงิน เช่น 40 baht",
+          "ถามว่าชอบงานไหม ต้องตอบ Yes/No\nไม่ใช่บอกทาง"] },
+
+  { id: "conv-16", skill: "conv", trap: null, ep: null, lv: "e",
+    q: "Student: ___\nTeacher: Yes, you may. But come back quickly.",
+    ch: ["May I go to the restroom, please?", "Must I clean the board?", "Would you like some water?", "Where is the restroom?"],
+    why: ["ดูคำตอบ: Yes, you may = อนุญาต\nคำถามขออนุญาต (permission) = May I ...?",
+          "Must I ...? ถามว่าต้องทำไหม\nตอบด้วย you may (อนุญาต) ไม่เข้ากัน",
+          "Would you like ...? = เสนอของให้\nครูต้องตอบ Yes, please. ไม่ใช่ Yes, you may.",
+          "Where ถามสถานที่ ต้องตอบว่าอยู่ตรงไหน\nตอบ Yes ไม่ได้"] },
+
+  { id: "conv-17", skill: "conv", trap: null, ep: null, lv: "h",
+    q: "Student: Do you mind if I share this table with you?\nBoy: ___ There's plenty of room.",
+    ch: ["No, not at all. Please sit down.", "Yes, I do. Sit here, please.", "You're welcome.", "Never mind."],
+    why: ["Do you mind ...? = คุณรังเกียจไหม ถ้าฉัน...\nอนุญาต = No, not at all. (ไม่รังเกียจเลย) + Please sit down. (เชิญนั่ง)\nท้ายประโยคบอกว่าที่ยังเหลือเยอะ → ยินดีให้นั่ง",
+          "Yes, I do = ใช่ ฉันรังเกียจ (ไม่อยากให้นั่ง)\nแต่ต่อด้วย \"เชิญนั่ง\" ขัดกันเอง",
+          "You're welcome ตอบคำขอบคุณ\nนักเรียนกำลังขออนุญาต ยังไม่ได้ขอบคุณ",
+          "Never mind = ไม่เป็นไร ใช้ตอบคำขอโทษ\nไม่ใช่คำอนุญาต"] },
+
+  { id: "conv-18", skill: "conv", trap: null, ep: null, lv: "m",
+    q: "Fah: Would you like to come to my house for dinner on Friday?\nMay: ___",
+    ch: ["I'd love to. What time should I come?", "Yes, I do.", "Here you are.", "Yes, I like."],
+    why: ["Would you like to ...? = ชวน (invitation)\nตอบรับ = I'd love to. (อยากไปมาก)",
+          "คำถามขึ้นด้วย Would ต้องตอบด้วย would\nYes, I do. ใช้ตอบ Do you ...?",
+          "Here you are = นี่จ้ะ ใช้ตอนยื่นของให้",
+          "like ต้องมีกรรมตามหลัง (like it / like to)\nYes, I like. ไม่ครบประโยค เป็นภาษาไทยแปลตรง"] },
+
+  { id: "conv-19", skill: "conv", trap: null, ep: null, lv: "m",
+    q: "Ken: Let's go to the beach tomorrow.\nJoe: ___ I have to visit my grandma.",
+    ch: ["I'm afraid I can't.", "That's a good idea.", "I'm afraid so.", "Same to you."],
+    why: ["ดูประโยคหลังช่อง: \"ฉันต้องไปเยี่ยมยาย\" = ไปไม่ได้\nปฏิเสธอย่างสุภาพ = I'm afraid I can't. (เสียดายจัง ไปไม่ได้)",
+          "That's a good idea = ตอบรับคำชวน\nแต่ประโยคหลังบอกว่าต้องไปหายาย ขัดกัน",
+          "I'm afraid so = \"คงใช่แหละ (น่าเสียดาย)\"\nใช้ตอบคำถาม Yes/No เช่น Is it going to rain?\nไม่ได้ใช้ปฏิเสธคำชวน",
+          "Same to you ใช้อวยพรกลับ\nKen ชวนไปเที่ยว ไม่ได้อวยพร"] },
+
+  { id: "conv-20", skill: "conv", trap: null, ep: null, lv: "e",
+    q: "Waiter: Would you like something to drink?\nCustomer: ___",
+    ch: ["Yes, please. An orange juice.", "Yes, I would like.", "No, I don't.", "Here you are."],
+    why: ["พนักงานเสนอเครื่องดื่ม (offer)\nรับ = Yes, please. + บอกว่าเอาอะไร",
+          "would like ต้องมีของตามหลัง (I would like a juice)\nYes, I would like. ไม่ครบ",
+          "คำถามขึ้นด้วย Would ต้องตอบด้วย would\nปฏิเสธที่ถูก = No, thank you.",
+          "Here you are ใช้ตอนยื่นของให้\nเป็นคำของพนักงานตอนเอาน้ำมาเสิร์ฟ ไม่ใช่ลูกค้า"] },
+
+  { id: "conv-21", skill: "conv", trap: null, ep: null, lv: "e",
+    q: "Sister: Can you pass me the salt, please?\nBrother: ___",
+    ch: ["Sure. Here you are.", "Yes, I can pass.", "You're welcome.", "Thank you very much."],
+    why: ["พี่สาวขอให้ส่งเกลือ (request)\nยื่นให้ = Sure. Here you are. (ได้ นี่จ้ะ)",
+          "pass ต้องบอกว่าส่งอะไร (pass it)\nตอบแค่ว่า \"ส่งได้\" แต่ไม่ได้ส่ง เป็นการแปลตรงตัว",
+          "You're welcome ตอบคำขอบคุณ\nพี่สาวยังไม่ได้ขอบคุณ",
+          "Thank you เป็นคำของคนที่ได้รับของ\nคนส่งเกลือไม่ต้องขอบคุณ"] },
+
+  { id: "conv-22", skill: "conv", trap: null, ep: null, lv: "m",
+    q: "Mai: Oh no! I forgot to bring your comic book back. I'm so sorry.\nLek: ___ You can bring it tomorrow.",
+    ch: ["Never mind.", "You're welcome.", "Congratulations!", "Same to you."],
+    why: ["Mai ขอโทษที่ลืมคืนหนังสือ\nตอบคำขอโทษ = Never mind. (ไม่เป็นไร)\nแล้วต่อด้วย \"พรุ่งนี้ค่อยเอามา\"",
+          "You're welcome ตอบคำขอบคุณ\nไม่ใช่ตอบคำขอโทษ",
+          "Congratulations ใช้กับเรื่องดี\nการลืมของไม่ใช่เรื่องน่ายินดี",
+          "Same to you ใช้อวยพรกลับ\nไม่ได้ใช้ตอบคำขอโทษ"] },
+
+  { id: "conv-23", skill: "conv", trap: null, ep: null, lv: "m",
+    q: "Jack: Thank you so much for lending me your umbrella.\nSue: ___",
+    ch: ["Not at all.", "Never mind.", "I'm sorry to hear that.", "Same to you."],
+    why: ["Jack ขอบคุณ\nNot at all. = ไม่เป็นไรเลย ใช้ตอบคำขอบคุณได้ (เหมือน You're welcome)",
+          "Never mind ใช้ตอบคำขอโทษ\nJack ไม่ได้ขอโทษ เขาขอบคุณ\n(จำคู่: Not at all ↔ Thank you · Never mind ↔ Sorry)",
+          "I'm sorry to hear that ใช้เมื่อได้ยินเรื่องไม่ดี",
+          "Same to you ใช้อวยพรกลับ\nคำขอบคุณไม่ใช่คำอวยพร"] },
+
+  { id: "conv-24", skill: "conv", trap: null, ep: null, lv: "h",
+    q: "Mom: ___\nSon: Sorry, Mom. I'll turn it down right now.",
+    ch: ["Your music is too loud. I can't sleep.", "Your music is very nice. Can you play it again?", "Have you finished your homework?", "It's too dark in here."],
+    why: ["ดูคำตอบ: Sorry + turn it down (หรี่เสียงลง)\nแปลว่าแม่บ่นเรื่องเสียงดัง → เพลงดังเกินไป (too loud)",
+          "แม่ชมเพลงและขอให้เปิดอีก\nลูกจะขอโทษและหรี่เสียงทำไม ไม่เข้ากัน",
+          "ถามเรื่องการบ้าน ต้องตอบ Yes/No\nไม่เกี่ยวกับ turn it down",
+          "ห้องมืดไป ต้องเปิดไฟ (turn on the light)\nturn down ใช้กับเสียง ไม่ใช่แสง"] },
+
+  { id: "conv-25", skill: "conv", trap: null, ep: null, lv: "m",
+    q: "Customer: ___\nShop assistant: Of course. The fitting room is over there.",
+    ch: ["Can I try this dress on?", "How much is this dress?", "Where can I pay for this dress?", "Is this dress on sale?"],
+    why: ["ดูคำตอบ: fitting room = ห้องลองเสื้อ\nลูกค้าขอลองชุด = Can I try this dress on?",
+          "How much ถามราคา ต้องตอบเป็นเงิน\nไม่ใช่บอกห้องลองเสื้อ",
+          "ถามที่จ่ายเงิน ต้องบอกที่แคชเชียร์\nไม่ใช่ห้องลองเสื้อ",
+          "on sale = ลดราคาไหม\nพนักงานต้องบอกเรื่องราคา ไม่ใช่ชี้ไปห้องลองเสื้อ"] },
+
+  { id: "conv-26", skill: "conv", trap: null, ep: null, lv: "h",
+    q: "Caller: ___\nDan: Speaking. Who's calling, please?",
+    ch: ["Hello. May I speak to Dan, please?", "Hello. Is that the pizza shop?", "Hello. Is Dan's sister at home?", "Hello. This is Dan speaking."],
+    why: ["Dan ตอบว่า Speaking. = \"กำลังพูดอยู่\" แปลว่า \"ผมคือ Dan\"\nผู้โทรจึงต้องขอสาย Dan = May I speak to Dan, please?",
+          "ถ้าถามว่าใช่ร้านพิซซ่าไหม\nDan ไม่ใช่ร้านพิซซ่า ตอบ Speaking ไม่ได้",
+          "ผู้โทรขอสายพี่/น้องสาวของ Dan\nDan ไม่ใช่พี่สาว ตอบ Speaking ไม่ได้",
+          "ผู้โทรบอกว่าตัวเองชื่อ Dan\nแต่คนรับก็ชื่อ Dan และยังถามว่า \"ใครโทรมา\" ขัดกัน"] },
+
+  { id: "conv-27", skill: "conv", trap: null, ep: null, lv: "e",
+    q: "Mrs. Brown: Good morning, class.\nStudents: ___",
+    ch: ["Good morning, Mrs. Brown.", "Good night, Mrs. Brown.", "Goodbye, Mrs. Brown.", "Good afternoon, class."],
+    why: ["ครูทักทายตอนเช้า\nนักเรียนทักกลับ = Good morning + ชื่อครู",
+          "Good night ใช้บอกลาตอนกลางคืน/ก่อนนอน\nไม่ใช่ทักทายตอนเช้า",
+          "Goodbye ใช้ตอนลากัน\nแต่ครูเพิ่งทักทายตอนเริ่มเรียน",
+          "afternoon = ตอนบ่าย ผิดเวลา\nและนักเรียนเรียกครูว่า class ไม่ได้"] },
+
+  { id: "conv-28", skill: "conv", trap: null, ep: null, lv: "e",
+    q: "Anna: Nice to meet you, Ploy.\nPloy: ___",
+    ch: ["Nice to meet you, too.", "I'm fine, thank you.", "You're welcome.", "See you, too."],
+    why: ["เจอกันครั้งแรก Anna บอกว่ายินดีที่ได้รู้จัก\nตอบกลับ = Nice to meet you, too. (ยินดีเช่นกัน)",
+          "I'm fine, thank you ตอบคำถาม How are you?",
+          "You're welcome ตอบคำขอบคุณ\nAnna ไม่ได้ขอบคุณ",
+          "See you ใช้ตอนลากัน\nแต่ทั้งสองคนเพิ่งเจอกัน"] },
+
+  { id: "conv-29", skill: "conv", trap: null, ep: null, lv: "h",
+    q: "Mr. Smith: What do you do, Mr. Chai?\nMr. Chai: ___",
+    ch: ["I'm a dentist.", "I'm fine, thanks.", "I'm reading the newspaper.", "I do it every day."],
+    why: ["What do you do? = คุณทำงานอะไร (ถามอาชีพ)\nตอบอาชีพ = I'm a dentist. (หมอฟัน)",
+          "I'm fine ตอบคำถาม How are you?\nคนละคำถามกัน",
+          "ตอบว่า \"กำลังอ่านหนังสือพิมพ์\"\nตอบคำถาม What are you doing? (กำลังทำอะไรอยู่)\nแต่ What do you do? ถามอาชีพ",
+          "แปลตรงตัวว่า \"ทำทุกวัน\"\nไม่ได้บอกว่าทำอะไร"] },
+
+  { id: "conv-30", skill: "conv", trap: null, ep: null, lv: "e",
+    q: "Beam: I have a big swimming race tomorrow.\nKate: ___",
+    ch: ["Good luck! You can do it.", "Congratulations on winning!", "Get well soon!", "I'm sorry to hear that."],
+    why: ["การแข่งยังไม่เกิด (tomorrow)\nอวยพรก่อนแข่ง = Good luck!",
+          "ยังไม่ได้แข่งเลย ยังไม่รู้ว่าชนะ\nแสดงความยินดีตอนนี้ยังไม่ได้",
+          "Get well soon ใช้กับคนป่วย\nBeam ไม่ได้ป่วย",
+          "I'm sorry to hear that ใช้กับเรื่องไม่ดี\nการได้ไปแข่งไม่ใช่เรื่องร้าย"] },
+
+  { id: "conv-31", skill: "conv", trap: null, ep: null, lv: "m",
+    q: "Nok: My grandpa is in the hospital.\nJim: ___",
+    ch: ["I'm sorry to hear that. I hope he gets better soon.", "That's great news!", "Congratulations to your grandpa!", "You're welcome."],
+    why: ["คุณตาเข้าโรงพยาบาล = เรื่องไม่ดี\nเห็นใจ + ขอให้หาย = I'm sorry to hear that. I hope he gets better soon.",
+          "That's great news = ข่าวดีมาก\nการป่วยไม่ใช่ข่าวดี",
+          "Congratulations ใช้แสดงความยินดี\nเข้าโรงพยาบาลไม่ใช่เรื่องน่ายินดี",
+          "You're welcome ตอบคำขอบคุณ\nNok ไม่ได้ขอบคุณ"] },
+
+  { id: "conv-32", skill: "conv", trap: null, ep: null, lv: "e",
+    q: "Teacher: Please open your books to page 46.\nStudent: ___ I didn't hear the page number.",
+    ch: ["Excuse me, could you say that again?", "Excuse me, can I go home now?", "Thank you. I heard you clearly.", "Here you are, teacher."],
+    why: ["ประโยคหลังช่อง: \"ไม่ได้ยินเลขหน้า\"\nต้องขอให้ครูพูดอีกครั้ง = Could you say that again?",
+          "ขอกลับบ้าน ไม่เกี่ยวกับการไม่ได้ยินเลขหน้า",
+          "บอกว่า \"ได้ยินชัด\" ขัดกับประโยคหลังที่บอกว่าไม่ได้ยิน",
+          "Here you are ใช้ตอนยื่นของให้\nครูไม่ได้ขอของ"] },
+
+  { id: "conv-33", skill: "conv", trap: null, ep: null, lv: "h",
+    q: "Mom: ___\nDaughter: About an hour ago. I'm almost done.",
+    ch: ["When did you start doing your homework?", "How long will your homework take?", "How often do you do your homework?", "What time does your class start?"],
+    why: ["ดูคำตอบ: About an hour ago = ประมาณ 1 ชั่วโมงที่แล้ว (อดีต)\nคำถามต้องถามเวลาในอดีต = When did you start ...?",
+          "How long will ... take? ถามอนาคตว่าจะใช้เวลาเท่าไร\nตอบด้วย ago (ที่แล้ว) ไม่ได้",
+          "How often = บ่อยแค่ไหน\nต้องตอบเช่น every day",
+          "ถามเวลาเข้าเรียน (ปกติ) ต้องตอบเช่น At 8:00\nและ I'm almost done ไม่เข้ากับคำถามนี้"] },
+
+  { id: "conv-34", skill: "conv", trap: null, ep: null, lv: "m",
+    q: "Visitor: Excuse me, is there a pharmacy near here?\nLocal: ___",
+    ch: ["Yes, there's one opposite the school.", "No, I'm not sick.", "Yes, it does.", "Yes, take this medicine twice a day."],
+    why: ["is there ...? = มี...ไหม\nตอบ Yes, there's one + บอกที่ตั้ง (opposite = ตรงข้าม)",
+          "นักท่องเที่ยวถามหาร้านขายยา\nไม่ได้ถามว่าคนตอบป่วยไหม",
+          "คำถามขึ้นด้วย is there ต้องตอบด้วย there is\nYes, it does. ใช้ตอบ Does it ...?",
+          "เป็นคำพูดของเภสัชกรตอนให้ยา\nไม่ได้บอกว่าร้านอยู่ที่ไหน"] }
+];
+
+// stage: idiom
+POOLS['idiom'] = [
+  { id: "idiom-01", skill: "idiom", trap: null, ep: null, lv: "e",
+    q: "The maths quiz was a piece of cake for Mina. She finished it in ten minutes.\n\nWhat does \"a piece of cake\" mean here?",
+    ch: ["very easy", "very difficult", "a sweet snack", "very long"],
+    why: ["a piece of cake = ง่ายมาก (สำนวน)\nเบาะแส: ทำเสร็จใน 10 นาที",
+          "ตรงข้ามกับความหมายจริง\nถ้ายากมาก คงไม่เสร็จเร็ว",
+          "แปลตรงตัวว่า \"ขนมเค้กหนึ่งชิ้น\"\nแต่ข้อสอบเป็นแบบทดสอบ ไม่ใช่ขนม",
+          "ถ้ายาวมาก คงทำไม่เสร็จใน 10 นาที"] },
+
+  { id: "idiom-02", skill: "idiom", trap: null, ep: null, lv: "e",
+    q: "Jay: I feel a bit under the weather today.\nPete: ___",
+    ch: ["Oh no. Maybe you should go home and rest.", "Yes, the weather is lovely today.", "Congratulations! That's great.", "You're welcome."],
+    why: ["under the weather = รู้สึกไม่ค่อยสบาย (สำนวน)\nเพื่อนป่วย → แนะนำให้กลับไปพัก",
+          "แปลตรงตัวจากคำว่า weather (อากาศ)\nแต่ Jay พูดถึงร่างกายตัวเอง ไม่ใช่อากาศ",
+          "Congratulations ใช้กับเรื่องดี\nไม่สบายไม่ใช่เรื่องน่ายินดี",
+          "You're welcome ตอบคำขอบคุณ\nJay ไม่ได้ขอบคุณ"] },
+
+  { id: "idiom-03", skill: "idiom", trap: null, ep: null, lv: "m",
+    q: "On the first day of camp, nobody knew each other. The leader played a funny name game to break the ice.\n\nWhat does \"break the ice\" mean?",
+    ch: ["help people feel relaxed and start talking", "break some ice for cold drinks", "make everyone stop talking", "end the camp early"],
+    why: ["break the ice = ทำให้คนที่ยังไม่รู้จักกันหายเกร็ง แล้วเริ่มคุยกัน\nเบาะแส: ไม่มีใครรู้จักกัน + เล่นเกมตลกๆ",
+          "แปลตรงตัวว่า \"ทุบน้ำแข็ง\"\nเนื้อเรื่องไม่มีน้ำแข็งหรือเครื่องดื่มเลย",
+          "ตรงข้ามกับความหมายจริง\nเกมตลกทำให้คนคุยกันมากขึ้น",
+          "เป็นวันแรกของค่าย และเล่นเกมให้สนุก\nไม่ได้จบค่าย"] },
+
+  { id: "idiom-04", skill: "idiom", trap: null, ep: null, lv: "m",
+    q: "My uncle lives in Canada, so we only see him once in a blue moon.\n\nWhat does \"once in a blue moon\" mean?",
+    ch: ["very rarely", "every month when the moon is full", "every weekend", "only at night"],
+    why: ["once in a blue moon = นานๆ ครั้ง แทบไม่เคย\nเบาะแส: ลุงอยู่ไกลถึงแคนาดา + คำว่า only",
+          "แปลตรงตัวจากคำว่า moon (ดวงจันทร์)\nสำนวนนี้ไม่ได้พูดถึงดวงจันทร์จริง",
+          "ลุงอยู่ไกลมาก เจอทุกสุดสัปดาห์ไม่ได้\nตรงข้ามกับความหมาย",
+          "ไม่ได้พูดถึงช่วงเวลากลางวัน-กลางคืน\nแปลจาก moon ตรงตัว"] },
+
+  { id: "idiom-05", skill: "idiom", trap: null, ep: null, lv: "e",
+    q: "Mom: Take your umbrella. It's raining cats and dogs!\nSon: ___",
+    ch: ["Wow, really? I'll take my raincoat as well.", "Really? Where are the animals?", "Great! Let's have a picnic in the sun.", "Here you are. Thank you."],
+    why: ["raining cats and dogs = ฝนตกหนักมาก\nลูกจึงเอาเสื้อกันฝนไปด้วย",
+          "แปลตรงตัวว่ามีแมวกับหมาตกลงมา\nสำนวนนี้หมายถึงฝนหนัก ไม่มีสัตว์จริง",
+          "ฝนตกหนัก ไปปิกนิกกลางแดดไม่ได้\nขัดกับที่แม่พูด",
+          "Here you are ใช้ตอนยื่นของให้\nแต่แม่เป็นคนบอกให้เอาร่มไป ไม่ได้ขอของจากลูก"] },
+
+  { id: "idiom-06", skill: "idiom", trap: null, ep: null, lv: "m",
+    q: "That new game console costs an arm and a leg. I can't buy it with my pocket money.\n\nWhat does \"costs an arm and a leg\" mean?",
+    ch: ["is very expensive", "is very cheap", "can hurt your body", "is very heavy"],
+    why: ["cost an arm and a leg = แพงมาก (สำนวน)\nเบาะแส: ซื้อด้วยค่าขนมไม่ได้",
+          "ตรงข้ามกับความหมาย\nถ้าถูกมาก คงซื้อด้วยค่าขนมได้",
+          "แปลตรงตัวจาก arm (แขน) และ leg (ขา)\nสำนวนนี้พูดถึงราคา ไม่ใช่ร่างกาย",
+          "ประโยคพูดเรื่องเงิน (pocket money)\nไม่ได้พูดเรื่องน้ำหนัก"] },
+
+  { id: "idiom-07", skill: "idiom", trap: null, ep: null, lv: "h",
+    q: "We planned a surprise party for Dad, but my little brother let the cat out of the bag at breakfast.\n\nWhat did the little brother do?",
+    ch: ["He told Dad the secret.", "He let the pet cat go outside.", "He bought a new bag for Dad.", "He kept the secret very well."],
+    why: ["let the cat out of the bag = เผลอบอกความลับ\nงานเลี้ยงเซอร์ไพรส์จึงไม่เป็นความลับแล้ว",
+          "แปลตรงตัวว่า \"ปล่อยแมวออกจากถุง\"\nเรื่องนี้เกี่ยวกับงานเซอร์ไพรส์ ไม่ใช่แมว",
+          "แปลจากคำว่า bag ตรงตัว\nไม่มีการซื้อกระเป๋าในเรื่อง",
+          "ตรงข้ามกับความหมาย\nคำว่า but บอกว่ามีเรื่องผิดแผน"] },
+
+  { id: "idiom-08", skill: "idiom", trap: null, ep: null, lv: "m",
+    q: "Mrs. Wong: Could you keep an eye on my bag while I buy a ticket?\nGirl: ___",
+    ch: ["Sure. I'll watch it for you.", "Sorry, I can't put my eye on your bag.", "Yes, it's a nice bag. Where did you buy it?", "You're welcome."],
+    why: ["keep an eye on = คอยดู/เฝ้าไว้ให้\nตอบรับคำขอ = Sure. I'll watch it for you.",
+          "แปลตรงตัวว่า \"วางตาไว้บนกระเป๋า\"\nสำนวนนี้แปลว่าช่วยเฝ้า",
+          "ชมกระเป๋าแต่ไม่ได้ตอบคำขอ\nคุณหว่องขอให้ช่วยเฝ้า ไม่ได้ถามเรื่องกระเป๋า",
+          "You're welcome ตอบคำขอบคุณ\nคุณหว่องกำลังขอให้ช่วย ยังไม่ได้ขอบคุณ"] },
+
+  { id: "idiom-09", skill: "idiom", trap: null, ep: null, lv: "e",
+    q: "Toon was over the moon when he got a puppy for his birthday.\n\nHow did Toon feel?",
+    ch: ["very happy", "very sad", "like he was flying in space", "very angry"],
+    why: ["over the moon = ดีใจมาก (สำนวน)\nเบาะแส: ได้ลูกหมาเป็นของขวัญวันเกิด",
+          "ได้ลูกหมาเป็นของขวัญ ไม่ใช่เรื่องเศร้า",
+          "แปลตรงตัวจาก moon (ดวงจันทร์)\nToon ไม่ได้ไปอวกาศจริง",
+          "ได้ของขวัญที่ชอบ ไม่ใช่เรื่องน่าโกรธ"] },
+
+  { id: "idiom-10", skill: "idiom", trap: null, ep: null, lv: "m",
+    q: "My brother is a real couch potato. He watches TV on the sofa all weekend.\n\nWhat is a \"couch potato\"?",
+    ch: ["a lazy person who sits and watches TV a lot", "a potato that is kept on the sofa", "a person who loves cooking potatoes", "a person who plays sports every day"],
+    why: ["couch potato = คนขี้เกียจที่นั่งดูทีวีทั้งวัน\nเบาะแส: ดูทีวีบนโซฟาทั้งสุดสัปดาห์",
+          "แปลตรงตัวว่า \"มันฝรั่งบนโซฟา\"\nแต่ประโยคพูดถึงพี่ชาย ไม่ใช่มันฝรั่ง",
+          "แปลจากคำว่า potato\nเรื่องนี้ไม่มีการทำอาหาร",
+          "ตรงข้ามกับความหมาย\nพี่ชายนั่งดูทีวีทั้งวัน ไม่ได้เล่นกีฬา"] },
+
+  { id: "idiom-11", skill: "idiom", trap: null, ep: null, lv: "m",
+    q: "Coach: We've practised for three hours. Let's call it a day.\nPlayer: ___",
+    ch: ["Great! See you at practice tomorrow, Coach.", "OK. Which day should I call?", "Sure! Let's keep going until midnight.", "Happy birthday, Coach!"],
+    why: ["call it a day = พอแค่นี้ก่อน เลิกทำวันนี้\nฝึกมา 3 ชั่วโมงแล้ว → กลับบ้าน แล้วพรุ่งนี้เจอกัน",
+          "แปลตรงตัวว่า \"โทร\" (call) และ \"วัน\" (day)\nสำนวนนี้ไม่เกี่ยวกับการโทรศัพท์",
+          "ฝึกต่อจนเที่ยงคืน = ไม่หยุด\nขัดกับที่โค้ชบอกให้เลิก",
+          "แปลจาก a day ว่าวันพิเศษ\nโค้ชไม่ได้พูดถึงวันเกิด"] },
+
+  { id: "idiom-12", skill: "idiom", trap: null, ep: null, lv: "h",
+    q: "Ann: I saw a pink elephant at school today!\nBob: You're pulling my leg, aren't you?\nAnn: ___",
+    ch: ["Yes, I'm only joking!", "No, I'm not touching your leg.", "Yes, does your leg hurt?", "Thank you. You too."],
+    why: ["pull someone's leg = แกล้งพูดเล่น/หลอกเล่น\nช้างสีชมพูที่โรงเรียนเป็นเรื่องแต่ง\nAnn ยอมรับว่าพูดเล่น = Yes, I'm only joking!",
+          "แปลตรงตัวว่า \"ดึงขา\"\nไม่มีใครจับขาใครจริงๆ",
+          "แปลตรงตัวจาก leg (ขา) อีกแบบ\nBob ไม่ได้เจ็บขา",
+          "Thank you. You too. ใช้ตอบคำอวยพร\nBob ไม่ได้อวยพร เขาถามว่าล้อเล่นใช่ไหม"] },
+
+  { id: "idiom-13", skill: "idiom", trap: null, ep: null, lv: "e",
+    q: "Mew: The final exam is next week, so I need to hit the books tonight.\nJune: ___",
+    ch: ["Good idea. Good luck with your studying!", "Why do you want to hit your books? That's bad.", "Congratulations on passing the exam!", "Never mind. It doesn't matter."],
+    why: ["hit the books = ตั้งใจอ่านหนังสือ/ทบทวนหนัก\nสอบสัปดาห์หน้า → ขออวยพรให้อ่านได้ดี",
+          "แปลตรงตัวว่า \"ตีหนังสือ\"\nสำนวนนี้แปลว่าอ่านหนังสือ ไม่ได้ทำร้ายหนังสือ",
+          "ยังไม่ได้สอบ (next week)\nยังแสดงความยินดีว่าสอบผ่านไม่ได้",
+          "Never mind ใช้ตอบคำขอโทษ\nMew ไม่ได้ขอโทษ"] },
+
+  { id: "idiom-14", skill: "idiom", trap: null, ep: null, lv: "h",
+    q: "Nida wanted to sing on stage, but she got cold feet and stayed behind the curtain.\n\nWhat does \"got cold feet\" mean?",
+    ch: ["felt too nervous to do it", "her feet were cold because of the air conditioner", "was very excited to sing", "forgot the words of the song"],
+    why: ["get cold feet = กลัว/ประหม่าจนไม่กล้าทำ\nเบาะแส: but + ไปหลบหลังม่าน ไม่ขึ้นเวที",
+          "แปลตรงตัวว่า \"เท้าเย็น\"\nสำนวนนี้พูดถึงความรู้สึก ไม่ใช่เท้า",
+          "ถ้าตื่นเต้นอยากร้อง คงขึ้นเวที\nแต่เธอหลบหลังม่าน",
+          "ประโยคไม่ได้บอกว่าลืมเนื้อเพลง\nและ cold feet ไม่ได้แปลว่าลืม"] },
+
+  { id: "idiom-15", skill: "idiom", trap: null, ep: null, lv: "h",
+    q: "My sister and I don't see eye to eye about which film to watch, so we always argue.\n\nWhat does \"don't see eye to eye\" mean?",
+    ch: ["don't agree", "can't see each other", "don't like films", "always agree"],
+    why: ["see eye to eye = เห็นตรงกัน\ndon't see eye to eye = เห็นไม่ตรงกัน\nเบาะแส: we always argue (เถียงกันตลอด)",
+          "แปลตรงตัวจาก see (มอง) และ eye (ตา)\nพี่น้องมองเห็นกันได้ แต่ความเห็นไม่ตรงกัน",
+          "ทั้งสองคนอยากดูหนัง แค่เลือกเรื่องไม่ตรงกัน",
+          "ตรงข้าม: ลืมดูคำว่า don't\nและถ้าเห็นตรงกันคงไม่เถียง"] },
+
+  { id: "idiom-16", skill: "idiom", trap: null, ep: null, lv: "e",
+    q: "Teacher: Was the spelling test hard, Pam?\nPam: ___ I got full marks.",
+    ch: ["No, it was a piece of cake.", "Yes, it was a piece of cake.", "No, I don't like cake.", "Yes, I ate a piece of cake."],
+    why: ["ครูถามว่ายากไหม → ไม่ยาก = No\nแล้วบอกว่า a piece of cake (ง่ายมาก) ได้เต็มด้วย",
+          "Yes = ยาก แต่ a piece of cake = ง่าย\nพูดขัดกันเอง ต้องเช็กทั้ง Yes/No และสำนวน",
+          "แปลตรงตัวว่า \"เค้ก\"\nครูถามเรื่องข้อสอบ ไม่ใช่ขนม",
+          "แปลตรงตัว + ตอบ Yes (ยาก)\nไม่เกี่ยวกับข้อสอบ"] },
+
+  { id: "idiom-17", skill: "idiom", trap: null, ep: null, lv: "e",
+    q: "Ploy: I have some exciting news to tell you!\nMook: Really? I'm all ears.\n\nWhat does Mook mean?",
+    ch: ["I'm ready to listen.", "My ears hurt.", "I can't hear you.", "I don't want to know."],
+    why: ["I'm all ears = ตั้งใจฟังอยู่ เล่ามาเลย\nเบาะแส: Really? แสดงว่าอยากรู้",
+          "แปลตรงตัวจาก ears (หู)\nMook ไม่ได้เจ็บหู",
+          "ตรงข้าม: all ears = ฟังเต็มที่\nไม่ใช่ไม่ได้ยิน",
+          "Mook ตื่นเต้นอยากรู้ (Really?)\nไม่ใช่ไม่อยากฟัง"] },
+
+  { id: "idiom-18", skill: "idiom", trap: null, ep: null, lv: "m",
+    q: "Just before my piano concert, Dad smiled and said, \"Break a leg!\"\n\nWhat did Dad mean?",
+    ch: ["Good luck!", "Be careful. You might fall.", "Please break something.", "Get well soon."],
+    why: ["Break a leg! = ขอให้โชคดีนะ (ใช้อวยพรก่อนขึ้นเวทีแสดง)\nเบาะแส: พ่อยิ้ม + ก่อนคอนเสิร์ต",
+          "แปลตรงตัวจาก break a leg (ขาหัก)\nพ่อไม่ได้เตือนเรื่องหกล้ม",
+          "แปลตรงตัวจาก break (ทำแตก/หัก)\nพ่อไม่ได้อยากให้ทำของพัง",
+          "Get well soon ใช้กับคนป่วย\nลูกไม่ได้ป่วย กำลังจะขึ้นแสดง"] }
+];
+
+// stage: visual
+const T_VIS_LIFT = "SIGN:\nLIFT OUT OF ORDER\nPLEASE USE THE STAIRS";
+const T_VIS_QUIET = "SIGN:\nQUIET CARRIAGE\nPlease keep phone calls and music for the other carriages.";
+const T_VIS_FEED = "SIGN:\nPLEASE DO NOT FEED THE MONKEYS\nThey have a special diet.";
+const T_VIS_LIB = "CITY LIBRARY RULES\n1. Children under 8 must come with an adult.\n2. You may borrow up to 5 books for 14 days.\n3. Late books: 5 baht per book per day.\n4. No food. Water in a bottle is OK.\n5. Please keep your voice down in the reading room.";
+const T_VIS_CAFE = "SUNNY BEAN CAFE\n- Open 7:00-18:00 (closed on Wednesdays)\n- Free Wi-Fi for customers: ask for the password at the counter\n- Order and pay at the counter, then find a table\n- Laptops are welcome, but not at the window tables on weekends";
+const T_VIS_BOAT = "RIVER BOAT TIMETABLE (every day)\nPier        | Boat A | Boat B | Boat C\nNorth Pier  |  8:00  |  9:30  | 11:00\nTemple Pier |  8:20  |  9:50  | 11:20\nMarket Pier |  8:45  | 10:15  | 11:45\nFare: adult 30 baht | child (under 12) 15 baht";
+const T_VIS_MED = "COUGH SYRUP\n- Adults and children over 12: 2 teaspoons, 3 times a day\n- Children 6-12: 1 teaspoon, 3 times a day\n- Children under 6: ask a doctor\n- Take after meals.\n- Do not take more than 4 times in one day.\n- Shake well before use.";
+const T_VIS_SURVEY = "How do the 40 students in Class 6/2 get to school?\nBy car              | 14\nBy school bus       | 10\nOn foot             |  9\nBy bicycle          |  5\nBy motorcycle taxi  |  2";
+const T_VIS_SPROUT = "HOW TO GROW BEAN SPROUTS\n1. Soak the mung beans in water for 8 hours.\n2. Pour away the water.\n3. Put the beans in a jar and cover it with a cloth.\n4. Keep the jar in a dark place.\n5. Rinse the beans twice a day.\n6. After 3-4 days, the sprouts are ready to eat.";
+
+POOLS['visual'] = [
+  // --- sign: lift ---
+  { id: 'visual-01', skill: 'visual', trap: null, ep: 'reading-word-match-trap', lv: 'e',
+    q: T_VIS_LIFT + "\n\nWhat does this sign mean?",
+    ch: ["The lift is not working, so people should walk.", "The lift is only for people who order food.", "The stairs are closed today.", "People must wait in order for the lift."],
+    why: ["โจทย์ถามว่าป้ายหมายถึงอะไร\nout of order = เสีย ใช้งานไม่ได้\nจึงให้เดินขึ้นบันได (use the stairs)", "ยกคำว่า order มาแต่ความหมายคนละเรื่อง\nout of order ไม่เกี่ยวกับการสั่งอาหาร", "ป้ายบอกให้ใช้บันได\nบันไดจึงเปิดอยู่ ไม่ได้ปิด", "ยกคำว่า order มาอีก\nin order = เรียงคิว แต่ป้ายบอกว่าลิฟต์เสีย ไม่ต้องรอ"] },
+  { id: 'visual-02', skill: 'visual', trap: null, ep: null, lv: 'e',
+    q: T_VIS_LIFT + "\n\nWhere would you most likely see this sign?",
+    ch: ["in a shopping mall", "on a football field", "in a rice field", "in a swimming pool"],
+    why: ["ป้ายพูดถึงลิฟต์และบันได\nต้องเป็นอาคารหลายชั้น เช่น ห้างสรรพสินค้า", "สนามฟุตบอลไม่มีลิฟต์", "ทุ่งนาไม่มีลิฟต์", "ในสระว่ายน้ำไม่มีลิฟต์"] },
+  // --- sign: quiet carriage ---
+  { id: 'visual-03', skill: 'visual', trap: null, ep: 'reading-word-match-trap', lv: 'm',
+    q: T_VIS_QUIET + "\n\nWhat does this sign mean?",
+    ch: ["You should not talk on the phone in this part of the train.", "Music is played for passengers in this carriage.", "Phone calls are free in this carriage.", "You must keep your phone in the other carriage."],
+    why: ["โจทย์ถามความหมายป้าย\nkeep calls and music for the other carriages = ไปโทร/เปิดเพลงตู้อื่น\nตู้นี้ต้องเงียบ", "ยกคำ music มา แต่ป้ายบอกให้เอาเพลงไปตู้อื่น\nตู้นี้ไม่มีเพลง", "ป้ายไม่ได้พูดเรื่องโทรฟรี\nแค่ห้ามโทรในตู้นี้", "ยกคำ keep / other carriage มา\nแต่ป้ายไม่ได้ให้ทิ้งโทรศัพท์ไว้ตู้อื่น พกไปได้ แค่ห้ามโทร"] },
+  { id: 'visual-04', skill: 'visual', trap: null, ep: null, lv: 'm',
+    q: T_VIS_QUIET + "\n\nWhere would you see this sign?",
+    ch: ["on a train", "in a hospital room", "at a bus stop", "in a cinema"],
+    why: ["คำว่า carriage = ตู้รถไฟ (ตู้โดยสาร)\nจึงเป็นป้ายบนรถไฟ", "โรงพยาบาลก็เงียบ แต่ไม่มีตู้ carriage", "ป้ายรถเมล์ไม่มี carriage", "โรงหนังเงียบเหมือนกัน แต่ไม่มีหลายตู้ให้ย้ายไป"] },
+  // --- sign: feed ---
+  { id: 'visual-05', skill: 'visual', trap: null, ep: 'not-incorrect-scan', lv: 'e',
+    q: T_VIS_FEED + "\n\nWhat must visitors NOT do?",
+    ch: ["give the monkeys some bananas", "take photos of the monkeys", "watch the monkeys play", "read the sign about the monkeys"],
+    why: ["โจทย์ถามสิ่งที่ห้ามทำ (NOT)\nDo not feed = ห้ามให้อาหาร\nให้กล้วย = ให้อาหาร จึงห้าม", "ถ่ายรูปไม่ได้ห้ามในป้าย", "ดูลิงเล่นไม่ได้ห้าม", "อ่านป้ายไม่ได้ห้าม"] },
+  { id: 'visual-06', skill: 'visual', trap: null, ep: 'reading-word-match-trap', lv: 'h',
+    q: T_VIS_FEED + "\n\nWhat does \"They have a special diet\" tell us?",
+    ch: ["The monkeys already get food that is right for them.", "The monkeys are on a diet because they are too fat.", "Visitors must buy special food for the monkeys.", "The monkeys are not hungry today."],
+    why: ["special diet = อาหารพิเศษที่จัดไว้ให้\nสวนสัตว์ให้อาหารที่เหมาะอยู่แล้ว จึงห้ามคนให้", "ยกคำ diet มา แต่ diet ในที่นี้ = อาหารที่กินประจำ\nไม่ใช่การลดน้ำหนัก", "ยกคำ special มา\nแต่ป้ายห้ามให้อาหาร จะให้ซื้อมาได้อย่างไร", "ป้ายไม่ได้พูดว่าลิงหิวหรือไม่หิว"] },
+  // --- library ---
+  { id: 'visual-07', skill: 'visual', trap: null, ep: 'reading-word-match-trap', lv: 'm',
+    q: T_VIS_LIB + "\n\nMali is 10 years old. She wants to borrow 6 books. Which is true?",
+    ch: ["She can borrow only 5 of them.", "She must come with an adult.", "She has to pay 5 baht for each book.", "She can keep them for only 6 days."],
+    why: ["กฎข้อ 2: ยืมได้ไม่เกิน 5 เล่ม (up to 5)\nอยากยืม 6 จึงยืมได้แค่ 5", "ต้องมาพร้อมผู้ใหญ่เฉพาะเด็กต่ำกว่า 8 ปี\nมะลิ 10 ขวบ ไม่ต้อง", "ยกเลข 5 บาทมา\nแต่ 5 บาทคือค่าปรับตอนคืนช้า ไม่ใช่ค่ายืม", "ยืมได้ 14 วัน ไม่ใช่ 6 วัน\nเลข 6 มาจากจำนวนหนังสือ"] },
+  { id: 'visual-08', skill: 'visual', trap: null, ep: null, lv: 'm',
+    q: T_VIS_LIB + "\n\nTon returns 2 books 3 days late. How much must he pay?",
+    ch: ["30 baht", "15 baht", "10 baht", "5 baht"],
+    why: ["5 บาท ต่อเล่ม ต่อวัน\n1 เล่ม 3 วัน = 15 บาท\n2 เล่ม = 15 × 2 = 30 บาท", "ลืมคูณจำนวนเล่ม (คิดแค่ 1 เล่ม)", "ลืมคูณจำนวนวัน (คิดแค่ 1 วัน)", "นี่คือค่าปรับ 1 เล่ม 1 วันเท่านั้น"] },
+  { id: 'visual-09', skill: 'visual', trap: null, ep: 'not-incorrect-scan', lv: 'm',
+    q: T_VIS_LIB + "\n\nWhich statement is INCORRECT?",
+    ch: ["You can eat a sandwich in the library if you are quiet.", "A 7-year-old boy needs an adult with him.", "Water in a bottle is allowed.", "You can keep a book for two weeks."],
+    why: ["โจทย์หาข้อที่ผิด (INCORRECT)\nกฎข้อ 4: No food = ห้ามกินอาหาร\nเงียบแค่ไหนก็กินแซนด์วิชไม่ได้", "จริง — เด็กต่ำกว่า 8 ต้องมากับผู้ใหญ่", "จริง — น้ำในขวดได้", "จริง — 14 วัน = 2 สัปดาห์"] },
+  // --- cafe ---
+  { id: 'visual-10', skill: 'visual', trap: null, ep: 'not-incorrect-scan', lv: 'e',
+    q: T_VIS_CAFE + "\n\nWhen can you NOT visit the cafe?",
+    ch: ["on Wednesday at 9:00", "on Saturday at 8:00", "on Monday at 17:30", "on Friday at 7:00"],
+    why: ["โจทย์ถามเวลาที่ไปไม่ได้ (NOT)\nร้านปิดทุกวันพุธ (closed on Wednesdays)", "เสาร์ 8 โมง ร้านเปิด (7:00–18:00)", "จันทร์ 17:30 ยังไม่ถึง 18:00 ร้านเปิด", "ศุกร์ 7 โมงตรง ร้านเพิ่งเปิดพอดี"] },
+  { id: 'visual-11', skill: 'visual', trap: null, ep: null, lv: 'e',
+    q: T_VIS_CAFE + "\n\nWhat should a customer do before finding a table?",
+    ch: ["order and pay at the counter", "wait for a waiter to bring the menu", "turn on a laptop at a window table", "pay after finishing the drink"],
+    why: ["ประกาศบอก Order and pay at the counter, then find a table\nthen = แล้วค่อย → สั่งและจ่ายก่อน", "ร้านนี้ไม่มีพนักงานมาเสิร์ฟเมนูที่โต๊ะ\nต้องไปสั่งเองที่เคาน์เตอร์", "ประกาศไม่ได้ให้ทำแบบนี้ก่อนหาโต๊ะ", "ต้องจ่ายตอนสั่ง ไม่ใช่จ่ายทีหลัง"] },
+  { id: 'visual-12', skill: 'visual', trap: null, ep: 'reading-word-match-trap', lv: 'h',
+    q: T_VIS_CAFE + "\n\nPloy wants to use her laptop at a window table on Sunday. What will the staff most likely say?",
+    ch: ["\"Please use a different table.\"", "\"Laptops are not allowed in this cafe.\"", "\"Sorry, we are closed today.\"", "\"You need to pay for the Wi-Fi.\""],
+    why: ["วันอาทิตย์ = weekend\nห้ามใช้โน้ตบุ๊กที่โต๊ะริมหน้าต่างช่วง weekend\nจึงต้องย้ายโต๊ะ", "ยกคำ laptops มา แต่ป้ายบอก Laptops are welcome\nใช้ได้ แค่ห้ามที่โต๊ะริมหน้าต่าง", "ร้านปิดวันพุธ ไม่ใช่วันอาทิตย์", "Wi-Fi ฟรีสำหรับลูกค้า (Free Wi-Fi)"] },
+  // --- boat timetable ---
+  { id: 'visual-13', skill: 'visual', trap: null, ep: null, lv: 'e',
+    q: T_VIS_BOAT + "\n\nNok gets on Boat B at Temple Pier. What time will she arrive at Market Pier?",
+    ch: ["10:15", "9:50", "8:45", "11:45"],
+    why: ["ดูคอลัมน์ Boat B แถว Market Pier = 10:15", "9:50 คือเวลาที่เรือ B ออกจาก Temple Pier (เวลาขึ้นเรือ)", "8:45 อยู่คอลัมน์ Boat A ดูผิดคอลัมน์", "11:45 อยู่คอลัมน์ Boat C ดูผิดคอลัมน์"] },
+  { id: 'visual-14', skill: 'visual', trap: null, ep: null, lv: 'm',
+    q: T_VIS_BOAT + "\n\nHow long does a boat take to go from North Pier to Market Pier?",
+    ch: ["45 minutes", "20 minutes", "25 minutes", "1 hour 30 minutes"],
+    why: ["Boat A: 8:00 → 8:45 = 45 นาที\n(ลองเช็ก Boat B: 9:30 → 10:15 ก็ 45 นาที)", "20 นาที คือแค่ North → Temple", "25 นาที คือแค่ Temple → Market", "1 ชม. 30 นาที คือเวลาห่างระหว่างเรือแต่ละลำ ไม่ใช่เวลาเดินทาง"] },
+  { id: 'visual-15', skill: 'visual', trap: null, ep: null, lv: 'h',
+    q: T_VIS_BOAT + "\n\nA mother and her two children, aged 6 and 9, take the boat. How much do they pay in total?",
+    ch: ["60 baht", "90 baht", "45 baht", "75 baht"],
+    why: ["แม่ = ผู้ใหญ่ 30\nลูก 2 คน อายุต่ำกว่า 12 = 15 + 15\nรวม 30 + 15 + 15 = 60 บาท", "คิดทุกคนเป็นราคาผู้ใหญ่ 30 × 3", "ลืมลูกไป 1 คน (30 + 15)", "คิดเป็นผู้ใหญ่ 2 คน เด็ก 1 คน (30 + 30 + 15)"] },
+  // --- medicine ---
+  { id: 'visual-16', skill: 'visual', trap: null, ep: null, lv: 'm',
+    q: T_VIS_MED + "\n\nHow many teaspoons can a 10-year-old take in one day?",
+    ch: ["3 teaspoons", "1 teaspoon", "6 teaspoons", "4 teaspoons"],
+    why: ["เด็ก 6–12 ปี: ครั้งละ 1 ช้อนชา วันละ 3 ครั้ง\n1 × 3 = 3 ช้อนชา", "1 ช้อนชาคือต่อครั้ง ลืมคูณ 3 ครั้ง", "6 ช้อนชาคือของผู้ใหญ่ (2 × 3) ดูผิดแถว", "4 มาจาก 'ไม่เกิน 4 ครั้ง' ไม่ใช่จำนวนช้อน"] },
+  { id: 'visual-17', skill: 'visual', trap: null, ep: 'reading-word-match-trap', lv: 'e',
+    q: T_VIS_MED + "\n\nWhat does \"Shake well before use\" mean?",
+    ch: ["Move the bottle quickly up and down before taking the medicine.", "Take the medicine only when you feel well.", "Wash the bottle well after you use it.", "Drink some water quickly after the medicine."],
+    why: ["shake = เขย่า · before use = ก่อนใช้\nเขย่าขวดให้ดีก่อนกินยา", "ยกคำ well มา แต่ well ที่นี่ = ให้ทั่ว ไม่ใช่ 'สบายดี'", "ป้ายไม่ได้พูดเรื่องล้างขวด และพูดว่า before ไม่ใช่ after", "ไม่มีเรื่องดื่มน้ำในฉลาก"] },
+  { id: 'visual-18', skill: 'visual', trap: null, ep: 'not-incorrect-scan', lv: 'h',
+    q: T_VIS_MED + "\n\nWhich statement is INCORRECT?",
+    ch: ["A 4-year-old can take 1 teaspoon without asking a doctor.", "An adult may take the syrup 3 times a day.", "You should take the syrup after eating.", "Nobody should take it 5 times in one day."],
+    why: ["โจทย์หาข้อที่ผิด (INCORRECT)\nเด็ก 4 ขวบ = ต่ำกว่า 6 ปี ต้องถามหมอก่อน", "จริง — ผู้ใหญ่ วันละ 3 ครั้ง", "จริง — Take after meals = กินหลังอาหาร", "จริง — ห้ามเกิน 4 ครั้ง 5 ครั้งจึงเกิน"] },
+  // --- survey ---
+  { id: 'visual-19', skill: 'visual', trap: null, ep: 'not-incorrect-scan', lv: 'm',
+    q: T_VIS_SURVEY + "\n\nWhich statement is INCORRECT?",
+    ch: ["More students walk to school than take the school bus.", "Going by car is the most popular way.", "Five students ride bicycles to school.", "A quarter of the class take the school bus."],
+    why: ["โจทย์หาข้อที่ผิด (INCORRECT)\nเดิน (on foot) 9 คน · รถโรงเรียน 10 คน\n9 น้อยกว่า 10 จึงผิด", "จริง — รถยนต์ 14 มากที่สุด", "จริง — จักรยาน 5 คน", "จริง — 10 จาก 40 = 1/4 (a quarter)"] },
+  { id: 'visual-20', skill: 'visual', trap: null, ep: 'not-incorrect-scan', lv: 'm',
+    q: T_VIS_SURVEY + "\n\nHow many students do NOT come to school by car?",
+    ch: ["26", "14", "24", "40"],
+    why: ["NOT by car = ทุกคน ลบ คนที่มารถยนต์\n40 − 14 = 26", "14 คือคนที่มารถยนต์ ตรงข้ามกับที่ถาม", "ลบเลขพลาด 40 − 14 ไม่ใช่ 24", "40 คือทั้งห้อง ยังไม่ได้ลบ"] },
+  { id: 'visual-21', skill: 'visual', trap: null, ep: 'reading-word-match-trap', lv: 'h',
+    q: T_VIS_SURVEY + "\n\nWhich statement is CORRECT?",
+    ch: ["Twice as many students come by school bus as by bicycle.", "Twice as many students come by car as on foot.", "The bicycle is the least popular way to come to school.", "More than half of the class come by car."],
+    why: ["รถโรงเรียน 10 · จักรยาน 5\n10 = 2 × 5 จึงเป็น 2 เท่า (twice as many)", "รถยนต์ 14 · เดิน 9 → 2 เท่าของ 9 คือ 18 ไม่ใช่ 14", "น้อยที่สุดคือมอเตอร์ไซค์รับจ้าง 2 คน ไม่ใช่จักรยาน", "ครึ่งห้องคือ 20 คน รถยนต์มีแค่ 14"] },
+  // --- sprouts ---
+  { id: 'visual-22', skill: 'visual', trap: null, ep: null, lv: 'e',
+    q: T_VIS_SPROUT + "\n\nWhat should you do right after soaking the beans?",
+    ch: ["Pour the water away.", "Eat the beans.", "Put the jar in the sun.", "Cover the beans with a cloth."],
+    why: ["ขั้น 1 แช่ถั่ว → ขั้นถัดไป (ขั้น 2) = เททิ้งน้ำ", "กินได้ตอนขั้น 6 หลัง 3–4 วัน", "ขั้น 4 ให้วางในที่มืด ไม่ใช่กลางแดด", "การคลุมผ้าคือขั้น 3 ข้ามขั้น 2 ไป"] },
+  { id: 'visual-23', skill: 'visual', trap: null, ep: null, lv: 'e',
+    q: T_VIS_SPROUT + "\n\nWhere should you keep the jar?",
+    ch: ["in a place with no light", "next to a sunny window", "in a bowl of water", "in a bright kitchen"],
+    why: ["ขั้น 4: Keep the jar in a dark place\ndark = มืด ไม่มีแสง", "ริมหน้าต่างแดดส่อง = สว่าง ตรงข้ามกับ dark", "ขั้น 2 ให้เทน้ำทิ้งแล้ว ไม่ได้แช่น้ำต่อ", "bright = สว่าง ตรงข้ามกับ dark"] },
+  { id: 'visual-24', skill: 'visual', trap: null, ep: null, lv: 'm',
+    q: T_VIS_SPROUT + "\n\nHow many times will you rinse the beans in 3 days?",
+    ch: ["6", "3", "2", "8"],
+    why: ["ขั้น 5: ล้างวันละ 2 ครั้ง (twice a day)\n3 วัน × 2 = 6 ครั้ง", "นับวันละครั้ง ลืมว่า twice = 2 ครั้ง", "2 คือต่อ 1 วัน ลืมคูณ 3 วัน", "8 คือจำนวนชั่วโมงที่แช่ถั่ว ดูเลขผิดขั้น"] },
+];
+
+// stage: passage
+const T_PAS_SLOTH = "Sloths live in the rainforests of Central and South America. They spend almost their whole lives hanging upside down in trees. A sloth moves so slowly that tiny green plants called algae can grow on its fur. This green colour helps it hide from eagles and jaguars. Sloths sleep for about 15 hours a day, and they come down to the ground only once a week to go to the toilet. Their slow speed is not laziness. Sloths eat mainly leaves, which give them very little energy, so moving slowly helps them save it. Surprisingly, sloths are good swimmers and can hold their breath for up to 40 minutes.";
+const T_PAS_EYES = "Do your eyes feel tired after a long time on a tablet or computer? Eye doctors suggest an easy habit called the 20-20-20 rule. Every 20 minutes, look at something about 20 feet (six metres) away for 20 seconds. This gives the small muscles in your eyes a rest. It also helps to blink often, because people blink much less when they stare at a screen, and their eyes become dry. Keep the screen about an arm's length from your face, and do not use it in a dark room. These tips will not fix eyes that need glasses, but they can make your eyes feel much more comfortable.";
+const T_PAS_DIARY = "Saturday, 14 March\nToday our class visited a mangrove forest in Samut Sakhon. We left school at 7:30 and arrived at about 9. A ranger named Khun Wit showed us how the mangrove roots hold the mud, so the sea cannot wash the land away. Then each of us planted a young tree. Mine kept falling over, so Khun Wit tied it to a bamboo stick. My shoes got stuck in the mud twice, and everyone laughed, including me! After lunch we watched tiny crabs running across the mud. I was tired on the bus home, but I want to come back next year to see how tall my tree has grown.";
+const T_PAS_PURSE = "Ploy found a small brown purse on a seat of the school bus. Inside were 200 baht, a library card and a photo of a little girl with a cat. Ploy's friend Mew whispered, \"Nobody saw you. Keep the money and throw the purse away.\" Ploy thought for a moment. She remembered how sad she had felt last year when she lost her own wallet. The next morning, she took the purse to the school office. At lunchtime, an old woman came to her classroom with a big bag of mangoes. \"The girl in the photo is my granddaughter,\" she said. \"Thank you for being so honest.\"";
+const T_PAS_SWAP = "To: All Grade 6 students\nFrom: Ms. Anong (English Club)\nSubject: Book Swap Day\n\nHi everyone,\nOur English Club will hold a Book Swap Day on Friday, 20 November, from 12:00 to 13:00 in the school hall. Bring up to three English books that you have finished reading. For each book you bring, you will get one ticket, and one ticket lets you take home one \"new\" book. Books must be clean and not torn. Comics are welcome, but please do not bring textbooks or workbooks. Any books left at the end will go to a village school in Nan.\nSee you there!\nMs. Anong";
+
+POOLS['passage'] = [
+  // --- P1 sloths (science fact) ---
+  { id: 'passage-01', skill: 'passage', trap: null, ep: 'reading-word-match-trap', lv: 'e',
+    q: T_PAS_SLOTH + "\n\nWhat is the passage mainly about?",
+    ch: ["how sloths live and why they move slowly", "why sloths are lazy animals", "how eagles and jaguars hunt in the rainforest", "why rainforests need more trees"],
+    why: ["โจทย์ถามใจความหลัก (main idea)\nทั้งเรื่องเล่าชีวิตสลอธ และเหตุผลที่มันช้า", "ยกคำ laziness มา แต่เรื่องบอก is NOT laziness\nมันไม่ได้ขี้เกียจ", "นกอินทรีกับเสือจากัวร์ถูกพูดถึงแค่ประโยคเดียว ไม่ใช่เรื่องหลัก", "เรื่องไม่ได้พูดว่าป่าต้องการต้นไม้เพิ่ม"] },
+  { id: 'passage-02', skill: 'passage', trap: null, ep: 'not-incorrect-scan', lv: 'm',
+    q: T_PAS_SLOTH + "\n\nWhich statement is INCORRECT?",
+    ch: ["Sloths come down from the trees every day to go to the toilet.", "Tiny plants can grow on a sloth's fur.", "Sloths can hold their breath for a long time.", "Sloths sleep for more than half of the day."],
+    why: ["โจทย์หาข้อที่ผิด (INCORRECT)\nเรื่องบอก only once a week = สัปดาห์ละครั้ง\nไม่ใช่ทุกวัน", "จริง — algae (พืชเล็ก ๆ) ขึ้นบนขนได้", "จริง — กลั้นหายใจได้ถึง 40 นาที", "จริง — นอน 15 ชม. จาก 24 ชม. = มากกว่าครึ่งวัน"] },
+  { id: 'passage-03', skill: 'passage', trap: null, ep: null, lv: 'm',
+    q: T_PAS_SLOTH + "\n\nIn \"moving slowly helps them save it\", the word \"save\" is closest in meaning to",
+    ch: ["keep", "rescue", "spend", "lose"],
+    why: ["save energy = เก็บพลังงานไว้ ไม่ใช้หมด\nจึงใกล้กับ keep", "rescue = ช่วยชีวิต เป็นอีกความหมายของ save\nแต่ในประโยคนี้ไม่ได้ช่วยใคร", "spend = ใช้ไป ตรงข้ามกับ save", "lose = เสียไป ตรงข้ามกับ save"] },
+  { id: 'passage-04', skill: 'passage', trap: null, ep: null, lv: 'm',
+    q: T_PAS_SLOTH + "\n\nIn \"moving slowly helps them save it\", the word \"it\" refers to",
+    ch: ["energy", "leaves", "the fur", "the ground"],
+    why: ["อ่านประโยคเต็ม: leaves give them very little energy, so moving slowly helps them save it\nสิ่งที่ถูกเก็บไว้คือ energy", "leaves เป็นพหูพจน์ ต้องใช้ them ไม่ใช่ it\nและเราไม่ได้ 'เก็บใบไม้' ด้วยการเดินช้า", "ขนอยู่คนละประโยค ไกลเกินไป", "พื้นดินอยู่คนละประโยค ไม่เกี่ยวกับการเก็บ"] },
+  // --- P2 eyes (health tip) ---
+  { id: 'passage-05', skill: 'passage', trap: null, ep: 'reading-word-match-trap', lv: 'e',
+    q: T_PAS_EYES + "\n\nWhy was this text written?",
+    ch: ["to give advice about caring for your eyes when you use screens", "to sell a new kind of glasses", "to tell people to stop using computers", "to explain how eye doctors fix bad eyesight"],
+    why: ["โจทย์ถามจุดประสงค์ (purpose)\nทั้งเรื่องเป็นคำแนะนำ (tips) ดูแลตาเวลาใช้จอ", "ยกคำ glasses มา แต่ไม่ได้ขายแว่นเลย", "เรื่องให้พักสายตา ไม่ได้ห้ามใช้คอมพิวเตอร์", "ยกคำ eye doctors / fix มา\nแต่เรื่องบอกว่าเคล็ดลับนี้ไม่ได้แก้สายตา"] },
+  { id: 'passage-06', skill: 'passage', trap: null, ep: 'not-incorrect-scan', lv: 'e',
+    q: T_PAS_EYES + "\n\nWhich of the following is NOT suggested in the text?",
+    ch: ["Wear glasses when you use a tablet.", "Blink often.", "Keep the screen about an arm's length away.", "Do not use a screen in a dark room."],
+    why: ["โจทย์หาข้อที่เรื่อง 'ไม่ได้แนะนำ' (NOT)\nเรื่องพูดถึงแว่น แต่ไม่ได้บอกให้ใส่แว่นตอนใช้แท็บเล็ต", "จริง — It also helps to blink often", "จริง — about an arm's length from your face", "จริง — do not use it in a dark room"] },
+  { id: 'passage-07', skill: 'passage', trap: null, ep: null, lv: 'm',
+    q: T_PAS_EYES + "\n\nThe word \"stare\" is closest in meaning to",
+    ch: ["look at something for a long time", "look at something very quickly", "close your eyes", "walk up the steps"],
+    why: ["stare at a screen = จ้องจอนาน ๆ\nเพราะจ้องนาน จึงกะพริบตาน้อย", "มองแวบเดียวคือ glance ตรงข้ามกับ stare", "หลับตาไม่ใช่จ้อง", "ฟังคล้าย stair (บันได) แต่คนละคำ"] },
+  { id: 'passage-08', skill: 'passage', trap: null, ep: 'reading-word-match-trap', lv: 'h',
+    q: T_PAS_EYES + "\n\nWhat can we learn from the last sentence?",
+    ch: ["The tips cannot take the place of glasses.", "After following the tips, people will not need glasses.", "The 20-20-20 rule is a kind of medicine for the eyes.", "Glasses are what make eyes tired."],
+    why: ["will not fix eyes that need glasses\n= ใครต้องใส่แว่น เคล็ดลับนี้ใช้แทนแว่นไม่ได้\nแค่ช่วยให้ตาสบายขึ้น", "ตรงข้ามกับเรื่อง (will not fix)", "เรื่องเรียกมันว่า habit (นิสัย) ไม่ใช่ยา", "ยกคำ glasses มา แต่ตาล้าเพราะจ้องจอนาน ไม่ใช่เพราะแว่น"] },
+  // --- P3 diary ---
+  { id: 'passage-09', skill: 'passage', trap: null, ep: 'reading-word-match-trap', lv: 'e',
+    q: T_PAS_DIARY + "\n\nWhat is the diary entry mainly about?",
+    ch: ["a class trip to plant trees in a mangrove forest", "a family holiday at the beach", "how to catch crabs in the mud", "how to make sticks from bamboo"],
+    why: ["โจทย์ถามใจความหลัก\nไปทัศนศึกษากับห้อง (our class) และปลูกต้นไม้ในป่าชายเลน", "ไปกับเพื่อนในห้อง ไม่ใช่ครอบครัว และไม่ได้ไปเที่ยวทะเล", "ยกคำ crabs / mud มา แต่แค่ 'ดู' ปู ไม่ได้จับ", "ยกคำ bamboo stick มา แต่ไม้ไผ่ใช้ผูกต้นไม้ ไม่ได้สอนทำ"] },
+  { id: 'passage-10', skill: 'passage', trap: null, ep: 'not-incorrect-scan', lv: 'm',
+    q: T_PAS_DIARY + "\n\nWhich statement is INCORRECT?",
+    ch: ["The writer was upset when the others laughed.", "The class arrived at the forest at about nine o'clock.", "Khun Wit helped the writer with the young tree.", "The students saw crabs in the afternoon."],
+    why: ["โจทย์หาข้อที่ผิด (INCORRECT)\neveryone laughed, including me = ผู้เขียนก็หัวเราะด้วย\nจึงไม่ได้เสียใจ", "จริง — arrived at about 9", "จริง — คุณวิทผูกต้นไม้กับไม้ไผ่ให้", "จริง — After lunch = ช่วงบ่าย"] },
+  { id: 'passage-11', skill: 'passage', trap: null, ep: null, lv: 'h',
+    q: T_PAS_DIARY + "\n\nIn \"so the sea cannot wash the land away\", \"wash the land away\" is closest in meaning to",
+    ch: ["carry the land off little by little", "clean the land with water", "give the land more water", "build new land"],
+    why: ["wash away = น้ำพัดพาไป\nรากโกงกางยึดโคลนไว้ ทะเลจึงพัดดินไปไม่ได้", "แปลตรงตัวว่า 'ล้าง' แต่ wash away ไม่ได้หมายถึงทำความสะอาด", "ไม่ได้หมายถึงรดน้ำ", "ตรงข้าม — wash away ทำให้ดินหายไป ไม่ใช่สร้างใหม่"] },
+  { id: 'passage-12', skill: 'passage', trap: null, ep: 'reading-word-match-trap', lv: 'm',
+    q: T_PAS_DIARY + "\n\nIn \"Mine kept falling over\", the word \"Mine\" refers to",
+    ch: ["the writer's young tree", "the writer's shoes", "the bamboo stick", "the mangrove roots"],
+    why: ["ประโยคก่อนหน้า: each of us planted a young tree\nMine = my tree ต้นของฉัน ที่ล้มอยู่เรื่อย", "รองเท้าอยู่ประโยคถัดไป และรองเท้าติดโคลน ไม่ได้ล้ม", "ไม้ไผ่คือสิ่งที่ใช้ผูกช่วย ไม่ใช่สิ่งที่ล้ม", "รากโกงกางยึดโคลนไว้ ไม่ใช่ของผู้เขียน"] },
+  // --- P4 short story ---
+  { id: 'passage-13', skill: 'passage', trap: null, ep: 'reading-word-match-trap', lv: 'e',
+    q: T_PAS_PURSE + "\n\nWhat is the main lesson of the story?",
+    ch: ["Doing the right thing is better than keeping what is not yours.", "Always keep your money in a purse.", "Children should not take the school bus.", "Old people like to give away mangoes."],
+    why: ["โจทย์ถามข้อคิด (lesson)\nพลอยเลือกคืนของ แทนที่จะเก็บเงินไว้เอง → ความซื่อสัตย์", "ยกคำ money / purse มา แต่ไม่ใช่ข้อคิดของเรื่อง", "รถโรงเรียนเป็นแค่ที่เจอกระเป๋า", "ยกคำ mangoes มา แต่มะม่วงเป็นแค่ของขอบคุณ"] },
+  { id: 'passage-14', skill: 'passage', trap: null, ep: 'not-incorrect-scan', lv: 'e',
+    q: T_PAS_PURSE + "\n\nWhich of these was NOT inside the purse?",
+    ch: ["a bus ticket", "some money", "a library card", "a photo of a girl"],
+    why: ["โจทย์หาสิ่งที่ 'ไม่มี' ในกระเป๋า (NOT)\nในกระเป๋ามี เงิน 200 บาท บัตรห้องสมุด รูปถ่าย\nไม่มีตั๋วรถ", "มี — 200 baht", "มี — a library card", "มี — a photo of a little girl with a cat"] },
+  { id: 'passage-15', skill: 'passage', trap: null, ep: null, lv: 'e',
+    q: T_PAS_PURSE + "\n\nThe word \"honest\" is closest in meaning to",
+    ch: ["truthful", "lucky", "clever", "shy"],
+    why: ["honest = ซื่อสัตย์ ไม่โกง ไม่ขโมย\nใกล้กับ truthful", "lucky = โชคดี คนละความหมาย", "clever = ฉลาด คนละความหมาย", "shy = ขี้อาย คนละความหมาย"] },
+  { id: 'passage-16', skill: 'passage', trap: null, ep: 'reading-word-match-trap', lv: 'h',
+    q: T_PAS_PURSE + "\n\nWhy did Ploy decide to return the purse?",
+    ch: ["She knew how it felt to lose something.", "Mew told her to give it back.", "She wanted a bag of mangoes.", "She saw the old woman drop it."],
+    why: ["She remembered how sad she had felt ... when she lost her own wallet\nเคยทำของหายมาก่อน จึงรู้ว่าเจ้าของจะเสียใจ", "ตรงข้าม — มิวบอกให้เก็บเงินไว้และทิ้งกระเป๋า", "พลอยไม่รู้มาก่อนว่าจะได้มะม่วง\nมะม่วงมาทีหลัง ตอนกลางวัน", "พลอยเจอกระเป๋าบนที่นั่ง ไม่ได้เห็นใครทำตก"] },
+  // --- P5 email ---
+  { id: 'passage-17', skill: 'passage', trap: null, ep: 'reading-word-match-trap', lv: 'e',
+    q: T_PAS_SWAP + "\n\nWhy did Ms. Anong write this email?",
+    ch: ["to invite students to swap books they have read", "to ask students to buy new English books", "to ask students to clean the school hall", "to collect textbooks for a village school"],
+    why: ["โจทย์ถามจุดประสงค์\nชวนนักเรียนมางาน Book Swap = เอาหนังสือที่อ่านแล้วมาแลกกัน", "ไม่ต้องซื้อ — เอาหนังสือมาแลกเป็นตั๋ว", "ยกคำ clean / hall มา แต่ clean หมายถึงหนังสือต้องสะอาด", "ยกคำ textbooks / village school มา\nแต่ห้ามเอา textbook มา และส่งไปน่านแค่หนังสือที่เหลือ"] },
+  { id: 'passage-18', skill: 'passage', trap: null, ep: 'not-incorrect-scan', lv: 'm',
+    q: T_PAS_SWAP + "\n\nWhich statement is INCORRECT?",
+    ch: ["Students can bring as many books as they like.", "The event will last for one hour.", "Students may bring comics.", "Books that nobody takes will go to another school."],
+    why: ["โจทย์หาข้อที่ผิด (INCORRECT)\nup to three = ไม่เกิน 3 เล่ม เอามาเท่าไรก็ได้ไม่จริง", "จริง — 12:00 ถึง 13:00 = 1 ชั่วโมง", "จริง — Comics are welcome", "จริง — books left ... go to a village school in Nan"] },
+  { id: 'passage-19', skill: 'passage', trap: null, ep: null, lv: 'm',
+    q: T_PAS_SWAP + "\n\nThe word \"torn\" is closest in meaning to",
+    ch: ["ripped", "dirty", "borrowed", "finished"],
+    why: ["torn = ขาด (กระดาษฉีกขาด)\nใกล้กับ ripped", "dirty = สกปรก อยู่ใกล้คำว่า clean แต่คนละความหมาย", "borrowed = ยืมมา ไม่เกี่ยว", "finished = อ่านจบแล้ว อยู่ในประโยคอื่น ไม่ใช่ความหมายของ torn"] },
+  { id: 'passage-20', skill: 'passage', trap: null, ep: null, lv: 'h',
+    q: T_PAS_SWAP + "\n\nFah brings two clean storybooks and one maths workbook. How many books can she take home?",
+    ch: ["2", "3", "1", "0"],
+    why: ["workbook ห้ามเอามา จึงไม่ได้ตั๋ว\nนิทาน 2 เล่ม = ตั๋ว 2 ใบ = แลกได้ 2 เล่ม", "นับ workbook ด้วย แต่ workbook ไม่รับ", "1 ตั๋วต่อ 1 เล่ม ฟ้าได้ตั๋ว 2 ใบ ไม่ใช่ 1", "ฟ้ายังได้ตั๋วจากนิทาน 2 เล่ม จึงไม่ใช่ 0"] },
+];
+
+// stage: vocab
+POOLS['vocab'] = [
+  // --- synonym in context ---
+  { id: 'vocab-01', skill: 'vocab', trap: null, ep: null, lv: 'e',
+    q: "The quiz was so simple that everyone finished it in ten minutes.\n\nThe word \"simple\" is closest in meaning to",
+    ch: ["easy", "long", "strange", "boring"],
+    why: ["ทุกคนทำเสร็จใน 10 นาที แปลว่าข้อสอบ 'ง่าย'\nsimple = easy", "ยาว (long) ต้องใช้เวลานาน ขัดกับ 10 นาที", "แปลก (strange) ไม่ทำให้เสร็จเร็ว", "น่าเบื่อ (boring) คนละความหมายกับ simple"] },
+  { id: 'vocab-02', skill: 'vocab', trap: null, ep: null, lv: 'm',
+    q: "Please be careful when you carry the box. The glasses inside are fragile.\n\nThe word \"fragile\" is closest in meaning to",
+    ch: ["easy to break", "very heavy", "very expensive", "full of water"],
+    why: ["be careful + แก้ว = แตกง่าย\nfragile = easy to break", "หนัก (heavy) คนละคำ", "แพง (expensive) คนละคำ", "glasses ที่นี่คือแก้ว ไม่ได้บอกว่ามีน้ำอยู่ข้างใน"] },
+  { id: 'vocab-03', skill: 'vocab', trap: null, ep: null, lv: 'e',
+    q: "After walking up the mountain all day, the hikers were exhausted and went straight to bed.\n\nThe word \"exhausted\" is closest in meaning to",
+    ch: ["very tired", "very hungry", "very excited", "very angry"],
+    why: ["เดินขึ้นเขาทั้งวัน แล้วเข้านอนเลย = เหนื่อยมาก\nexhausted = very tired", "หิว (hungry) ไม่ใช่ความหมายของ exhausted", "ตื่นเต้น (excited) ไม่ทำให้รีบเข้านอน", "โกรธ (angry) ไม่เกี่ยวกับการเดินทั้งวัน"] },
+  // --- polysemy ---
+  { id: 'vocab-04', skill: 'vocab', trap: null, ep: null, lv: 'm',
+    q: "\"This bag is so light that I can carry it with one finger.\"\n\nIn which sentence does \"light\" have the SAME meaning?",
+    ch: ["My new laptop is light, so I take it everywhere.", "Please turn on the light. It's dark in here.", "She has light brown hair.", "We will light the candles on the cake."],
+    why: ["light ในโจทย์ = เบา (ไม่หนัก)\nโน้ตบุ๊กเบาจึงพกไปทุกที่ = เบา เหมือนกัน", "light = ไฟ (หลอดไฟ)", "light brown = สีอ่อน", "light the candles = จุดเทียน"] },
+  { id: 'vocab-05', skill: 'vocab', trap: null, ep: null, lv: 'm',
+    q: "\"We watched a play about a brave princess at the theatre.\"\n\nIn which sentence does \"play\" have the SAME meaning?",
+    ch: ["Our class will perform a short play on Children's Day.", "Let's play football after school.", "Can you play the piano?", "My little brother likes to play with his toy cars."],
+    why: ["play ในโจทย์ = ละครเวที (คำนาม)\nperform a short play = แสดงละครสั้น เหมือนกัน", "play football = เล่นกีฬา (กริยา)", "play the piano = เล่นดนตรี (กริยา)", "play with toys = เล่นของเล่น (กริยา)"] },
+  { id: 'vocab-06', skill: 'vocab', trap: null, ep: null, lv: 'h',
+    q: "\"What kind of music do you like?\"\n\nIn which sentence does \"kind\" have the SAME meaning?",
+    ch: ["A whale is a kind of mammal, not a fish.", "It was kind of you to help me.", "My grandma is very kind to animals.", "Please be kind to the new students."],
+    why: ["kind ในโจทย์ = ประเภท/ชนิด (type)\na kind of mammal = สัตว์เลี้ยงลูกด้วยนมชนิดหนึ่ง", "kind of you = ใจดี (คุณศัพท์)", "very kind = ใจดี", "be kind = ใจดี"] },
+  // --- collocations (trap 28) ---
+  { id: 'vocab-07', skill: 'vocab', trap: 28, ep: null, lv: 'e',
+    q: "I'm sorry. I ___ a mistake when I wrote your name on the card.",
+    ch: ["made", "did", "took", "had"],
+    why: ["คำคู่ (collocation): make a mistake = ทำผิด\nอดีต → made", "did a mistake ผิด — คนไทยแปล 'ทำ' เป็น do บ่อย", "took a mistake ไม่มีใช้", "had a mistake ไม่ใช้กับการทำผิด"] },
+  { id: 'vocab-08', skill: 'vocab', trap: 28, ep: null, lv: 'e',
+    q: "Please don't ___ so much noise. The baby is sleeping.",
+    ch: ["make", "do", "take", "give"],
+    why: ["คำคู่: make noise = ทำเสียงดัง", "do noise ไม่มีใช้", "take noise ไม่มีใช้", "give noise ไม่มีใช้"] },
+  { id: 'vocab-09', skill: 'vocab', trap: 28, ep: null, lv: 'e',
+    q: "Mum always says, \"Just ___ your best, and don't worry about the score.\"",
+    ch: ["do", "make", "take", "have"],
+    why: ["คำคู่: do your best = ทำให้ดีที่สุด", "make your best ผิด — best ไปกับ do", "take your best ไม่มีใช้", "have your best ไม่มีใช้"] },
+  { id: 'vocab-10', skill: 'vocab', trap: 28, ep: null, lv: 'm',
+    q: "The school sports day will ___ place on the main field.",
+    ch: ["take", "make", "have", "do"],
+    why: ["คำคู่: take place = จัดขึ้น (เกิดขึ้น)", "make place ไม่ใช่ 'จัดขึ้น'", "have place ไม่มีใช้", "do place ไม่มีใช้"] },
+  { id: 'vocab-11', skill: 'vocab', trap: 28, ep: null, lv: 'm',
+    q: "When you move to Chiang Mai, let's ___ in touch online.",
+    ch: ["keep", "make", "take", "do"],
+    why: ["คำคู่: keep in touch = ติดต่อกันเรื่อย ๆ", "make in touch ผิด", "take in touch ผิด", "do in touch ผิด"] },
+  { id: 'vocab-12', skill: 'vocab', trap: 28, ep: null, lv: 'e',
+    q: "My little sister ___ friends easily because she is very friendly.",
+    ch: ["makes", "does", "takes", "plays"],
+    why: ["คำคู่: make friends = ได้เพื่อนใหม่ / ผูกมิตร\nประธานเอกพจน์ → makes", "does friends ไม่มีใช้", "takes friends ไม่ได้แปลว่าผูกมิตร", "plays friends ผิด — ต้อง plays with friends และไม่ใช่ความหมายนี้"] },
+  { id: 'vocab-13', skill: 'vocab', trap: 28, ep: null, lv: 'h',
+    q: "Ton missed two weeks of school because he was sick. Now he has to study hard to ___ the rest of the class.",
+    ch: ["catch up with", "look after", "run out of", "give up"],
+    why: ["catch up with = ตามให้ทัน\nขาดเรียนไป จึงต้องเรียนให้ทันเพื่อน", "look after = ดูแล ไม่ใช่ตามให้ทัน", "run out of = ใช้จนหมด", "give up the rest of the class = เลิก/ทิ้งเพื่อน ไม่เข้ากับ study hard"] },
+  // --- phrasal verbs ---
+  { id: 'vocab-14', skill: 'vocab', trap: null, ep: null, lv: 'e',
+    q: "Could you ___ my hamster while I'm in Japan? He needs food and water every day.",
+    ch: ["look after", "look for", "look up", "look like"],
+    why: ["look after = ดูแล\nต้องให้อาหารทุกวัน จึงขอให้ดูแล", "look for = ตามหา แต่หนูแฮมสเตอร์ไม่ได้หาย", "look up = ค้นหา (ในพจนานุกรม)", "look like = ดูเหมือน"] },
+  { id: 'vocab-15', skill: 'vocab', trap: null, ep: null, lv: 'm',
+    q: "The football match was ___ until next Saturday because of the heavy rain.",
+    ch: ["put off", "put on", "run out of", "looked after"],
+    why: ["put off = เลื่อนออกไป\nมี until next Saturday บอกว่าเลื่อนไปวันใหม่", "put on = สวมใส่ / เปิด", "run out of = ใช้หมด ไม่เข้ากับการแข่ง", "looked after = ดูแล ไม่เข้ากับ until next Saturday"] },
+  { id: 'vocab-16', skill: 'vocab', trap: null, ep: null, lv: 'm',
+    q: "We have ___ eggs, so I can't make pancakes this morning.",
+    ch: ["run out of", "put off", "looked after", "come across"],
+    why: ["run out of = ใช้จนหมด\nไข่หมด จึงทำแพนเค้กไม่ได้", "put off eggs = เลื่อนไข่? ไม่มีความหมาย", "looked after eggs = ดูแลไข่ ไม่ใช่เหตุที่ทำแพนเค้กไม่ได้", "come across eggs = บังเอิญเจอไข่ ขัดกับทำไม่ได้"] },
+  { id: 'vocab-17', skill: 'vocab', trap: null, ep: null, lv: 'e',
+    q: "My uncle ___ smoking last year, and now he feels much healthier.",
+    ch: ["gave up", "gave back", "put on", "came across"],
+    why: ["give up + V-ing = เลิกทำ\nเลิกสูบบุหรี่ → สุขภาพดีขึ้น", "give back = คืนของ ใช้กับ smoking ไม่ได้", "put on = ใส่ (เสื้อ) / เพิ่ม (น้ำหนัก) ไม่ใช่เลิก", "came across = บังเอิญเจอ ไม่ทำให้สุขภาพดีขึ้น"] },
+  { id: 'vocab-18', skill: 'vocab', trap: null, ep: null, lv: 'h',
+    q: "While I was cleaning my room, I ___ an old photo of my first birthday.",
+    ch: ["came across", "came back", "ran out of", "put off"],
+    why: ["come across = บังเอิญเจอ\nทำความสะอาดห้องแล้วเจอรูปเก่าโดยไม่ได้ตั้งใจ", "came back = กลับมา ต้องตามด้วยสถานที่ ไม่ใช่รูป", "ran out of a photo = รูปหมด? ไม่มีความหมาย", "put off a photo = เลื่อนรูป? ไม่มีความหมาย"] },
+  // --- word formation ---
+  { id: 'vocab-19', skill: 'vocab', trap: null, ep: null, lv: 'm',
+    q: "We were surprised by the ___ of the villagers. They gave us food and a place to sleep.",
+    ch: ["kindness", "kind", "kindly", "kindful"],
+    why: ["หลัง the ... of ต้องเป็นคำนาม (noun)\nkind + ness = kindness ความใจดี", "kind เป็นคุณศัพท์ (ใจดี) วางหลัง the ตรงนี้ไม่ได้", "kindly เป็นคำวิเศษณ์ (adverb)", "kindful ไม่มีคำนี้"] },
+  { id: 'vocab-20', skill: 'vocab', trap: null, ep: null, lv: 'h',
+    q: "The ___ of the new library will take two years.",
+    ch: ["construction", "construct", "constructive", "constructed"],
+    why: ["หลัง The และก่อน of ต้องเป็นคำนาม\nconstruct + ion = construction การก่อสร้าง", "construct เป็นกริยา (สร้าง)", "constructive เป็นคุณศัพท์ (สร้างสรรค์)", "constructed เป็นกริยาช่อง 3"] },
+  { id: 'vocab-21', skill: 'vocab', trap: null, ep: null, lv: 'm',
+    q: "Mai thinks cats are better than dogs, but I ___. I love dogs more.",
+    ch: ["disagree", "agree", "unagree", "misagree"],
+    why: ["but + I love dogs more = ความเห็นไม่ตรงกัน\ndis + agree = disagree ไม่เห็นด้วย", "agree = เห็นด้วย ขัดกับ but และรักหมามากกว่า", "unagree ไม่มีคำนี้ — agree เติม dis-", "misagree ไม่มีคำนี้"] },
+  { id: 'vocab-22', skill: 'vocab', trap: null, ep: null, lv: 'e',
+    q: "The water in this lake is ___. Please don't swim in it.",
+    ch: ["unsafe", "safe", "dissafe", "safety"],
+    why: ["ห้ามว่ายน้ำ = น้ำไม่ปลอดภัย\nun + safe = unsafe", "safe = ปลอดภัย ขัดกับห้ามว่าย", "dissafe ไม่มีคำนี้ — safe เติม un-", "safety เป็นคำนาม วางหลัง is แทนคุณศัพท์ไม่ได้ในประโยคนี้"] },
+  { id: 'vocab-23', skill: 'vocab', trap: null, ep: null, lv: 'm',
+    q: "My old phone is ___ now. The screen is broken and it won't turn on.",
+    ch: ["useless", "useful", "unuseful", "usage"],
+    why: ["จอแตก เปิดไม่ติด = ใช้ไม่ได้\nuse + less = useless ไร้ประโยชน์", "useful = มีประโยชน์ ขัดกับจอแตก", "unuseful ไม่ใช้ — ตรงข้ามของ useful คือ useless", "usage เป็นคำนาม (การใช้)"] },
+  // --- confusing pairs ---
+  { id: 'vocab-24', skill: 'vocab', trap: null, ep: null, lv: 'm',
+    q: "I forgot my umbrella, so I asked Nid, \"Can I ___ yours?\" She said, \"Sure, I can ___ it to you until Friday.\"",
+    ch: ["borrow / lend", "lend / borrow", "borrow / borrow", "lend / lend"],
+    why: ["borrow = ยืมมา (ฉันรับ)\nlend = ให้ยืม (นิดให้)\nฉันขอยืม → borrow · นิดให้ยืม → lend it to you", "สลับกัน — Can I lend yours? = ฉันให้ยืมของเธอ? ไม่เข้าเรื่อง", "ช่อง 2 ผิด — borrow it to you ไม่มี ต้อง lend ... to", "ช่อง 1 ผิด — คนขอคือคนยืม ใช้ borrow"] },
+  { id: 'vocab-25', skill: 'vocab', trap: null, ep: null, lv: 'e',
+    q: "Hurry up, or we will ___ the train!",
+    ch: ["miss", "lose", "forget", "fail"],
+    why: ["miss the train = ตกรถไฟ (ไปไม่ทัน)", "lose = ทำหาย — รถไฟไม่ได้หาย", "forget the train = ลืมรถไฟ ไม่เข้ากับ hurry up", "fail = สอบตก/ล้มเหลว ใช้กับรถไฟไม่ได้"] },
+  { id: 'vocab-26', skill: 'vocab', trap: null, ep: null, lv: 'h',
+    q: "I ___ my wallet on the way to school, so I had no money and ___ lunch.",
+    ch: ["lost / missed", "missed / lost", "lost / lost", "missed / missed"],
+    why: ["lose = ทำของหาย → lost my wallet\nmiss a meal = ไม่ได้กิน → missed lunch", "สลับกัน — missed my wallet = คิดถึงกระเป๋า? ไม่ใช่ทำหาย", "ช่อง 2 ผิด — lost lunch ไม่ใช่ 'อดข้าวกลางวัน'", "ช่อง 1 ผิด — กระเป๋าเงินหาย ใช้ lost"] },
+  { id: 'vocab-27', skill: 'vocab', trap: null, ep: null, lv: 'e',
+    q: "Excuse me. Can you ___ me the way to the museum?",
+    ch: ["tell", "say", "speak", "talk"],
+    why: ["tell + คน (me) + เรื่อง = บอกใคร\ntell me the way = บอกทางฉัน", "say ไม่ตามด้วยคนทันที (say me ผิด)", "speak me ผิด — speak ไม่ตามด้วยคนที่ฟังทันที", "talk me ผิด — ต้อง talk to me"] },
+  { id: 'vocab-28', skill: 'vocab', trap: null, ep: null, lv: 'h',
+    q: "Grandma is sitting in the living room. Ton is in the kitchen. Grandma calls, \"Ton, could you bring me a glass of water, please?\"\n\nWhat does Grandma want Ton to do?",
+    ch: ["carry a glass of water from the kitchen to her", "take a glass of water away from her", "drink a glass of water in the kitchen", "borrow a glass from her"],
+    why: ["bring = เอามาหาคนพูด\nยายอยู่ห้องนั่งเล่น → ให้ต้นถือน้ำจากครัวมาให้ยาย", "take away = เอาออกไปจากคนพูด ตรงข้ามกับ bring", "ยายขอให้ 'เอามาให้' ไม่ได้ให้ต้นดื่มเอง", "borrow = ยืม ยายไม่ได้ให้ต้นยืมแก้ว"] },
+];
+
+// stage: tense
+POOLS['tense'] = [
+  // ---- trap 1: present simple (นิสัย) vs present continuous (ช่วงนี้/ตอนนี้)
+  { id: 'tense-01', skill: 'tense', trap: 1, ep: 'time-marker-per-blank', lv: 'e',
+    q: "My grandfather usually ___ his bicycle to the market, but this week he ___ the bus because his leg hurts.",
+    ch: ['rides / is taking', 'is riding / takes', 'ride / is taking', 'is riding / is taking'],
+    why: [
+      "แต่ละช่องมีคำบอกเวลาของตัวเอง\nช่อง 1: usually = ทำเป็นประจำ → rides\nช่อง 2: this week = แค่ช่วงนี้ → is taking",
+      "สลับกันพอดี\nusually ต้องใช้ V1 เติม s ไม่ใช่ is riding\nthis week ต้องใช้ is taking",
+      "ช่อง 2 ถูก แต่ช่อง 1 ผิด\ngrandfather คนเดียว ต้องเติม s → rides",
+      "ช่อง 2 ถูก แต่ช่อง 1 ผิด\nusually = ทำประจำ → rides ไม่ใช่ is riding"] },
+  { id: 'tense-02', skill: 'tense', trap: 1, ep: null, lv: 'e',
+    q: "Listen! Someone ___ the piano in the music room.",
+    ch: ['is playing', 'plays', 'played', 'play'],
+    why: [
+      "Listen! = ฟังสิ ตอนนี้เลย\nเรื่องที่กำลังเกิดตอนพูด → is + V-ing → is playing",
+      "plays = ทำเป็นประจำ\nแต่ Listen! บอกว่ากำลังเกิดตอนนี้",
+      "played = เกิดไปแล้ว\nถ้าจบแล้ว จะให้ฟังได้ยังไง",
+      "Someone เป็นคนเดียว\nถึงจะใช้ V1 ก็ต้องเติม s\nและที่จริงต้องเป็น is playing"] },
+  { id: 'tense-03', skill: 'tense', trap: 1, ep: 'time-marker-per-blank', lv: 'm',
+    q: "Ice ___ when it gets warm, but look — the ice cubes in my cold glass ___ yet.",
+    ch: ["melts / aren't melting", "is melting / don't melt", "melts / don't melt", "is melting / aren't melting"],
+    why: [
+      "ช่อง 1: ความจริงทั่วไป (fact) → V1 เติม s → melts\nช่อง 2: look ... yet = ตอนนี้ยังไม่ละลาย → aren't melting",
+      "สลับกันพอดี\nความจริงทั่วไปไม่ใช้ is melting\nเรื่องที่มองเห็นตอนนี้ไม่ใช้ don't melt",
+      "ช่อง 1 ถูก\nแต่ look = ดูตอนนี้ → ต้อง aren't melting",
+      "ช่อง 2 ถูก\nแต่น้ำแข็งละลายเมื่ออุ่น เป็นความจริงเสมอ → melts"] },
+
+  // ---- trap 2: past simple vs present perfect
+  { id: 'tense-04', skill: 'tense', trap: 2, ep: 'time-marker-per-blank', lv: 'm',
+    q: "Aunt Noi ___ teaching Thai dance in 2016, and since then she ___ more than two hundred students.",
+    ch: ['started / has taught', 'has started / taught', 'started / taught', 'has started / has taught'],
+    why: [
+      "หาคำบอกเวลาของแต่ละช่อง\nช่อง 1: in 2016 = ปีที่จบแล้ว → started\nช่อง 2: since then = ตั้งแต่นั้นถึงตอนนี้ → has taught",
+      "สลับกันพอดี\nin + ปี ใช้ has started ไม่ได้\nsince then ใช้ taught ไม่ได้",
+      "ช่อง 1 ถูก\nแต่ since then = ยาวมาถึงตอนนี้ → has taught",
+      "ช่อง 2 ถูก\nแต่ in 2016 = จุดเวลาในอดีต → started"] },
+  { id: 'tense-05', skill: 'tense', trap: 2, ep: 'time-marker-per-blank', lv: 'e',
+    q: "Since September, our class ___ three science projects.",
+    ch: ['has finished', 'finished', 'finishes', 'is finishing'],
+    why: [
+      "Since September = ตั้งแต่ ก.ย. จนถึงตอนนี้\nช่วงที่ยาวมาถึงตอนนี้ → has + V3 → has finished",
+      "finished = จบในอดีต ไม่มาถึงตอนนี้\nแต่ Since บอกว่ายาวมาถึงตอนนี้",
+      "finishes = ทำเป็นประจำ\nไม่เข้ากับ Since September",
+      "is finishing = กำลังทำอยู่ตอนนี้\nสามงานเสร็จไปแล้ว ไม่ใช่กำลังทำ"] },
+  { id: 'tense-06', skill: 'tense', trap: 2, ep: 'time-marker-per-blank', lv: 'h',
+    q: "Up to now, my brother ___ Japan twice, but he ___ Mount Fuji when he was there last April.",
+    ch: ["has visited / didn't see", "visited / hasn't seen", "has visited / hasn't seen", "visited / didn't see"],
+    why: [
+      "ช่อง 1: Up to now = จนถึงตอนนี้ → has visited\nช่อง 2: last April = เดือนที่ผ่านไปแล้ว → didn't see",
+      "สลับกันพอดี\nUp to now ต้องใช้ has + V3\nlast April ต้องใช้อดีต didn't see",
+      "ช่อง 1 ถูก\nแต่ last April = อดีตที่จบแล้ว ใช้ hasn't seen ไม่ได้",
+      "ช่อง 2 ถูก\nแต่ Up to now = ถึงตอนนี้ → ต้อง has visited"] },
+
+  // ---- trap 3: past simple vs past continuous
+  { id: 'tense-07', skill: 'tense', trap: 3, ep: 'short-interrupts-long', lv: 'e',
+    q: "I ___ a shower when the doorbell rang, so I couldn't open the door.",
+    ch: ['was having', 'had', 'have', 'am having'],
+    why: [
+      "อาบน้ำ = เรื่องยาวที่กำลังทำอยู่\nกริ่งดัง = เรื่องสั้นที่แทรกเข้ามา\nเรื่องยาวในอดีต → was + V-ing → was having",
+      "had = อาบเสร็จทั้งครั้ง\nแต่ so I couldn't open the door บอกว่ายังอาบอยู่ตอนกริ่งดัง",
+      "have = ปัจจุบัน\nแต่ rang และ couldn't เป็นอดีต",
+      "am having = กำลังทำตอนนี้\nแต่เรื่องนี้เกิดในอดีต"] },
+  { id: 'tense-08', skill: 'tense', trap: 3, ep: 'short-interrupts-long', lv: 'm',
+    q: "When the fire alarm suddenly ___, Mr. Lee ___ a lesson, so he stopped and took the class outside.",
+    ch: ['went off / was teaching', 'was going off / was teaching', 'went off / taught', 'was going off / taught'],
+    why: [
+      "สัญญาณดัง = เรื่องสั้นที่แทรก → went off\nสอนอยู่ = เรื่องยาว → was teaching\nhe stopped บอกว่ากำลังสอนอยู่ตอนเสียงดัง",
+      "ช่อง 2 ถูก\nแต่ suddenly = ดังขึ้นทันที เป็นเรื่องสั้นที่แทรก → went off\nไม่ใช่รูป -ing ทั้งสองช่อง",
+      "ช่อง 1 ถูก\nแต่ taught = สอนจบทั้งคาบ\nจะ stopped กลางคาบได้ยังไง → was teaching",
+      "สลับกันพอดี\nเรื่องสั้นใช้ V2 · เรื่องยาวใช้ was + V-ing"] },
+  { id: 'tense-09', skill: 'tense', trap: 3, ep: 'short-interrupts-long', lv: 'm',
+    q: "Somchai ___ his leg while he ___ football in the rain last Saturday.",
+    ch: ['broke / was playing', 'was breaking / played', 'was breaking / was playing', 'has broken / was playing'],
+    why: [
+      "ขาหัก = เกิดทันทีครั้งเดียว → broke\nเตะบอลอยู่ = เรื่องยาว (while) → was playing",
+      "สลับกันพอดี\nขาหักเกิดทันที ไม่ใช่ was breaking\nwhile + เรื่องที่กำลังทำ → was playing",
+      "ช่อง 2 ถูก\nแต่ขาหักเกิดทันที ไม่ได้หักอยู่นาน ๆ → broke",
+      "ช่อง 2 ถูก\nแต่ last Saturday = อดีตที่จบแล้ว ใช้ has broken ไม่ได้"] },
+
+  // ---- trap 4: will / be going to / be + -ing (นัดแล้ว)
+  { id: 'tense-10', skill: 'tense', trap: 4, ep: 'will-vs-going-to', lv: 'e',
+    q: "A: Oh no, I left my pencil case at home.\nB: Don't worry. I ___ you one of mine.",
+    ch: ['will lend', 'lend', 'am lending', 'lent'],
+    why: [
+      "B เพิ่งคิดได้ตอนพูด แล้วเสนอช่วย\nเพิ่งตัดสินใจตอนพูด → will lend",
+      "lend = ทำเป็นประจำ\nแต่นี่คือการเสนอช่วยตอนนี้",
+      "am lending = นัดไว้แล้ว\nแต่ B เพิ่งรู้ว่าเพื่อนลืม จึงนัดไว้ก่อนไม่ได้",
+      "lent = ให้ยืมไปแล้ว\nแต่ยังไม่ได้ให้ เพิ่งเสนอ"] },
+  { id: 'tense-11', skill: 'tense', trap: 4, ep: 'will-vs-going-to', lv: 'e',
+    q: "Look at that boy on top of the wall! He ___!",
+    ch: ['is going to fall', 'falls', 'fell', 'has fallen'],
+    why: [
+      "Look! = เห็นหลักฐานตรงหน้า\nเขายังอยู่บนกำแพง แต่ท่าทางจะตก\nเห็นหลักฐาน → is going to fall",
+      "falls = ตกเป็นประจำ\nไม่ใช่สิ่งที่เห็นว่ากำลังจะเกิด",
+      "fell = ตกไปแล้ว\nแต่เขายังอยู่บนกำแพง",
+      "has fallen = ตกไปแล้ว\nแต่เขายังอยู่บนกำแพง"] },
+  { id: 'tense-12', skill: 'tense', trap: 4, ep: 'will-vs-going-to', lv: 'h',
+    q: "Mum: Your shoes are full of holes. They ___ soon.\nLek: Oh, I didn't notice! OK, I ___ a new pair this weekend, I promise.",
+    ch: ['are going to break / will buy', 'are breaking / buy', 'broke / will buy', 'break / bought'],
+    why: [
+      "ช่อง 1: รองเท้ามีรูเต็ม = เห็นหลักฐาน → are going to break\nช่อง 2: I promise = สัญญาตอนพูด → will buy",
+      "are breaking = นัดไว้ (ใช้กับแผนของคน) ไม่ใช่รองเท้า\nbuy = นิสัย ไม่ใช่คำสัญญา",
+      "ช่อง 2 ถูก\nแต่ soon = เร็ว ๆ นี้ (อนาคต) ใช้ broke ไม่ได้",
+      "break = นิสัย ไม่ใช่อนาคต\nbought = อดีต แต่ this weekend ยังไม่มาถึง"] },
+  { id: 'tense-13', skill: 'tense', trap: 4, ep: 'continuous-as-future', lv: 'm',
+    q: "I ___ my cousins in Hua Hin next Saturday. Mum bought the bus tickets two days ago.",
+    ch: ['am visiting', 'visited', 'visit', 'was visiting'],
+    why: [
+      "next Saturday = ยังไม่เกิด\nซื้อตั๋วแล้ว = นัดไว้แน่นอน\nนัดแน่นอนมีวันเวลา → am + V-ing → am visiting",
+      "visited = เกิดไปแล้ว\nแต่ next Saturday ยังมาไม่ถึง",
+      "visit = นิสัย/ประจำ\nไม่ใช้กับนัดของเราที่มีวันแน่นอน",
+      "was visiting = กำลังทำในอดีต\nแต่นี่คืออนาคต"] },
+
+  // ---- trap 6: present perfect (continuous) + for / since
+  { id: 'tense-14', skill: 'tense', trap: 6, ep: 'time-marker-per-blank', lv: 'e',
+    q: "My sister ___ the violin since she was seven.",
+    ch: ['has been playing', 'is playing', 'plays', 'played'],
+    why: [
+      "since she was seven = ตั้งแต่ 7 ขวบจนถึงตอนนี้\nทำต่อเนื่องมาถึงตอนนี้ → has been + V-ing",
+      "is playing = แค่ตอนนี้\nไม่ได้บอกว่าทำมาตั้งแต่ 7 ขวบ",
+      "plays = นิสัย\nใช้คู่กับ since ไม่ได้",
+      "played = จบในอดีต\nแต่ since บอกว่ายังเล่นมาถึงตอนนี้"] },
+  { id: 'tense-15', skill: 'tense', trap: 6, ep: 'time-marker-per-blank', lv: 'm',
+    q: "It ___ for two hours, and it still hasn't stopped. The streets are full of water.",
+    ch: ['has been raining', 'is raining', 'rains', 'has been rain'],
+    why: [
+      "for two hours + still hasn't stopped = ตกมา 2 ชั่วโมงและยังตกอยู่\nต่อเนื่องถึงตอนนี้ → has been + V-ing",
+      "is raining = แค่ตอนนี้\nใช้คู่กับ for two hours ไม่ได้",
+      "rains = นิสัย\nไม่ใช่เรื่องที่ตกต่อเนื่องอยู่ตอนนี้",
+      "หลัง has been ต้องเป็น V-ing\nrain ต้องเติม -ing → raining"] },
+  { id: 'tense-16', skill: 'tense', trap: 6, ep: 'time-marker-per-blank', lv: 'h',
+    q: "Ploy ___ in the school choir since she ___ to this school in Grade 4.",
+    ch: ['has sung / moved', 'sang / has moved', 'has sung / has moved', 'sings / moves'],
+    why: [
+      "ร้องเพลงมาถึงตอนนี้ → has sung\nหลัง since = วันที่เริ่ม (ย้ายมาตอน ป.4) = อดีต → moved",
+      "สลับกันพอดี\nกริยาที่อยู่หลัง since คือจุดเริ่ม → ใช้อดีต\nส่วนเรื่องที่ยาวมาถึงตอนนี้ → has sung",
+      "ช่อง 1 ถูก\nแต่ย้ายโรงเรียนเกิดครั้งเดียวตอน ป.4 → moved",
+      "sings / moves = ปัจจุบันทั้งคู่\nใช้คู่กับ since ไม่ได้"] },
+
+  // ---- trap 7: time clause (when / as soon as / until / before / after) + by the time
+  { id: 'tense-17', skill: 'tense', trap: 7, ep: 'will-in-time-clause', lv: 'e',
+    q: "Please wait here until your mother ___.",
+    ch: ['arrives', 'will arrive', 'arrive', 'arrived'],
+    why: [
+      "วงคำ until ก่อน\nฝั่งที่มี until ห้ามใช้ will\nใช้ V1 เติม s → arrives",
+      "หลัง until ห้ามใส่ will\nถึงจะเป็นเรื่องอนาคตก็ตาม",
+      "your mother เป็นคนเดียว\nต้องเติม s → arrives",
+      "arrived = อดีต\nแต่ Please wait = ให้รอตอนนี้ แม่ยังไม่มา"] },
+  { id: 'tense-18', skill: 'tense', trap: 7, ep: 'will-in-time-clause', lv: 'm',
+    q: "When Uncle Tom ___ from London next week, he ___ us some English chocolate.",
+    ch: ['comes back / will bring', 'will come back / will bring', 'will come back / brings', 'came back / will bring'],
+    why: [
+      "วงคำ When ก่อน แล้วค่อยดู next week\nฝั่ง When ห้าม will → comes back\nอีกฝั่งเป็นอนาคต → will bring",
+      "มี next week อยู่ฝั่ง When ก็ยังห้าม will\nwill ใส่ได้แค่อีกฝั่ง",
+      "will ไปอยู่ผิดฝั่ง\nฝั่ง When ต้อง comes back\nฝั่งผลต้อง will bring",
+      "came back = อดีต\nแต่ next week ยังไม่มาถึง"] },
+  { id: 'tense-19', skill: 'tense', trap: 7, ep: 'will-in-time-clause', lv: 'm',
+    q: "I ___ you a postcard as soon as I get to Phuket.",
+    ch: ['will send', 'send', 'sent', 'am sent'],
+    why: [
+      "ฝั่งที่มี as soon as ใช้ V1 อยู่แล้ว (get)\nช่องว่างอยู่อีกฝั่ง = เรื่องอนาคต → will send",
+      "send = นิสัย\nแต่นี่คือสิ่งที่จะทำในอนาคต\nฝั่งที่ไม่มีคำประตู ใส่ will ได้",
+      "sent = ส่งไปแล้ว\nแต่ยังไปไม่ถึงภูเก็ตเลย",
+      "am sent = ถูกส่ง\nแต่ฉันเป็นคนส่งเอง"] },
+  { id: 'tense-20', skill: 'tense', trap: 7, ep: 'will-in-time-clause', lv: 'h',
+    q: "Before the concert ___ tonight, the band ___ one last practice.",
+    ch: ['starts / will have', 'will start / will have', 'will start / has', 'started / will have'],
+    why: [
+      "วงคำ Before ก่อน แล้วค่อยดู tonight\nฝั่ง Before ห้าม will → starts\nอีกฝั่งเป็นอนาคต → will have",
+      "tonight อยู่ฝั่ง Before ก็ยังห้าม will\nฝั่ง Before → starts",
+      "will ไปอยู่ผิดฝั่ง\nฝั่ง Before → starts · ฝั่งผล → will have",
+      "started = อดีต\nแต่ tonight ยังไม่ถึง"] },
+  { id: 'tense-21', skill: 'tense', trap: 7, ep: null, lv: 'm',
+    q: "By the time Dad got to the bus stop, the last bus ___.",
+    ch: ['had already left', 'has already left', 'already leaves', 'is already leaving'],
+    why: [
+      "By the time Dad got there = ตอนที่พ่อไปถึง (อดีต)\nรถออกไปก่อนหน้านั้นอีก\nอดีตที่เกิดก่อนอดีต → had + V3",
+      "has left = ถึงตอนนี้\nแต่เรื่องนี้เทียบกับตอนที่พ่อไปถึงในอดีต",
+      "already leaves = ปัจจุบัน\nแต่ got เป็นอดีต",
+      "is leaving = กำลังออกตอนนี้\nแต่เรื่องนี้เกิดไปแล้วในอดีต"] },
+  { id: 'tense-22', skill: 'tense', trap: 7, ep: null, lv: 'h',
+    q: "By the time the firefighters ___, the fire ___ most of the old wooden house.",
+    ch: ['arrived / had destroyed', 'had arrived / destroyed', 'arrived / has destroyed', 'have arrived / had destroyed'],
+    why: [
+      "ไฟไหม้บ้านก่อน → had destroyed\nนักดับเพลิงมาถึงทีหลัง → arrived\nเรื่องที่เกิดก่อนใช้ had + V3",
+      "สลับกันพอดี\nเรื่องที่เกิดก่อนคือไฟไหม้ ไม่ใช่การมาถึง",
+      "ช่อง 1 ถูก\nแต่ has destroyed = ถึงตอนนี้\nต้องเป็น had destroyed (ก่อนตอนมาถึง)",
+      "ช่อง 2 ถูก\nแต่ have arrived ใช้คู่กับ had destroyed ไม่ได้\nการมาถึงเป็นอดีต → arrived"] },
+
+  // ---- trap 25: reported speech (ถอยกริยาตัวแรก 1 ขั้น)
+  { id: 'tense-23', skill: 'tense', trap: 25, ep: 'reported-speech-shift', lv: 'e',
+    q: "Mali said, \"I have to feed my cat today.\"\nMali said that she ___ feed her cat that day.",
+    ch: ['had to', 'has to', 'have to', 'had'],
+    why: [
+      "said = เล่าคำพูดของคนอื่น\nถอยกริยา 1 ขั้น: have to → had to",
+      "has to = ยังไม่ถอย\ntoday เปลี่ยนเป็น that day แล้ว กริยาก็ต้องถอยด้วย",
+      "have to = ลอกคำพูดมาเฉย ๆ\nต้องถอย have to → had to",
+      "ถอยแล้วแต่ทำ to หาย\nhad feed ผิดรูป → had to feed"] },
+  { id: 'tense-24', skill: 'tense', trap: 25, ep: 'reported-speech-shift', lv: 'm',
+    q: "Ken said, \"I can fix your bike tomorrow.\"\nKen said that he ___ my bike the next day.",
+    ch: ['could fix', 'can fix', 'could fixed', 'can fixed'],
+    why: [
+      "ถอยกริยาช่วยตัวแรก 1 ขั้น: can → could\nหลัง could ใช้ V1 → could fix",
+      "can = ยังไม่ถอย\ntomorrow เปลี่ยนเป็น the next day แล้ว\ncan ก็ต้องถอยเป็น could ด้วย",
+      "ถอย can → could ถูกแล้ว\nแต่หลัง could ใช้ V1 → fix ไม่ใช่ fixed",
+      "ยังไม่ถอย can\nและหลัง can ใช้ V1 ไม่ใช่ fixed"] },
+  { id: 'tense-25', skill: 'tense', trap: 25, ep: 'reported-speech-shift', lv: 'h',
+    q: "Grandpa said, \"You will have to carry a torch tonight.\"\nGrandpa told me that I ___ carry a torch that night.",
+    ch: ['would have to', 'would had to', 'will have to', 'will had to'],
+    why: [
+      "ถอยกริยาตัวแรกตัวเดียว: will → would\nตัวหลัง would ใช้รูปธรรมดา → have to",
+      "ถอยเกิน\nถอยแค่ will → would ตัวเดียว\nhave ไม่ต้องถอย",
+      "ยังไม่ถอย will\nเล่าด้วย told ต้องถอย will → would",
+      "ถอยผิดตัว\nต้องถอย will → would · have to คงเดิม"] },
+  { id: 'tense-26', skill: 'tense', trap: 25, ep: 'reported-speech-shift', lv: 'm',
+    q: "Mew said, \"I am able to touch my toes now.\"\nMew said that she ___ touch her toes then.",
+    ch: ['was able to', 'is able to', 'could able to', 'was able'],
+    why: [
+      "ถอยกริยาตัวแรกตัวเดียว: am → was\nable to คงไว้เหมือนเดิม → was able to",
+      "is able to = ยังไม่ถอย\nnow เปลี่ยนเป็น then แล้ว am ก็ต้องถอยเป็น was",
+      "could กับ able to ใช้ด้วยกันไม่ได้\nถอยแค่ am → was แล้วคง able to ไว้",
+      "ถอย am → was ถูกแล้ว แต่ทำ to หาย\nต้องเป็น was able to + V1"] },
+
+  // ---- trap 27: stative verbs ไม่ใช้ -ing
+  { id: 'tense-27', skill: 'tense', trap: 27, ep: null, lv: 'e',
+    q: "This red umbrella ___ to my grandmother.",
+    ch: ['belongs', 'is belonging', 'belong', 'are belonging'],
+    why: [
+      "belong = เป็นของ (กริยาบอกสภาพ)\nกริยาบอกสภาพไม่เติม -ing\numbrella อันเดียว → belongs",
+      "belong ไม่ใช้ -ing\nเป็นของใคร ไม่ใช่สิ่งที่กำลังทำ",
+      "umbrella อันเดียว ต้องเติม s → belongs",
+      "ไม่ใช้ -ing และ umbrella อันเดียว ใช้ are ไม่ได้"] },
+  { id: 'tense-28', skill: 'tense', trap: 27, ep: null, lv: 'm',
+    q: "Right now, Fern ___ the answer, but she is too shy to say it.",
+    ch: ['knows', 'is knowing', 'know', 'has been knowing'],
+    why: [
+      "know = รู้ (กริยาบอกสภาพในหัว)\nถึงจะมี Right now ก็ไม่เติม -ing\nFern คนเดียว → knows",
+      "know ไม่ใช้ -ing แม้มี Right now",
+      "Fern คนเดียว ต้องเติม s → knows",
+      "know ไม่ใช้ -ing ทุกรูป\nรวมถึง has been knowing"] },
+];
+
+// stage: cmpt
+POOLS['cmpt'] = [
+  // ---- trap 5: conditional 0 / 1 / 2
+  { id: 'cmpt-01', skill: 'cmpt', trap: 5, ep: 'conditional-pairing', lv: 'e',
+    q: "If it ___ tomorrow, we will stay at home and play board games.",
+    ch: ['rains', 'will rain', 'rained', 'is rain'],
+    why: [
+      "อีกฝั่งมี will = เรื่องที่เป็นไปได้จริง\nฝั่ง if ใช้ V1 → it ตัวเดียว เติม s → rains",
+      "ฝั่ง if ห้ามใส่ will\nwill อยู่ได้แค่อีกฝั่ง",
+      "rained = ใช้กับเรื่องสมมติคู่กับ would\nแต่อีกฝั่งเป็น will",
+      "is rain ผิดรูป\nไม่มี is หน้า V1 → rains"] },
+  { id: 'cmpt-02', skill: 'cmpt', trap: 5, ep: 'conditional-pairing', lv: 'e',
+    q: "I am the shortest boy in my class. If I ___ taller, I would join the school basketball team.",
+    ch: ['were', 'am', 'will be', 'have been'],
+    why: [
+      "จริง ๆ ฉันตัวเตี้ยที่สุด = สูงกว่านี้คือเรื่องสมมติ\nฝั่งผลมี would → ฝั่ง if ต้องถอยเป็นอดีต\nam → were",
+      "am = ยังไม่ถอย\nมี would อีกฝั่ง → ฝั่ง if ต้องถอยด้วย",
+      "ฝั่ง if ห้ามใส่ will",
+      "have been ไม่ใช่คู่ของ would\nสมมติ → if + were"] },
+  { id: 'cmpt-03', skill: 'cmpt', trap: 5, ep: 'conditional-pairing', lv: 'm',
+    q: "If Joe ___ more free time, he ___ a pet rabbit. But he is busy with lessons every evening.",
+    ch: ['had / would keep', 'has / would keep', 'had / will keep', 'has / will keep'],
+    why: [
+      "But he is busy = จริง ๆ ไม่มีเวลา → เรื่องสมมติ\nถอยทั้งสองฝั่งพร้อมกัน: had ↔ would\nhad / would keep",
+      "ใส่ would แล้ว แต่ลืมถอยฝั่ง if\nhas ต้องถอยเป็น had",
+      "ถอยฝั่ง if แล้ว แต่ฝั่งผลยังเป็น will\nhad ต้องคู่กับ would",
+      "has / will = เรื่องที่เป็นไปได้จริง\nแต่ประโยคหลังบอกว่าเขาไม่ว่างจริง ๆ"] },
+  { id: 'cmpt-04', skill: 'cmpt', trap: 5, ep: 'conditional-pairing', lv: 'm',
+    q: "I don't know her phone number. If I ___ it, I would call her right now.",
+    ch: ['knew', 'know', 'will know', 'would know'],
+    why: [
+      "ประโยคแรกบอกว่าไม่รู้จริง = สมมติ\nฝั่งผลมี would → ฝั่ง if ถอยเป็นอดีต\nknow → knew",
+      "know = ยังไม่ถอย\nมี would อีกฝั่ง ต้องถอยทั้งคู่",
+      "ฝั่ง if ห้ามใส่ will",
+      "would อยู่ได้แค่ฝั่งผล\nฝั่ง if ห้ามใส่ would"] },
+  { id: 'cmpt-05', skill: 'cmpt', trap: 5, ep: 'conditional-pairing', lv: 'h',
+    q: "We ___ a picnic today if the weather ___ so hot. It's 40 degrees outside!",
+    ch: ['would have / were not', 'would have / are not', 'will have / were not', 'will have / are not'],
+    why: [
+      "ร้อน 40 องศาจริง = สมมติว่าไม่ร้อน\nถอยทั้งสองฝั่ง: would ↔ were\nถึง if จะอยู่ข้างหลังก็ใช้กฎเดียวกัน",
+      "ใส่ would แล้ว แต่ลืมถอยฝั่ง if\nare not ต้องถอยเป็น were not",
+      "ถอยฝั่ง if แล้ว แต่ฝั่งผลยังเป็น will\nwere ต้องคู่กับ would",
+      "will / are = เรื่องที่เป็นไปได้จริง\nแต่ตอนนี้ร้อนจริง ๆ → ต้องสมมติ"] },
+  { id: 'cmpt-06', skill: 'cmpt', trap: 5, ep: 'conditional-pairing', lv: 'm',
+    q: "If I ___ enough money, I could buy that guitar, but I only have 300 baht.",
+    ch: ['had', 'have', 'will have', 'would have'],
+    why: [
+      "but I only have 300 baht = เงินไม่พอจริง → สมมติ\ncould ในฝั่งผล = สัญญาณสมมติ เหมือน would\nฝั่ง if → had",
+      "have = ยังไม่ถอย\nเห็น could ฝั่งผล → ฝั่ง if ต้องเป็นอดีต",
+      "ฝั่ง if ห้ามใส่ will",
+      "would อยู่ได้แค่ฝั่งผล\nฝั่ง if ใช้ had"] },
+  { id: 'cmpt-07', skill: 'cmpt', trap: 5, ep: null, lv: 'e',
+    q: "If you heat ice, it ___.",
+    ch: ['melts', 'melted', 'would melt', 'is melt'],
+    why: [
+      "ความจริงทางวิทยาศาสตร์ เกิดทุกครั้ง\nif + V1 → V1 ทั้งสองฝั่ง → melts",
+      "melted = อดีต\nแต่ heat เป็นปัจจุบัน และนี่คือความจริงทุกครั้ง",
+      "would = สมมติ คู่กับ if + V2\nแต่ฝั่ง if เป็น heat (V1)",
+      "is melt ผิดรูป\nไม่มี is หน้า V1"] },
+
+  // ---- trap 17: modals
+  { id: 'cmpt-08', skill: 'cmpt', trap: 17, ep: 'modal-meaning-by-context', lv: 'e',
+    q: "Students ___ run in the science lab. It is dangerous.",
+    ch: ["mustn't", "don't have to", 'must', "doesn't have to"],
+    why: [
+      "It is dangerous = อันตราย → ห้ามทำ\nห้าม = mustn't",
+      "don't have to = ไม่จำเป็นต้อง (ทำก็ได้)\nแต่ในห้องแล็บวิ่งไม่ได้เลย",
+      "must run = ต้องวิ่ง\nตรงข้ามกับ It is dangerous",
+      "Students หลายคน ใช้ doesn't ไม่ได้\nและความหมายคือไม่จำเป็น ไม่ใช่ห้าม"] },
+  { id: 'cmpt-09', skill: 'cmpt', trap: 17, ep: 'modal-meaning-by-context', lv: 'm',
+    q: "Tomorrow is a holiday, so we ___ get up early. We can sleep until nine.",
+    ch: ["don't have to", "mustn't", 'have to', 'must'],
+    why: [
+      "We can sleep until nine = นอนต่อได้\nไม่จำเป็นต้องตื่นเช้า → don't have to",
+      "mustn't = ห้าม\nวันหยุดไม่ได้ห้ามตื่นเช้า แค่ไม่จำเป็น",
+      "have to = ต้อง\nตรงข้ามกับ can sleep until nine",
+      "must = ต้อง\nตรงข้ามกับ can sleep until nine"] },
+  { id: 'cmpt-10', skill: 'cmpt', trap: 17, ep: null, lv: 'm',
+    q: "You look really tired. You'd better ___ to bed early tonight.",
+    ch: ['go', 'to go', 'going', 'went'],
+    why: [
+      "You'd better = You had better (ควรจะ)\nหลัง had better ใช้ V1 เปล่า ๆ → go",
+      "หลัง had better ไม่มี to",
+      "หลัง had better ไม่ใช้ V-ing",
+      "ถึงจะมี had แต่ had better ตามด้วย V1 เสมอ\nไม่ใช่ went"] },
+  { id: 'cmpt-11', skill: 'cmpt', trap: 17, ep: 'modal-meaning-by-context', lv: 'h',
+    q: "I got lost on the hiking trail because I didn't bring a map. I ___ a map with me.",
+    ch: ['should have brought', 'should bring', 'must bring', 'should have bring'],
+    why: [
+      "หลงไปแล้ว = เสียดายเรื่องในอดีต\nควรทำแต่ไม่ได้ทำ → should have + V3\nbring → brought",
+      "should bring = ควรเอาไป (ตอนนี้/อนาคต)\nแต่เรื่องหลงทางเกิดไปแล้ว",
+      "must bring = ต้องเอาไป (ตอนนี้/อนาคต)\nไม่ได้บอกความเสียดายในอดีต",
+      "หลัง should have ต้องเป็น V3\nbring → brought"] },
+  { id: 'cmpt-12', skill: 'cmpt', trap: 17, ep: 'modal-meaning-by-context', lv: 'm',
+    q: "The ground is wet and the trees are dripping. It ___ last night.",
+    ch: ['must have rained', 'must rain', 'should rain', 'must rained'],
+    why: [
+      "เห็นหลักฐาน (พื้นเปียก) แล้วเดาเรื่องเมื่อคืน\nเดาว่าเกิดแล้วในอดีต → must have + V3",
+      "must rain = ต้องตก (ตอนนี้/อนาคต)\nแต่ last night เป็นอดีต",
+      "should rain = ควรตก\nความหมายไม่ตรง และไม่ใช่อดีต",
+      "หลัง must ใช้ V1 หรือ have + V3\nmust rained ผิดรูป"] },
+  { id: 'cmpt-13', skill: 'cmpt', trap: 17, ep: null, lv: 'e',
+    q: "My little brother is only three, but he ___ count to twenty already.",
+    ch: ['can', 'can to', 'must', 'cans'],
+    why: [
+      "นับได้ = ความสามารถ → can\nหลัง can ใช้ V1 → can count",
+      "หลัง can ไม่มี to",
+      "must = ต้อง\nประโยคนี้ชมว่าเก่ง นับได้แล้ว ไม่ใช่ถูกบังคับ",
+      "can ไม่เติม s ถึงประธานจะเป็นคนเดียว"] },
+
+  // ---- trap 8: passive (be + V3)
+  { id: 'cmpt-14', skill: 'cmpt', trap: 8, ep: 'passive-recognition', lv: 'e',
+    q: "This beautiful temple ___ more than 200 years ago.",
+    ch: ['was built', 'built', 'is building', 'has built'],
+    why: [
+      "ถามตัวเองก่อน: วัดสร้างตัวเองได้ไหม? ไม่ได้\nวัดถูกสร้าง → be + V3\n200 years ago = อดีต → was built",
+      "built = วัดเป็นคนสร้าง\nวัดสร้างอะไรไม่ได้ ต้องถูกสร้าง",
+      "is building = วัดกำลังสร้างของ\nและ ago เป็นอดีต",
+      "has built = วัดเป็นคนสร้าง\nและใช้คู่กับ ago ไม่ได้"] },
+  { id: 'cmpt-15', skill: 'cmpt', trap: 8, ep: 'passive-recognition', lv: 'm',
+    q: "Workers are busy by the river. A new bridge ___ there right now. It ___ by the end of next year.",
+    ch: ['is being built / will be completed', 'is building / will complete', 'is being built / will complete', 'was built / completes'],
+    why: [
+      "สะพานสร้างตัวเองไม่ได้ → ถูกทำทั้งสองช่อง\nright now → is being built\nnext year → will be completed",
+      "ลืมว่าสะพานเป็นผู้ถูกทำทั้งสองช่อง\nต้องมี be + V3",
+      "ช่อง 1 ถูก แต่ช่อง 2 ลืม\nสะพานทำให้ตัวเองเสร็จไม่ได้ → will be completed",
+      "was built = สร้างเสร็จแล้ว\nแต่ right now = กำลังสร้างอยู่"] },
+  { id: 'cmpt-16', skill: 'cmpt', trap: 8, ep: 'passive-recognition', lv: 'm',
+    q: "The broken window ___ yet, so the classroom is cold.",
+    ch: ["hasn't been repaired", "hasn't repaired", "didn't repair", "isn't repairing"],
+    why: [
+      "หน้าต่างซ่อมตัวเองไม่ได้ → ถูกซ่อม\nyet = ยังไม่ถึงตอนนี้ → has been + V3\nhasn't been repaired",
+      "hasn't repaired = หน้าต่างไม่ได้ซ่อมของ\nหน้าต่างเป็นผู้ถูกซ่อม",
+      "didn't repair = หน้าต่างไม่ได้ซ่อมของ\nหน้าต่างเป็นผู้ถูกซ่อม",
+      "isn't repairing = หน้าต่างไม่ได้กำลังซ่อม\nหน้าต่างเป็นผู้ถูกซ่อม"] },
+  { id: 'cmpt-17', skill: 'cmpt', trap: 8, ep: 'passive-recognition', lv: 'm',
+    q: "All the homework must ___ before Friday.",
+    ch: ['be handed in', 'hand in', 'handed in', 'be hand in'],
+    why: [
+      "การบ้านส่งตัวเองไม่ได้ → ถูกส่ง\nหลัง must → be + V3 → be handed in",
+      "must hand in = การบ้านเป็นคนส่ง\nการบ้านเป็นของที่ถูกส่ง",
+      "หลัง must ต้องมี be ก่อน V3",
+      "หลัง be ต้องเป็น V3 → handed"] },
+  { id: 'cmpt-18', skill: 'cmpt', trap: 8, ep: 'passive-recognition', lv: 'e',
+    q: "These funny stories ___ by my grandmother when she was young.",
+    ch: ['were written', 'wrote', 'were wrote', 'are writing'],
+    why: [
+      "เรื่องเขียนตัวเองไม่ได้ → ถูกเขียน\nมี by + คนเขียน · when she was young = อดีต\nwere + V3 → were written",
+      "wrote = เรื่องเป็นคนเขียน\nแต่มี by my grandmother = ยายเป็นคนเขียน",
+      "หลัง were ต้องเป็น V3\nwrite → written ไม่ใช่ wrote",
+      "are writing = เรื่องกำลังเขียน\nเรื่องเป็นผู้ถูกเขียน และนี่คืออดีต"] },
+  { id: 'cmpt-19', skill: 'cmpt', trap: 8, ep: 'passive-recognition', lv: 'h',
+    q: "Look! The old school hall ___ blue and white this week.",
+    ch: ['is being painted', 'is painting', 'paints', 'has been painting'],
+    why: [
+      "ห้องโถงทาสีตัวเองไม่ได้ → ถูกทาสี\nLook! this week = กำลังเกิดช่วงนี้\nis being + V3 → is being painted",
+      "is painting = ห้องโถงเป็นคนทาสี\nห้องโถงเป็นผู้ถูกทาสี",
+      "paints = ห้องโถงทาสีเป็นประจำ\nผิดทั้งความหมายและไม่มี be + V3",
+      "has been painting = ห้องโถงเป็นคนทาสี\nห้องโถงเป็นผู้ถูกทาสี"] },
+
+  // ---- trap 15: question tags (เช็ก 2 อย่าง: กริยาช่วยตัวเดียวกัน + กลับบวก/ลบ)
+  { id: 'cmpt-20', skill: 'cmpt', trap: 15, ep: 'question-tag-two-checks', lv: 'e',
+    q: "Your cousin can play chess, ___?",
+    ch: ["can't he", "can't you", "doesn't he", "isn't he"],
+    why: [
+      "เช็ก 1: กริยาช่วยคือ can → ใช้ can\nเช็ก 2: ประโยคบวก → tag ลบ → can't he",
+      "ประธานคือ Your cousin → ใน tag ใช้ he\nไม่ใช่ you",
+      "กริยาช่วยในประโยคคือ can\ntag ต้องใช้ can ไม่ใช่ does",
+      "กริยาช่วยในประโยคคือ can\ntag ต้องใช้ can ไม่ใช่ is"] },
+  { id: 'cmpt-21', skill: 'cmpt', trap: 15, ep: 'question-tag-two-checks', lv: 'e',
+    q: "Ploy wasn't at school yesterday, ___?",
+    ch: ['was she', "wasn't she", 'did she', "didn't she"],
+    why: [
+      "เช็ก 1: กริยาช่วยคือ was\nเช็ก 2: ประโยคลบ (wasn't) → tag บวก → was she",
+      "ลืมกลับลบเป็นบวก\nประโยคลบ → tag ต้องบวก",
+      "กริยาในประโยคคือ was\ntag ต้องใช้ was ไม่ใช่ did",
+      "ผิดทั้งสองเช็ก\nต้องใช้ was และต้องเป็นบวก"] },
+  { id: 'cmpt-22', skill: 'cmpt', trap: 15, ep: 'question-tag-two-checks', lv: 'm',
+    q: "The twins have already eaten lunch, ___?",
+    ch: ["haven't they", "haven't them", "didn't they", "hasn't they"],
+    why: [
+      "เช็ก 1: กริยาช่วยคือ have\nเช็ก 2: ประโยคบวก → tag ลบ → haven't they",
+      "ใน tag ใช้ประธาน they\nไม่ใช่ them (them ใช้เป็นกรรม)",
+      "กริยาช่วยคือ have (have eaten)\ntag ต้องใช้ have ไม่ใช่ did",
+      "they ใช้ have ไม่ใช่ has\n→ haven't they"] },
+  { id: 'cmpt-23', skill: 'cmpt', trap: 15, ep: 'question-tag-two-checks', lv: 'm',
+    q: "I am in your team today, ___?",
+    ch: ["aren't I", "isn't I", "don't I", "wasn't I"],
+    why: [
+      "กฎพิเศษที่ต้องจำ: I am → tag ลบคือ aren't I",
+      "is ใช้กับ he/she/it ไม่ใช้กับ I\nI am → aren't I",
+      "กริยาในประโยคคือ am ไม่ใช่ do\nI am → aren't I",
+      "wasn't = อดีต\nแต่ today เป็นปัจจุบัน (am)"] },
+  { id: 'cmpt-24', skill: 'cmpt', trap: 15, ep: 'question-tag-two-checks', lv: 'm',
+    q: "Let's take a photo together, ___?",
+    ch: ['shall we', "don't we", "won't we", "aren't we"],
+    why: [
+      "กฎพิเศษที่ต้องจำ: Let's ... → shall we?\n(เป็นการชวน)",
+      "Let's ไม่ใช้ do\nชวนทำอะไร → shall we",
+      "Let's ไม่ใช้ won't\nชวนทำอะไร → shall we",
+      "ไม่มี are ในประโยค\nLet's → shall we"] },
+  { id: 'cmpt-25', skill: 'cmpt', trap: 15, ep: 'question-tag-two-checks', lv: 'h',
+    q: "Everyone enjoyed the school trip, ___?",
+    ch: ["didn't they", "didn't them", "wasn't they", "don't they"],
+    why: [
+      "Everyone ใน tag ใช้ they\nenjoyed = V2 ไม่มีกริยาช่วย → ใช้ did\nประโยคบวก → tag ลบ → didn't they",
+      "ใน tag ใช้ประธาน they\nไม่ใช่ them (them ใช้เป็นกรรม)",
+      "ไม่มี was ในประโยค\nenjoyed = V2 → ใช้ did",
+      "enjoyed เป็นอดีต\ntag ต้องเป็นอดีตด้วย → did"] },
+  { id: 'cmpt-26', skill: 'cmpt', trap: 15, ep: 'question-tag-two-checks', lv: 'h',
+    q: "Your parents never eat spicy food, ___?",
+    ch: ['do they', "don't they", 'do you', 'did they'],
+    why: [
+      "never = ไม่เคยเลย → ประโยคนี้เป็นลบ\nประโยคลบ → tag บวก\neat (V1) + parents → do they",
+      "ดูแค่ว่าไม่มี not แต่ never ก็คือลบ\nประโยคลบ → tag ต้องบวก",
+      "ประธานคือ Your parents → they\nไม่ใช่ you",
+      "eat เป็นปัจจุบัน\ntag ต้องเป็นปัจจุบัน → do"] },
+];
+
+// stage: form
+POOLS['form'] = [
+  { id: 'form-01', skill: 'form', trap: 9, ep: null, lv: 'e',
+    q: "The magic show was so ___ that my little brother kept clapping.",
+    ch: ['amazing', 'amazed', 'amaze', 'amazement'],
+    why: ["โจทย์ถามว่าโชว์เป็นแบบไหน\nโชว์ทำให้คนอื่นทึ่ง → ใช้ -ing\nso amazing = น่าทึ่งมาก",
+          "amazed = รู้สึกทึ่ง ใช้กับคน\nโชว์รู้สึกเองไม่ได้",
+          "amaze เป็นกริยา (verb)\nหลัง so ต้องใช้คำคุณศัพท์ (adjective)",
+          "amazement เป็นคำนาม (noun)\nso + คำนาม ใช้ไม่ได้"] },
+  { id: 'form-02', skill: 'form', trap: 9, ep: null, lv: 'e',
+    q: "After the long walk up the hill, we all felt very ___.",
+    ch: ['tired', 'tiring', 'tire', 'tiredly'],
+    why: ["โจทย์ถามว่าพวกเรารู้สึกอย่างไร\nคนรู้สึกเหนื่อย → ใช้ -ed\nfelt very tired",
+          "tiring = น่าเหนื่อย ใช้กับงาน/การเดิน\nไม่ใช่ความรู้สึกของคน",
+          "tire เป็นกริยา\nหลัง very ต้องเป็นคำคุณศัพท์",
+          "tiredly เป็น adverb\nหลัง feel ต้องใช้คำคุณศัพท์ ไม่ใช่ -ly"] },
+  { id: 'form-03', skill: 'form', trap: 9, ep: null, lv: 'm',
+    q: "The students were ___ by the science show because the experiments were so ___.",
+    ch: ['fascinated / interesting', 'fascinating / interested', 'fascinated / interested', 'fascinating / interesting'],
+    why: ["ช่อง 1: นักเรียนรู้สึกทึ่ง → -ed (fascinated)\nช่อง 2: การทดลองทำให้คนสนใจ → -ing (interesting)\nตรวจทีละช่องเสมอ",
+          "สลับกันทั้งสองช่อง\nนักเรียนไม่ได้เป็นคนน่าทึ่ง และการทดลองรู้สึกสนใจเองไม่ได้",
+          "ช่อง 1 ถูก แต่ช่อง 2 ผิด\nการทดลองไม่มีความรู้สึก ต้องเป็น interesting",
+          "ช่อง 2 ถูก แต่ช่อง 1 ผิด\nwere ___ by = ถูกทำให้รู้สึก → ต้องเป็น -ed"] },
+  { id: 'form-04', skill: 'form', trap: 10, ep: 'adjective-for-adverb', lv: 'e',
+    q: "The baby is sleeping, so please close the door ___.",
+    ch: ['gently', 'gentle', 'gentleness', 'gentlest'],
+    why: ["ถามตัวเองว่า คำนี้ขยายอะไร\nขยายกริยา close (ปิดอย่างไร) → ต้องเป็น adverb -ly\nclose the door gently",
+          "gentle เป็นคำคุณศัพท์ ใช้ขยายคำนาม\nเช่น a gentle voice ไม่ใช่ขยายกริยา",
+          "gentleness เป็นคำนาม\nขยายกริยาไม่ได้",
+          "gentlest เป็นขั้นสุดของคำคุณศัพท์\nไม่มีอะไรให้เทียบ และขยายกริยาต้องใช้ -ly"] },
+  { id: 'form-05', skill: 'form', trap: 10, ep: 'adjective-for-adverb', lv: 'm',
+    q: "The school hall was ___ decorated with flowers and lights for Sports Day.",
+    ch: ['beautifully', 'beautiful', 'beauty', 'beautify'],
+    why: ["คำนี้ขยาย decorated (ตกแต่งอย่างไร)\ndecorated มาจากกริยา → ขยายด้วย adverb -ly\nbeautifully decorated = ตกแต่งอย่างสวยงาม",
+          "beautiful เป็นคำคุณศัพท์\nใช้ขยายคำนาม เช่น a beautiful hall",
+          "beauty เป็นคำนาม\nวางหน้า decorated ไม่ได้",
+          "beautify เป็นกริยา\nกริยาสองตัวติดกันแบบนี้ไม่ได้"] },
+  { id: 'form-06', skill: 'form', trap: 10, ep: 'adjective-for-adverb', lv: 'm',
+    q: "My grandmother learned to use her new phone ___ quickly.",
+    ch: ['surprisingly', 'surprising', 'surprised', 'surprise'],
+    why: ["คำนี้ขยาย quickly (เร็วแค่ไหน)\nคำที่ขยาย adverb ต้องเป็น adverb -ly ด้วย\nsurprisingly quickly = เร็วจนน่าแปลกใจ",
+          "surprising เป็นคำคุณศัพท์\nขยาย quickly ไม่ได้ ต้องเติม -ly",
+          "surprised = รู้สึกแปลกใจ ใช้กับคน\nไม่ได้ขยายคำว่า quickly",
+          "surprise เป็นคำนามหรือกริยา\nวางหน้า quickly ไม่ได้"] },
+  { id: 'form-07', skill: 'form', trap: 10, ep: 'adjective-for-adverb', lv: 'h',
+    q: "Mmm! The soup smells ___. Let's eat now.",
+    ch: ['delicious', 'deliciously', 'more deliciously', 'deliciousness'],
+    why: ["ระวัง! smell ตรงนี้แปลว่า มีกลิ่น\nมันบอกว่าซุปเป็นแบบไหน → ขยายคำนาม soup\nจึงใช้คำคุณศัพท์ delicious (ไม่เติม -ly)",
+          "deliciously เป็น adverb\nหลัง smell / taste / look / feel ที่บอกลักษณะ ใช้คำคุณศัพท์",
+          "more deliciously เป็น adverb และเป็นการเปรียบเทียบ\nไม่มีอะไรให้เทียบ",
+          "deliciousness เป็นคำนาม\nsmells + คำนาม ใช้ไม่ได้"] },
+  { id: 'form-08', skill: 'form', trap: 11, ep: null, lv: 'e',
+    q: "An elephant is ___ than a horse.",
+    ch: ['heavier', 'heaviest', 'more heavier', 'heavy'],
+    why: ["มีคำว่า than = เทียบ 2 สิ่ง\nheavy → heavier (y เปลี่ยนเป็น i + er)",
+          "heaviest ใช้เทียบ 3 สิ่งขึ้นไป และใช้คู่กับ the",
+          "more heavier ผิด\nมี -er แล้ว ห้ามใส่ more ซ้ำ",
+          "heavy ไม่ได้เปลี่ยนรูป\nมี than ต้องใช้รูปเปรียบเทียบ"] },
+  { id: 'form-09', skill: 'form', trap: 11, ep: null, lv: 'm',
+    q: "Bangkok is one of the ___ in Asia.",
+    ch: ['busiest cities', 'busiest city', 'busier cities', 'most busiest cities'],
+    why: ["one of the + ขั้นสุด + คำนามพหูพจน์\n= หนึ่งในหลาย ๆ เมือง → cities ต้องเติม s\nbusy → busiest",
+          "city เป็นเอกพจน์\none of = หนึ่งใน 'หลาย' เมือง ต้องใช้ cities",
+          "busier เป็นขั้นกว่า ใช้คู่กับ than\nหลัง the ... in Asia ต้องใช้ขั้นสุด",
+          "most busiest ผิด\nมี -est แล้ว ห้ามใส่ most ซ้ำ"] },
+  { id: 'form-10', skill: 'form', trap: 11, ep: null, lv: 'm',
+    q: "Our class picnic this year was ___ than the one last year.",
+    ch: ['much better', 'more better', 'much more good', 'very better'],
+    why: ["good → better (เปลี่ยนรูปพิเศษ)\nถ้าจะเน้นว่า ดีกว่ามาก ใช้ much หน้า better",
+          "more better ผิด\nbetter เป็นขั้นกว่าอยู่แล้ว ห้ามใส่ more ซ้ำ",
+          "good ไม่ใช้ more good\nขั้นกว่าของ good คือ better เท่านั้น",
+          "very ใช้กับขั้นกว่าไม่ได้\nต้องใช้ much / a lot แทน"] },
+  { id: 'form-11', skill: 'form', trap: 11, ep: null, lv: 'e',
+    q: "Nida has grown a lot. She is now as ___ as her older sister.",
+    ch: ['tall', 'taller', 'tallest', 'more tall'],
+    why: ["as ... as = เท่ากัน\nตรงกลางใช้คำคุณศัพท์รูปธรรมดา → as tall as",
+          "taller ใช้คู่กับ than\nไม่ใช้ใน as ... as",
+          "tallest เป็นขั้นสุด\nไม่ใช้ใน as ... as",
+          "more tall ผิดรูป\nและ as ... as ใช้รูปธรรมดาเท่านั้น"] },
+  { id: 'form-12', skill: 'form', trap: 12, ep: null, lv: 'e',
+    q: "This box is too ___ for me to carry by myself.",
+    ch: ['heavy', 'heavier', 'heavily', 'heaviness'],
+    why: ["too + คำคุณศัพท์ + for/to = มากเกินไปจนทำไม่ได้\ntoo heavy = หนักเกินไป",
+          "too ใช้กับคำคุณศัพท์รูปธรรมดา\nไม่ใช้ขั้นกว่า",
+          "heavily เป็น adverb\ntoo ตรงนี้ขยายกล่อง (คำนาม) ต้องใช้คำคุณศัพท์",
+          "heaviness เป็นคำนาม\ntoo + คำนาม ใช้ไม่ได้"] },
+  { id: 'form-13', skill: 'form', trap: 12, ep: null, lv: 'm',
+    q: "Ploy is only seven, so she isn't ___ to ride the big roller coaster.",
+    ch: ['tall enough', 'enough tall', 'too much tall', 'tall too'],
+    why: ["enough วางหลังคำคุณศัพท์เสมอ\ntall enough = สูงพอ\nisn't tall enough = ยังสูงไม่พอ",
+          "enough tall ผิดตำแหน่ง\nกับคำคุณศัพท์ enough ต้องอยู่ข้างหลัง",
+          "too much ใช้กับคำนามนับไม่ได้\nไม่ใช้หน้าคำคุณศัพท์อย่าง tall",
+          "tall too แปลว่า สูงด้วย\nไม่ได้แปลว่า สูงพอ ประโยคไม่มีความหมาย"] },
+  { id: 'form-14', skill: 'form', trap: 12, ep: null, lv: 'h',
+    q: "The tea was ___ hot ___ drink, so I waited for a few minutes.",
+    ch: ['too / to', 'so / that', 'enough / to', 'too / for'],
+    why: ["too + คำคุณศัพท์ + to + V1 = มากเกินไปจนทำไม่ได้\ntoo hot to drink = ร้อนเกินไปจนดื่มไม่ได้",
+          "so ... that ต้องตามด้วยประโยคเต็ม\nเช่น so hot that I couldn't drink it\nthat drink ไม่ครบประโยค",
+          "enough ต้องอยู่หลังคำคุณศัพท์ (hot enough)\nและความหมายผิด ร้อนพอ ไม่ทำให้ต้องรอ",
+          "หลัง for ต้องเป็นคำนาม/V-ing\nfor drink ผิด ต้องเป็น to drink"] },
+  { id: 'form-15', skill: 'form', trap: 13, ep: null, lv: 'e',
+    q: "There is only ___ milk left in the fridge, so we need to buy some more.",
+    ch: ['a little', 'a few', 'many', 'few'],
+    why: ["milk นับไม่ได้ (uncountable)\nมีนิดหน่อย → a little",
+          "a few ใช้กับของนับได้\nเช่น a few eggs",
+          "many ใช้กับของนับได้พหูพจน์\nmany milk ผิด",
+          "few ใช้กับของนับได้\nใช้กับ milk ไม่ได้"] },
+  { id: 'form-16', skill: 'form', trap: 13, ep: null, lv: 'm',
+    q: "I already have ___ good friends at my new school, so I don't feel lonely.",
+    ch: ['a few', 'a little', 'few', 'much'],
+    why: ["friends นับได้ → ใช้ a few\na few = มีอยู่บ้าง (ความหมายบวก)\nเข้ากับ ไม่เหงา",
+          "a little ใช้กับของนับไม่ได้\nfriends นับได้",
+          "few (ไม่มี a) = แทบไม่มีเลย\nขัดกับ so I don't feel lonely",
+          "much ใช้กับของนับไม่ได้\nmuch friends ผิด"] },
+  { id: 'form-17', skill: 'form', trap: 13, ep: null, lv: 'h',
+    q: "For the picnic, we bought ___ apples but only ___ bread.",
+    ch: ['a lot of / a little', 'many / a few', 'much / a little', 'a few / many'],
+    why: ["ช่อง 1: apples นับได้ → a lot of ใช้ได้\nช่อง 2: bread นับไม่ได้ → a little\nตรวจทีละช่อง",
+          "ช่อง 1 ถูก แต่ช่อง 2 ผิด\nbread นับไม่ได้ ใช้ a few ไม่ได้",
+          "ช่อง 2 ถูก แต่ช่อง 1 ผิด\nmuch ใช้กับนับไม่ได้ apples นับได้",
+          "ช่อง 2 ผิด\nmany bread ผิด เพราะ bread นับไม่ได้"] },
+  { id: 'form-18', skill: 'form', trap: 14, ep: 'subject-verb-with-phrase', lv: 'e',
+    q: "There ___ three new students in our class this term.",
+    ch: ['are', 'is', 'be', 'has'],
+    why: ["There + be ดูคำนามข้างหลัง\nthree students = พหูพจน์ → There are",
+          "There is ใช้กับของชิ้นเดียว\nthree students มีหลายคน",
+          "be ต้องเปลี่ยนรูปเป็น is / are\nใช้รูป be เฉย ๆ ไม่ได้",
+          "There has ผิด\nบอกว่า มี ใช้ There is / There are"] },
+  { id: 'form-19', skill: 'form', trap: 14, ep: 'subject-verb-with-phrase', lv: 'm',
+    q: "One of my cousins ___ in Chiang Mai.",
+    ch: ['lives', 'live', 'are living', 'have lived'],
+    why: ["เอานิ้วปิด of my cousins ก่อน\nประธานจริงคือ One (คนเดียว) → กริยาเติม s\nOne ... lives",
+          "live ไม่เติม s ใช้กับพหูพจน์\nหลอกให้ดูที่ cousins",
+          "are ใช้กับพหูพจน์\nOne ต้องใช้ is",
+          "have ใช้กับพหูพจน์\nOne ต้องใช้ has"] },
+  { id: 'form-20', skill: 'form', trap: 14, ep: 'subject-verb-with-phrase', lv: 'e',
+    q: "Playing video games for too long ___ bad for your eyes.",
+    ch: ['is', 'are', 'were', 'be'],
+    why: ["ประธานคือ Playing video games (การเล่นเกม)\nV-ing เป็นประธาน = 1 เรื่อง → ใช้ is",
+          "are หลอกให้ดูที่ games\nแต่ประธานจริงคือ การเล่น (1 เรื่อง)",
+          "were ใช้กับพหูพจน์ และเป็นอดีต\nประโยคนี้บอกความจริงทั่วไป",
+          "be ต้องเปลี่ยนรูปตามประธาน\nใช้ be เฉย ๆ ไม่ได้"] },
+  { id: 'form-21', skill: 'form', trap: 14, ep: 'subject-verb-with-phrase', lv: 'h',
+    q: "Neither my brother nor my parents ___ spicy food.",
+    ch: ['like', 'likes', 'is liking', "doesn't like"],
+    why: ["neither ... nor ให้ดูคำที่อยู่ใกล้กริยาที่สุด\nmy parents = พหูพจน์ → like (ไม่เติม s)",
+          "likes ตามคำว่า brother ซึ่งอยู่ไกล\nต้องตามคำที่ใกล้กริยา คือ parents",
+          "like เป็นกริยาบอกความรู้สึก ไม่ใช้ -ing\nและ is ใช้กับเอกพจน์",
+          "neither ... nor มีความหมายปฏิเสธอยู่แล้ว\nใส่ doesn't ซ้ำ = ปฏิเสธซ้อน"] },
+  { id: 'form-22', skill: 'form', trap: 14, ep: 'subject-verb-with-phrase', lv: 'h',
+    q: "Mathematics ___ my favourite subject, and the news about the new maths club ___ exciting.",
+    ch: ['is / is', 'are / are', 'is / are', 'are / is'],
+    why: ["Mathematics ลงท้าย s แต่เป็นวิชาเดียว → is\nnews ลงท้าย s แต่นับไม่ได้ → is",
+          "ผิดทั้งสองช่อง\ns ท้ายคำไม่ได้แปลว่าเป็นพหูพจน์เสมอ",
+          "ช่อง 1 ถูก แต่ช่อง 2 ผิด\nnews ใช้ is เสมอ (และ about the new maths club เป็นแค่วลีขยาย)",
+          "ช่อง 2 ถูก แต่ช่อง 1 ผิด\nวิชา Mathematics ใช้ is"] },
+  { id: 'form-23', skill: 'form', trap: 16, ep: 'gerund-vs-infinitive-list', lv: 'e',
+    q: "My dad enjoys ___ in the garden on Sunday mornings.",
+    ch: ['working', 'to work', 'work', 'works'],
+    why: ["enjoy + V-ing เสมอ\nenjoys working",
+          "enjoy ไม่ตามด้วย to + V\nจำ: enjoy / avoid / finish + V-ing",
+          "หลัง enjoy ใช้ V1 เปล่า ๆ ไม่ได้",
+          "works เป็นกริยาของประธาน\nกริยาสองตัวติดกันแบบนี้ไม่ได้"] },
+  { id: 'form-24', skill: 'form', trap: 16, ep: 'gerund-vs-infinitive-list', lv: 'm',
+    q: "We have decided ___ our grandparents in Phuket during the school holidays.",
+    ch: ['to visit', 'visiting', 'visit', 'visited'],
+    why: ["decide + to + V1 เสมอ\ndecided to visit\nจำ: decide / hope / want + to",
+          "decide ไม่ตามด้วย V-ing",
+          "ขาด to\ndecide ต้องมี to ก่อนกริยา",
+          "visited เป็นกริยาช่อง 2\nกริยาสองตัวติดกันแบบนี้ไม่ได้"] },
+  { id: 'form-25', skill: 'form', trap: 16, ep: 'gerund-vs-infinitive-list', lv: 'h',
+    q: "I'm really looking forward to ___ you at the party, and I hope ___ there early.",
+    ch: ['seeing / to get', 'see / to get', 'seeing / getting', 'see / getting'],
+    why: ["ช่อง 1: look forward to + V-ing (to ตรงนี้ไม่ใช่ to + V1)\nช่อง 2: hope + to + V1\nseeing / to get",
+          "ช่อง 2 ถูก แต่ช่อง 1 ผิด\nlook forward to ต้องตามด้วย V-ing",
+          "ช่อง 1 ถูก แต่ช่อง 2 ผิด\nhope ตามด้วย to + V1 ไม่ใช่ V-ing",
+          "ผิดทั้งสองช่อง\nสลับกฎกันพอดี"] },
+  { id: 'form-26', skill: 'form', trap: 16, ep: 'gerund-vs-infinitive-list', lv: 'm',
+    q: "Please avoid ___ your phone while you are crossing the road.",
+    ch: ['using', 'to use', 'use', 'used'],
+    why: ["avoid + V-ing เสมอ\navoid using = หลีกเลี่ยงการใช้",
+          "avoid ไม่ตามด้วย to + V",
+          "หลัง avoid ใช้ V1 เปล่า ๆ ไม่ได้",
+          "used เป็นกริยาช่อง 2/3\nหลัง avoid ต้องเป็น V-ing"] },
+  { id: 'form-27', skill: 'form', trap: 24, ep: null, lv: 'm',
+    q: "On weekends, I like reading, swimming and ___ my bike.",
+    ch: ['riding', 'ride', 'to ride', 'rode'],
+    why: ["ของในรายการต้องเป็นรูปเดียวกัน (parallel)\nreading, swimming → riding",
+          "ride เป็น V1\nไม่เข้าชุดกับ reading, swimming",
+          "to ride ไม่เข้าชุดกับ -ing สองตัวแรก\nรายการต้องเหมือนกันทุกตัว",
+          "rode เป็นอดีต\nไม่เข้าชุด และประโยคพูดถึงนิสัย"] },
+  { id: 'form-28', skill: 'form', trap: 24, ep: null, lv: 'h',
+    q: "Our teacher asked us to read the story, answer the questions and ___ a short summary.",
+    ch: ['write', 'writing', 'wrote', 'writes'],
+    why: ["asked us to + read, answer, write\nทุกตัวในรายการเป็น V1 เหมือนกัน → write",
+          "writing ไม่เข้าชุดกับ read, answer",
+          "wrote เป็นอดีต ไม่เข้าชุด\nหลัง to ต้องเป็น V1",
+          "writes เติม s ไม่เข้าชุด\nหลัง to ต้องเป็น V1"] },
+];
+
+// stage: small
+POOLS['small'] = [
+  { id: 'small-01', skill: 'small', trap: 18, ep: null, lv: 'e',
+    q: "The girl ___ won the singing contest is my neighbour.",
+    ch: ['who', 'which', 'whose', 'where'],
+    why: ["คำข้างหน้าคือ The girl (คน)\nและตามด้วยกริยา won → ใช้ who",
+          "which ใช้กับสัตว์หรือสิ่งของ\nไม่ใช้กับคน",
+          "whose = ของใคร ต้องตามด้วยคำนาม\nเช่น whose mother",
+          "where ใช้กับสถานที่"] },
+  { id: 'small-02', skill: 'small', trap: 18, ep: null, lv: 'm',
+    q: "This is the restaurant ___ we had dinner on my birthday.",
+    ch: ['where', 'which', 'who', 'whose'],
+    why: ["restaurant เป็นสถานที่\nหลังช่องว่างเป็นประโยคครบแล้ว (we had dinner)\n= กินข้าวที่นั่น → where",
+          "which ต้องเป็นประธานหรือกรรมของประโยคหลัง\nแต่ we had dinner ครบแล้ว ไม่มีที่ว่างให้ which",
+          "who ใช้กับคน",
+          "whose = ของใคร ต้องตามด้วยคำนามทันที"] },
+  { id: 'small-03', skill: 'small', trap: 18, ep: null, lv: 'm',
+    q: "I have a friend ___ father is a pilot.",
+    ch: ['whose', 'who', "who's", 'which'],
+    why: ["พ่อ ของ เพื่อน → บอกความเป็นเจ้าของ\nwhose + คำนาม → whose father",
+          "who father ผิด\nwho ไม่ได้แปลว่า ของใคร",
+          "who's = who is\nwho is father is ... ผิด",
+          "which ใช้กับสิ่งของ\nและไม่ได้แปลว่า ของ"] },
+  { id: 'small-04', skill: 'small', trap: 18, ep: null, lv: 'm',
+    q: "The woman to ___ I gave my old books is a librarian.",
+    ch: ['whom', 'which', 'whose', 'where'],
+    why: ["The woman เป็นคน และมีคำบุพบท to อยู่ข้างหน้า\nหลังคำบุพบท ใช้ whom กับคน → to whom",
+          "which ใช้กับสัตว์หรือสิ่งของ\nThe woman เป็นคน",
+          "whose = ของใคร ต้องตามด้วยคำนาม\nwhose I gave ผิด",
+          "where ใช้กับสถานที่\nและ to where ใช้แบบนี้ไม่ได้"] },
+  { id: 'small-05', skill: 'small', trap: 19, ep: null, lv: 'e',
+    q: "The bird built ___ nest in the tree outside my window.",
+    ch: ['its', "it's", 'it', "its'"],
+    why: ["บอกความเป็นเจ้าของ = รังของมัน\nits (ไม่มี ') = ของมัน",
+          "it's = it is\nThe bird built it is nest ผิด",
+          "it เป็นประธาน/กรรม\nไม่ได้แปลว่า ของมัน",
+          "its' (มี ' ข้างหลัง) ไม่มีในภาษาอังกฤษ\nของมัน เขียนว่า its เฉย ๆ"] },
+  { id: 'small-06', skill: 'small', trap: 19, ep: null, lv: 'm',
+    q: "Tom, be careful with that knife, or you might cut ___.",
+    ch: ['yourself', 'you', 'your', 'yourselves'],
+    why: ["คนทำ กับคนโดน เป็นคนเดียวกัน (Tom)\n→ ใช้ reflexive pronoun: yourself",
+          "cut you = ตัดคนอื่นที่ชื่อ you\nแต่ Tom ทำตัวเอง ต้องใช้ yourself",
+          "your = ของคุณ ต้องมีคำนามตาม\nเช่น your finger",
+          "yourselves ใช้กับหลายคน\nTom มีคนเดียว"] },
+  { id: 'small-07', skill: 'small', trap: 19, ep: null, lv: 'h',
+    q: "The mangoes from our garden are sweeter than ___ from the market.",
+    ch: ['those', 'that', 'them', 'it'],
+    why: ["ใช้คำแทน mangoes เพื่อไม่พูดซ้ำ\nmangoes เป็นพหูพจน์ → those\n= มะม่วงที่มาจากตลาด",
+          "that ใช้แทนของเอกพจน์\nmangoes มีหลายลูก",
+          "them เป็นกรรม ใช้ตามด้วย from the market แบบนี้ไม่ได้",
+          "it ใช้แทนของชิ้นเดียว\nmangoes เป็นพหูพจน์"] },
+  { id: 'small-08', skill: 'small', trap: 19, ep: null, lv: 'e',
+    q: "I have two pencils. One is red, and ___ is blue.",
+    ch: ['the other', 'another', 'other', 'others'],
+    why: ["มีแค่ 2 แท่ง พูดถึงแท่งแรกแล้ว\nแท่งที่เหลือแท่งเดียว → the other",
+          "another = อีกอันหนึ่ง (ยังมีอีกหลายอัน)\nแต่ตรงนี้มีแค่ 2 แท่ง",
+          "other ต้องมีคำนามตาม\nเช่น other pencils",
+          "others เป็นพหูพจน์\nเหลือแท่งเดียว และกริยาเป็น is"] },
+  { id: 'small-09', skill: 'small', trap: 20, ep: null, lv: 'e',
+    q: "I saw ___ elephant at the zoo last Saturday.",
+    ch: ['an', 'a', '–', 'many'],
+    why: ["elephant ขึ้นต้นด้วยเสียงสระ (เอ)\nเห็นตัวเดียว → an elephant",
+          "a ใช้กับคำที่ขึ้นต้นด้วยเสียงพยัญชนะ",
+          "elephant เป็นคำนามนับได้เอกพจน์\nต้องมีคำนำหน้า (a / an / the)",
+          "many ต้องตามด้วยพหูพจน์ (elephants)"] },
+  { id: 'small-10', skill: 'small', trap: 20, ep: null, lv: 'h',
+    q: "My uncle is ___ honest man, and he teaches at ___ university in Bangkok.",
+    ch: ['an / a', 'a / an', 'an / an', 'a / a'],
+    why: ["ดูที่ เสียง ไม่ใช่ตัวอักษร\nhonest ไม่ออกเสียง h → ขึ้นด้วยสระ → an\nuniversity ออกเสียง ยู (เหมือน y) → a",
+          "สลับกันทั้งสองช่อง",
+          "ช่อง 1 ถูก แต่ช่อง 2 ผิด\nuniversity ขึ้นต้นด้วยเสียง ยู ใช้ a",
+          "ช่อง 2 ถูก แต่ช่อง 1 ผิด\nhonest ขึ้นต้นด้วยเสียงสระ ใช้ an"] },
+  { id: 'small-11', skill: 'small', trap: 20, ep: null, lv: 'm',
+    q: "___ sun rises in ___ east every morning.",
+    ch: ['The / the', 'A / the', 'The / an', '– / the'],
+    why: ["ของที่มีอันเดียวในโลก ใช้ the\nthe sun · ทิศ ใช้ the → in the east",
+          "ดวงอาทิตย์มีดวงเดียว\nไม่ใช้ a",
+          "ทิศ ใช้ the ไม่ใช้ an\nin the east",
+          "sun ต้องมี the นำหน้า\nไม่เว้นว่างได้"] },
+  { id: 'small-12', skill: 'small', trap: 20, ep: null, lv: 'm',
+    q: "At our school, we usually have ___ lunch at twelve o'clock.",
+    ch: ['–', 'a', 'an', 'the'],
+    why: ["มื้ออาหาร (breakfast / lunch / dinner)\nพูดถึงทั่วไป ไม่ใส่ article\nhave lunch",
+          "have a lunch ไม่ใช้\nมื้ออาหารทั่วไปไม่ใส่ a",
+          "an ใช้กับเสียงสระ\nและมื้ออาหารไม่ใส่ article",
+          "the lunch ใช้เมื่อเจาะจงมื้อใดมื้อหนึ่ง\nประโยคนี้พูดถึงนิสัยทุกวัน"] },
+  { id: 'small-13', skill: 'small', trap: 21, ep: null, lv: 'e',
+    q: "My birthday is ___ 5 June.",
+    ch: ['on', 'in', 'at', 'since'],
+    why: ["วันที่ (date) ใช้ on\non 5 June",
+          "in ใช้กับเดือน/ปี เฉย ๆ\nเช่น in June · มีวันที่แล้วต้องใช้ on",
+          "at ใช้กับเวลา\nเช่น at 7 o'clock",
+          "since = ตั้งแต่ ใช้กับ have + V3"] },
+  { id: 'small-14', skill: 'small', trap: 21, ep: null, lv: 'e',
+    q: "We have lived in this house ___ 2020.",
+    ch: ['since', 'for', 'in', 'from'],
+    why: ["have lived + จุดเริ่มต้นของเวลา\n2020 เป็นจุดเริ่ม → since",
+          "for ใช้กับ ระยะเวลา\nเช่น for six years",
+          "have lived ... in 2020 ผิด\nhave + V3 ต้องใช้ since / for",
+          "from ต้องมีคู่ to\nกับ have + V3 ให้ใช้ since"] },
+  { id: 'small-15', skill: 'small', trap: 21, ep: null, lv: 'm',
+    q: "Let's meet ___ the bus stop ___ Sunday morning.",
+    ch: ['at / on', 'in / on', 'at / in', 'on / at'],
+    why: ["จุดนัดเจอ (bus stop) ใช้ at\nวัน + ช่วงเวลา (Sunday morning) ใช้ on",
+          "ช่อง 1 ผิด\nin the bus stop = อยู่ข้างใน ป้ายรถเมล์ไม่มีข้างใน",
+          "ช่อง 2 ผิด\nมีชื่อวัน ต้องใช้ on (in the morning ใช้ได้เมื่อไม่มีชื่อวัน)",
+          "ผิดทั้งสองช่อง\nสลับกันพอดี"] },
+  { id: 'small-16', skill: 'small', trap: 22, ep: null, lv: 'm',
+    q: "___ it was raining heavily, the football match continued.",
+    ch: ['Although', 'Despite', 'Because', 'However'],
+    why: ["สองเรื่องขัดกัน (ฝนตก แต่ ยังแข่ง)\nตามด้วยประโยคเต็ม (it was raining) → Although",
+          "Despite ต้องตามด้วยคำนาม/V-ing\nเช่น Despite the rain",
+          "Because = เพราะ\nฝนตก ไม่ใช่เหตุที่ทำให้แข่งต่อ",
+          "However ใช้ขึ้นต้นประโยคที่สอง\nเชื่อมสองส่วนในประโยคเดียวแบบนี้ไม่ได้"] },
+  { id: 'small-17', skill: 'small', trap: 22, ep: null, lv: 'm',
+    q: "___ her bad cold, Mai still went to school.",
+    ch: ['Despite', 'Although', 'Because', 'However'],
+    why: ["สองเรื่องขัดกัน (เป็นหวัด แต่ ยังไปโรงเรียน)\nตามด้วยคำนาม (her bad cold) → Despite",
+          "Although ต้องตามด้วยประโยคเต็ม\nเช่น Although she had a bad cold",
+          "Because ต้องตามด้วยประโยคเต็ม\nและ เป็นหวัด ไม่ใช่เหตุที่ทำให้ไปโรงเรียน",
+          "However ใช้เชื่อมประโยคใหม่\nตามด้วยคำนามแบบนี้ไม่ได้"] },
+  { id: 'small-18', skill: 'small', trap: 22, ep: null, lv: 'e',
+    q: "Hurry up, ___ you will miss the school bus.",
+    ch: ['or else', 'unless', 'although', 'so that'],
+    why: ["เตือน: รีบหน่อย ไม่อย่างนั้นจะตกรถ\nor else = ไม่อย่างนั้น",
+          "unless = ถ้าไม่\nรีบหน่อย ถ้าไม่ตกรถ ไม่มีความหมาย",
+          "although = ถึงแม้ว่า\nไม่มีความขัดแย้งตรงนี้",
+          "so that = เพื่อที่จะ\nเท่ากับบอกให้รีบเพื่อจะตกรถ ผิดความหมาย"] },
+  { id: 'small-19', skill: 'small', trap: 22, ep: null, lv: 'h',
+    q: "Nok not only sings well ___ plays the guitar beautifully.",
+    ch: ['but also', 'and also', 'so also', 'or also'],
+    why: ["not only ... but also เป็นคู่ที่ต้องมาด้วยกัน\n= ไม่เพียงแต่ ... แต่ยัง ...",
+          "and also ไม่ใช่คู่ของ not only\nต้องใช้ but also",
+          "so also ไม่ใช่คู่ของ not only",
+          "or also ไม่ใช่คู่ของ not only\nor = หรือ"] },
+  { id: 'small-20', skill: 'small', trap: 22, ep: null, lv: 'h',
+    q: "This bike is cheap. ___, it is very light, so I can carry it easily.",
+    ch: ['Moreover', 'However', 'Although', 'Because'],
+    why: ["ถูก และ เบา = ข้อดีทั้งคู่\nเพิ่มข้อดีอีกข้อ → Moreover (ยิ่งไปกว่านั้น)",
+          "However ใช้เมื่อเรื่องขัดกัน\nถูก กับ เบา ไม่ได้ขัดกัน",
+          "Although ต้องเชื่อมสองส่วนในประโยคเดียว\nและไม่ตามด้วยจุลภาคแบบนี้",
+          "Because = เพราะ\nไม่ได้บอกเหตุผล และไม่ตามด้วยจุลภาคแบบนี้"] },
+  { id: 'small-21', skill: 'small', trap: 23, ep: null, lv: 'e',
+    q: "Choose the sentence with the correct word order.\nDad ___ coffee in the morning.",
+    ch: ['usually drinks', 'drinks usually', 'usually is drinking', 'is usually drink'],
+    why: ["คำบอกความถี่ (usually, always, often)\nวางหน้ากริยาหลัก → usually drinks",
+          "usually ไม่วางหลังกริยาหลัก\ndrinks usually coffee ผิดตำแหน่ง",
+          "นิสัย ใช้ present simple\nและ usually ต้องอยู่หลัง is ถ้ามี is",
+          "is + drink ผิดรูป\nต้องเป็น usually drinks"] },
+  { id: 'small-22', skill: 'small', trap: 23, ep: null, lv: 'm',
+    q: "Which sentence is correct?",
+    ch: ['My sister is always late for school.', 'My sister always late is for school.', 'My sister is late always for school.', 'Always is my sister late for school.'],
+    why: ["คำบอกความถี่ วางหลัง is / am / are\nis always late",
+          "is ต้องอยู่หลังประธานทันที\nlate is ผิดตำแหน่ง",
+          "always ไม่วางหลังคำคุณศัพท์ late",
+          "ประโยคบอกเล่า ห้ามเอา is ขึ้นก่อนประธาน\nแบบนี้คือรูปคำถาม"] },
+  { id: 'small-23', skill: 'small', trap: 23, ep: null, lv: 'h',
+    q: "For Mother's Day, she bought ___ for her mum.",
+    ch: ['a beautiful red silk scarf', 'a red beautiful silk scarf', 'a silk red beautiful scarf', 'a beautiful silk red scarf'],
+    why: ["ลำดับคำคุณศัพท์: ความคิดเห็น → สี → วัสดุ → คำนาม\nbeautiful (สวย) → red (สี) → silk (ผ้าไหม) → scarf",
+          "สี (red) มาก่อนความคิดเห็น (beautiful) ไม่ได้",
+          "วัสดุ (silk) ต้องอยู่ติดคำนามที่สุด\nไม่ใช่อยู่หน้าสุด",
+          "silk ต้องอยู่หลัง red\nวัสดุอยู่ติดคำนามเสมอ"] },
+  { id: 'small-24', skill: 'small', trap: 26, ep: null, lv: 'e',
+    q: "I'm hungry. I want ___ to eat.",
+    ch: ['something', 'someone', 'nothing', 'anyone'],
+    why: ["อยากได้ของกิน = สิ่งของ\nประโยคบอกเล่า → something",
+          "someone = ใครบางคน (คน)\nกินคนไม่ได้!",
+          "nothing = ไม่มีอะไร\nหิวแต่ไม่อยากกินอะไร ขัดกัน",
+          "anyone = ใครก็ได้ (คน)\nไม่ใช่สิ่งของ"] },
+  { id: 'small-25', skill: 'small', trap: 26, ep: null, lv: 'm',
+    q: "I knocked on the door, but ___ answered. The house was empty.",
+    ch: ['no one', 'anyone', 'someone', 'everyone'],
+    why: ["บ้านว่าง = ไม่มีใครตอบ\nno one = ไม่มีใคร",
+          "anyone ใช้ในประโยคปฏิเสธ/คำถาม\nanswered เป็นบอกเล่า จึงใช้ไม่ได้",
+          "someone answered = มีคนตอบ\nขัดกับ บ้านว่าง",
+          "everyone answered = ทุกคนตอบ\nขัดกับ บ้านว่าง"] },
+  { id: 'small-26', skill: 'small', trap: 26, ep: null, lv: 'h',
+    q: "I looked everywhere, but I couldn't find my keys ___.",
+    ch: ['anywhere', 'somewhere', 'nowhere', 'no place'],
+    why: ["มี couldn't (ปฏิเสธ) อยู่แล้ว\nประโยคปฏิเสธใช้ any- → anywhere",
+          "somewhere ใช้ในประโยคบอกเล่า\nประโยคนี้เป็นปฏิเสธ",
+          "couldn't + nowhere = ปฏิเสธซ้อน\nภาษาอังกฤษห้ามปฏิเสธสองครั้ง",
+          "couldn't + no place = ปฏิเสธซ้อน\nห้ามปฏิเสธสองครั้ง"] },
+  { id: 'small-27', skill: 'small', trap: 29, ep: null, lv: 'm',
+    q: "I don't have ___ money left after shopping.",
+    ch: ['any', 'no', 'some', 'none'],
+    why: ["มี don't (ปฏิเสธ) แล้ว\nปฏิเสธ + any → don't have any",
+          "don't + no = ปฏิเสธซ้อน\nห้ามใช้",
+          "some ใช้ในประโยคบอกเล่า\nประโยคปฏิเสธใช้ any",
+          "none ใช้แทนคำนาม ไม่วางหน้าคำนาม\nและ don't + none = ปฏิเสธซ้อน"] },
+  { id: 'small-28', skill: 'small', trap: 29, ep: null, lv: 'h',
+    q: "My uncle used to smoke, but he doesn't smoke ___.",
+    ch: ['anymore', 'no more', 'not anymore', 'no longer'],
+    why: ["doesn't (ปฏิเสธ) + anymore = ไม่ ... อีกแล้ว",
+          "doesn't + no more = ปฏิเสธซ้อน",
+          "doesn't + not = ปฏิเสธสองครั้ง",
+          "no longer ใช้แทน doesn't ได้ (he no longer smokes)\nแต่ doesn't + no longer = ปฏิเสธซ้อน"] },
+];
+
+// stage: errid
+POOLS['errid'] = [
+  { id: 'errid-01', skill: 'errid', trap: 2, ep: null, lv: 'm',
+    q: "Find the mistake.\nWe {1:moved} to Khon Kaen {2:in} 2022, and we {3:live} there ever since, {4:enjoying} the local food.",
+    ch: ['3', '1', '2', '4'],
+    why: ["3 ผิด: ever since = ตั้งแต่ตอนนั้นจนถึงตอนนี้\nต้องใช้ have + V3 → have lived",
+          "1 ถูก: in 2022 = อดีตที่จบแล้ว ใช้ช่อง 2 (moved)",
+          "2 ถูก: ปี ใช้ in → in 2022",
+          "4 ถูก: , enjoying ... = และก็ได้กิน ... ใช้ V-ing ต่อท้ายได้"] },
+  { id: 'errid-02', skill: 'errid', trap: 14, ep: 'subject-verb-with-phrase', lv: 'm',
+    q: "Find the mistake.\nEvery child in our class {1:has} a locker, but there {2:is} not enough lockers {3:for} the new students {4:who} joined this term.",
+    ch: ['2', '1', '3', '4'],
+    why: ["2 ผิด: There + be ดูคำนามข้างหลัง\nlockers เป็นพหูพจน์ → there are",
+          "1 ถูก: Every child = ทีละคน (เอกพจน์) → has",
+          "3 ถูก: lockers for the new students = ล็อกเกอร์สำหรับนักเรียนใหม่",
+          "4 ถูก: students เป็นคน → who"] },
+  { id: 'errid-03', skill: 'errid', trap: 16, ep: 'gerund-vs-infinitive-list', lv: 'e',
+    q: "Find the mistake.\nMy brother {1:showed} us the model plane {2:that} he {3:built}, but he hasn't finished {4:to paint} it yet.",
+    ch: ['4', '1', '2', '3'],
+    why: ["4 ผิด: finish + V-ing เสมอ\n→ hasn't finished painting",
+          "1 ถูก: เล่าเรื่องอดีต ใช้ช่อง 2 (showed)",
+          "2 ถูก: the model plane (สิ่งของ) ใช้ that ได้",
+          "3 ถูก: สร้างเสร็จในอดีต ใช้ช่อง 2 (built)"] },
+  { id: 'errid-04', skill: 'errid', trap: 10, ep: 'adjective-for-adverb', lv: 'm',
+    q: "Find the mistake.\nThe new robot {1:moves} {2:surprising} {3:quickly} and can {4:easily} climb the stairs.",
+    ch: ['2', '1', '3', '4'],
+    why: ["2 ผิด: คำนี้ขยาย quickly (ไม่ใช่คำนาม)\nต้องเป็น adverb → surprisingly quickly",
+          "1 ถูก: The robot (ตัวเดียว) + ความจริงทั่วไป → moves",
+          "3 ถูก: quickly ขยายกริยา moves (เคลื่อนที่อย่างไร)",
+          "4 ถูก: easily ขยายกริยา climb (ปีนอย่างไร)"] },
+  { id: 'errid-05', skill: 'errid', trap: 11, ep: null, lv: 'e',
+    q: "Find the mistake.\nBecause {1:more} parents came to help, this year's school fair was {2:much} {3:more better} than {4:last year's}.",
+    ch: ['3', '1', '2', '4'],
+    why: ["3 ผิด: better เป็นขั้นกว่าอยู่แล้ว\nห้ามใส่ more ซ้ำ → much better",
+          "1 ถูก: more parents = ผู้ปกครองมากกว่าเดิม",
+          "2 ถูก: much ใช้เน้นขั้นกว่า (ดีกว่ามาก)",
+          "4 ถูก: last year's = งานของปีที่แล้ว เทียบงานกับงาน"] },
+  { id: 'errid-06', skill: 'errid', trap: 21, ep: null, lv: 'e',
+    q: "Find the mistake.\nWe {1:need to} pack our bags {2:by} Friday because the science camp {3:will start} {4:in} 12 December.",
+    ch: ['4', '1', '2', '3'],
+    why: ["4 ผิด: มีวันที่ (12 December) ต้องใช้ on\n→ on 12 December",
+          "1 ถูก: need to + V1 → need to pack",
+          "2 ถูก: by Friday = ภายในวันศุกร์ (ไม่เกินวันศุกร์)",
+          "3 ถูก: ค่ายเริ่มในอนาคต ใช้ will start ได้"] },
+  { id: 'errid-07', skill: 'errid', trap: 20, ep: null, lv: 'e',
+    q: "Find the mistake.\nShe wants to become {1:an} engineer and {2:design} {3:a} bridges for {4:the} city where she grew up.",
+    ch: ['3', '1', '2', '4'],
+    why: ["3 ผิด: bridges เป็นพหูพจน์ ใช้ a ไม่ได้\n→ ตัด a ออก: design bridges",
+          "1 ถูก: engineer ขึ้นต้นด้วยเสียงสระ → an",
+          "2 ถูก: wants to become ... and (to) design ใช้ V1 เข้าชุดกับ become",
+          "4 ถูก: the city where she grew up = เมืองที่เจาะจงแล้ว ใช้ the"] },
+  { id: 'errid-08', skill: 'errid', trap: 19, ep: null, lv: 'm',
+    q: "Find the mistake.\nThe school updated {1:it's} website, and parents say the new pages {2:are} much {3:easier} to {4:use}.",
+    ch: ['1', '2', '3', '4'],
+    why: ["1 ผิด: it's = it is\nบอกว่า เว็บไซต์ของโรงเรียน ต้องใช้ its (ไม่มี ')",
+          "2 ถูก: the new pages เป็นพหูพจน์ → are",
+          "3 ถูก: much easier = ง่ายกว่ามาก (much + ขั้นกว่า)",
+          "4 ถูก: easier to + V1 → to use"] },
+  { id: 'errid-09', skill: 'errid', trap: 24, ep: null, lv: 'm',
+    q: "Find the mistake.\nDuring the holidays, I like {1:reading} comics, {2:playing} badminton, and {3:to bake} cookies {4:with} my mum.",
+    ch: ['3', '1', '2', '4'],
+    why: ["3 ผิด: ของในรายการต้องเป็นรูปเดียวกัน\nreading, playing → baking",
+          "1 ถูก: like + V-ing ใช้ได้ และเป็นตัวตั้งของรายการ",
+          "2 ถูก: playing เข้าชุดกับ reading",
+          "4 ถูก: with my mum = กับแม่"] },
+  { id: 'errid-10', skill: 'errid', trap: 17, ep: null, lv: 'e',
+    q: "Find the mistake.\nWhen you ride a bike {1:on} busy roads, you {2:should} {3:to wear} a helmet {4:for} safety.",
+    ch: ['3', '1', '2', '4'],
+    why: ["3 ผิด: หลัง should / can / must ใช้ V1 เปล่า ๆ\nห้ามมี to → should wear",
+          "1 ถูก: on busy roads = บนถนน",
+          "2 ถูก: should = ควร ใช้ให้คำแนะนำ",
+          "4 ถูก: for safety = เพื่อความปลอดภัย"] },
+  { id: 'errid-11', skill: 'errid', trap: 8, ep: 'passive-recognition', lv: 'h',
+    q: "Find the mistake.\nThe new library {1:was built} last year, and now it {2:uses} by hundreds of students {3:who} come {4:to study} there every day.",
+    ch: ['2', '1', '3', '4'],
+    why: ["2 ผิด: ห้องสมุดใช้อะไรเองไม่ได้ มันถูกใช้\nมีคำว่า by → ต้องเป็น passive: is used",
+          "1 ถูก: ห้องสมุดถูกสร้าง + last year → was built",
+          "3 ถูก: students เป็นคน → who",
+          "4 ถูก: come to study = มาเพื่อเรียน"] },
+  { id: 'errid-12', skill: 'errid', trap: 3, ep: 'short-interrupts-long', lv: 'm',
+    q: "Find the mistake.\nWhile I {1:was walking} home, it {2:started} {3:to rain}, so I {4:run} into a shop.",
+    ch: ['4', '1', '2', '3'],
+    why: ["4 ผิด: เรื่องทั้งหมดเกิดในอดีต\nต้องใช้ช่อง 2 → ran",
+          "1 ถูก: While + เรื่องที่กำลังทำอยู่ (ยาว) → was walking",
+          "2 ถูก: ฝนเริ่มตกแทรกเข้ามา (สั้น) → started",
+          "3 ถูก: start to + V1 ใช้ได้ (start raining ก็ได้)"] },
+  { id: 'errid-13', skill: 'errid', trap: 14, ep: 'subject-verb-with-phrase', lv: 'h',
+    q: "Find the mistake.\nMathematics {1:are} the subject {2:that} my cousin {3:likes} {4:best}.",
+    ch: ['1', '2', '3', '4'],
+    why: ["1 ผิด: Mathematics เป็นชื่อวิชาเดียว ถึงจะลงท้าย s\n→ Mathematics is",
+          "2 ถูก: the subject (สิ่งของ) ใช้ that ได้",
+          "3 ถูก: my cousin (คนเดียว) → likes",
+          "4 ถูก: like ... best = ชอบที่สุด"] },
+  { id: 'errid-14', skill: 'errid', trap: 11, ep: null, lv: 'h',
+    q: "Find the mistake.\nMount Fuji is one of the {1:most famous} {2:mountain} in the world, and many climbers {3:dream} of {4:reaching} its top.",
+    ch: ['2', '1', '3', '4'],
+    why: ["2 ผิด: one of the + ขั้นสุด + พหูพจน์\n→ mountains",
+          "1 ถูก: famous ยาว ใช้ most → the most famous ขั้นสุด ถูกแล้ว",
+          "3 ถูก: many climbers (พหูพจน์) → dream",
+          "4 ถูก: dream of + V-ing (หลังคำบุพบท of ใช้ V-ing)"] },
+  { id: 'errid-15', skill: 'errid', trap: 12, ep: null, lv: 'm',
+    q: "Find the mistake.\nThe water in the pool was {1:enough warm} {2:for} the children {3:to swim} in, so they {4:stayed} all afternoon.",
+    ch: ['1', '2', '3', '4'],
+    why: ["1 ผิด: enough วางหลังคำคุณศัพท์\n→ warm enough",
+          "2 ถูก: enough for + คน = พอสำหรับใคร",
+          "3 ถูก: enough ... to + V1 → to swim",
+          "4 ถูก: เล่าอดีต ใช้ช่อง 2 (stayed)"] },
+  { id: 'errid-16', skill: 'errid', trap: 13, ep: null, lv: 'm',
+    q: "Find the mistake.\nBecause the weather {1:was} cloudy and {2:windy}, there {3:were} only {4:a little} people at the beach.",
+    ch: ['4', '1', '2', '3'],
+    why: ["4 ผิด: people นับได้\nต้องใช้ a few → only a few people",
+          "1 ถูก: the weather (นับไม่ได้) + อดีต → was",
+          "2 ถูก: cloudy and windy คำคุณศัพท์คู่กัน",
+          "3 ถูก: people เป็นพหูพจน์ + อดีต → there were"] },
+  { id: 'errid-17', skill: 'errid', trap: 9, ep: null, lv: 'e',
+    q: "Find the mistake.\nThe football match was so {1:excited} that nobody {2:wanted} to {3:leave} before {4:the end}.",
+    ch: ['1', '2', '3', '4'],
+    why: ["1 ผิด: การแข่งขันทำให้คนตื่นเต้น\nสิ่งที่ทำให้รู้สึก ใช้ -ing → exciting",
+          "2 ถูก: nobody + อดีต → wanted",
+          "3 ถูก: want to + V1 → to leave",
+          "4 ถูก: before the end = ก่อนจบ"] },
+  { id: 'errid-18', skill: 'errid', trap: 5, ep: 'conditional-pairing', lv: 'm',
+    q: "Find the mistake.\nIf it {1:will rain} on Saturday, we {2:will stay} at home and {3:watch} a movie {4:together}.",
+    ch: ['1', '2', '3', '4'],
+    why: ["1 ผิด: หลัง If ห้ามใช้ will\n→ If it rains",
+          "2 ถูก: ประโยคผล ใช้ will + V1 ได้",
+          "3 ถูก: will stay ... and (will) watch ใช้ V1",
+          "4 ถูก: together = ด้วยกัน"] },
+  { id: 'errid-19', skill: 'errid', trap: 21, ep: 'not-incorrect-scan', lv: 'm',
+    q: "Which sentence is INCORRECT?",
+    ch: ['She has lived in Phuket since three years.', 'He has worked here for ten years.', 'They have known each other since 2019.', 'We have been good friends for a long time.'],
+    why: ["ข้อนี้ผิด → คือคำตอบ\nthree years เป็นระยะเวลา ต้องใช้ for\n→ for three years",
+          "ถูก: ten years = ระยะเวลา → for",
+          "ถูก: 2019 = จุดเริ่ม → since",
+          "ถูก: a long time = ระยะเวลา → for"] },
+  { id: 'errid-20', skill: 'errid', trap: 16, ep: 'not-incorrect-scan', lv: 'e',
+    q: "Which sentence is INCORRECT?",
+    ch: ['I am looking forward to meet my pen pal.', 'She decided to join the art club.', 'We enjoy playing chess after lunch.', 'He hopes to visit Japan next year.'],
+    why: ["ข้อนี้ผิด → คือคำตอบ\nlook forward to + V-ing\n→ looking forward to meeting",
+          "ถูก: decide + to + V1",
+          "ถูก: enjoy + V-ing",
+          "ถูก: hope + to + V1"] },
+  { id: 'errid-21', skill: 'errid', trap: 14, ep: 'not-incorrect-scan', lv: 'h',
+    q: "Which sentence is INCORRECT?",
+    ch: ['One of my friends have a pet snake.', 'Each of the boys has a new bag.', 'There are two cats under the car.', 'Reading comics is fun for me.'],
+    why: ["ข้อนี้ผิด → คือคำตอบ\nปิด of my friends ก่อน ประธานคือ One\n→ One of my friends has",
+          "ถูก: ประธานคือ Each → has",
+          "ถูก: two cats = พหูพจน์ → There are",
+          "ถูก: V-ing เป็นประธาน = 1 เรื่อง → is"] },
+  { id: 'errid-22', skill: 'errid', trap: 29, ep: 'not-incorrect-scan', lv: 'e',
+    q: "Which sentence is INCORRECT?",
+    ch: ["I didn't eat nothing for breakfast.", "She doesn't live here anymore.", 'Nobody knows the answer.', "I can't find my pen anywhere."],
+    why: ["ข้อนี้ผิด → คือคำตอบ\ndidn't + nothing = ปฏิเสธซ้อน\n→ I didn't eat anything",
+          "ถูก: doesn't + anymore = ไม่ ... อีกแล้ว",
+          "ถูก: Nobody (ปฏิเสธครั้งเดียว) + knows",
+          "ถูก: can't + anywhere"] },
+];
+
+// stage: mech
+POOLS['mech'] = [
+  { id: "mech-01", skill: "mech", trap: 30, ep: null, lv: "e",
+    q: "Which question should be read with a different intonation from the other three?",
+    ch: ["Do you like mangoes?", "Where do you live?", "What is your name?", "Who is your teacher?"],
+    why: ["ขึ้นต้นด้วย Do = คำถาม Yes/No\nคำถาม Yes/No ลงท้ายเสียงสูงขึ้น ↑\nอีก 3 ข้อเป็นคำถาม Wh- ลงเสียงต่ำ ↓",
+          "ขึ้นต้นด้วย Where = คำถาม Wh- → เสียงลง ↓",
+          "ขึ้นต้นด้วย What = คำถาม Wh- → เสียงลง ↓",
+          "ขึ้นต้นด้วย Who = คำถาม Wh- → เสียงลง ↓"] },
+
+  { id: "mech-02", skill: "mech", trap: 30, ep: null, lv: "e",
+    q: "Which question should be read with a different intonation from the other three?",
+    ch: ["When does the film start?", "Can you swim?", "Is this your pen?", "Are they at home?"],
+    why: ["ขึ้นต้นด้วย When = คำถาม Wh-\nคำถาม Wh- ลงเสียงต่ำ ↓\nอีก 3 ข้อเป็นคำถาม Yes/No เสียงขึ้น ↑",
+          "ขึ้นต้นด้วย Can = คำถาม Yes/No → เสียงขึ้น ↑",
+          "ขึ้นต้นด้วย Is = คำถาม Yes/No → เสียงขึ้น ↑",
+          "ขึ้นต้นด้วย Are = คำถาม Yes/No → เสียงขึ้น ↑"] },
+
+  { id: "mech-03", skill: "mech", trap: 30, ep: null, lv: "m",
+    q: "Which question should be read with a different intonation from the other three?",
+    ch: ["Is it going to rain?", "Whose bag is this?", "Why is she crying?", "Which colour do you like?"],
+    why: ["ขึ้นต้นด้วย Is = คำถาม Yes/No → เสียงขึ้น ↑\nอีก 3 ข้อขึ้นต้นด้วย Wh- → เสียงลง ↓",
+          "Whose (ของใคร) ก็เป็นคำ Wh- → เสียงลง ↓",
+          "Why (ทำไม) เป็นคำ Wh- → เสียงลง ↓",
+          "Which (อันไหน) เป็นคำ Wh- → เสียงลง ↓"] },
+
+  { id: "mech-04", skill: "mech", trap: 30, ep: null, lv: "m",
+    q: "Which question should be read with a different intonation from the other three?",
+    ch: ["How old is your brother?", "Have you ever been to Japan?", "Do you have a pet?", "Will it be sunny tomorrow?"],
+    why: ["How ไม่ได้ขึ้นต้นด้วย Wh แต่ก็เป็นคำถาม Wh- (ถามข้อมูล)\nตอบ Yes/No ไม่ได้ → เสียงลง ↓\nอีก 3 ข้อตอบ Yes/No ได้ → เสียงขึ้น ↑",
+          "ขึ้นต้นด้วย Have = คำถาม Yes/No → เสียงขึ้น ↑",
+          "ขึ้นต้นด้วย Do = คำถาม Yes/No → เสียงขึ้น ↑",
+          "ขึ้นต้นด้วย Will = คำถาม Yes/No → เสียงขึ้น ↑"] },
+
+  { id: "mech-05", skill: "mech", trap: 30, ep: null, lv: "e",
+    q: "Which word does NOT have the same vowel sound as the others?",
+    ch: ["cake", "hat", "map", "bag"],
+    why: ["cake อ่านว่า \"เคค\" เสียงสระ เอ (/eɪ/)\nเพราะมี e ท้ายคำ ทำให้ a ออกเสียงตามชื่อตัว",
+          "hat เสียงสระ แอ (/æ/) เหมือน map, bag",
+          "map เสียงสระ แอ (/æ/) เหมือน hat, bag",
+          "bag เสียงสระ แอ (/æ/) เหมือน hat, map"] },
+
+  { id: "mech-06", skill: "mech", trap: 30, ep: null, lv: "m",
+    q: "Which word does NOT have the same vowel sound as the others?",
+    ch: ["bread", "see", "meet", "tea"],
+    why: ["bread อ่านว่า \"เบรด\" เสียงสระ เอะ (/e/) สั้น\nถึงจะเขียนด้วย ea เหมือน tea แต่เสียงไม่เหมือน",
+          "see เสียงสระ อี ยาว (/iː/)",
+          "meet เสียงสระ อี ยาว (/iː/)",
+          "tea เสียงสระ อี ยาว (/iː/)\nระวัง: ea ใน tea ≠ ea ใน bread"] },
+
+  { id: "mech-07", skill: "mech", trap: 30, ep: null, lv: "h",
+    q: "Which word does NOT have the same vowel sound as the others?",
+    ch: ["put", "cut", "bus", "sun"],
+    why: ["put อ่านว่า \"พุท\" เสียงสระ อุ (/ʊ/)\nถึงจะสะกดด้วย u เหมือนกัน แต่เสียงต่าง",
+          "cut อ่านว่า \"คัท\" เสียงสระ อะ (/ʌ/)",
+          "bus อ่านว่า \"บัส\" เสียงสระ อะ (/ʌ/)",
+          "sun อ่านว่า \"ซัน\" เสียงสระ อะ (/ʌ/)"] },
+
+  { id: "mech-08", skill: "mech", trap: 30, ep: null, lv: "e",
+    q: "Which sentence is written correctly?",
+    ch: ["My friend Ploy lives in Bangkok.", "my friend Ploy lives in Bangkok.", "My friend ploy lives in Bangkok.", "My friend Ploy lives in bangkok."],
+    why: ["ถูกครบ: ตัวแรกของประโยคเป็นตัวใหญ่ (My)\nชื่อคน (Ploy) และชื่อเมือง (Bangkok) ขึ้นต้นตัวใหญ่",
+          "คำแรกของประโยคต้องขึ้นต้นด้วยตัวใหญ่\nmy → My",
+          "ชื่อคนต้องขึ้นต้นตัวใหญ่เสมอ\nploy → Ploy",
+          "ชื่อเมืองต้องขึ้นต้นตัวใหญ่เสมอ\nbangkok → Bangkok"] },
+
+  { id: "mech-09", skill: "mech", trap: 30, ep: null, lv: "m",
+    q: "Which sentence is written correctly?",
+    ch: ["Where did you go last weekend?", "Where did you go last weekend.", "where did you go last weekend?", "Where did you go last Weekend?"],
+    why: ["ประโยคคำถามต้องจบด้วยเครื่องหมาย ?\nคำแรกตัวใหญ่ และ weekend เป็นคำธรรมดา ใช้ตัวเล็ก",
+          "เป็นคำถาม (Where did...) ต้องจบด้วย ?\nไม่ใช่จุด .",
+          "คำแรกของประโยคต้องขึ้นต้นตัวใหญ่\nwhere → Where",
+          "weekend ไม่ใช่ชื่อเฉพาะ ไม่ต้องใช้ตัวใหญ่\n(ชื่อวัน เช่น Monday ถึงจะใช้ตัวใหญ่)"] },
+
+  { id: "mech-10", skill: "mech", trap: 30, ep: null, lv: "h",
+    q: "Which sentence is written correctly?",
+    ch: ["The dog is wagging its tail because it's happy.", "The dog is wagging it's tail because its happy.", "The dog is wagging its tail because its happy.", "The dog is wagging it's tail because it's happy."],
+    why: ["its = ของมัน (หางของมัน → its tail)\nit's = it is (มันมีความสุข → it's happy)\nลองแทน it is ดู: ถ้าแทนได้ ใช้ it's",
+          "ผิดทั้งสองที่\nit's tail = it is tail ไม่มีความหมาย\nits happy ต้องเป็น it's happy",
+          "its tail ถูก แต่ its happy ผิด\nมันมีความสุข = it is happy → it's happy",
+          "it's happy ถูก แต่ it's tail ผิด\nหางของมัน = its tail (ไม่มี ')"] }
+];
+
+// stage: trap
+const T_TRAP_LIBRARY = "GREEN HILL LIBRARY\nOpen: Tuesday to Sunday, 9 a.m. – 6 p.m.\nClosed on Mondays.\n• Children under 10 must come with an adult.\n• You can borrow up to five books for two weeks.\n• No food inside. You may bring a bottle of water.\n• Free story time for young children every Saturday at 10 a.m.";
+const T_TRAP_MUSEUM = "Last Friday, Class 6/2 spent the day at the City Science Centre. They left school by bus at 8 a.m. and arrived at 9:30. In the morning, they watched a show about the planets. After lunch, they built small robots in a workshop. Ton's robot could walk, but Mai's robot could only turn around in circles. The class got back to school at 3 p.m. Everyone was tired but happy.";
+const T_TRAP_REDPANDA = "Red pandas live in the cool mountain forests of Asia. Although they are called pandas, they are only about the size of a house cat. They spend most of their time in trees, and they even sleep up there. Their main food is bamboo, but they also eat fruit and birds' eggs. On cold nights, a red panda wraps its long, thick tail around its body like a blanket.";
+const T_TRAP_WATERPARK = "SUNNY BAY WATER PARK\n• No food or drinks in the pools.\n• Children shorter than 120 cm must wear a life jacket.\n• No running near the pools.\n• Lockers: 20 baht per day.";
+
+POOLS['trap'] = [
+  // ---- will-in-time-clause (high-risk) ×4
+  { id: 'trap-01', skill: 'trap', trap: 7, ep: 'will-in-time-clause', lv: 'e',
+    q: "When our school year ___ next May, I will be in Grade 7.",
+    ch: ['begins', 'will begin', 'began', 'begin'],
+    why: [
+      "วงคำ When ก่อน แล้วค่อยดู next May\nฝั่ง When ห้าม will → begins",
+      "เห็น next May แล้วรีบใส่ will\nวงคำ When ก่อน → ฝั่งนี้ห้าม will",
+      "began = อดีต แต่ next May ยังไม่มาถึง\nวงคำ When ก่อน → ฝั่งนี้ใช้ V1 ปัจจุบัน",
+      "school year เป็นสิ่งเดียว ต้องเติม s\nวงคำ When ก่อน → ใช้ V1 เติม s"] },
+  { id: 'trap-02', skill: 'trap', trap: 7, ep: 'will-in-time-clause', lv: 'm',
+    q: "Our team ___ practising until the coach ___ the whistle later today.",
+    ch: ['will keep / blows', 'will keep / will blow', 'keeps / will blow', 'kept / blows'],
+    why: [
+      "วงคำ until ก่อน\nฝั่ง until ห้าม will → blows\nอีกฝั่งเป็นอนาคต → will keep",
+      "ใส่ will ทั้งสองฝั่ง\nวงคำ until ก่อน → ฝั่งนี้ห้าม will",
+      "ย้าย will ไปผิดฝั่ง\nwill อยู่ฝั่งที่ไม่มีคำประตู\nฝั่ง until ใช้ V1",
+      "kept = อดีต\nแต่ later today ยังไม่ถึง"] },
+  { id: 'trap-03', skill: 'trap', trap: 7, ep: 'will-in-time-clause', lv: 'm',
+    q: "After Nok ___ her exams next week, she ___ a long holiday in the south.",
+    ch: ['finishes / will take', 'will finish / will take', 'will finish / takes', 'finished / will take'],
+    why: [
+      "วงคำ After ก่อน แล้วค่อยดู next week\nฝั่ง After ห้าม will → finishes\nอีกฝั่ง → will take",
+      "เห็น next week แล้วใส่ will ทุกช่อง\nวงคำ After ก่อน → ฝั่งนี้ห้าม will",
+      "ย้าย will ไปผิดฝั่ง\nฝั่ง After → finishes · อีกฝั่ง → will take",
+      "finished = อดีต\nแต่ next week ยังไม่มาถึง"] },
+  { id: 'trap-04', skill: 'trap', trap: 7, ep: 'will-in-time-clause', lv: 'h',
+    q: "Before Grandpa {1:will leave} for the airport tomorrow, he {2:will water} all {3:the plants} {4:in the garden}.",
+    ch: ['1', '2', '3', '4'],
+    why: [
+      "ส่วนที่ 1 ผิด\nวงคำ Before ก่อน → ฝั่งนี้ห้าม will\nแก้เป็น leaves",
+      "will water ถูกแล้ว\nอยู่ฝั่งที่ไม่มีคำประตู ใส่ will ได้\nอย่าย้าย will มาฝั่งนี้แล้วลืมฝั่ง Before",
+      "all the plants ถูกแล้ว\nต้นไม้ทุกต้นในสวน",
+      "in the garden ถูกแล้ว\nใช้ in กับสวน"] },
+
+  // ---- as-soon-as-meaning
+  { id: 'trap-05', skill: 'trap', trap: 7, ep: 'as-soon-as-meaning', lv: 'm',
+    q: "Grandma will phone us ___ her plane lands, so we know she is safe.",
+    ch: ['as soon as', 'until', 'while', 'before'],
+    why: [
+      "แปลไทยทีละตัวก่อนเลือก\nas soon as = ทันทีที่\nโทรทันทีที่เครื่องลง → รู้ว่าปลอดภัย",
+      "until = จนกว่า\nโทรจนกว่าเครื่องจะลง? ไม่ใช่\nเลือกเพราะคุ้นหู ต้องแปลก่อน",
+      "while = ขณะที่\nโทรขณะเครื่องกำลังลง? ทำไม่ได้\nแปลไทยใส่ประโยคก่อนเลือก",
+      "before = ก่อนที่\nโทรก่อนเครื่องลง จะรู้ได้ยังไงว่าปลอดภัย"] },
+
+  // ---- conditional-pairing
+  { id: 'trap-06', skill: 'trap', trap: 5, ep: 'conditional-pairing', lv: 'm',
+    q: "If our school ___ a swimming pool, we ___ swimming every day. Sadly, there is no pool.",
+    ch: ['had / would go', 'has / would go', 'had / will go', 'has / will go'],
+    why: [
+      "Sadly, there is no pool = ไม่มีจริง → สมมติ\nถอยคู่พร้อมกัน: had ↔ would",
+      "ใส่ would แล้ว แต่ฝั่ง if ยังไม่ถอย\nดูฝั่ง if ก่อนเสมอ: has → had",
+      "ถอยฝั่ง if แล้ว แต่ลืมฝั่งผล\nhad ต้องคู่กับ would ไม่ใช่ will",
+      "has / will = มีสระได้จริง\nแต่ประโยคหลังบอกว่าไม่มีสระ\nอ่านประโยครอบ ๆ ก่อน"] },
+
+  // ---- continuous-as-future
+  { id: 'trap-07', skill: 'trap', trap: 4, ep: 'continuous-as-future', lv: 'e',
+    q: "Hi Jane,\nI ___ a small birthday party at my house on Friday evening. Can you come? Mum is making pizza!\nLove, Ning",
+    ch: ['am having', 'had', 'have had', 'was having'],
+    why: [
+      "ถามตัวเองก่อน: งานนี้เกิดแล้วหรือยัง?\nCan you come? = ยังไม่เกิด\nนัดแน่นอนมีวันเวลา → am having",
+      "had = งานจบแล้ว\nแต่ยังชวนเพื่อนมาอยู่\nถามก่อนว่างานเกิดแล้วหรือยัง",
+      "have had = มีไปแล้ว แต่งานยังไม่เกิด\nถามก่อนว่างานเกิดแล้วหรือยัง",
+      "was having = กำลังจัดในอดีต แต่ on Friday ยังมาไม่ถึง\nถามก่อนว่างานเกิดแล้วหรือยัง"] },
+
+  // ---- gerund-vs-infinitive-list
+  { id: 'trap-08', skill: 'trap', trap: 16, ep: 'gerund-vs-infinitive-list', lv: 'e',
+    q: "My uncle has finished ___ the fence, and now he is ready ___ the garden.",
+    ch: ['painting / to water', 'to paint / watering', 'painting / watering', 'to paint / to water'],
+    why: [
+      "ดูคำข้างหน้าช่องก่อน\nfinish + V-ing → painting\nready + to V → to water",
+      "สลับกันพอดี\nอย่าเลือกด้วยความลื่นหู\nfinish → V-ing · ready → to V",
+      "ช่อง 1 ถูก\nแต่ ready ต้องตามด้วย to V\nรูปเดียวกันทั้งสองช่อง = สงสัยไว้ก่อน",
+      "ช่อง 2 ถูก\nแต่ finish ต้องตามด้วย V-ing\nรูปเดียวกันทั้งสองช่อง = สงสัยไว้ก่อน"] },
+
+  // ---- modal-meaning-by-context
+  { id: 'trap-09', skill: 'trap', trap: 17, ep: 'modal-meaning-by-context', lv: 'h',
+    q: "It started to rain on my way home, and I got very wet. I ___ an umbrella this morning.",
+    ch: ['should have taken', 'ought to take', 'should take', 'must have taken'],
+    why: [
+      "เปียกไปแล้ว = เสียดายเรื่องที่ผ่านมา\nควรทำแต่ไม่ได้ทำ → should have + V3",
+      "ought to take = ควรเอาไป (ตอนนี้/อนาคต)\nเรื่องผ่านไปแล้ว ต้องมี have + V3",
+      "should take = ควรเอาไป (ตอนนี้/อนาคต)\nเรื่องผ่านไปแล้ว ต้องมี have + V3",
+      "must have taken = เดาว่าเอาไปแน่ ๆ\nแต่ถ้าเอาร่มไป จะเปียกทำไม\nแปลไทยทั้งประโยคก่อนเลือก"] },
+
+  // ---- not-incorrect-scan (high-risk) ×3
+  { id: 'trap-10', skill: 'trap', trap: null, ep: 'not-incorrect-scan', lv: 'e',
+    q: T_TRAP_LIBRARY + "\n\nWhich statement is NOT true?",
+    ch: ['You can eat snacks inside the library.', 'The library is closed on Mondays.', 'You can borrow five books at one time.', 'Story time on Saturdays is free.'],
+    why: [
+      "วงคำ NOT ก่อน แล้วเขียน จ/ท ทุกข้อ\nNo food inside = ห้ามกินในห้องสมุด\nข้อนี้ ท (ไม่จริง) → คำตอบ",
+      "ข้อนี้ จ (จริง) — Closed on Mondays\nโจทย์ถาม NOT = หาข้อที่ไม่จริง",
+      "ข้อนี้ จ (จริง) — up to five books\nโจทย์ถาม NOT = หาข้อที่ไม่จริง",
+      "ข้อนี้ จ (จริง) — Free story time\nโจทย์ถาม NOT = หาข้อที่ไม่จริง"] },
+  { id: 'trap-11', skill: 'trap', trap: null, ep: 'not-incorrect-scan', lv: 'm',
+    q: T_TRAP_MUSEUM + "\n\nWhich sentence about the trip is INCORRECT?",
+    ch: ["Mai's robot could walk.", 'The bus trip to the science centre took one and a half hours.', 'The students watched a show about planets before lunch.', 'The class got back to school at 3 p.m.'],
+    why: [
+      "วงคำ INCORRECT ก่อน แล้วเขียน จ/ท ทุกข้อ\nหุ่นของ Ton เดินได้ ของ Mai แค่หมุน\nข้อนี้ ท → คำตอบ",
+      "ข้อนี้ จ — ออก 8 โมง ถึง 9 โมงครึ่ง = 1 ชั่วโมงครึ่ง\nINCORRECT = หาข้อที่ผิด",
+      "ข้อนี้ จ — In the morning ... show about the planets\nINCORRECT = หาข้อที่ผิด",
+      "ข้อนี้ จ — got back to school at 3 p.m.\nINCORRECT = หาข้อที่ผิด"] },
+  { id: 'trap-12', skill: 'trap', trap: null, ep: 'not-incorrect-scan', lv: 'm',
+    q: T_TRAP_REDPANDA + "\n\nAll of the following are true EXCEPT ___.",
+    ch: ['red pandas are as big as giant pandas', 'red pandas often sleep in trees', 'red pandas eat more than just bamboo', 'a red panda can keep warm with its tail'],
+    why: [
+      "วงคำ EXCEPT ก่อน = ยกเว้น → หาข้อที่ไม่จริง\nเรื่องบอกว่าตัวเท่าแมวบ้าน\nข้อนี้ ท → คำตอบ",
+      "ข้อนี้ จ — they even sleep up there\nEXCEPT = หาข้อที่ไม่จริง",
+      "ข้อนี้ จ — also eat fruit and birds' eggs\nEXCEPT = หาข้อที่ไม่จริง",
+      "ข้อนี้ จ — wraps its tail ... like a blanket\nEXCEPT = หาข้อที่ไม่จริง"] },
+
+  // ---- paired-blank-check-both (high-risk) ×3
+  { id: 'trap-13', skill: 'trap', trap: 1, ep: 'paired-blank-check-both', lv: 'e',
+    q: "Every morning my mother ___ tea, but right now she ___ coffee because the tea is finished.",
+    ch: ['drinks / is drinking', 'drinks / drinks', 'is drinking / is drinking', 'drank / is drinking'],
+    why: [
+      "ตรวจทีละช่อง\nEvery morning = นิสัย → drinks\nright now = ตอนนี้ → is drinking",
+      "ช่อง 1 ถูกแล้วรีบเลือก\nตรวจช่อง 2 ด้วย: right now → is drinking",
+      "ใช้รูปเดียวกันทั้งสองช่อง\nEvery morning = นิสัย → drinks",
+      "ช่อง 2 ถูก แต่ช่อง 1 ผิด\nEvery morning = นิสัยตอนนี้ → drinks ไม่ใช่อดีต"] },
+  { id: 'trap-14', skill: 'trap', trap: 2, ep: 'paired-blank-check-both', lv: 'm',
+    q: "Kai ___ in this village since 2019, but his sister ___ to Bangkok last year.",
+    ch: ['has lived / moved', 'has lived / has moved', 'lived / moved', 'lives / has moved'],
+    why: [
+      "ตรวจทีละช่อง\nsince 2019 → has lived\nlast year → moved",
+      "ช่อง 1 ถูกแล้วรีบเลือก\nตรวจช่อง 2 ด้วย: last year = อดีต → moved",
+      "ช่อง 2 ถูก แต่ช่อง 1 ผิด\nsince ถึงตอนนี้ → has lived",
+      "ผิดทั้งสองช่อง\nsince → has lived · last year → moved"] },
+  { id: 'trap-15', skill: 'trap', trap: 8, ep: 'paired-blank-check-both', lv: 'h',
+    q: "The old bridge ___ by a flood last year, so a new one ___ now.",
+    ch: ['was destroyed / is being built', 'was destroyed / is building', 'destroyed / is being built', 'destroyed / is building'],
+    why: [
+      "ตรวจทีละช่อง: ประธานทำเองหรือถูกทำ?\nสะพานถูกน้ำท่วมพัง → was destroyed\nสะพานใหม่ถูกสร้าง → is being built",
+      "ช่อง 1 ถูกแล้วรีบเลือก\nตรวจช่อง 2 ด้วย: สะพานสร้างตัวเองไม่ได้",
+      "ช่อง 2 ถูก แต่ช่อง 1 ผิด\nมี by a flood = สะพานถูกทำ → was destroyed",
+      "ผิดทั้งสองช่อง\nสะพานเป็นผู้ถูกทำทั้งคู่ → be + V3"] },
+
+  // ---- passive-recognition
+  { id: 'trap-16', skill: 'trap', trap: 8, ep: 'passive-recognition', lv: 'e',
+    q: "Your parcel ___ to your house tomorrow afternoon.",
+    ch: ['will be delivered', 'will deliver', 'delivers', 'is delivering'],
+    why: [
+      "ถามก่อน: พัสดุส่งตัวเองได้ไหม? ไม่ได้\nพัสดุถูกส่ง + tomorrow → will be + V3",
+      "ดูแค่ tomorrow แล้วเลือก will\nต้องถามก่อนว่าประธานทำเองได้ไหม",
+      "delivers = พัสดุเป็นคนส่ง\nถามก่อนว่าประธานทำเองได้ไหม",
+      "is delivering = พัสดุกำลังส่งของ\nถามก่อนว่าประธานทำเองได้ไหม"] },
+
+  // ---- question-tag-two-checks (high-risk) ×3
+  { id: 'trap-17', skill: 'trap', trap: 15, ep: 'question-tag-two-checks', lv: 'm',
+    q: "Your grandparents {1:haven't lived} {2:in} this house for {3:very long}, {4:haven't they}?",
+    ch: ['4', '1', '2', '3'],
+    why: [
+      "เห็น , ... they? ท้ายประโยค → ตรวจ tag ก่อน\nประโยคลบ (haven't) → tag ต้องบวก\nแก้เป็น have they",
+      "haven't lived ถูกแล้ว (for very long)\nตรวจ tag ท้ายประโยคก่อนส่วนอื่น",
+      "live in this house ถูกแล้ว\nตรวจ tag ท้ายประโยคก่อนส่วนอื่น",
+      "for very long ถูกแล้ว (= นานมาก)\nตรวจ tag ท้ายประโยคก่อนส่วนอื่น"] },
+  { id: 'trap-18', skill: 'trap', trap: 15, ep: 'question-tag-two-checks', lv: 'e',
+    q: "Somsak wasn't sleepy in class today, ___?",
+    ch: ['was he', "wasn't he", 'did he', 'is he'],
+    why: [
+      "เช็ก 1: กริยาช่วย was\nเช็ก 2: ประโยคลบ (wasn't) → tag บวก → was he",
+      "ลืมเช็กที่ 2\nประโยคลบ → tag ต้องกลับเป็นบวก",
+      "ลืมเช็กที่ 1\nกริยาในประโยคคือ was ไม่ใช่ did",
+      "ลืมเช็กที่ 1\ntag ต้องใช้ was ตัวเดิมจากประโยค ไม่ใช่ is"] },
+  { id: 'trap-19', skill: 'trap', trap: 16, ep: 'question-tag-two-checks', lv: 'h',
+    q: "Nida {1:enjoys} {2:to read} comic books on the bus, {3:doesn't she}? She {4:reads} one every day.",
+    ch: ['2', '1', '3', '4'],
+    why: [
+      "ตรวจ tag ก่อน: does + บวก→ลบ = doesn't she ถูก\ntag ถูก → สแกนส่วนอื่นต่อ\nenjoy + V-ing → แก้เป็น reading",
+      "enjoys ถูกแล้ว\nNida คนเดียว เติม s",
+      "tag ไม่ได้ผิดทุกครั้ง\nenjoys → does · บวก → ลบ = doesn't she ถูกแล้ว\nตรวจ tag แล้วถูก ต้องหาต่อ",
+      "reads ถูกแล้ว\nShe คนเดียว เติม s"] },
+
+  // ---- reading-word-match-trap
+  { id: 'trap-20', skill: 'trap', trap: null, ep: 'reading-word-match-trap', lv: 'e',
+    q: T_TRAP_WATERPARK + "\n\nWhat does the sign tell visitors?",
+    ch: ['Some children must wear a life jacket.', 'Visitors can bring food and drinks into the pools.', 'Everyone must wear a life jacket.', 'A locker costs 120 baht per day.'],
+    why: [
+      "เด็กที่สูงไม่ถึง 120 ซม. ต้องใส่เสื้อชูชีพ\n= เด็กบางคน ไม่ใช่ทุกคน",
+      "มีคำ food, drinks, pools เหมือนป้าย\nแต่ป้ายเขียนว่า No food or drinks\nอ่านทั้งประโยค ดูว่ามี No ไหม",
+      "Everyone = ทุกคน (คำเกินจริง)\nป้ายบอกแค่เด็กที่ตัวเตี้ยกว่า 120 ซม.",
+      "120 เป็นความสูงของเด็ก ไม่ใช่ราคา\nตู้เก็บของ 20 บาท\nตัวเลขเหมือนในป้าย ต้องดูว่าเป็นของอะไร"] },
+
+  // ---- reported-speech-shift (high-risk) ×3
+  { id: 'trap-21', skill: 'trap', trap: 25, ep: 'reported-speech-shift', lv: 'h',
+    q: "\"I will be able to come to your party,\" Fon told me.\nFon said that she ___ to my party.",
+    ch: ['would be able to come', 'was able to come', 'would able to come', 'will be able to came'],
+    why: [
+      "ถอยกริยาตัวแรกตัวเดียว: will → would\nที่เหลือคงเดิม → would be able to come",
+      "ตัด will ทิ้งแล้วไปถอย be แทน\nถอยแค่ตัวแรก will → would · be คงเดิม",
+      "will → would ถูกแล้ว แต่ทำ be หาย\nตัวหลัง would ต้องอยู่ครบ → be able to",
+      "ยังไม่ถอย will\nและหลัง to ต้องเป็น V1 → come"] },
+  { id: 'trap-22', skill: 'trap', trap: 25, ep: 'reported-speech-shift', lv: 'm',
+    q: "Our teacher said, \"You have to finish the test in 30 minutes.\"\nOur teacher told us that we ___ the test in 30 minutes.",
+    ch: ['had to finish', 'have to finished', 'had to finished', 'would had to finish'],
+    why: [
+      "ถอยกริยาตัวแรก 1 ขั้น: have to → had to\nหลัง to ใช้ V1 → had to finish",
+      "ไม่ถอย have\nและถอยผิดตัวไปที่ finish\nถอยแค่ตัวแรก",
+      "ถอย have → had ถูกแล้ว\nแต่ถอย finish ซ้ำ = ถอยเกิน\nหลัง to ใช้ V1",
+      "ถอยเกิน\nไม่มี will ในคำพูด จึงไม่มี would\nและหลัง would ใช้ have ไม่ใช่ had"] },
+  { id: 'trap-23', skill: 'trap', trap: 25, ep: 'reported-speech-shift', lv: 'm',
+    q: "Last night Tan said, \"I am watching a football match now.\"\nThis morning I told Mum: Tan said that he ___ a football match ___.",
+    ch: ['was watching / then', 'is watching / then', 'was watching / now', 'is watching / now'],
+    why: [
+      "เล่าตอนเช้า = คนละเวลากับตอนที่ Tan พูด\nเปลี่ยน 2 อย่างพร้อมกัน\n1) ถอยกริยา: am watching → was watching\n2) คำบอกเวลา: now → then",
+      "เปลี่ยนคำบอกเวลาแล้ว แต่ลืมถอยกริยา\nam → was",
+      "ถอยกริยาแล้ว แต่ลืมเปลี่ยนคำบอกเวลา\nnow → then",
+      "ลอกคำพูดมาเฉย ๆ ไม่เปลี่ยนอะไรเลย\nตัวเลือกที่เหมือนคำพูดเป๊ะ ตัดทิ้งก่อน"] },
+
+  // ---- short-interrupts-long
+  { id: 'trap-24', skill: 'trap', trap: 3, ep: 'short-interrupts-long', lv: 'e',
+    q: "We were playing a board game when the lights suddenly ___ out, so we couldn't finish it.",
+    ch: ['went', 'were going', 'go', 'have gone'],
+    why: [
+      "เล่นเกมอยู่ = เรื่องยาว (were playing มีให้แล้ว)\nไฟดับทันที = เรื่องสั้นที่แทรกเข้ามา\nเรื่องสั้นที่แทรก → V2 → went",
+      "ใส่รูป -ing ทั้งสองฝั่ง\nsuddenly = ทันที เป็นเรื่องสั้น\nเรื่องสั้นที่แทรกเข้ามา ใช้ V2 เสมอ",
+      "go = ปัจจุบัน แต่ were playing เป็นอดีต\nเรื่องสั้นที่แทรกในอดีต ใช้ V2 เสมอ",
+      "have gone = ถึงตอนนี้ แต่เรื่องนี้จบในอดีต\nเรื่องสั้นที่แทรกในอดีต ใช้ V2 เสมอ"] },
+
+  // ---- subject-verb-with-phrase
+  { id: 'trap-25', skill: 'trap', trap: 14, ep: 'subject-verb-with-phrase', lv: 'm',
+    q: "The leader of the {1:young} scouts {2:wear} a {3:green} hat {4:every day}.",
+    ch: ['2', '1', '3', '4'],
+    why: [
+      "ปิดวลี of the young scouts ด้วยนิ้ว\nเหลือ The leader ... wear → หัวหน้ามีคนเดียว\nแก้เป็น wears",
+      "young ถูกแล้ว (ขยายคำนาม scouts)\nอย่าดูคำที่ติดกริยา ปิดวลี of ... ก่อน แล้วหาประธานจริง",
+      "green ถูกแล้ว (ขยายคำนาม hat)\nปิดวลี of ... ก่อน แล้วเช็กประธานกับกริยา",
+      "every day ถูกแล้ว (ทำเป็นประจำ)\nปิดวลี of ... ก่อน แล้วเช็กประธานกับกริยา"] },
+
+  // ---- time-marker-per-blank
+  { id: 'trap-26', skill: 'trap', trap: 6, ep: 'time-marker-per-blank', lv: 'h',
+    q: "For more than twenty years, my uncle ___ as a doctor in this town, and he still loves his job. Last month he ___ a prize for his work.",
+    ch: ['has worked / won', 'had worked / won', 'worked / has won', 'has worked / has won'],
+    why: [
+      "ขีดคำบอกเวลาทุกตัวก่อน\nFor ... years + still = ถึงตอนนี้ → has worked\nLast month = อดีต → won",
+      "เห็นว่าเป็นเวลานานแล้วเลยใช้ had\nFor + ช่วงเวลาถึงตอนนี้ → have/has + V3",
+      "สลับกันพอดี\nFor ... still → has worked\nLast month → won",
+      "ช่อง 1 ถูก\nแต่ Last month = อดีต → won"] },
+
+  // ---- will-vs-going-to
+  { id: 'trap-27', skill: 'trap', trap: 4, ep: 'will-vs-going-to', lv: 'e',
+    q: "A: This box is too heavy for me!\nB: Wait, I ___ you carry it.",
+    ch: ['will help', 'help', 'helped', 'am help'],
+    why: [
+      "B เพิ่งเห็นแล้วเสนอตัวตอนพูด\nเพิ่งตัดสินใจตอนพูด → will help",
+      "help = นิสัย แต่นี่คือการเสนอช่วยตอนนี้\nถามก่อน: เพิ่งตัดสินใจตอนพูดไหม? ใช่ → will",
+      "helped = ช่วยไปแล้ว แต่ยังไม่ได้ช่วย\nถามก่อน: เพิ่งตัดสินใจตอนพูดไหม? ใช่ → will",
+      "am help ผิดรูป ไม่มี am หน้า V1\nเสนอตัวตอนพูด → will + V1"] },
+
+  // ---- adjective-for-adverb
+  { id: 'trap-28', skill: 'trap', trap: 10, ep: 'adjective-for-adverb', lv: 'm',
+    q: "Our new classmate {1:speaks} English {2:incredible} {3:well}, so the teacher {4:often asks} her to read aloud.",
+    ch: ['2', '1', '3', '4'],
+    why: [
+      "ถามออกเสียง: คำนี้ขยายคำนาม หรือ ขยายกริยา?\nincredible ขยาย well (พูดเก่งแค่ไหน) → ต้อง -ly\nแก้เป็น incredibly",
+      "speaks ถูกแล้ว\nclassmate คนเดียว เติม s",
+      "well ถูกแล้ว\nขยาย speaks → ใช้ well (ไม่ใช่ good)",
+      "often asks her to read ถูกแล้ว\nask + คน + to V\nอย่าไปสงสัยส่วนที่ถูก ถามก่อนว่าคำไหนขยายอะไร"] },
+];
+
+</script>
+
+<script id="engine">
+"use strict";
+const TOPICS = [
+  { id: 'conv',    ico: '💬', name: 'บทสนทนา', d: 'เลือกประโยคตอบให้ถูกสถานการณ์ (ออกเยอะที่สุด)' },
+  { id: 'idiom',   ico: '🗣️', name: 'สำนวน (idiom)', d: 'hit the books · piece of cake · ห้ามแปลตรงตัว' },
+  { id: 'visual',  ico: '🪧', name: 'ป้าย · ประกาศ · ตาราง', d: 'ป้ายหมายถึงอะไร · เจอที่ไหน · อ่านตาราง/ฉลาก' },
+  { id: 'passage', ico: '📖', name: 'อ่านเรื่องสั้น', d: 'จุดประสงค์ · NOT/INCORRECT · ความหมายคำ · อนุมาน' },
+  { id: 'vocab',   ico: '📚', name: 'คำศัพท์ในประโยค', d: 'คำเหมือน · คำหลายความหมาย · make/do · phrasal verb' },
+  { id: 'tense',   ico: '⏰', name: 'Tense', d: 'ช่องว่าง 2 ช่อง · When/until · เล่าคำพูด' },
+  { id: 'cmpt',    ico: '🔀', name: 'If · modal · passive · tag', d: 'If 1/2 · must/have to · ถูกกระทำ · question tag' },
+  { id: 'form',    ico: '🧩', name: 'รูปคำ', d: '-ed/-ing · adj/adv · more/most · too/enough · -ing/to' },
+  { id: 'small',   ico: '🔗', name: 'คำเล็กแต่สำคัญ', d: 'who/which · a/an/the · in/on/at · although/despite' },
+  { id: 'errid',   ico: '🔍', name: 'จับจุดผิด', d: 'ขีดเส้นใต้ 4 จุด ผิด 1 จุด · ประโยคไหน INCORRECT' },
+  { id: 'mech',    ico: '🔊', name: 'เสียง · เครื่องหมาย', d: 'น้ำเสียงขึ้น/ลง · เสียงสระ · จุด/ตัวใหญ่' },
+  { id: 'trap',    ico: '🪤', name: 'กับดักของน้อง', d: 'ข้อแบบที่น้องเคยพลาดจริง · เล่นบ่อย ๆ', cls: 'trap' }
+];
+/* สัดส่วนสอบจำลอง 40 ข้อ ตาม blueprint (Mock โยธินฯ แนะนำ) */
+const MOCK_MIX = { conv: 6, idiom: 2, passage: 8, visual: 5, form: 4, small: 3, tense: 4, cmpt: 3, errid: 3, vocab: 2 };
+const MOCK_SEC = 24 * 60, ROUND = 10, MIX_N = 15, KEYS = ['1', '2', '3', '4'];
+
+/* ---------- storage (ครอบ try/catch เสมอ) ---------- */
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('en-all:' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('en-all:' + k, JSON.stringify(v)); } catch (e) { } }
+};
+
+/* ---------- helpers ---------- */
+const $ = id => document.getElementById(id);
+function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+function markup(s) { return esc(s).replace(/\{(\d):([^}]*)\}/g, (m, n, t) => '<u><b>' + n + '</b>' + t + '</u>'); }
+function plain(s) { return String(s).replace(/\{(\d):([^}]*)\}/g, '($1) $2'); }
+function splitQ(q) { const i = q.lastIndexOf('\n\n'); return i < 0 ? { t: '', q: q } : { t: q.slice(0, i), q: q.slice(i + 2) }; }
+function isTable(t) { return /[│|┃]|  {2,}\S|\t/.test(t); }
+function fmtT(s) { s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+function topicOf(id) { return TOPICS.find(t => t.id === id); }
+
+/* เลือกข้อที่ยังไม่เคยเห็นก่อน แล้วค่อยวนซ้ำ */
+function pick(stage, n, avoid) {
+  const pool = (POOLS[stage] || []).filter(x => !avoid || !avoid.has(x.id));
+  const seen = new Set(store.get('seen:' + stage, []));
+  let fresh = shuffle(pool.filter(x => !seen.has(x.id)));
+  if (fresh.length < n) { store.set('seen:' + stage, []); fresh = fresh.concat(shuffle(pool.filter(x => !fresh.includes(x)))); }
+  return fresh.slice(0, n);
+}
+function markSeen(it) { const k = 'seen:' + it.stage; const s = store.get(k, []); if (!s.includes(it.id)) { s.push(it.id); store.set(k, s); } }
+
+/* ---------- state ---------- */
+let S = null, timer = null;
+
+function buildMenu() {
+  const box = $('topicList'); box.innerHTML = '';
+  TOPICS.forEach(t => {
+    const n = (POOLS[t.id] || []).length; if (!n) return;
+    const b = document.createElement('button'); b.className = 'lv' + (t.cls ? ' ' + t.cls : '');
+    const best = store.get('best:' + t.id, null);
+    b.innerHTML = '<span class="best">' + (best != null ? 'ดีสุด ' + best + '/10' : '') + '</span><b>' + t.ico + ' ' + esc(t.name) + '</b><span class="d">' + esc(t.d) + ' · ' + n + ' ข้อ</span>';
+    b.onclick = () => start('topic', t.id); box.appendChild(b);
+  });
+  const bm = store.get('best:mock', null); $('best-mock').textContent = bm != null ? 'ดีสุด ' + bm + '/40' : '';
+  const bx = store.get('best:mix', null); $('best-mix').textContent = bx != null ? 'ดีสุด ' + bx + '/' + MIX_N : '';
+}
+
+function tag(items, stage) { return items.map(x => Object.assign({ stage }, x)); }
+
+function start(mode, stage) {
+  let items = [];
+  if (mode === 'topic') items = tag(pick(stage, ROUND), stage);
+  else if (mode === 'mix') {
+    const ids = shuffle(TOPICS.map(t => t.id).filter(id => (POOLS[id] || []).length));
+    for (let k = 0; items.length < MIX_N && k < 200; k++) { const id = ids[k % ids.length]; const got = tag(pick(id, 1, new Set(items.map(x => x.id))), id); if (got.length) items.push(got[0]); }
+    items = shuffle(items);
+  } else if (mode === 'mock') {
+    for (const id in MOCK_MIX) items = items.concat(tag(pick(id, MOCK_MIX[id]), id));
+    /* ข้อที่ใช้เรื่องอ่านเดียวกันอยู่ติดกัน เหมือนข้อสอบจริง */
+    const groups = {}; items.forEach(x => { const k = x.stage + '|' + splitQ(x.q).t; (groups[k] = groups[k] || []).push(x); });
+    items = [].concat(...shuffle(Object.values(groups)));
+  }
+  S = { mode, stage, items, i: 0, ok: 0, ans: [], t0: Date.now(), qt0: Date.now() };
+  show('play'); clearInterval(timer); timer = setInterval(tick, 500); tick(); render();
+}
+
+function tick() {
+  if (!S) return; const el = (Date.now() - S.t0) / 1000;
+  if (S.mode === 'mock') {
+    const left = MOCK_SEC - el; $('hTime').textContent = fmtT(left); $('hTimeL').textContent = 'เหลือเวลา';
+    $('pTime').classList.toggle('late', left < 180);
+    if (left <= 0) { clearInterval(timer); finish(true); }
+  } else { $('hTime').textContent = fmtT(el); $('hTimeL').textContent = 'เวลา'; $('pTime').classList.remove('late'); }
+}
+
+function render() {
+  const it = S.items[S.i], n = S.items.length;
+  $('hNo').textContent = (S.i + 1); $('hOf').textContent = 'ข้อ / ' + n;
+  $('hOk').textContent = S.mode === 'mock' ? S.ans.length : S.ok; $('hOkL').textContent = S.mode === 'mock' ? 'ตอบแล้ว' : 'ถูก';
+  $('bar').style.width = (100 * S.i / n) + '%';
+  const tp = topicOf(it.stage); $('tName').textContent = tp.ico + ' ' + tp.name;
+  const p = splitQ(it.q);
+  $('txt').innerHTML = p.t ? '<div class="txt' + (isTable(p.t) ? ' mono' : '') + '">' + markup(p.t) + '</div>' : '';
+  $('q').innerHTML = markup(p.q);
+  const order = shuffle([0, 1, 2, 3]); S.order = order;
+  const box = $('choices'); box.innerHTML = '';
+  /* ข้อจับจุดผิดเรียงเลข 1–4 ตามตำแหน่ง ไม่สลับ */
+  const isNum = it.ch.every(c => /^[1-4]$/.test(c));
+  const ord = isNum ? [0, 1, 2, 3].sort((a, b) => it.ch[a] - it.ch[b]) : order; S.order = ord;
+  ord.forEach((ci, k) => {
+    const b = document.createElement('button'); b.className = 'ch';
+    b.innerHTML = isNum ? '<span class="k">จุด</span> ' + esc(it.ch[ci]) : '<span class="k">' + KEYS[k] + '.</span> ' + esc(it.ch[ci]);
+    b.onclick = () => answer(ci, b); box.appendChild(b);
+  });
+  $('fb').innerHTML = ''; $('next').classList.add('hidden'); S.qt0 = Date.now();
+  window.scrollTo(0, 0);
+}
+
+function answer(ci, btn) {
+  const it = S.items[S.i], ok = ci === 0, sec = (Date.now() - S.qt0) / 1000;
+  S.ans.push({ it, ci, ok, sec }); markSeen(it); if (ok) S.ok++;
+  const btns = [...$('choices').children]; btns.forEach(b => b.disabled = true);
+  if (S.mode === 'mock') { btn.classList.add('pick'); setTimeout(nextQ, 220); return; }
+  btns.forEach((b, k) => { if (S.order[k] === 0) b.classList.add('ok'); });
+  if (!ok) btn.classList.add('bad');
+  let h = ok ? '<div class="fb ok"><span class="t">✔ ถูกต้อง!</span>' + esc(it.why[0]) + '</div>'
+             : '<div class="fb bad"><span class="t">✘ ยังไม่ใช่ — "' + esc(plain(it.ch[ci])) + '"</span>' + esc(it.why[ci]) + '</div>'
+             + '<div class="fb ok"><span class="t">✔ คำตอบคือ "' + esc(plain(it.ch[0])) + '"</span>' + esc(it.why[0]) + '</div>';
+  $('fb').innerHTML = h; $('hOk').textContent = S.ok;
+  $('next').textContent = S.i + 1 < S.items.length ? 'ข้อต่อไป →' : 'ดูผล'; $('next').classList.remove('hidden');
+  $('next').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function nextQ() { S.i++; if (S.i >= S.items.length) finish(false); else render(); }
+
+function finish(timeUp) {
+  clearInterval(timer);
+  const n = S.items.length, ok = S.ok, pct = Math.round(100 * ok / n), el = (Date.now() - S.t0) / 1000;
+  const answered = S.ans.length, avg = answered ? el / answered : 0;
+  const key = S.mode === 'topic' ? S.stage : S.mode;
+  const prev = store.get('best:' + key, null); if (prev == null || ok > prev) store.set('best:' + key, ok);
+  $('dTitle').textContent = S.mode === 'mock' ? (timeUp ? '⏰ หมดเวลา!' : '🏁 จบสอบจำลอง') : S.mode === 'mix' ? '🔀 จบรอบคละหัวข้อ' : topicOf(S.stage).ico + ' ' + topicOf(S.stage).name;
+  $('dStars').textContent = pct >= 80 ? '⭐⭐⭐' : pct >= 60 ? '⭐⭐' : pct >= 40 ? '⭐' : '💪';
+  $('dScore').textContent = ok + ' / ' + n;
+  let msg = 'ใช้เวลา ' + fmtT(el) + ' · เฉลี่ย ' + Math.round(avg) + ' วินาที/ข้อ (เป้า 36)';
+  if (S.mode === 'mock' && answered < n) msg += '\nตอบไม่ทัน ' + (n - answered) + ' ข้อ';
+  msg += '\n' + (pct >= 80 ? 'เก่งมาก! ลองหัวข้อที่ยากขึ้นได้เลย' : pct >= 50 ? 'ดีแล้ว อ่านคำอธิบายข้อที่ผิดด้านล่าง แล้วเล่นอีกรอบ' : 'ไม่เป็นไร ผิด = ได้รู้ว่าต้องฝึกตรงไหน อ่านคำอธิบายแล้วลองใหม่นะ');
+  $('dMsg').style.whiteSpace = 'pre-line'; $('dMsg').textContent = msg;
+  /* แยกคะแนนรายหัวข้อ (สอบจำลอง / คละ) */
+  let sk = '';
+  if (S.mode !== 'topic') {
+    const per = {}; S.items.forEach(x => { per[x.stage] = per[x.stage] || { n: 0, ok: 0 }; per[x.stage].n++; });
+    S.ans.forEach(a => { if (a.ok) per[a.it.stage].ok++; });
+    sk = '<h2>คะแนนรายหัวข้อ</h2>' + Object.keys(per).map(id => { const t = topicOf(id); return '<div class="row"><span>' + t.ico + ' ' + esc(t.name) + '</span><span class="v">' + per[id].ok + '/' + per[id].n + '</span></div>'; }).join('');
+  }
+  $('dSkill').innerHTML = sk;
+  const wrong = S.ans.filter(a => !a.ok);
+  $('dMiss').innerHTML = wrong.length ? '<h2>ข้อที่ผิด — อ่านทีละข้อนะ</h2>' + wrong.map(a => {
+    const p = splitQ(a.it.q);
+    return '<div class="miss"><div class="mq">' + markup(p.q) + '</div>น้องตอบ: "' + esc(plain(a.it.ch[a.ci])) + '"\n' + esc(a.it.why[a.ci]) + '\n\n✔ คำตอบ: "' + esc(plain(a.it.ch[0])) + '"\n' + esc(a.it.why[0]) + '</div>';
+  }).join('') : '';
+  S.done = true; show('done');
+}
+
+function show(id) { ['home', 'play', 'done'].forEach(s => $(s).classList.toggle('hidden', s !== id)); window.scrollTo(0, 0); }
+
+$('mockBtn').onclick = () => start('mock');
+$('mixBtn').onclick = () => start('mix');
+$('next').onclick = nextQ;
+$('quit').onclick = () => { clearInterval(timer); S = null; buildMenu(); show('home'); };
+$('again').onclick = () => start(S.mode, S.stage);
+$('toHome').onclick = () => { S = null; buildMenu(); show('home'); };
+buildMenu();
+</script>
+</body>
+</html>
