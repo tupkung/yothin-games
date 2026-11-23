@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>คณิต ป.5 พื้นฐานและแข่งขัน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+--ink:#1a1c1e;--muted:#5b6167;--line:#dfe3e8;--bg:#fbfbfa;--card:#fff;--soft:#f4f6f8;
+--accent:#1f6feb;--ok:#136c39;--ok-bg:#e8f6ee;--bad:#b3261e;--bad-bg:#fdecea;
+--base:#1f6feb;--comp:#b25000;--mix:#6b46e0;--on-accent:#fff;--tip:#fff7e0;--tip-line:#e6c565}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#333a42;--bg:#16181b;--card:#1e2126;--soft:#262a30;
+--accent:#69a4ff;--ok:#6fd39a;--ok-bg:#13301f;--bad:#ff8a80;--bad-bg:#3a1a17;
+--base:#69a4ff;--comp:#f0a163;--mix:#a68cff;--on-accent:#0b1a33;--tip:#2e2814;--tip-line:#7a6526}}
+:root[data-theme="dark"]{
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#333a42;--bg:#16181b;--card:#1e2126;--soft:#262a30;
+--accent:#69a4ff;--ok:#6fd39a;--ok-bg:#13301f;--bad:#ff8a80;--bad-bg:#3a1a17;
+--base:#69a4ff;--comp:#f0a163;--mix:#a68cff;--on-accent:#0b1a33;--tip:#2e2814;--tip-line:#7a6526}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Sarabun","Noto Sans Thai",-apple-system,sans-serif;font-size:18px;line-height:1.7;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:680px;margin:0 auto;padding:20px 16px calc(60px + env(safe-area-inset-bottom))}
+h1{font-size:1.45rem;margin:0 0 4px}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 16px}
+.hidden{display:none !important}
+button{font-family:inherit;font-size:1rem;cursor:pointer;touch-action:manipulation}
+.tipbox{background:var(--tip);border:1px solid var(--tip-line);border-radius:12px;padding:10px 14px;font-size:.92rem;margin:0 0 16px}
+.subj{display:block;width:100%;text-align:left;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;padding:14px 16px;margin-bottom:12px}
+.subj b{font-size:1.15rem}
+.subj .d{color:var(--muted);font-size:.86rem}
+.t{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:12px 16px;margin-bottom:10px}
+.t .best{float:right;font-size:.8rem;color:var(--ok);font-weight:700}
+.t .d{color:var(--muted);font-size:.85rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.hud{display:flex;gap:10px;margin-bottom:12px}
+.pill{flex:1;background:var(--soft);border-radius:11px;padding:6px;text-align:center;line-height:1.3}
+.pill .n{font-size:1.25rem;font-weight:700;font-family:"IBM Plex Mono",monospace}
+.pill .l{font-size:.72rem;color:var(--muted)}
+.q{font-size:1.15rem;font-weight:600;margin:4px 0 14px;white-space:pre-line}
+.fig{margin:0 0 10px;text-align:center}
+.fig svg{width:100%;max-width:360px;height:auto;color:var(--ink)}
+.ch{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;margin-bottom:9px;min-height:50px}
+.ch.ok{border-color:var(--ok);background:var(--ok-bg)}
+.ch.bad{border-color:var(--bad);background:var(--bad-bg)}
+.fb{border-radius:12px;padding:10px 14px;margin:4px 0 12px;font-size:.96rem;white-space:pre-line}
+.fb.ok{background:var(--ok-bg);border:1px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);border:1px solid var(--bad)}
+.fb.hint{background:var(--tip);border:1px solid var(--tip-line)}
+.go{display:block;width:100%;background:var(--accent);color:var(--on-accent);border:0;border-radius:12px;padding:12px;font-weight:700}
+.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:.88rem}
+.hintbtn{background:transparent;color:var(--ink);border:1px dashed var(--tip-line);border-radius:10px;padding:6px 12px;font-size:.9rem;margin:0 0 10px}
+.big{font-size:2.4rem;font-weight:700;text-align:center}
+.stars{font-size:2rem;text-align:center}
+.miss{font-size:.9rem;background:var(--soft);border-radius:10px;padding:8px 12px;margin:6px 0;white-space:pre-line}
+.tag{display:inline-block;font-size:.75rem;border-radius:999px;padding:0 8px;margin-right:6px;border:1px solid currentColor}
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;font-size:.82em;line-height:1.15;margin:0 .12em}
+.fr>span:first-child{border-bottom:1.5px solid currentColor;padding:0 .2em}
+.fr>span:last-child{padding:0 .2em}
+footer{color:var(--muted);font-size:.8rem;text-align:center;margin-top:24px}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section id="home">
+  <h1>🔢 คณิต ป.5 — พื้นฐาน + สนามแข่งขัน</h1>
+  <p class="sub">เลือกโหมด แล้วเลือกหัวข้อ เล่นรอบละ 10 ข้อ ตอบแล้วมีคำอธิบายทุกข้อ</p>
+  <div class="tipbox">📘 <b>พื้นฐาน</b> = ตามหนังสือ ป.5 ต้องทำได้ทุกข้อ<br>🏆 <b>สนามแข่งขัน</b> = ใช้ความรู้ ป.5 เหมือนเดิม แต่ต้องคิดหลายขั้น แบบข้อสอบเข้า ม.1 และสอบแข่งขัน<br>💡 ติดตรงไหน กด "ขอใบ้" ได้ จะบอกขั้นแรกให้</div>
+  <div id="subjects"></div>
+</section>
+<section id="topics" class="hidden">
+  <h1 id="sTitle"></h1><p class="sub" id="sSub"></p>
+  <div id="topicList"></div>
+  <p style="text-align:center"><button class="ghost" id="backHome">← เลือกโหมดอื่น</button></p>
+</section>
+<section id="play" class="hidden">
+  <div class="hud">
+    <div class="pill"><div class="n" id="hNo">1</div><div class="l" id="hOf">ข้อ / 10</div></div>
+    <div class="pill"><div class="n" id="hOk">0</div><div class="l">ถูก</div></div>
+    <div class="pill"><div class="n" id="hStreak">0</div><div class="l" id="hStreakL">ถูกติดกัน 🔥</div></div>
+  </div>
+  <div class="card">
+    <div class="sub" id="tName" style="margin:0 0 4px"></div>
+    <div class="fig" id="fig"></div>
+    <div class="q" id="q"></div>
+    <button class="hintbtn" id="hint">💡 ขอใบ้ (ขั้นแรก)</button>
+    <div id="hintBox"></div>
+    <div id="choices"></div>
+    <div id="fb"></div>
+    <button class="go hidden" id="next">ข้อต่อไป ➜</button>
+  </div>
+  <p style="text-align:center;margin-top:12px"><button class="ghost" id="quit">← กลับ</button></p>
+</section>
+<section id="done" class="hidden">
+  <div class="card">
+    <h1 id="dTitle"></h1>
+    <div class="stars" id="dStars"></div>
+    <div class="big" id="dScore"></div>
+    <p style="text-align:center;color:var(--muted)" id="dMsg"></p>
+    <div id="dMiss"></div>
+    <button class="go" id="again">เล่นอีกรอบ (โจทย์ใหม่)</button>
+    <p style="text-align:center;margin-top:10px"><button class="ghost" id="toTopics">← เลือกหัวข้อ</button></p>
+  </div>
+</section>
+<footer>เกมคณิต ป.5 · โจทย์สุ่มตัวเลขใหม่ทุกรอบ · สถิติเก็บในเครื่องนี้</footer>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); if (Telegram.WebApp.disableVerticalSwipes) Telegram.WebApp.disableVerticalSwipes(); } } catch (e) { }
+</script>
+
+<script id="gen">
+"use strict";
+/* ข้อหนึ่งข้อ = { q: คำถาม, c: [ตัวถูก, ตัวลวง...], w: คำอธิบาย, why: {ตัวลวง: ผิดเพราะอะไร}, fig?: SVG, k?: ชนิด, p?: ตัวแปรให้ตัวทดสอบคิดซ้ำ } */
+const R = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const fmt = n => Number(n).toLocaleString('en-US');
+function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const gcd = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) { const t = a % b; a = b; b = t; } return a; };
+const lcm = (a, b) => a / gcd(a, b) * b;
+/* เศษส่วน */
+function F(n, d) { if (d < 0) { n = -n; d = -d; } const g = gcd(n, d) || 1; return { n: n / g, d: d / g }; }
+const fadd = (x, y) => F(x.n * y.d + y.n * x.d, x.d * y.d);
+const fsub = (x, y) => F(x.n * y.d - y.n * x.d, x.d * y.d);
+const fmul = (x, y) => F(x.n * y.n, x.d * y.d);
+const fdiv = (x, y) => F(x.n * y.d, x.d * y.n);
+function fs(x) { if (!x || !x.d || !(x.n > 0)) return null; if (x.d === 1) return fmt(x.n); if (x.n > x.d) { const w = Math.floor(x.n / x.d); return w + ' ' + (x.n - w * x.d) + '/' + x.d; } return x.n + '/' + x.d; }
+const imp = x => x.n + '/' + x.d;               /* เศษเกิน ไม่ทำเป็นจำนวนคละ */
+function coN(d) { let n; do { n = R(1, d - 1); } while (gcd(n, d) !== 1); return n; }
+/* ทศนิยม: คืน null ถ้ามีเกิน 3 ตำแหน่ง */
+function ds(x) { if (!(x > 0) || !isFinite(x)) return null; const r = Math.round(x * 1000) / 1000; if (Math.abs(r - x) > 1e-9) return null; let [i, f] = r.toFixed(3).split('.'); f = f.replace(/0+$/, ''); return fmt(+i) + (f ? '.' + f : ''); }
+const ns = n => (Number.isInteger(n) && n > 0) ? fmt(n) : null;
+const U = (s, unit) => s == null ? null : s + ' ' + unit;
+
+function C(ans, cands, pad) {
+  if (ans == null) throw new Error('bad answer');
+  const c = [ans], why = {};
+  const ok = x => typeof x === 'string' && x.length > 0 && !/NaN|Infinity|undefined|null/.test(x) && !c.includes(x);
+  for (const it of cands) { if (c.length >= 4) break; const [s, r] = Array.isArray(it) ? it : [it, '']; if (ok(s)) { c.push(s); if (r) why[s] = r; } }
+  let g = 0; while (c.length < 4 && g++ < 400) { const s = pad(); if (ok(s)) c.push(s); }
+  if (c.length < 4) throw new Error('not enough choices for ' + ans);
+  return { c, why };
+}
+function Q(q, ans, cands, pad, w, extra) { const { c, why } = C(ans, cands, pad); return Object.assign({ q, c, w, why }, extra || {}); }
+const padN = (A, step, unit) => () => { const v = A + pick([-3, -2, -1, 1, 2, 3]) * step; const s = Number.isInteger(v) ? ns(v) : ds(v); return unit ? U(s, unit) : s; };
+const padF = A => () => fs(F(A.n + pick([-2, -1, 1, 2]) * R(1, 2), A.d + pick([0, 0, 1, -1])));
+
+/* =================== 📘 พื้นฐาน ป.5 =================== */
+
+/* b1 เศษส่วน บวก ลบ */
+function gFracAS() {
+  const t = R(1, 3);
+  if (t === 1) {
+    let d1, d2; do { d1 = R(2, 12); d2 = R(2, 12); } while (d1 === d2 || lcm(d1, d2) > 40);
+    const a = F(coN(d1), d1), b = F(coN(d2), d2), A = fadd(a, b), L = lcm(d1, d2);
+    const w = 'โจทย์ถาม: ' + fs(a) + ' + ' + fs(b) + ' เท่ากับเท่าไร\n1. ตัวส่วนไม่เท่ากัน ต้องทำให้เท่ากันก่อน หาเลขที่ทั้ง ' + d1 + ' และ ' + d2 + ' หารลงตัว → ' + L +
+      '\n2. ' + fs(a) + ' = ' + (a.n * L / d1) + '/' + L + ' (คูณบนและล่างด้วย ' + (L / d1) + ')' +
+      '\n3. ' + fs(b) + ' = ' + (b.n * L / d2) + '/' + L + ' (คูณบนและล่างด้วย ' + (L / d2) + ')' +
+      '\n4. บวกเฉพาะตัวเศษ: ' + (a.n * L / d1 + b.n * L / d2) + '/' + L + ' = ' + fs(A) + '\nคำตอบ ' + fs(A);
+    return Q('หาผลบวก\n' + fs(a) + ' + ' + fs(b) + ' = ?', fs(A),
+      [[fs(F(a.n + b.n, d1 + d2)), 'บวกเศษกับเศษ ส่วนกับส่วน ทำแบบนี้ไม่ได้ ต้องทำตัวส่วนให้เท่ากันก่อน'],
+       [fs(F(a.n + b.n, L)), 'ทำตัวส่วนให้เท่ากันแล้ว แต่ลืมคูณตัวเศษตาม'],
+       [fs(F(a.n + b.n, d1 * d2)), 'ตัวส่วนคูณกัน แต่ตัวเศษบวกเฉย ๆ']], padF(A), w, { k: 'fadd', p: { a, b } });
+  }
+  if (t === 2) {
+    let d1, d2, a, b; do { d1 = R(2, 9); d2 = R(2, 9); a = F(coN(d1), d1); b = F(coN(d2), d2); } while (d1 === d2 || a.n * d2 + b.n * d1 <= d1 * d2 || lcm(d1, d2) > 36);
+    const w1 = R(1, 5), w2 = R(1, 4), X = fadd(F(w1, 1), a), Y = fadd(F(w2, 1), b), A = fadd(X, Y), L = lcm(d1, d2), fsum = fadd(a, b);
+    const w = 'โจทย์ถาม: ' + fs(X) + ' + ' + fs(Y) + ' เท่ากับเท่าไร\n1. บวกจำนวนเต็มก่อน: ' + w1 + ' + ' + w2 + ' = ' + (w1 + w2) +
+      '\n2. ทำตัวส่วนให้เท่ากัน (' + L + '): ' + (a.n * L / d1) + '/' + L + ' + ' + (b.n * L / d2) + '/' + L + ' = ' + (a.n * L / d1 + b.n * L / d2) + '/' + L +
+      '\n3. ' + (a.n * L / d1 + b.n * L / d2) + '/' + L + ' เกิน 1 → เท่ากับ ' + fs(fsum) + ' ทด 1 ไปที่จำนวนเต็ม' +
+      '\n4. ' + (w1 + w2) + ' + ' + fs(fsum) + ' = ' + fs(A) + '\nคำตอบ ' + fs(A);
+    return Q('หาผลบวก\n' + fs(X) + ' + ' + fs(Y) + ' = ?', fs(A),
+      [[fs(fsub(A, F(1, 1))), 'เศษส่วนรวมกันเกิน 1 แล้วลืมทด 1 ไปที่จำนวนเต็ม'],
+       [fs(fadd(F(w1 + w2, 1), F(a.n + b.n, d1 + d2))), 'บวกเศษกับเศษ ส่วนกับส่วน ต้องทำตัวส่วนให้เท่ากันก่อน'],
+       [fs(fadd(A, F(1, 1))), 'ทด 1 ซ้ำสองครั้ง']], padF(A), w, { k: 'fadd', p: { a: X, b: Y } });
+  }
+  let d1, d2, a, b; do { d1 = R(2, 9); d2 = R(2, 9); a = F(coN(d1), d1); b = F(coN(d2), d2); } while (d1 === d2 || a.n * d2 >= b.n * d1 || lcm(d1, d2) > 36);
+  const w2 = R(1, 4), w1 = w2 + R(2, 5), X = fadd(F(w1, 1), a), Y = fadd(F(w2, 1), b), A = fsub(X, Y), L = lcm(d1, d2);
+  const an = a.n * L / d1, bn = b.n * L / d2;
+  const w = 'โจทย์ถาม: ' + fs(X) + ' − ' + fs(Y) + ' เท่ากับเท่าไร\n1. ทำตัวส่วนให้เท่ากัน (' + L + '): ' + fs(a) + ' = ' + an + '/' + L + ' และ ' + fs(b) + ' = ' + bn + '/' + L +
+    '\n2. ' + an + '/' + L + ' ลบ ' + bn + '/' + L + ' ไม่พอ ต้องยืม 1 จาก ' + w1 + ' (1 = ' + L + '/' + L + ')' +
+    '\n3. ' + w1 + ' ' + an + '/' + L + ' จึงกลายเป็น ' + (w1 - 1) + ' และ ' + (an + L) + '/' + L +
+    '\n4. จำนวนเต็ม: ' + (w1 - 1) + ' − ' + w2 + ' = ' + (w1 - 1 - w2) + '\n5. เศษส่วน: ' + (an + L) + '/' + L + ' − ' + bn + '/' + L + ' = ' + (an + L - bn) + '/' + L +
+    '\nคำตอบ ' + fs(A);
+  return Q('หาผลลบ\n' + fs(X) + ' − ' + fs(Y) + ' = ?', fs(A),
+    [[fs(fadd(F(w1 - w2, 1), fsub(b, a))), 'เอาเศษส่วนตัวหลังลบตัวหน้า (กลับด้าน) เพราะตัวหน้าลบไม่พอ ต้องยืม 1 แทน'],
+     [fs(fadd(A, F(1, 1))), 'ยืม 1 มาแล้ว แต่ลืมลดจำนวนเต็มลง 1'],
+     [fs(fadd(F(w1 - w2, 1), F(an + L - bn, L * 2))), 'ยืมแล้วตัวส่วนผิด (1 ที่ยืมมาต้องเขียนเป็น ' + L + '/' + L + ')']], padF(A), w, { k: 'fsub', p: { a: X, b: Y } });
+}
+
+/* b2 เศษส่วน คูณ หาร */
+function gFracMD() {
+  const t = R(1, 5);
+  const pf = () => { const d = R(2, 9); return F(coN(d), d); };
+  if (t === 1) {
+    let x, y; do { x = pf(); y = pf(); } while (x.d === y.d && x.n === y.n);
+    const A = fmul(x, y);
+    const w = 'โจทย์ถาม: ' + fs(x) + ' × ' + fs(y) + ' เท่ากับเท่าไร\n1. เศษคูณเศษ: ' + x.n + ' × ' + y.n + ' = ' + (x.n * y.n) + '\n2. ส่วนคูณส่วน: ' + x.d + ' × ' + y.d + ' = ' + (x.d * y.d) +
+      '\n3. ได้ ' + (x.n * y.n) + '/' + (x.d * y.d) + ' ทำเป็นอย่างต่ำ = ' + fs(A) + '\nคำตอบ ' + fs(A);
+    return Q('หาผลคูณ\n' + fs(x) + ' × ' + fs(y) + ' = ?', fs(A),
+      [[fs(fdiv(x, y)), 'คูณไขว้ — วิธีนี้ใช้กับการหาร ไม่ใช่การคูณ'],
+       [fs(F(x.n + y.n, x.d * y.d)), 'บวกตัวเศษ แต่คูณตัวส่วน — ต้องคูณทั้งคู่'],
+       [fs(F(x.n * y.n, x.d + y.d)), 'คูณตัวเศษ แต่บวกตัวส่วน — ต้องคูณทั้งคู่']], padF(A), w, { k: 'fmul', p: { x, y } });
+  }
+  if (t === 2) {
+    const d = R(3, 9), n = coN(d), N = d * R(3, 15), A = N / d * n;
+    const w = 'โจทย์ถาม: ' + n + '/' + d + ' ของ ' + N + ' เท่ากับเท่าไร\n1. คำว่า "ของ" แปลว่า คูณ\n2. แบ่ง ' + N + ' เป็น ' + d + ' ส่วนเท่ากัน: ' + N + ' ÷ ' + d + ' = ' + (N / d) +
+      '\n3. เอามา ' + n + ' ส่วน: ' + (N / d) + ' × ' + n + ' = ' + A + '\nคำตอบ ' + A;
+    return Q(n + '/' + d + ' ของ ' + N + ' เท่ากับเท่าไร', ns(A),
+      [[ns(N - A), 'นี่คือส่วนที่เหลือ ไม่ใช่ ' + n + '/' + d + ' ของ ' + N],
+       [ns(N / d), 'แบ่งเป็น ' + d + ' ส่วนแล้ว ลืมเอามา ' + n + ' ส่วน'],
+       [ns(N * n), 'คูณ ' + n + ' แล้ว ลืมหารด้วย ' + d]], padN(A, n), w, { k: 'fof', p: { n, d, N } });
+  }
+  if (t === 3) {
+    let x, y; do { x = pf(); y = pf(); } while (x.n * y.d === y.n * x.d);
+    const A = fdiv(x, y);
+    const w = 'โจทย์ถาม: ' + fs(x) + ' ÷ ' + fs(y) + ' เท่ากับเท่าไร\n1. หารด้วยเศษส่วน = คูณด้วย "ตัวกลับ" ของตัวหลัง\n2. ' + fs(y) + ' กลับเป็น ' + y.d + '/' + y.n +
+      '\n3. ' + fs(x) + ' × ' + y.d + '/' + y.n + ' = ' + (x.n * y.d) + '/' + (x.d * y.n) + '\n4. ทำเป็นอย่างต่ำ = ' + fs(A) + '\nคำตอบ ' + fs(A);
+    return Q('หาผลหาร\n' + fs(x) + ' ÷ ' + fs(y) + ' = ?', fs(A),
+      [[fs(fmul(x, y)), 'ลืมกลับตัวหาร — คูณตรง ๆ เลย'],
+       [fs(fdiv(y, x)), 'กลับผิดตัว — ต้องกลับตัวหลัง (ตัวหาร) ไม่ใช่ตัวหน้า'],
+       [fs(F(x.n * y.d, x.d * y.n + x.d)), 'กลับตัวหารแล้ว แต่ตัวส่วนคิดผิด']], padF(A), w, { k: 'fdiv', p: { x, y } });
+  }
+  if (t === 4) {
+    const a = pf(), b = pf(), w1 = R(1, 3), w2 = R(1, 2), X = fadd(F(w1, 1), a), Y = fadd(F(w2, 1), b), A = fmul(X, Y);
+    const w = 'โจทย์ถาม: ' + fs(X) + ' × ' + fs(Y) + ' เท่ากับเท่าไร\n1. เปลี่ยนจำนวนคละเป็นเศษเกินก่อน: ' + fs(X) + ' = ' + imp(X) + ' และ ' + fs(Y) + ' = ' + imp(Y) +
+      '\n2. คูณ: ' + imp(X) + ' × ' + imp(Y) + ' = ' + (X.n * Y.n) + '/' + (X.d * Y.d) + '\n3. ทำเป็นจำนวนคละ = ' + fs(A) + '\nคำตอบ ' + fs(A);
+    return Q('หาผลคูณ\n' + fs(X) + ' × ' + fs(Y) + ' = ?', fs(A),
+      [[fs(fadd(F(w1 * w2, 1), fmul(a, b))), 'คูณจำนวนเต็มกับจำนวนเต็ม เศษส่วนกับเศษส่วน แยกกัน — ต้องเปลี่ยนเป็นเศษเกินก่อน'],
+       [fs(fadd(F(w1 + w2, 1), fmul(a, b))), 'บวกจำนวนเต็ม แต่คูณเศษส่วน — ต้องเปลี่ยนเป็นเศษเกินแล้วคูณทั้งก้อน'],
+       [fs(fdiv(X, Y)), 'คูณไขว้ — นั่นคือวิธีหาร']], padF(A), w, { k: 'fmul', p: { x: X, y: Y } });
+  }
+  const d = R(2, 9), n = coN(d), k = R(2, 9), N = n * k, A = k * d;
+  const w = 'โจทย์ถาม: ' + N + ' ÷ ' + n + '/' + d + ' เท่ากับเท่าไร\n1. หารด้วยเศษส่วน = คูณด้วยตัวกลับ: ' + n + '/' + d + ' กลับเป็น ' + d + '/' + n +
+    '\n2. ' + N + ' × ' + d + '/' + n + ' = ' + (N * d) + '/' + n + ' = ' + A + '\nตรวจ: หารด้วยเลขที่น้อยกว่า 1 คำตอบต้องมากขึ้น ✓\nคำตอบ ' + A;
+  return Q('หาผลหาร\n' + N + ' ÷ ' + n + '/' + d + ' = ?', ns(A),
+    [[fs(F(N * n, d)), 'คูณแทนหาร — หารด้วยเศษส่วนต้องกลับตัวหารก่อน'],
+     [fs(F(N, d * n)), 'กลับแล้วไปไว้ผิดที่'],
+     [ns(N * d), 'คูณด้วยตัวส่วน แต่ลืมหารด้วยตัวเศษ ' + n]], padN(A, d), w, { k: 'wdiv', p: { N, n, d } });
+}
+
+/* b3 โจทย์ปัญหาเศษส่วน 2 ขั้นตอน */
+function gFracWord() {
+  const t = R(1, 4);
+  if (t === 1) {
+    let b, a, M, s1, X; do { b = pick([3, 4, 5, 6, 8]); a = coN(b); M = b * R(4, 30) * 5; s1 = M / b * a; X = R(2, 20) * 5; } while (M - s1 - X <= 0 || M > 1500);
+    const A = M - s1 - X;
+    const w = 'โจทย์ถาม: เหลือเงินกี่บาท\n1. ค่าหนังสือ = ' + a + '/' + b + ' ของ ' + fmt(M) + ' = ' + fmt(M) + ' ÷ ' + b + ' × ' + a + ' = ' + fmt(s1) + ' บาท' +
+      '\n2. ใช้ไปทั้งหมด ' + fmt(s1) + ' + ' + X + ' = ' + fmt(s1 + X) + ' บาท\n3. เหลือ ' + fmt(M) + ' − ' + fmt(s1 + X) + ' = ' + fmt(A) + ' บาท\nคำตอบ ' + fmt(A) + ' บาท';
+    return Q('ต้นมีเงิน ' + fmt(M) + ' บาท ซื้อหนังสือไป ' + a + '/' + b + ' ของเงินที่มี แล้วซื้อขนมอีก ' + X + ' บาท ต้นเหลือเงินกี่บาท', U(ns(A), 'บาท'),
+      [[U(ns(M - s1), 'บาท'), 'ลืมหักค่าขนมอีก ' + X + ' บาท'], [U(ns(s1 + X), 'บาท'), 'นี่คือเงินที่ใช้ไป ไม่ใช่เงินที่เหลือ'], [U(ns(M - s1 + X), 'บาท'), 'ค่าขนมต้องลบออก ไม่ใช่บวกเพิ่ม']],
+      padN(A, 5, 'บาท'), w, { k: 'int', p: { v: M - M * a / b - X } });
+  }
+  if (t === 2) {
+    const b = pick([2, 3, 4, 5, 6]), a = pick([1, 1, 2, 3].filter(v => v < b && gcd(v, b) === 1)), L = a * R(3, 12), A = L * b / a;
+    const w = 'โจทย์ถาม: ตัดได้กี่ท่อน\n1. แบ่งเป็นท่อนละเท่ากัน = หาร: ' + L + ' ÷ ' + a + '/' + b + '\n2. กลับตัวหาร: ' + L + ' × ' + b + '/' + a + ' = ' + A + '\nคำตอบ ' + A + ' ท่อน';
+    return Q('เชือกยาว ' + L + ' เมตร ตัดเป็นท่อน ท่อนละ ' + a + '/' + b + ' เมตร จะได้กี่ท่อน', U(ns(A), 'ท่อน'),
+      [[U(fs(F(L * a, b)), 'ท่อน'), 'คูณแทนหาร — ตัดเป็นท่อน ๆ ต้องหาร'], [U(ns(L * b), 'ท่อน'), 'คูณ ' + b + ' แล้วลืมหารด้วย ' + a], [U(ns(A + b), 'ท่อน'), 'คิดเกินมา']],
+      padN(A, 1, 'ท่อน'), w, { k: 'int', p: { v: L / (a / b) } });
+  }
+  if (t === 3) {
+    let T, g, u; do { T = fadd(F(R(2, 5), 1), F(pick([1, 1, 3]), pick([2, 4]))); g = F(coN(4), 4); u = fadd(F(R(0, 1), 1), F(coN(3), 3)); } while (!(fv(T) - fv(g) - fv(u) > 0.2));
+    const A = fsub(fsub(T, g), u);
+    const w = 'โจทย์ถาม: เหลือเนื้อหมูกี่กิโลกรัม\n1. ให้ป้าแล้วเหลือ: ' + fs(T) + ' − ' + fs(g) + ' = ' + fs(fsub(T, g)) +
+      '\n2. ใช้ทำกับข้าวแล้วเหลือ: ' + fs(fsub(T, g)) + ' − ' + fs(u) + ' = ' + fs(A) + '\nคำตอบ ' + fs(A) + ' กิโลกรัม';
+    return Q('แม่ซื้อเนื้อหมู ' + fs(T) + ' กิโลกรัม แบ่งให้ป้า ' + fs(g) + ' กิโลกรัม ใช้ทำกับข้าว ' + fs(u) + ' กิโลกรัม แม่เหลือเนื้อหมูกี่กิโลกรัม', U(fs(A), 'กิโลกรัม'),
+      [[U(fs(fsub(T, g)), 'กิโลกรัม'), 'ลืมหักส่วนที่ใช้ทำกับข้าว'], [U(fs(fadd(g, u)), 'กิโลกรัม'), 'นี่คือส่วนที่ให้ไป + ใช้ไป ไม่ใช่ส่วนที่เหลือ'], [U(fs(fadd(fsub(T, g), u)), 'กิโลกรัม'), 'ส่วนที่ใช้ต้องลบ ไม่ใช่บวก']],
+      () => U(padF(A)(), 'กิโลกรัม'), w, { k: 'frac', p: { v: fv(T) - fv(g) - fv(u) } });
+  }
+  const b = pick([2, 3, 4, 5]), a = coN(b), d = pick([3, 4, 5]), c = coN(d), N = b * d * R(1, 3);
+  const girls = N / b * a, A = girls / d * c;
+  if (!(A > 0) || girls - A <= 0 || N > 48) return gFracWord();
+  const w = 'โจทย์ถาม: นักเรียนหญิงที่ใส่แว่นมีกี่คน\n1. นักเรียนหญิง = ' + a + '/' + b + ' ของ ' + N + ' = ' + girls + ' คน\n2. หญิงที่ใส่แว่น = ' + c + '/' + d + ' ของ "นักเรียนหญิง" (' + girls + ' คน) = ' + A + ' คน\nคำตอบ ' + A + ' คน';
+  return Q('ห้องหนึ่งมีนักเรียน ' + N + ' คน เป็นนักเรียนหญิง ' + a + '/' + b + ' ของห้อง นักเรียนหญิง ' + c + '/' + d + ' ใส่แว่นตา นักเรียนหญิงที่ใส่แว่นตามีกี่คน', U(ns(A), 'คน'),
+    [[U(ns(N / d * c), 'คน'), 'คิด ' + c + '/' + d + ' จากทั้งห้อง — ต้องคิดจากนักเรียนหญิงเท่านั้น'], [U(ns(girls), 'คน'), 'นี่คือนักเรียนหญิงทั้งหมด ยังไม่ได้คิดคนใส่แว่น'], [U(ns(girls - A), 'คน'), 'นี่คือนักเรียนหญิงที่ไม่ใส่แว่น']],
+    padN(A, 1, 'คน'), w, { k: 'int', p: { v: N * (a / b) * (c / d) } });
+}
+const fv = x => x.n / x.d;
+
+/* b4 ทศนิยม: ค่าประจำหลัก แปลง เปรียบเทียบ */
+const DEN = [4, 5, 8, 20, 25, 40, 50, 125, 200, 250];
+function to10(d) { for (const m of [10, 100, 1000]) if (m % d === 0) return m; return 0; }
+function gDecBasic() {
+  const t = R(1, 4);
+  if (t === 1) {
+    let dg; do { dg = [R(1, 9), R(0, 9), R(1, 9), R(1, 9), R(1, 9)]; } while (new Set(dg).size < 5);
+    const num = dg[0] + '' + dg[1] + '.' + dg[2] + dg[3] + dg[4], pos = R(1, 3), dig = dg[1 + pos], A = ds(dig / Math.pow(10, pos));
+    const nm = ['', 'ส่วนสิบ (0.1)', 'ส่วนร้อย (0.01)', 'ส่วนพัน (0.001)'];
+    const w = 'โจทย์ถาม: เลขโดด ' + dig + ' ใน ' + num + ' มีค่าเท่าไร\n1. หลังจุด ตำแหน่งที่ 1 = หลัก' + nm[1] + ' ตำแหน่งที่ 2 = หลัก' + nm[2] + ' ตำแหน่งที่ 3 = หลัก' + nm[3] +
+      '\n2. ' + dig + ' อยู่ตำแหน่งที่ ' + pos + ' หลังจุด = หลัก' + nm[pos] + '\n3. ค่า = ' + dig + ' × ' + ds(1 / Math.pow(10, pos)) + ' = ' + A + '\nคำตอบ ' + A;
+    const others = [0, 1, 2, 3].filter(k => k !== pos).map(k => [k === 0 ? String(dig) : ds(dig / Math.pow(10, k)), 'นับตำแหน่งหลังจุดผิด — ' + dig + ' อยู่ตำแหน่งที่ ' + pos]);
+    return Q('ในจำนวน ' + num + '\nเลขโดด ' + dig + ' มีค่าเท่าใด', A, others, () => null, w, { k: 'place', p: { num, dig } });
+  }
+  if (t === 2 || t === 3) {
+    const d = pick(DEN), n = coN(d), m = to10(d), N = n * m / d, A = ds(n / d);
+    if (t === 2) {
+      const w = 'โจทย์ถาม: ' + n + '/' + d + ' เขียนเป็นทศนิยมได้เท่าไร\n1. ทำตัวส่วนให้เป็น ' + fmt(m) + ': คูณบนและล่างด้วย ' + (m / d) + '\n2. ' + n + '/' + d + ' = ' + N + '/' + fmt(m) +
+        '\n3. ' + fmt(m) + ' มีเลข 0 อยู่ ' + (String(m).length - 1) + ' ตัว → ทศนิยม ' + (String(m).length - 1) + ' ตำแหน่ง = ' + A + '\nคำตอบ ' + A;
+      return Q('เศษส่วน ' + n + '/' + d + ' เขียนเป็นทศนิยมได้เท่าใด', A,
+        [[n + '.' + d, 'เอาตัวเศษกับตัวส่วนมาต่อกันด้วยจุด — ไม่ใช่วิธีแปลง'], [ds(n / d * 10), 'เลื่อนจุดทศนิยมผิดไป 1 ตำแหน่ง'], [ds(n / d / 10), 'เลื่อนจุดทศนิยมผิดไป 1 ตำแหน่ง']],
+        () => ds(n / d + pick([1, 2, 3]) / 100), w, { k: 'dec', p: { v: n / d } });
+    }
+    const k = String(m).length - 1;
+    const w = 'โจทย์ถาม: ' + A + ' เป็นเศษส่วนอย่างต่ำได้เท่าไร\n1. นับตำแหน่งหลังจุด: มี ' + (A.split('.')[1] || '').length + ' ตำแหน่ง → ตัวส่วนเป็น ' + fmt(Math.pow(10, (A.split('.')[1] || '').length)) +
+      '\n2. ' + A + ' = ' + Math.round(n / d * Math.pow(10, (A.split('.')[1] || '').length)) + '/' + fmt(Math.pow(10, (A.split('.')[1] || '').length)) + '\n3. ทำเป็นอย่างต่ำ = ' + n + '/' + d + '\nคำตอบ ' + n + '/' + d;
+    const dp = (A.split('.')[1] || '').length, top = Math.round(n / d * Math.pow(10, dp));
+    return Q('ทศนิยม ' + A + ' เขียนเป็นเศษส่วนอย่างต่ำได้เท่าใด', fs(F(n, d)),
+      [[fs(F(top, Math.pow(10, dp - 1))), 'นับตำแหน่งทศนิยมขาดไป 1 ตำแหน่ง'], [fs(F(top, Math.pow(10, dp + 1))), 'นับตำแหน่งทศนิยมเกินไป 1 ตำแหน่ง'], [fs(F(d, n)), 'กลับตัวเศษกับตัวส่วน']],
+      padF(F(n, d)), w, { k: 'frac', p: { v: n / d }, kk: k });
+  }
+  const ip = R(0, 9), most = Math.random() < 0.5;
+  let vals; do {
+    vals = shuffle([ip + R(1, 9) / 10, ip + R(11, 99) / 100, ip + R(101, 999) / 1000, ip + R(1, 99) / 1000]);
+  } while (new Set(vals.map(v => ds(v))).size < 4 || vals.some(v => ds(v) == null || v <= 0));
+  const target = most ? Math.max(...vals) : Math.min(...vals), A = ds(target);
+  const len = s => s.length;
+  const cands = vals.filter(v => v !== target).map(v => { const s = ds(v); return [s, most && len(s) > len(A) ? 'ตัวเลขยาวกว่า ไม่ได้แปลว่ามากกว่า — เทียบทีละหลักจากซ้าย' : (!most && len(s) < len(A) ? 'ตัวเลขสั้นกว่า ไม่ได้แปลว่าน้อยกว่า — เทียบทีละหลักจากซ้าย' : 'เทียบหลักส่วนสิบก่อน ถ้าเท่ากันค่อยดูหลักส่วนร้อย')]; });
+  const pad3 = v => v.toFixed(3);
+  const w = 'โจทย์ถาม: จำนวนไหน' + (most ? 'มากที่สุด' : 'น้อยที่สุด') + '\n1. เติม 0 ให้ทุกตัวมีทศนิยม 3 ตำแหน่ง: ' + vals.map(pad3).join(', ') +
+    '\n2. เทียบทีละหลักจากซ้าย: หลักหน่วย → ส่วนสิบ → ส่วนร้อย → ส่วนพัน\n3. ' + (most ? 'มากที่สุด' : 'น้อยที่สุด') + ' คือ ' + pad3(target) + ' = ' + A + '\nคำตอบ ' + A;
+  return Q('ข้อใดมีค่า' + (most ? 'มากที่สุด' : 'น้อยที่สุด'), A, cands, () => null, w, { k: most ? 'max' : 'min', p: { vals } });
+}
+
+/* b5 ทศนิยม คูณ หาร */
+function gDecMD() {
+  const t = R(1, 4);
+  if (t === 1) {
+    let ai; do { ai = R(101, 999); } while (ai % 10 === 0); const k = R(3, 9), P = ai * k, A = ds(P / 100);
+    const w = 'โจทย์ถาม: ' + ds(ai / 100) + ' × ' + k + ' เท่ากับเท่าไร\n1. คูณแบบไม่สนใจจุดก่อน: ' + ai + ' × ' + k + ' = ' + fmt(P) + '\n2. ' + ds(ai / 100) + ' มีทศนิยม 2 ตำแหน่ง → คำตอบมีทศนิยม 2 ตำแหน่ง\n3. ' + fmt(P) + ' → ' + (P / 100).toFixed(2) + '\nคำตอบ ' + A;
+    return Q('หาผลคูณ\n' + ds(ai / 100) + ' × ' + k + ' = ?', A, [[ds(P / 10), 'ใส่จุดทศนิยมผิดตำแหน่ง (นับได้ 1 ตำแหน่ง)'], [ds(P / 1000), 'ใส่จุดทศนิยมผิดตำแหน่ง (นับได้ 3 ตำแหน่ง)'], [ds((P + 10) / 100), 'ทดผิดไป 1']],
+      () => ds((P + pick([-20, 20, 30, -30])) / 100), w, { k: 'dec', p: { v: ai / 100 * k } });
+  }
+  if (t === 2) {
+    let ai, bi; do { ai = R(11, 99); bi = R(11, 99); } while (ai % 10 === 0 || bi % 10 === 0);
+    const P = ai * bi, A = ds(P / 1000);
+    const w = 'โจทย์ถาม: ' + ds(ai / 10) + ' × ' + ds(bi / 100) + ' เท่ากับเท่าไร\n1. คูณแบบไม่สนใจจุดก่อน: ' + ai + ' × ' + bi + ' = ' + fmt(P) +
+      '\n2. นับตำแหน่งทศนิยมรวมกัน: ' + ds(ai / 10) + ' มี 1 ตำแหน่ง + ' + ds(bi / 100) + ' มี 2 ตำแหน่ง = 3 ตำแหน่ง\n3. ' + fmt(P) + ' → ' + (P / 1000).toFixed(3) + '\nคำตอบ ' + A;
+    return Q('หาผลคูณ\n' + ds(ai / 10) + ' × ' + ds(bi / 100) + ' = ?', A, [[ds(P / 100), 'นับตำแหน่งทศนิยมได้ 2 — ต้องรวมของทั้งสองตัว 1 + 2 = 3'], [ds(P / 10), 'นับตำแหน่งทศนิยมแค่ตัวหน้าตัวเดียว'], [ds(P), 'ลืมใส่จุดทศนิยม']],
+      () => ds((P + pick([-10, 10, 100, -100])) / 1000), w, { k: 'dec', p: { v: (ai / 10) * (bi / 100) } });
+  }
+  if (t === 3) {
+    const sc = pick([100, 1000]), qi = R(sc === 100 ? 101 : 1001, sc === 100 ? 999 : 4999), d = R(2, 9), nn = qi * d, A = ds(qi / sc);
+    if (qi % 10 === 0) return gDecMD();
+    const w = 'โจทย์ถาม: ' + ds(nn / sc) + ' ÷ ' + d + ' เท่ากับเท่าไร\n1. หารแบบไม่สนใจจุดก่อน: ' + fmt(nn) + ' ÷ ' + d + ' = ' + fmt(qi) +
+      '\n2. ตัวหารเป็นจำนวนนับ → จุดทศนิยมของคำตอบอยู่ตรงกับตัวตั้ง (' + (sc === 100 ? 2 : 3) + ' ตำแหน่ง)\n3. ตรวจ: ' + A + ' × ' + d + ' = ' + ds(nn / sc) + ' ✓\nคำตอบ ' + A;
+    return Q('หาผลหาร\n' + ds(nn / sc) + ' ÷ ' + d + ' = ?', A, [[ds(qi / sc * 10), 'ใส่จุดทศนิยมผิดตำแหน่ง — ต้องตรงกับตัวตั้ง'], [ds(qi / sc / 10), 'ใส่จุดทศนิยมผิดตำแหน่ง — ต้องตรงกับตัวตั้ง'], [ds((qi + 1) / sc), 'หารผิดหลักสุดท้าย']],
+      () => ds((qi + pick([-2, 2, 10, -10])) / sc), w, { k: 'dec', p: { v: nn / sc / d } });
+  }
+  const d = pick([4, 5, 8, 20, 25, 40]); let n; do { n = R(d + 1, 9 * d); } while (n % d === 0);
+  const q = Math.floor(n / d), r = n % d, A = ds(n / d);
+  const w = 'โจทย์ถาม: ' + n + ' ÷ ' + d + ' เป็นทศนิยมได้เท่าไร\n1. ' + n + ' ÷ ' + d + ' = ' + q + ' เศษ ' + r + '\n2. หารต่อ: เติมจุดและ 0 หลังตัวตั้ง (' + n + '.000) แล้วหารต่อไปเรื่อย ๆ จนลงตัว' +
+    '\n3. เศษ ' + r + ' ÷ ' + d + ' = ' + ds(r / d) + '\n4. รวม ' + q + ' + ' + ds(r / d) + ' = ' + A + '\nคำตอบ ' + A;
+  return Q('หาผลหาร (ตอบเป็นทศนิยม)\n' + n + ' ÷ ' + d + ' = ?', A, [[q + ' เศษ ' + r, 'โจทย์ให้ตอบเป็นทศนิยม — เศษต้องหารต่อ ไม่ใช่เขียนว่า "เศษ"'], [q + '.' + r, 'เอาเศษ ' + r + ' มาต่อหลังจุดเลย — ต้องเอาเศษไปหารด้วย ' + d + ' อีกที'], [ds((n * 10) / d), 'จุดทศนิยมเลื่อนไป 1 ตำแหน่ง']],
+    () => ds(n / d + pick([0.1, 0.2, -0.1, 1])), w, { k: 'dec', p: { v: n / d } });
+}
+
+/* b6 บัญญัติไตรยางศ์ */
+const R3 = [
+  { thing: 'สมุด', unit: 'เล่ม', per: [12, 35] }, { thing: 'ปากกา', unit: 'ด้าม', per: [8, 25] }, { thing: 'ส้ม', unit: 'กิโลกรัม', per: [30, 65] },
+  { thing: 'ไข่ไก่', unit: 'แผง', per: [95, 140] }, { thing: 'น้ำดื่ม', unit: 'แพ็ก', per: [45, 80] }];
+function gRule3() {
+  const t = R(1, 4);
+  if (t === 1) {
+    const it = pick(R3), per = R(it.per[0], it.per[1]); let n1, n2; do { n1 = R(2, 9); n2 = R(3, 15); } while (n1 === n2);
+    const P = per * n1, A = per * n2;
+    const w = 'โจทย์ถาม: ซื้อ ' + n2 + ' ' + it.unit + ' ต้องจ่ายกี่บาท\n1. ' + it.thing + ' ' + n1 + ' ' + it.unit + ' ราคา ' + fmt(P) + ' บาท\n2. ' + it.thing + ' 1 ' + it.unit + ' ราคา ' + fmt(P) + ' ÷ ' + n1 + ' = ' + per + ' บาท' +
+      '\n3. ' + it.thing + ' ' + n2 + ' ' + it.unit + ' ราคา ' + per + ' × ' + n2 + ' = ' + fmt(A) + ' บาท\nคำตอบ ' + fmt(A) + ' บาท';
+    return Q(it.thing + ' ' + n1 + ' ' + it.unit + ' ราคา ' + fmt(P) + ' บาท ถ้าซื้อ ' + n2 + ' ' + it.unit + ' ต้องจ่ายเงินกี่บาท', U(ns(A), 'บาท'),
+      [[U(ns(per), 'บาท'), 'นี่คือราคา 1 ' + it.unit + ' ยังไม่ได้คูณ ' + n2], [U(ns(P * n2), 'บาท'), 'ลืมหารด้วย ' + n1 + ' ก่อน (ต้องหาราคา 1 ' + it.unit + ' ก่อน)'], [U(ns(P + (n2 - n1)), 'บาท'), 'ราคาไม่ได้เพิ่มทีละ 1 บาท ต้องหาราคาต่อ ' + it.unit + ' ก่อน']],
+      padN(A, per, 'บาท'), w, { k: 'int', p: { v: P / n1 * n2 } });
+  }
+  if (t === 2) {
+    const it = pick(R3), per = R(it.per[0], it.per[1]), n1 = R(2, 6), P = per * n1, k = R(4, 20), M = per * k;
+    const w = 'โจทย์ถาม: เงิน ' + fmt(M) + ' บาท ซื้อได้กี่' + it.unit + '\n1. ' + it.thing + ' 1 ' + it.unit + ' ราคา ' + fmt(P) + ' ÷ ' + n1 + ' = ' + per + ' บาท\n2. เงิน ' + fmt(M) + ' บาท ซื้อได้ ' + fmt(M) + ' ÷ ' + per + ' = ' + k + ' ' + it.unit + '\nคำตอบ ' + k + ' ' + it.unit;
+    return Q(it.thing + ' ' + n1 + ' ' + it.unit + ' ราคา ' + fmt(P) + ' บาท มีเงิน ' + fmt(M) + ' บาท ซื้อ' + it.thing + 'ได้กี่' + it.unit, U(ns(k), it.unit),
+      [[U(ns(M / P), it.unit), 'หารด้วยราคา ' + n1 + ' ' + it.unit + ' ได้จำนวน "ชุด" ต้องคูณ ' + n1 + ' อีกครั้ง'], [U(ns(Math.round(M / n1)), it.unit), 'เอาเงินหารด้วยจำนวน' + it.unit + ' — ต้องหารด้วยราคาต่อ ' + it.unit], [U(ns(k + n1), it.unit), 'บวกจำนวนที่โจทย์ให้มาเพิ่ม']],
+      padN(k, 1, it.unit), w, { k: 'int', p: { v: M / (P / n1) } });
+  }
+  if (t === 3) {
+    const v = R(4, 9) * 10, t1 = R(2, 5); let t2; do { t2 = R(2, 8); } while (t2 === t1);
+    const D1 = v * t1, A = v * t2;
+    const w = 'โจทย์ถาม: ' + t2 + ' ชั่วโมงวิ่งได้กี่กิโลเมตร\n1. ' + t1 + ' ชั่วโมง วิ่งได้ ' + D1 + ' กิโลเมตร\n2. 1 ชั่วโมง วิ่งได้ ' + D1 + ' ÷ ' + t1 + ' = ' + v + ' กิโลเมตร\n3. ' + t2 + ' ชั่วโมง วิ่งได้ ' + v + ' × ' + t2 + ' = ' + A + ' กิโลเมตร\nคำตอบ ' + A + ' กิโลเมตร';
+    return Q('รถยนต์คันหนึ่งวิ่งด้วยความเร็วคงที่ ' + t1 + ' ชั่วโมงได้ระยะทาง ' + D1 + ' กิโลเมตร ถ้าวิ่ง ' + t2 + ' ชั่วโมงจะได้ระยะทางกี่กิโลเมตร', U(ns(A), 'กิโลเมตร'),
+      [[U(ns(D1 * t2), 'กิโลเมตร'), 'ลืมหารด้วย ' + t1 + ' (ต้องหาระยะทางใน 1 ชั่วโมงก่อน)'], [U(ns(v), 'กิโลเมตร'), 'นี่คือระยะทางใน 1 ชั่วโมงเท่านั้น'], [U(ns(D1 + v), 'กิโลเมตร'), 'บวกเพิ่มแค่ 1 ชั่วโมง']],
+      padN(A, 10, 'กิโลเมตร'), w, { k: 'int', p: { v: D1 / t1 * t2 } });
+  }
+  const r = R(3, 12), m = R(2, 6), x = r * m, k = R(3, 15), y = r * k;
+  const w = 'โจทย์ถาม: พิมพ์ ' + y + ' แผ่นใช้เวลากี่นาที\n1. ' + m + ' นาที พิมพ์ได้ ' + x + ' แผ่น\n2. 1 นาที พิมพ์ได้ ' + x + ' ÷ ' + m + ' = ' + r + ' แผ่น\n3. ' + y + ' แผ่น ใช้เวลา ' + y + ' ÷ ' + r + ' = ' + k + ' นาที\nคำตอบ ' + k + ' นาที';
+  return Q('เครื่องถ่ายเอกสารพิมพ์ได้ ' + x + ' แผ่นใน ' + m + ' นาที ถ้าต้องพิมพ์ ' + y + ' แผ่น จะใช้เวลากี่นาที', U(ns(k), 'นาที'),
+    [[U(ns(y / m), 'นาที'), 'หารด้วยจำนวนนาที — ต้องหาว่า 1 นาทีพิมพ์ได้กี่แผ่นก่อน'], [U(ns(y * m), 'นาที'), 'คูณแทนหาร'], [U(ns(Math.round(y / x)), 'นาที'), 'ได้จำนวน "รอบละ ' + m + ' นาที" ต้องคูณ ' + m + ' อีกครั้ง']],
+    padN(k, 1, 'นาที'), w, { k: 'int', p: { v: y / (x / m) } });
+}
+
+/* b7 ร้อยละ ไม่เกิน 2 ขั้นตอน */
+function gPct() {
+  const t = R(1, 6);
+  if (t === 1) {
+    const d = pick([4, 5, 10, 20, 25, 50]), n = coN(d), A = n * 100 / d;
+    const w = 'โจทย์ถาม: ' + n + '/' + d + ' เป็นร้อยละเท่าไร\n1. ร้อยละ = ตัวส่วนเป็น 100\n2. คูณบนและล่างด้วย ' + (100 / d) + ': ' + n + '/' + d + ' = ' + A + '/100\n3. ' + A + '/100 = ร้อยละ ' + A + '\nคำตอบ ' + A + '%';
+    return Q('เศษส่วน ' + n + '/' + d + ' คิดเป็นร้อยละเท่าใด', A + '%',
+      [[(100 - A) + '%', 'นี่คือส่วนที่เหลือจาก 100%'], [n + '' + d + '%', 'เอาตัวเศษกับตัวส่วนมาเรียงต่อกัน — ไม่ใช่วิธีแปลง'], [(n * 10) + '%', 'คูณ 10 แทนการทำตัวส่วนเป็น 100']],
+      () => (A + pick([-10, -5, 5, 10])) + '%', w, { k: 'pct', p: { v: n / d * 100 } });
+  }
+  if (t === 2) {
+    const p = R(1, 19) * 5, N = R(2, 30) * 20, A = p * N / 100;
+    const w = 'โจทย์ถาม: ร้อยละ ' + p + ' ของ ' + fmt(N) + ' เท่ากับเท่าไร\n1. ร้อยละ ' + p + ' = ' + p + '/100\n2. ' + p + '/100 × ' + fmt(N) + ' = ' + fmt(p * N) + ' ÷ 100 = ' + fmt(A) + '\nคำตอบ ' + fmt(A);
+    return Q('ร้อยละ ' + p + ' ของ ' + fmt(N) + ' เท่ากับเท่าใด', ns(A),
+      [[ns(N - A), 'นี่คือส่วนที่เหลือ (ร้อยละ ' + (100 - p) + ')'], [ns(A * 10), 'หารด้วย 10 แทน 100'], [ns(p * N), 'ลืมหารด้วย 100']],
+      padN(A, 5), w, { k: 'int', p: { v: N * p / 100 } });
+  }
+  if (t === 3) {
+    const r = pick([10, 15, 20, 25, 30, 40]), P = R(3, 40) * 20, A = P * (100 - r) / 100, off = P * r / 100;
+    if (!Number.isInteger(A)) return gPct();
+    const w = 'โจทย์ถาม: ต้องจ่ายเงินกี่บาท\n1. ส่วนลด = ร้อยละ ' + r + ' ของ ' + fmt(P) + ' = ' + fmt(off) + ' บาท\n2. จ่ายจริง = ' + fmt(P) + ' − ' + fmt(off) + ' = ' + fmt(A) + ' บาท\nทางลัด: ลด ' + r + '% = จ่าย ' + (100 - r) + '% → ' + fmt(P) + ' × ' + (100 - r) + '/100 = ' + fmt(A) + '\nคำตอบ ' + fmt(A) + ' บาท';
+    return Q('เสื้อติดป้ายราคา ' + fmt(P) + ' บาท ร้านลดราคาให้ร้อยละ ' + r + ' ต้องจ่ายเงินกี่บาท', U(ns(A), 'บาท'),
+      [[U(ns(off), 'บาท'), 'นี่คือส่วนลด ไม่ใช่ราคาที่ต้องจ่าย'], [U(ns(P - r), 'บาท'), 'ลด ' + r + '% ไม่ใช่ลด ' + r + ' บาท'], [U(ns(P + off), 'บาท'), 'ส่วนลดต้องลบออก ไม่ใช่บวก']],
+      padN(A, 10, 'บาท'), w, { k: 'int', p: { v: P - P * r / 100 } });
+  }
+  if (t === 4) {
+    const r = pick([10, 15, 20, 25, 30, 40]), Cc = R(3, 40) * 20, A = Cc * (100 + r) / 100, pr = Cc * r / 100;
+    if (!Number.isInteger(A)) return gPct();
+    const w = 'โจทย์ถาม: ต้องขายราคากี่บาท\n1. กำไร = ร้อยละ ' + r + ' ของทุน = ' + r + '/100 × ' + fmt(Cc) + ' = ' + fmt(pr) + ' บาท\n2. ราคาขาย = ทุน + กำไร = ' + fmt(Cc) + ' + ' + fmt(pr) + ' = ' + fmt(A) + ' บาท\nคำตอบ ' + fmt(A) + ' บาท';
+    return Q('แม่ค้าซื้อพัดลมมาราคา ' + fmt(Cc) + ' บาท ต้องการกำไรร้อยละ ' + r + ' ต้องขายพัดลมราคากี่บาท', U(ns(A), 'บาท'),
+      [[U(ns(pr), 'บาท'), 'นี่คือกำไร ยังไม่ได้บวกทุน'], [U(ns(Cc + r), 'บาท'), 'กำไร ' + r + '% ไม่ใช่กำไร ' + r + ' บาท'], [U(ns(Cc - pr), 'บาท'), 'กำไรต้องบวก ไม่ใช่ลบ']],
+      padN(A, 10, 'บาท'), w, { k: 'int', p: { v: Cc * (1 + r / 100) } });
+  }
+  if (t === 5) {
+    const N = pick([20, 25, 40, 50]), p = R(1, 19) * 5, k = N * p / 100;
+    if (!Number.isInteger(k) || k <= 0 || k >= N) return gPct();
+    const w = 'โจทย์ถาม: นักเรียนหญิงคิดเป็นร้อยละเท่าไร\n1. หญิง ' + k + ' คน จากทั้งหมด ' + N + ' คน = ' + k + '/' + N + '\n2. ทำตัวส่วนเป็น 100: คูณบนและล่างด้วย ' + (100 / N) + ' → ' + p + '/100\nคำตอบ ร้อยละ ' + p;
+    return Q('ห้องเรียนมีนักเรียน ' + N + ' คน เป็นนักเรียนหญิง ' + k + ' คน นักเรียนหญิงคิดเป็นร้อยละเท่าใด', p + '%',
+      [[(100 - p) + '%', 'นี่คือร้อยละของนักเรียนชาย'], [k + '%', 'เอาจำนวนคนมาตอบเลย ยังไม่ได้เทียบกับ 100'], [(p + 10 <= 100 ? p + 10 : p - 15) + '%', 'คูณผิด']],
+      () => (p + pick([-5, 5, -10])) + '%', w, { k: 'pct', p: { v: k / N * 100 } });
+  }
+  const r = pick([5, 10, 15, 20, 25]), Cc = R(5, 50) * 20, S = Cc * (100 - r) / 100;
+  if (!Number.isInteger(S)) return gPct();
+  const bad = (Cc - S) * 100 / S;
+  const w = 'โจทย์ถาม: ขาดทุนร้อยละเท่าไร\n1. ขาดทุน = ทุน − ราคาขาย = ' + fmt(Cc) + ' − ' + fmt(S) + ' = ' + fmt(Cc - S) + ' บาท\n2. ร้อยละ "เทียบกับทุน" เสมอ: ' + fmt(Cc - S) + '/' + fmt(Cc) + ' × 100 = ' + r + '\nคำตอบ ขาดทุนร้อยละ ' + r;
+  return Q('ซื้อจักรยานมา ' + fmt(Cc) + ' บาท ขายไป ' + fmt(S) + ' บาท ขาดทุนร้อยละเท่าใด', r + '%',
+    [[Number.isInteger(bad) ? bad + '%' : null, 'เอาไปเทียบกับราคาขาย — กำไรขาดทุนต้องเทียบกับทุน'], [(100 - r) + '%', 'นี่คือราคาขายคิดเป็นร้อยละของทุน'], [ns(Math.round((Cc - S) / 10)) + '%', 'เอาเงินที่ขาดทุนมาหาร 10']],
+    () => (r + pick([-5, 5, 10])) + '%', w, { k: 'pct', p: { v: (Cc - S) / Cc * 100 } });
+}
+
+/* b8 ความยาว น้ำหนัก เปลี่ยนหน่วยเป็นทศนิยม */
+function gUnits() {
+  const t = R(1, 5);
+  if (t === 1) {
+    const km = R(1, 9), m = pick([R(1, 9), R(10, 99), R(101, 999)]), A = ds(km + m / 1000);
+    const w = 'โจทย์ถาม: ' + km + ' กม. ' + m + ' ม. เป็นกี่กิโลเมตร\n1. 1 กิโลเมตร = 1,000 เมตร\n2. ' + m + ' เมตร = ' + m + '/1,000 กม. = ' + ds(m / 1000) + ' กม. (ทศนิยม 3 ตำแหน่ง เพราะ 1,000 มี 0 สามตัว)\n3. รวม ' + km + ' + ' + ds(m / 1000) + ' = ' + A + '\nคำตอบ ' + A + ' กิโลเมตร';
+    return Q(km + ' กิโลเมตร ' + m + ' เมตร เท่ากับกี่กิโลเมตร', U(A, 'กิโลเมตร'),
+      [[U(ds(km + m / 100), 'กิโลเมตร'), 'ใช้ 1 กม. = 100 ม. — ที่จริง 1 กม. = 1,000 ม.'], [m < 100 ? U(km + '.' + m, 'กิโลเมตร') : null, 'เอาเลขมาต่อหลังจุดเลย — ต้องเขียนให้ครบ 3 ตำแหน่ง'], [U(ds(km + m / 10000), 'กิโลเมตร'), 'เลื่อนจุดเกินไป 1 ตำแหน่ง']],
+      () => U(ds(km + m / 1000 + pick([0.1, -0.1, 1])), 'กิโลเมตร'), w, { k: 'dec', p: { v: km + m / 1000 } });
+  }
+  if (t === 2) {
+    const kgi = R(11, 99) * (Math.random() < 0.5 ? 1 : 0) || R(101, 999), sc = kgi < 100 ? 10 : 100, kg = kgi / sc, A = kg * 1000;
+    if (!Number.isInteger(Math.round(A)) || kgi % 10 === 0) return gUnits();
+    const w = 'โจทย์ถาม: ' + ds(kg) + ' กิโลกรัม เป็นกี่กรัม\n1. 1 กิโลกรัม = 1,000 กรัม\n2. ' + ds(kg) + ' × 1,000 = เลื่อนจุดไปทางขวา 3 ตำแหน่ง\n3. ได้ ' + fmt(Math.round(A)) + ' กรัม\nคำตอบ ' + fmt(Math.round(A)) + ' กรัม';
+    return Q(ds(kg) + ' กิโลกรัม เท่ากับกี่กรัม', U(ns(Math.round(A)), 'กรัม'),
+      [[U(ns(Math.round(A / 10)), 'กรัม'), 'คูณ 100 — ต้องคูณ 1,000'], [U(ns(Math.round(A * 10)), 'กรัม'), 'คูณ 10,000 — ต้องคูณ 1,000'], [U(ns(Math.floor(kg) * 1000 + (kgi % sc)), 'กรัม'), 'แปลงแค่ส่วนจำนวนเต็ม แล้วเอาเลขหลังจุดมาต่อ']],
+      padN(Math.round(A), 100, 'กรัม'), w, { k: 'int', p: { v: kg * 1000 } });
+  }
+  if (t === 3) {
+    const mm = R(1, 9), cm = pick([R(1, 9), R(11, 99)]), A = ds(mm + cm / 100);
+    const w = 'โจทย์ถาม: ' + mm + ' ม. ' + cm + ' ซม. เป็นกี่เมตร\n1. 1 เมตร = 100 เซนติเมตร\n2. ' + cm + ' ซม. = ' + cm + '/100 ม. = ' + ds(cm / 100) + ' ม. (ทศนิยม 2 ตำแหน่ง)\n3. รวม ' + mm + ' + ' + ds(cm / 100) + ' = ' + A + '\nคำตอบ ' + A + ' เมตร';
+    return Q(mm + ' เมตร ' + cm + ' เซนติเมตร เท่ากับกี่เมตร', U(A, 'เมตร'),
+      [[U(ds(mm + cm / 10), 'เมตร'), 'คิดว่า 1 ม. = 10 ซม. — ที่จริง 1 ม. = 100 ซม.'], [U(ds(mm + cm / 1000), 'เมตร'), 'คิดว่า 1 ม. = 1,000 ซม. — ที่จริง 1 ม. = 100 ซม.'], [U(ds(mm * 100 + cm), 'เมตร'), 'นี่คือคำตอบเป็นเซนติเมตร ไม่ใช่เมตร']],
+      () => U(ds(mm + cm / 100 + pick([0.1, -0.1, 1, 0.01])), 'เมตร'), w, { k: 'dec', p: { v: mm + cm / 100 } });
+  }
+  if (t === 4) {
+    const a = R(101, 399) / 100, g = R(1, 9) * 50 + 50; const tot = Math.round(a * 1000) + g, A = ds(tot / 1000);
+    if (Math.round(a * 100) % 10 === 0) return gUnits();
+    const w = 'โจทย์ถาม: รวมกี่กิโลกรัม\n1. ทำหน่วยให้เหมือนกันก่อน: ' + g + ' กรัม = ' + g + '/1,000 = ' + ds(g / 1000) + ' กิโลกรัม\n2. ' + ds(a) + ' + ' + ds(g / 1000) + ' = ' + A + '\nคำตอบ ' + A + ' กิโลกรัม';
+    return Q('แม่ซื้อแป้ง ' + ds(a) + ' กิโลกรัม และน้ำตาล ' + g + ' กรัม รวมเป็นกี่กิโลกรัม', U(A, 'กิโลกรัม'),
+      [[U(ds(a + g / 100), 'กิโลกรัม'), 'แปลงกรัมโดยหาร 100 — ต้องหาร 1,000'], [U(ds(a + g), 'กิโลกรัม'), 'บวกโดยไม่แปลงหน่วยก่อน'], [U(ds(a + g / 10000), 'กิโลกรัม'), 'เลื่อนจุดเกินไป 1 ตำแหน่ง']],
+      () => U(ds(tot / 1000 + pick([0.1, -0.1, 1])), 'กิโลกรัม'), w, { k: 'dec', p: { v: a + g / 1000 } });
+  }
+  const ti = R(101, 999), tn = ti / 100, A = ti * 10;
+  if (ti % 10 === 0) return gUnits();
+  const w = 'โจทย์ถาม: ' + ds(tn) + ' เมตริกตัน เป็นกี่กิโลกรัม\n1. 1 เมตริกตัน = 1,000 กิโลกรัม\n2. ' + ds(tn) + ' × 1,000 = ' + fmt(A) + '\nคำตอบ ' + fmt(A) + ' กิโลกรัม';
+  return Q('รถบรรทุกข้าวสาร ' + ds(tn) + ' เมตริกตัน คิดเป็นกี่กิโลกรัม', U(ns(A), 'กิโลกรัม'),
+    [[U(ns(A / 10), 'กิโลกรัม'), 'คิดว่า 1 ตัน = 100 กิโลกรัม'], [U(ns(A * 10), 'กิโลกรัม'), 'คิดว่า 1 ตัน = 10,000 กิโลกรัม'], [U(ns(Math.floor(tn) * 1000 + (ti % 100)), 'กิโลกรัม'), 'แปลงแค่ส่วนจำนวนเต็ม แล้วเอาเลขหลังจุดมาต่อ']],
+    padN(A, 100, 'กิโลกรัม'), w, { k: 'int', p: { v: tn * 1000 } });
+}
+
+/* ---------- รูปวาด SVG ---------- */
+const rad = a => a * Math.PI / 180;
+function arcLabel(cx, cy, a1, a2, label, hi) {
+  const r = 17, p1 = [cx + r * Math.cos(rad(a1)), cy - r * Math.sin(rad(a1))], p2 = [cx + r * Math.cos(rad(a2)), cy - r * Math.sin(rad(a2))];
+  const mid = (a1 + a2) / 2, lr = 34, lx = cx + lr * Math.cos(rad(mid)), ly = cy - lr * Math.sin(rad(mid));
+  const col = hi ? 'var(--comp)' : 'var(--accent)';
+  return '<path d="M' + p1[0].toFixed(1) + ' ' + p1[1].toFixed(1) + ' A' + r + ' ' + r + ' 0 0 0 ' + p2[0].toFixed(1) + ' ' + p2[1].toFixed(1) + '" fill="none" stroke="' + col + '" stroke-width="2"/>' +
+    '<text x="' + lx.toFixed(1) + '" y="' + (ly + 5).toFixed(1) + '" text-anchor="middle" font-size="15" font-weight="700" style="fill:' + col + '">' + label + '</text>';
+}
+function arrowMark(x, y) { return '<path d="M' + (x - 5) + ' ' + (y - 5) + ' L' + x + ' ' + y + ' L' + (x - 5) + ' ' + (y + 5) + '" fill="none" stroke="currentColor" stroke-width="1.6"/>'; }
+
+/* b9 เส้นขนานและมุม: มุมแหลมเท่ากันหมด มุมป้านเท่ากันหมด แหลม + ป้าน = 180 */
+const QUAD = { AR: 'ขวาบน', AL: 'ซ้ายบน', BL: 'ซ้ายล่าง', BR: 'ขวาล่าง' };
+function angleAt(pos, phi) { return (pos === 'AR' || pos === 'BL') ? phi : 180 - phi; }
+function quadSpan(pos, phi) { return pos === 'AR' ? [0, phi] : pos === 'AL' ? [phi, 180] : pos === 'BL' ? [180, 180 + phi] : [180 + phi, 360]; }
+function relName(p1, p2) {
+  /* p1 ที่จุดตัดบน p2 ที่จุดตัดล่าง */
+  const inside = p => (p === 'BL' || p === 'BR') ? 'top' : 'bot';
+  const s = p => (p === 'AR' || p === 'BR') ? 'R' : 'L';
+  const in1 = p1 === 'BL' || p1 === 'BR', in2 = p2 === 'AL' || p2 === 'AR';
+  if (p1 === p2) return 'มุมที่อยู่ตำแหน่งเดียวกัน (มุมภายนอกกับมุมภายในที่อยู่ตรงข้ามบนข้างเดียวกันของเส้นตัด) ขนาดเท่ากัน';
+  if (in1 && in2 && s(p1) !== s(p2)) return 'เป็นมุมแย้ง (alternate angles) ขนาดเท่ากัน';
+  if (in1 && in2 && s(p1) === s(p2)) return 'เป็นมุมภายในที่อยู่บนข้างเดียวกันของเส้นตัด รวมกันได้ 180°';
+  return null;
+}
+function svgPar(phi, labels) {
+  const y1 = 62, y2 = 152, cx1 = 165, dx = (y2 - y1) / Math.tan(rad(phi)), cx2 = cx1 - dx, ext = 46 / Math.sin(rad(phi));
+  const ux = Math.cos(rad(phi)), uy = Math.sin(rad(phi));
+  let s = '<svg viewBox="0 0 330 214" role="img" aria-label="เส้นขนานสองเส้นกับเส้นตัด">';
+  s += '<line x1="18" y1="' + y1 + '" x2="312" y2="' + y1 + '" stroke="currentColor" stroke-width="2"/><line x1="18" y1="' + y2 + '" x2="312" y2="' + y2 + '" stroke="currentColor" stroke-width="2"/>';
+  s += arrowMark(290, y1) + arrowMark(290, y2);
+  s += '<line x1="' + (cx1 + ux * ext).toFixed(1) + '" y1="' + (y1 - uy * ext).toFixed(1) + '" x2="' + (cx2 - ux * ext).toFixed(1) + '" y2="' + (y2 + uy * ext).toFixed(1) + '" stroke="currentColor" stroke-width="2"/>';
+  for (const L of labels) { const [a1, a2] = quadSpan(L.pos, phi); s += arcLabel(L.top ? cx1 : cx2, L.top ? y1 : y2, a1, a2, L.text, L.hi); }
+  s += '<text x="300" y="' + (y1 - 8) + '" font-size="12" text-anchor="end" style="fill:var(--muted)">ขนานกัน</text></svg>';
+  return s;
+}
+function gParallel() {
+  const P = ['AR', 'AL', 'BL', 'BR'];
+  let phi, p1, p2, rel; do { phi = pick([R(35, 80), R(100, 145)]); p1 = pick(P); p2 = pick(P); rel = relName(p1, p2); } while (!rel || phi % 5 === 0 && Math.random() < 0.3);
+  const g = angleAt(p1, phi), A = angleAt(p2, phi);
+  const fig = svgPar(phi, [{ pos: p1, top: true, text: g + '°' }, { pos: p2, top: false, text: 'x', hi: true }]);
+  const kind = v => v < 90 ? 'มุมแหลม' : 'มุมป้าน';
+  const w = 'โจทย์ถาม: มุม x กี่องศา\n1. เส้นขนานถูกเส้นตัด จะมีมุมแค่ 2 ขนาด: มุมแหลมเท่ากันหมด มุมป้านเท่ากันหมด และ แหลม + ป้าน = 180°\n2. มุม ' + g + '° เป็น' + kind(g) + ' ส่วนมุม x ดูแล้วเป็น' + kind(A) +
+    '\n3. ' + (A === g ? 'ชนิดเดียวกัน → x = ' + g + '°' : 'คนละชนิด → x = 180 − ' + g + ' = ' + A + '°') + '\n4. ชื่อเรียก: ' + rel + '\nคำตอบ ' + A + '°';
+  return Q('จากรูป เส้นตรงสองเส้นขนานกัน\nมุม x มีขนาดกี่องศา', A + '°',
+    [[(180 - A) + '°', A === g ? 'สองมุมนี้เป็นชนิดเดียวกัน (' + kind(A) + ') จึงเท่ากัน ไม่ต้องเอา 180 ลบ' : 'สองมุมนี้คนละชนิด ต้องรวมกันได้ 180°'],
+     [Math.abs(90 - A) + '°', 'เอา 90 มาคิด — มุมตรงเป็น 180° ไม่ใช่ 90°'], [(360 - A) + '°', 'เอา 360 มาคิด — มุมบนเส้นตรงรวมกันได้ 180°']],
+    () => (A + pick([-10, 10, 20])) + '°', w, { fig, k: 'par', p: { phi, p1, p2 } });
+}
+
+/* b10 รูปสี่เหลี่ยม: สมบัติ + พื้นที่ + ความยาวรอบรูป */
+const QUAD_POOL = [
+  ['รูปสี่เหลี่ยมใดมีด้านขนานกันเพียง 1 คู่', ['รูปสี่เหลี่ยมคางหมู', 'รูปสี่เหลี่ยมด้านขนาน', 'รูปสี่เหลี่ยมขนมเปียกปูน', 'รูปสี่เหลี่ยมผืนผ้า'], 'โจทย์ถาม: รูปไหนมีด้านขนาน "เพียง 1 คู่"\n1. ด้านขนาน ผืนผ้า ขนมเปียกปูน มีด้านขนาน 2 คู่\n2. คางหมูมีด้านขนานแค่ 1 คู่\nคำตอบ รูปสี่เหลี่ยมคางหมู'],
+  ['รูปสี่เหลี่ยมที่ด้านยาวเท่ากันทุกด้าน แต่ไม่มีมุมฉากเลย คือรูปใด', ['รูปสี่เหลี่ยมขนมเปียกปูน', 'รูปสี่เหลี่ยมจัตุรัส', 'รูปสี่เหลี่ยมผืนผ้า', 'รูปสี่เหลี่ยมคางหมู'], 'โจทย์ถาม: ด้านเท่ากันหมด + ไม่มีมุมฉาก\n1. ด้านเท่ากันหมด มี 2 แบบ: จัตุรัส กับ ขนมเปียกปูน\n2. จัตุรัสมีมุมฉาก จึงตัดทิ้ง\nคำตอบ รูปสี่เหลี่ยมขนมเปียกปูน'],
+  ['รูปสี่เหลี่ยมใดมีเส้นทแยงมุมตัดกันเป็นมุมฉาก และแบ่งครึ่งซึ่งกันและกัน แต่เส้นทแยงมุมยาวไม่เท่ากัน', ['รูปสี่เหลี่ยมขนมเปียกปูน', 'รูปสี่เหลี่ยมผืนผ้า', 'รูปสี่เหลี่ยมจัตุรัส', 'รูปสี่เหลี่ยมคางหมู'], 'โจทย์ถาม: เส้นทแยงมุมตั้งฉาก แบ่งครึ่งกัน แต่ยาวไม่เท่ากัน\n1. จัตุรัส: เส้นทแยงมุมยาวเท่ากัน → ไม่ใช่\n2. ผืนผ้า: เส้นทแยงมุมไม่ตั้งฉาก → ไม่ใช่\n3. ขนมเปียกปูน: ตั้งฉาก แบ่งครึ่งกัน ยาวไม่เท่ากัน ✓\nคำตอบ รูปสี่เหลี่ยมขนมเปียกปูน'],
+  ['รูปสี่เหลี่ยมใดมีมุมทั้งสี่เป็นมุมฉาก แต่ด้านไม่ได้ยาวเท่ากันทุกด้าน', ['รูปสี่เหลี่ยมผืนผ้า', 'รูปสี่เหลี่ยมจัตุรัส', 'รูปสี่เหลี่ยมขนมเปียกปูน', 'รูปสี่เหลี่ยมรูปว่าว'], 'โจทย์ถาม: มุมฉากทั้ง 4 มุม + ด้านไม่เท่ากันหมด\n1. มุมฉากทั้ง 4 มุม มี จัตุรัส กับ ผืนผ้า\n2. จัตุรัสด้านเท่ากันหมด จึงตัดทิ้ง\nคำตอบ รูปสี่เหลี่ยมผืนผ้า'],
+  ['รูปสี่เหลี่ยมรูปว่าวมีสมบัติข้อใด', ['ด้านประชิดยาวเท่ากัน 2 คู่', 'ด้านตรงข้ามขนานกัน 2 คู่', 'ทุกมุมเป็นมุมฉาก', 'ด้านยาวเท่ากันทุกด้าน'], 'โจทย์ถาม: รูปว่าวมีอะไรพิเศษ\n1. รูปว่าว: ด้านที่ติดกัน (ด้านประชิด) ยาวเท่ากัน 2 คู่\n2. ไม่มีด้านขนาน ไม่มีมุมฉากทุกมุม\nคำตอบ ด้านประชิดยาวเท่ากัน 2 คู่'],
+  ['ข้อใดถูกต้อง', ['รูปสี่เหลี่ยมจัตุรัสทุกรูปเป็นรูปสี่เหลี่ยมผืนผ้า', 'รูปสี่เหลี่ยมผืนผ้าทุกรูปเป็นรูปสี่เหลี่ยมจัตุรัส', 'รูปสี่เหลี่ยมคางหมูทุกรูปเป็นรูปสี่เหลี่ยมด้านขนาน', 'รูปสี่เหลี่ยมขนมเปียกปูนทุกรูปเป็นรูปสี่เหลี่ยมจัตุรัส'], 'โจทย์ถาม: ข้อความไหนจริง\n1. จัตุรัสมีมุมฉาก 4 มุม และด้านตรงข้ามยาวเท่ากัน → เป็นผืนผ้าแบบพิเศษ ✓\n2. ผืนผ้าส่วนใหญ่ด้านไม่เท่ากันหมด จึงไม่ใช่จัตุรัส\nคำตอบ จัตุรัสทุกรูปเป็นผืนผ้า'],
+  ['รูปสี่เหลี่ยมด้านขนานมีสมบัติข้อใด', ['ด้านตรงข้ามยาวเท่ากันและขนานกัน', 'ทุกมุมเป็นมุมฉาก', 'เส้นทแยงมุมยาวเท่ากันเสมอ', 'มีด้านขนานกันเพียง 1 คู่'], 'โจทย์ถาม: สมบัติของสี่เหลี่ยมด้านขนาน\n1. ด้านตรงข้ามขนานกัน 2 คู่ และยาวเท่ากัน\n2. มุมไม่จำเป็นต้องเป็นมุมฉาก\nคำตอบ ด้านตรงข้ามยาวเท่ากันและขนานกัน'],
+  ['มุมภายในทั้งสี่มุมของรูปสี่เหลี่ยมใด ๆ รวมกันได้กี่องศา', ['360°', '180°', '270°', '400°'], 'โจทย์ถาม: มุมในสี่เหลี่ยมรวมกันเท่าไร\n1. ลากเส้นทแยงมุม 1 เส้น ได้สามเหลี่ยม 2 รูป\n2. สามเหลี่ยม 1 รูป มุมรวม 180°\n3. 2 รูป = 180 × 2 = 360°\nคำตอบ 360°'],
+];
+function gQuad() {
+  const t = R(1, 6);
+  if (t <= 2) { const [q, c, w] = pick(QUAD_POOL); return { q, c: c.slice(), w, why: {} }; }
+  if (t === 3) {
+    const b = R(6, 20), h = R(4, 15); let s; do { s = R(h + 1, h + 6); } while (s === b); const A = b * h;
+    const w = 'โจทย์ถาม: พื้นที่ของรูปสี่เหลี่ยมด้านขนาน\n1. สูตร: พื้นที่ = ฐาน × สูง (ความสูงต้องตั้งฉากกับฐาน)\n2. ด้านเอียงยาว ' + s + ' ซม. ไม่ใช่ความสูง — ไม่ต้องใช้\n3. ' + b + ' × ' + h + ' = ' + A + '\nคำตอบ ' + A + ' ตารางเซนติเมตร';
+    return Q('รูปสี่เหลี่ยมด้านขนาน มีฐานยาว ' + b + ' ซม. ด้านเอียงยาว ' + s + ' ซม. และความสูง ' + h + ' ซม. มีพื้นที่กี่ตารางเซนติเมตร', U(ns(A), 'ตร.ซม.'),
+      [[U(ns(b * s), 'ตร.ซม.'), 'เอาด้านเอียงมาคูณ — ต้องใช้ความสูงที่ตั้งฉากกับฐาน'], [U(ns(2 * (b + s)), 'ตร.ซม.'), 'นี่คือความยาวรอบรูป ไม่ใช่พื้นที่'], [U(A % 2 === 0 ? ns(A / 2) : null, 'ตร.ซม.'), 'หาร 2 เหมือนสามเหลี่ยม — สี่เหลี่ยมด้านขนานไม่ต้องหาร 2']],
+      padN(A, b, 'ตร.ซม.'), w, { k: 'int', p: { v: b * h } });
+  }
+  if (t === 4) {
+    let d1, d2; do { d1 = R(4, 24); d2 = R(4, 24); } while (d1 === d2 || (d1 * d2) % 2);
+    const A = d1 * d2 / 2;
+    const w = 'โจทย์ถาม: พื้นที่รูปสี่เหลี่ยมขนมเปียกปูน\n1. สูตร: พื้นที่ = ½ × เส้นทแยงมุม × เส้นทแยงมุม\n2. ½ × ' + d1 + ' × ' + d2 + ' = ' + (d1 * d2) + ' ÷ 2 = ' + A + '\nคำตอบ ' + A + ' ตารางเซนติเมตร';
+    return Q('รูปสี่เหลี่ยมขนมเปียกปูน มีเส้นทแยงมุมยาว ' + d1 + ' ซม. และ ' + d2 + ' ซม. มีพื้นที่กี่ตารางเซนติเมตร', U(ns(A), 'ตร.ซม.'),
+      [[U(ns(d1 * d2), 'ตร.ซม.'), 'ลืมหาร 2'], [U(ns(2 * (d1 + d2)), 'ตร.ซม.'), 'เอาเส้นทแยงมุมไปบวกกันแบบความยาวรอบรูป'], [U(ns(A + d1), 'ตร.ซม.'), 'คูณผิด']],
+      padN(A, 2, 'ตร.ซม.'), w, { k: 'int', p: { v: d1 * d2 / 2 } });
+  }
+  if (t === 5) {
+    const b = R(5, 25), h = R(3, 16), A = b * h;
+    const w = 'โจทย์ถาม: ความสูงของรูปสี่เหลี่ยมด้านขนาน\n1. พื้นที่ = ฐาน × สูง\n2. ' + A + ' = ' + b + ' × สูง\n3. สูง = ' + A + ' ÷ ' + b + ' = ' + h + '\nคำตอบ ' + h + ' เซนติเมตร';
+    return Q('รูปสี่เหลี่ยมด้านขนานมีพื้นที่ ' + A + ' ตารางเซนติเมตร ฐานยาว ' + b + ' เซนติเมตร ความสูงเป็นกี่เซนติเมตร', U(ns(h), 'ซม.'),
+      [[U(ns(A - b), 'ซม.'), 'เอาฐานไปลบ — ต้องหาร'], [U(ns(2 * h), 'ซม.'), 'คูณ 2 เหมือนสูตรสามเหลี่ยม — สี่เหลี่ยมด้านขนานไม่ต้อง'], [U(A % 2 === 0 ? ns(A / 2) : null, 'ซม.'), 'หาร 2 แทนการหารด้วยฐาน']],
+      padN(h, 1, 'ซม.'), w, { k: 'int', p: { v: A / b } });
+  }
+  const s = R(4, 30), P = 4 * s;
+  const rh = Math.random() < 0.5;
+  if (rh) {
+    const w = 'โจทย์ถาม: ด้านหนึ่งยาวเท่าไร\n1. ขนมเปียกปูนมีด้านยาวเท่ากันทั้ง 4 ด้าน\n2. ด้านละ = ' + P + ' ÷ 4 = ' + s + '\nคำตอบ ' + s + ' เซนติเมตร';
+    return Q('รูปสี่เหลี่ยมขนมเปียกปูนมีความยาวรอบรูป ' + P + ' เซนติเมตร ด้านหนึ่งยาวกี่เซนติเมตร', U(ns(s), 'ซม.'),
+      [[U(ns(P / 2), 'ซม.'), 'หาร 2 — ขนมเปียกปูนมี 4 ด้านยาวเท่ากัน'], [U(ns(P - 4), 'ซม.'), 'ลบ 4 แทนการหาร 4'], [U(ns(P * 4), 'ซม.'), 'คูณ 4 แทนการหาร 4']],
+      padN(s, 1, 'ซม.'), w, { k: 'int', p: { v: P / 4 } });
+  }
+  const a = R(5, 30), b2 = R(3, 20), A = 2 * (a + b2);
+  if (a === b2) return gQuad();
+  const w = 'โจทย์ถาม: ความยาวรอบรูป\n1. สี่เหลี่ยมด้านขนาน: ด้านตรงข้ามยาวเท่ากัน มีด้าน ' + a + ' สองด้าน และ ' + b2 + ' สองด้าน\n2. รอบรูป = ' + a + ' + ' + b2 + ' + ' + a + ' + ' + b2 + ' = ' + A + '\nคำตอบ ' + A + ' เซนติเมตร';
+  return Q('รูปสี่เหลี่ยมด้านขนานมีด้านยาว ' + a + ' ซม. และ ' + b2 + ' ซม. ความยาวรอบรูปเป็นกี่เซนติเมตร', U(ns(A), 'ซม.'),
+    [[U(ns(a + b2), 'ซม.'), 'บวกแค่ 2 ด้าน — สี่เหลี่ยมมี 4 ด้าน'], [U(ns(a * b2), 'ซม.'), 'คูณกันได้พื้นที่ ไม่ใช่ความยาวรอบรูป (และยังต้องใช้ความสูง)'], [U(ns(4 * a), 'ซม.'), 'คิดว่าด้านยาวเท่ากันหมด']],
+    padN(A, 2, 'ซม.'), w, { k: 'int', p: { v: 2 * (a + b2) } });
+}
+
+/* b11 ปริมาตรและความจุ */
+function gVol() {
+  const t = R(1, 5);
+  if (t === 1) {
+    const l = R(4, 20), wd = R(3, 15), h = R(2, 12), A = l * wd * h;
+    const w = 'โจทย์ถาม: ปริมาตรของกล่อง\n1. ปริมาตร = กว้าง × ยาว × สูง\n2. ' + wd + ' × ' + l + ' × ' + h + ' = ' + fmt(A) + '\nคำตอบ ' + fmt(A) + ' ลูกบาศก์เซนติเมตร';
+    return Q('กล่องทรงสี่เหลี่ยมมุมฉาก กว้าง ' + wd + ' ซม. ยาว ' + l + ' ซม. สูง ' + h + ' ซม. มีปริมาตรกี่ลูกบาศก์เซนติเมตร', U(ns(A), 'ลบ.ซม.'),
+      [[U(ns(2 * (l * wd + l * h + wd * h)), 'ลบ.ซม.'), 'นี่คือพื้นที่ผิวรอบกล่อง ไม่ใช่ปริมาตร'], [U(ns(l * wd), 'ลบ.ซม.'), 'คูณแค่กว้าง × ยาว ลืมคูณความสูง'], [U(ns(l + wd + h), 'ลบ.ซม.'), 'บวกแทนคูณ']],
+      padN(A, h, 'ลบ.ซม.'), w, { k: 'int', p: { v: l * wd * h } });
+  }
+  if (t === 2) {
+    let l, wd, h; do { l = R(2, 10) * 10; wd = R(2, 6) * 10; h = R(2, 6) * 10; } while ((l * wd * h) % 1000);
+    const V = l * wd * h, A = V / 1000;
+    const w = 'โจทย์ถาม: ตู้ปลาจุน้ำได้กี่ลิตร\n1. ปริมาตร = ' + l + ' × ' + wd + ' × ' + h + ' = ' + fmt(V) + ' ลบ.ซม.\n2. 1 ลิตร = 1,000 ลบ.ซม.\n3. ' + fmt(V) + ' ÷ 1,000 = ' + fmt(A) + ' ลิตร\nคำตอบ ' + fmt(A) + ' ลิตร';
+    return Q('ตู้ปลาทรงสี่เหลี่ยมมุมฉาก ยาว ' + l + ' ซม. กว้าง ' + wd + ' ซม. สูง ' + h + ' ซม. จุน้ำได้เต็มที่กี่ลิตร', U(ns(A), 'ลิตร'),
+      [[U(ns(A * 10), 'ลิตร'), 'หาร 100 — 1 ลิตร = 1,000 ลบ.ซม.'], [U(ns(V), 'ลิตร'), 'ลืมเปลี่ยน ลบ.ซม. เป็นลิตร'], [U(A % 10 === 0 ? ns(A / 10) : ds(A / 10), 'ลิตร'), 'หาร 10,000 — 1 ลิตร = 1,000 ลบ.ซม.']],
+      padN(A, 2, 'ลิตร'), w, { k: 'int', p: { v: l * wd * h / 1000 } });
+  }
+  if (t === 3) {
+    const l = R(5, 20), wd = R(3, 12), h = R(2, 15), V = l * wd * h;
+    const w = 'โจทย์ถาม: กล่องสูงกี่เซนติเมตร\n1. ปริมาตร = กว้าง × ยาว × สูง\n2. พื้นที่ฐาน = ' + wd + ' × ' + l + ' = ' + (wd * l) + '\n3. สูง = ' + fmt(V) + ' ÷ ' + (wd * l) + ' = ' + h + '\nคำตอบ ' + h + ' เซนติเมตร';
+    return Q('กล่องทรงสี่เหลี่ยมมุมฉากมีปริมาตร ' + fmt(V) + ' ลบ.ซม. กว้าง ' + wd + ' ซม. ยาว ' + l + ' ซม. กล่องสูงกี่เซนติเมตร', U(ns(h), 'ซม.'),
+      [[U(ns(V / l), 'ซม.'), 'หารด้วยความยาวอย่างเดียว ต้องหารด้วย กว้าง × ยาว'], [U(ns(V / wd), 'ซม.'), 'หารด้วยความกว้างอย่างเดียว ต้องหารด้วย กว้าง × ยาว'], [U(ns(V - l * wd), 'ซม.'), 'ลบแทนหาร']],
+      padN(h, 1, 'ซม.'), w, { k: 'int', p: { v: V / (l * wd) } });
+  }
+  if (t === 4) {
+    let a, b, c; do { a = R(2, 8); b = R(2, 8); c = pick([1.5, 2.5, 3, 2]); } while (!Number.isInteger(a * b * c));
+    const A = a * b * c;
+    const w = 'โจทย์ถาม: ห้องมีปริมาตรกี่ลูกบาศก์เมตร\n1. หน่วยเป็นเมตรทุกด้านแล้ว คูณได้เลย\n2. ' + a + ' × ' + b + ' × ' + ds(c) + ' = ' + A + '\nคำตอบ ' + A + ' ลูกบาศก์เมตร';
+    return Q('ห้องเก็บของกว้าง ' + a + ' เมตร ยาว ' + b + ' เมตร สูง ' + ds(c) + ' เมตร มีปริมาตรกี่ลูกบาศก์เมตร', U(ns(A), 'ลบ.ม.'),
+      [[U(ds(a + b + c), 'ลบ.ม.'), 'บวกแทนคูณ'], [U(ns(a * b), 'ลบ.ม.'), 'ลืมคูณความสูง'], [U(ns(2 * (a * b + a * c + b * c)), 'ลบ.ม.'), 'นี่คือพื้นที่ผิวของห้อง ไม่ใช่ปริมาตร']],
+      padN(A, 2, 'ลบ.ม.'), w, { k: 'int', p: { v: a * b * c } });
+  }
+  let l, wd, L, h; do { l = R(2, 8) * 10; wd = R(2, 5) * 10; h = R(3, 25); L = l * wd * h / 1000; } while (!Number.isInteger(L));
+  const w = 'โจทย์ถาม: น้ำสูงกี่เซนติเมตร\n1. เปลี่ยนลิตรเป็น ลบ.ซม.: ' + L + ' ลิตร = ' + fmt(L * 1000) + ' ลบ.ซม.\n2. พื้นที่ก้นตู้ = ' + l + ' × ' + wd + ' = ' + fmt(l * wd) + ' ตร.ซม.\n3. ความสูงน้ำ = ' + fmt(L * 1000) + ' ÷ ' + fmt(l * wd) + ' = ' + h + '\nคำตอบ ' + h + ' เซนติเมตร';
+  return Q('ตู้ทรงสี่เหลี่ยมมุมฉาก ก้นตู้ยาว ' + l + ' ซม. กว้าง ' + wd + ' ซม. เทน้ำลงไป ' + L + ' ลิตร น้ำจะสูงกี่เซนติเมตร', U(ns(h), 'ซม.'),
+    [[U(ds(L * 100 / (l * wd)), 'ซม.'), 'ใช้ 1 ลิตร = 100 ลบ.ซม. — ที่จริง 1,000'], [U(ns(L * 10000 / (l * wd)), 'ซม.'), 'ใช้ 1 ลิตร = 10,000 ลบ.ซม. — ที่จริง 1,000'], [U(ns(h + 5), 'ซม.'), 'หารผิด']],
+    padN(h, 1, 'ซม.'), w, { k: 'int', p: { v: L * 1000 / (l * wd) } });
+}
+
+/* b12 กราฟเส้น */
+const GCTX = [
+  { t: 'จำนวนไอศกรีมที่ขายได้ (ถ้วย)', u: 'ถ้วย', x: ['จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.'], step: 10, max: 90 },
+  { t: 'ปริมาณน้ำฝน (มิลลิเมตร)', u: 'มิลลิเมตร', x: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.'], step: 20, max: 180 },
+  { t: 'จำนวนคนที่มายืมหนังสือห้องสมุด (คน)', u: 'คน', x: ['จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.'], step: 5, max: 45 },
+  { t: 'อุณหภูมิตอนเที่ยง (องศาเซลเซียส)', u: 'องศา', x: ['1', '2', '3', '4', '5', '6', '7'], step: 2, max: 40, min: 24 }];
+function svgLine(ctx, v) {
+  const x0 = 46, x1 = 320, y0 = 186, y1 = 16, lo = ctx.min || 0, n = v.length, Y = val => y0 - (val - lo) / (ctx.max - lo) * (y0 - y1), X = i => x0 + 16 + i * ((x1 - x0 - 32) / (n - 1));
+  let s = '<svg viewBox="0 0 330 222" role="img" aria-label="กราฟเส้น">';
+  for (let g = lo; g <= ctx.max; g += ctx.step) s += '<line x1="' + x0 + '" y1="' + Y(g).toFixed(1) + '" x2="' + x1 + '" y2="' + Y(g).toFixed(1) + '" stroke="var(--line)" stroke-width="1"/><text x="' + (x0 - 6) + '" y="' + (Y(g) + 4).toFixed(1) + '" font-size="11" text-anchor="end" style="fill:var(--muted)">' + g + '</text>';
+  s += '<line x1="' + x0 + '" y1="' + y1 + '" x2="' + x0 + '" y2="' + y0 + '" stroke="currentColor"/><line x1="' + x0 + '" y1="' + y0 + '" x2="' + x1 + '" y2="' + y0 + '" stroke="currentColor"/>';
+  s += '<polyline fill="none" stroke="var(--accent)" stroke-width="2.5" points="' + v.map((val, i) => X(i).toFixed(1) + ',' + Y(val).toFixed(1)).join(' ') + '"/>';
+  v.forEach((val, i) => { s += '<circle cx="' + X(i).toFixed(1) + '" cy="' + Y(val).toFixed(1) + '" r="4" style="fill:var(--accent)"/><text x="' + X(i).toFixed(1) + '" y="' + (y0 + 18) + '" font-size="12" text-anchor="middle" style="fill:currentColor">' + ctx.x[i] + '</text>'; });
+  return s + '</svg>';
+}
+function gGraph() {
+  const ctx = pick(GCTX), n = ctx.x.length, lo = ctx.min || 0, steps = (ctx.max - lo) / ctx.step;
+  let v; do { v = Array.from({ length: n }, () => lo + R(1, steps) * ctx.step); } while (new Set(v).size < n - 1);
+  const fig = svgLine(ctx, v), lab = i => (ctx.x[0] === '1' ? 'วันที่ ' : '') + ctx.x[i], title = 'กราฟเส้นแสดง' + ctx.t;
+  const t = R(1, 4);
+  if (t === 1) {
+    const i = R(0, n - 1), A = v[i];
+    const w = 'โจทย์ถาม: ค่าของ ' + lab(i) + '\n1. หา ' + lab(i) + ' ที่แกนนอน แล้วมองขึ้นไปหาจุดบนเส้น\n2. จากจุด มองไปทางซ้ายที่แกนตั้ง ได้ ' + A + '\nคำตอบ ' + A + ' ' + ctx.u;
+    const nb = [v[i - 1], v[i + 1]].filter(x => x !== undefined && x !== A).map(x => [x + ' ' + ctx.u, 'อ่านจุดของช่องข้าง ๆ — ดูให้ตรงกับ ' + lab(i)]);
+    return Q(title + '\n' + lab(i) + ' มีค่าเท่าใด', A + ' ' + ctx.u, nb.concat([[(A + ctx.step) + ' ' + ctx.u, 'อ่านเส้นตารางเลยไป 1 ช่อง'], [(A - ctx.step) + ' ' + ctx.u, 'อ่านเส้นตารางขาดไป 1 ช่อง']]),
+      () => (A + pick([-2, 2, 3]) * ctx.step) + ' ' + ctx.u, w, { fig, k: 'gval', p: { v, i } });
+  }
+  if (t === 2) {
+    let i, j; do { i = R(0, n - 1); j = R(0, n - 1); } while (i === j || v[i] === v[j]);
+    const A = Math.abs(v[i] - v[j]);
+    const w = 'โจทย์ถาม: ' + lab(i) + ' กับ ' + lab(j) + ' ต่างกันเท่าไร\n1. อ่านค่า: ' + lab(i) + ' = ' + v[i] + ' และ ' + lab(j) + ' = ' + v[j] + '\n2. ต่างกัน = มาก − น้อย = ' + Math.max(v[i], v[j]) + ' − ' + Math.min(v[i], v[j]) + ' = ' + A + '\nคำตอบ ' + A + ' ' + ctx.u;
+    return Q(title + '\n' + lab(i) + ' กับ ' + lab(j) + ' ต่างกันเท่าใด', A + ' ' + ctx.u,
+      [[(v[i] + v[j]) + ' ' + ctx.u, '"ต่างกัน" ต้องลบ ไม่ใช่บวก'], [(A + ctx.step) + ' ' + ctx.u, 'อ่านค่าคลาดไป 1 ช่อง'], [Math.max(v[i], v[j]) + ' ' + ctx.u, 'นี่คือค่าที่มากกว่า ยังไม่ได้ลบ']],
+      () => (A + pick([-1, 2, 3]) * ctx.step) + ' ' + ctx.u, w, { fig, k: 'gdiff', p: { v, i, j } });
+  }
+  if (t === 3) {
+    const inc = v.slice(1).map((x, i) => x - v[i]), mx = Math.max(...inc);
+    if (mx <= 0 || inc.filter(d => d === mx).length > 1 || n - 1 < 4) return gGraph();
+    const k = inc.indexOf(mx), seg = i => lab(i) + ' → ' + lab(i + 1);
+    const hiPt = v.indexOf(Math.max(...v));
+    const others = shuffle(inc.map((d, i) => i).filter(i => i !== k)).map(i => [seg(i), i + 1 === hiPt || i === hiPt ? 'ช่วงนี้มีจุดที่สูงที่สุด แต่โจทย์ถามว่า "เพิ่มขึ้น" มากที่สุด ต้องดูว่าเส้นชันขึ้นมากแค่ไหน' : 'ช่วงนี้เพิ่มขึ้น ' + Math.max(0, inc[i]) + ' (หรือลดลง) น้อยกว่าช่วงที่ถูก']);
+    const w = 'โจทย์ถาม: ช่วงไหน "เพิ่มขึ้น" มากที่สุด\n1. หาผลต่างของแต่ละช่วง (ตัวหลัง − ตัวหน้า): ' + inc.map((d, i) => seg(i) + ' ' + (d > 0 ? '+' : '') + d).join(', ') +
+      '\n2. เส้นที่ชันขึ้นมากที่สุด = เพิ่มมากที่สุด\nคำตอบ ' + seg(k) + ' (เพิ่ม ' + mx + ' ' + ctx.u + ')';
+    return Q(title + '\nช่วงใดมีค่าเพิ่มขึ้นมากที่สุด', seg(k), others, () => null, w, { fig, k: 'ginc', p: { v, k } });
+  }
+  const A = v.reduce((a, b) => a + b, 0);
+  const w = 'โจทย์ถาม: รวมทุกช่องได้เท่าไร\n1. อ่านค่าทุกจุด: ' + v.join(', ') + '\n2. บวกกัน: ' + v.join(' + ') + ' = ' + A + '\nคำตอบ ' + A + ' ' + ctx.u;
+  return Q(title + '\nรวมทุก' + (ctx.x[0] === '1' ? 'วัน' : 'ช่วง') + 'มีค่ากี่' + ctx.u, A + ' ' + ctx.u,
+    [[(A - v[n - 1]) + ' ' + ctx.u, 'ลืมบวกช่องสุดท้าย (' + lab(n - 1) + ')'], [(A + ctx.step) + ' ' + ctx.u, 'อ่านค่าเกินไป 1 ช่องตาราง'], [(A - v[0]) + ' ' + ctx.u, 'ลืมบวกช่องแรก (' + lab(0) + ')']],
+    () => (A + pick([-2, 2, 3]) * ctx.step) + ' ' + ctx.u, w, { fig, k: 'gsum', p: { v } });
+}
+
+/* =================== 🏆 สนามแข่งขัน (ความรู้ ป.5 + คิดหลายชั้น) =================== */
+
+/* c1 แบบรูปและผลบวก */
+function cPattern() {
+  const t = R(1, 5);
+  if (t === 1) {
+    const a = R(2, 15), d = R(2, 9), n = R(15, 60), A = a + (n - 1) * d;
+    const seq = [0, 1, 2, 3].map(i => a + i * d).join(', ');
+    const w = 'โจทย์ถาม: จำนวนที่ ' + n + '\n1. เพิ่มทีละ ' + d + '\n2. จำนวนที่ 1 = ' + a + ' → จำนวนที่ 2 บวก ' + d + ' ไป 1 ครั้ง → จำนวนที่ ' + n + ' บวก ' + d + ' ไป ' + (n - 1) + ' ครั้ง\n3. ' + a + ' + (' + (n - 1) + ' × ' + d + ') = ' + A + '\nคำตอบ ' + A;
+    return Q('แบบรูป ' + seq + ', …\nจำนวนที่ ' + n + ' คือจำนวนใด', ns(A),
+      [[ns(a + n * d), 'บวก ' + d + ' ไป ' + n + ' ครั้ง — จำนวนที่ 1 ยังไม่ได้บวก จึงบวกแค่ ' + (n - 1) + ' ครั้ง'], [ns(n * d), 'ลืมจุดเริ่มต้น ' + a], [ns(a + (n - 2) * d), 'บวกขาดไป 1 ครั้ง']],
+      padN(A, d), w, { k: 'int', p: { v: a + (n - 1) * d } });
+  }
+  if (t === 2) {
+    const a = R(1, 12), d = R(2, 8), cnt = R(20, 80), L = a + (cnt - 1) * d;
+    const w = 'โจทย์ถาม: มีกี่จำนวน\n1. ระยะจากตัวแรกถึงตัวสุดท้าย: ' + L + ' − ' + a + ' = ' + (L - a) + '\n2. เพิ่มทีละ ' + d + ' → กระโดด ' + (L - a) + ' ÷ ' + d + ' = ' + ((L - a) / d) + ' ครั้ง\n3. กระโดด ' + ((L - a) / d) + ' ครั้ง มีจำนวน ' + ((L - a) / d) + ' + 1 = ' + cnt + ' ตัว (นับตัวแรกด้วย)\nคำตอบ ' + cnt;
+    return Q('แบบรูป ' + a + ', ' + (a + d) + ', ' + (a + 2 * d) + ', …, ' + L + '\nมีจำนวนทั้งหมดกี่จำนวน', ns(cnt),
+      [[ns(cnt - 1), 'ลืม +1 (นับแค่จำนวนครั้งที่กระโดด ไม่ได้นับตัวแรก)'], [ns(Math.floor(L / d)), 'เอาตัวสุดท้ายหารด้วย ' + d + ' เลย ลืมหักตัวแรก'], [ns(cnt + 1), 'บวกเกินมา 1']],
+      padN(cnt, 1), w, { k: 'int', p: { v: Math.round((L - a) / d) + 1 } });
+  }
+  if (t === 3) {
+    const n = R(2, 10) * 10 + pick([0, 0, 5]), A = n * (n + 1) / 2;
+    const w = 'โจทย์ถาม: 1 + 2 + … + ' + n + '\n1. จับคู่หัวท้าย: 1 + ' + n + ' = ' + (n + 1) + ', 2 + ' + (n - 1) + ' = ' + (n + 1) + ', … ทุกคู่ได้ ' + (n + 1) + '\n2. มี ' + n + ' จำนวน → ได้ ' + n + ' ÷ 2 = ' + ds(n / 2) + ' คู่\n3. ' + (n + 1) + ' × ' + ds(n / 2) + ' = ' + fmt(A) + '\nคำตอบ ' + fmt(A);
+    return Q('1 + 2 + 3 + … + ' + n + ' = ?', ns(A),
+      [[ns(n * (n + 1)), 'ลืมหาร 2 (จับคู่แล้วได้ ' + n + '/2 คู่ ไม่ใช่ ' + n + ' คู่)'], [ns(n * n / 2), 'ใช้ ' + n + ' × ' + n + ' ÷ 2 — คู่หัวท้ายรวมได้ ' + (n + 1) + ' ไม่ใช่ ' + n], [ns((n - 1) * n / 2), 'ลืมบวก ' + n + ' ตัวสุดท้าย']],
+      padN(A, n), w, { k: 'int', p: { v: Array.from({ length: n }, (_, i) => i + 1).reduce((a, b) => a + b, 0) } });
+  }
+  if (t === 4) {
+    const shape = pick([{ nm: 'สามเหลี่ยม', s: 3 }, { nm: 'สี่เหลี่ยม', s: 4 }, { nm: 'ห้าเหลี่ยม', s: 5 }, { nm: 'หกเหลี่ยม', s: 6 }]), k = shape.s - 1, n = R(12, 40), A = k * n + 1;
+    const w = 'โจทย์ถาม: ต่อ ' + n + ' รูปใช้ไม้ขีดกี่ก้าน\n1. รูปแรกใช้ ' + shape.s + ' ก้าน\n2. ต่อรูปใหม่ 1 รูป ใช้ด้านร่วมกับรูปเก่า 1 ด้าน จึงเพิ่มแค่ ' + k + ' ก้าน\n3. ' + n + ' รูป = ' + shape.s + ' + (' + (n - 1) + ' × ' + k + ') = ' + A + '\nคำตอบ ' + A + ' ก้าน';
+    return Q('ต่อรูป' + shape.nm + 'เรียงเป็นแถวด้วยไม้ขีด\n1 รูปใช้ ' + shape.s + ' ก้าน, 2 รูปใช้ ' + (2 * k + 1) + ' ก้าน, 3 รูปใช้ ' + (3 * k + 1) + ' ก้าน\nถ้าต่อ ' + n + ' รูป ต้องใช้ไม้ขีดกี่ก้าน', U(ns(A), 'ก้าน'),
+      [[U(ns(shape.s * n), 'ก้าน'), 'นับทุกรูปแยกกัน — ด้านที่ติดกันใช้ไม้ขีดก้านเดียว'], [U(ns(k * n), 'ก้าน'), 'ลืมก้านแรกสุด 1 ก้าน'], [U(ns(k * n + shape.s), 'ก้าน'), 'นับรูปแรกซ้ำ']],
+      padN(A, k, 'ก้าน'), w, { k: 'int', p: { v: shape.s + (n - 1) * k } });
+  }
+  const p = R(2, 5), q = R(1, 4), x = R(2, 6), y = R(1, 5), z = R(2, 5);
+  const op = (a, b) => p * a + q * b, inner = op(y, z), A = op(x, inner), wrong = op(op(x, y), z);
+  if (A === wrong) return cPattern();
+  const w = 'โจทย์ถาม: ' + x + ' ◆ (' + y + ' ◆ ' + z + ')\n1. ทำในวงเล็บก่อน: ' + y + ' ◆ ' + z + ' = (' + p + ' × ' + y + ') + (' + q + ' × ' + z + ') = ' + inner +
+    '\n2. ' + x + ' ◆ ' + inner + ' = (' + p + ' × ' + x + ') + (' + q + ' × ' + inner + ') = ' + A + '\nคำตอบ ' + A;
+  return Q('กำหนดให้ a ◆ b = (' + p + ' × a) + (' + q + ' × b)\nเช่น 1 ◆ 1 = ' + (p + q) + '\n' + x + ' ◆ (' + y + ' ◆ ' + z + ') มีค่าเท่าใด', ns(A),
+    [[ns(wrong), 'ทำจากซ้ายไปขวา ไม่ได้ทำในวงเล็บก่อน'], [ns(op(inner, x)), 'สลับตำแหน่ง a กับ b — ตัวหน้าคือ a ต้องคูณ ' + p], [ns(inner), 'ทำแค่ในวงเล็บ ยังไม่ได้ทำขั้นที่ 2']],
+    padN(A, q), w, { k: 'int', p: { v: p * x + q * (p * y + q * z) } });
+}
+
+/* c2 เศษส่วนพลิกแพลง */
+function cFrac() {
+  const t = R(1, 4);
+  if (t === 1) {
+    const b = pick([3, 4, 5, 6]), a = coN(b), d = pick([3, 4, 5]), c = coN(d), M = b * d * R(2, 12) * 10;
+    const rem1 = M - M / b * a, spend2 = rem1 / d * c, A = rem1 - spend2;
+    if (M > 3000) return cFrac();
+    const w = 'โจทย์ถาม: เหลือเงินกี่บาท (ระวัง "ของเงินที่เหลือ")\n1. ซื้อหนังสือ ' + a + '/' + b + ' ของ ' + fmt(M) + ' = ' + fmt(M / b * a) + ' บาท → เหลือ ' + fmt(rem1) + ' บาท' +
+      '\n2. ซื้อขนม ' + c + '/' + d + ' ของ "เงินที่เหลือ" = ' + c + '/' + d + ' ของ ' + fmt(rem1) + ' = ' + fmt(spend2) + ' บาท\n3. เหลือ ' + fmt(rem1) + ' − ' + fmt(spend2) + ' = ' + fmt(A) + ' บาท\nคำตอบ ' + fmt(A) + ' บาท';
+    const wrongBase = M - M / b * a - M / d * c;
+    return Q('มีเงิน ' + fmt(M) + ' บาท ใช้ ' + a + '/' + b + ' ของเงินซื้อหนังสือ แล้วใช้ ' + c + '/' + d + ' ของเงินที่เหลือซื้อขนม จะเหลือเงินกี่บาท', U(ns(A), 'บาท'),
+      [[U(ns(wrongBase), 'บาท'), 'คิด ' + c + '/' + d + ' จากเงินตั้งต้น — โจทย์บอกว่า "ของเงินที่เหลือ"'], [U(ns(spend2), 'บาท'), 'นี่คือค่าขนม ไม่ใช่เงินที่เหลือ'], [U(ns(rem1), 'บาท'), 'ลืมหักค่าขนม']],
+      padN(A, 10, 'บาท'), w, { k: 'int', p: { v: M * (1 - a / b) * (1 - c / d) } });
+  }
+  if (t === 2) {
+    const b = pick([3, 4, 5, 6, 7, 8]), a = coN(b), R1 = (b - a) * R(3, 30) * 5, M = R1 / (b - a) * b;
+    const w = 'โจทย์ถาม: เดิมมีเงินกี่บาท\n1. ใช้ไป ' + a + '/' + b + ' → เหลือ ' + (b - a) + '/' + b + ' ของเงินเดิม\n2. ' + (b - a) + ' ส่วน = ' + fmt(R1) + ' บาท → 1 ส่วน = ' + fmt(R1) + ' ÷ ' + (b - a) + ' = ' + fmt(R1 / (b - a)) + ' บาท' +
+      '\n3. เงินเดิม ' + b + ' ส่วน = ' + fmt(R1 / (b - a)) + ' × ' + b + ' = ' + fmt(M) + ' บาท\nคำตอบ ' + fmt(M) + ' บาท';
+    return Q('น้องใช้เงินไป ' + a + '/' + b + ' ของเงินที่มี เหลือเงิน ' + fmt(R1) + ' บาท เดิมน้องมีเงินกี่บาท', U(ns(M), 'บาท'),
+      [[U(ns(R1 + R1 / b * a), 'บาท'), 'เอา ' + a + '/' + b + ' ของ "เงินที่เหลือ" มาบวก — ' + a + '/' + b + ' ต้องคิดจากเงินเดิม'], [U(ns(R1 / a * b), 'บาท'), 'คิดว่าเงินที่เหลือคือ ' + a + ' ส่วน — ที่จริงเหลือ ' + (b - a) + ' ส่วน'], [U(ns(R1 * b), 'บาท'), 'คูณ ' + b + ' โดยไม่หาร ' + (b - a) + ' ก่อน']],
+      padN(M, 10, 'บาท'), w, { k: 'int', p: { v: R1 / (1 - a / b) } });
+  }
+  if (t === 3) {
+    const k = R(1, 4), m = R(k + 4, 14), A = fsub(F(1, k), F(1, m + 1));
+    const terms = [k, k + 1, k + 2].map(i => '1/' + (i * (i + 1)));
+    const w = 'โจทย์ถาม: ผลบวกนี้เท่ากับเท่าไร\n1. สังเกต: 1/' + (k * (k + 1)) + ' = 1/' + k + ' − 1/' + (k + 1) + ', 1/' + ((k + 1) * (k + 2)) + ' = 1/' + (k + 1) + ' − 1/' + (k + 2) + ' …\n2. เขียนแบบนี้ทุกตัว ตัวกลางจะหักล้างกันหมด\n3. เหลือ 1/' + k + ' − 1/' + (m + 1) + ' = ' + fs(A) + '\nคำตอบ ' + fs(A);
+    return Q(terms.join(' + ') + ' + … + 1/' + (m * (m + 1)) + ' = ?\n(ตัวส่วนคือ ' + k + '×' + (k + 1) + ', ' + (k + 1) + '×' + (k + 2) + ', … , ' + m + '×' + (m + 1) + ')', fs(A),
+      [[fs(fsub(F(1, k), F(1, m))), 'หักล้างแล้วตัวสุดท้ายเหลือ 1/' + (m + 1) + ' ไม่ใช่ 1/' + m], [fs(F(1, m + 1)), 'เหลือแค่ตัวท้าย ลืมตัวแรก 1/' + k], [fs(fsub(F(1, k + 1), F(1, m + 1))), 'ตัวแรกที่เหลือคือ 1/' + k + ' ไม่ใช่ 1/' + (k + 1)]],
+      padF(A), w, { k: 'frac', p: { v: Array.from({ length: m - k + 1 }, (_, i) => 1 / ((k + i) * (k + i + 1))).reduce((a, b) => a + b, 0) } });
+  }
+  const b = pick([3, 4, 5, 6, 8]), a = coN(b), X = (b - a) * R(2, 15), Cap = X / (b - a) * b;
+  const w = 'โจทย์ถาม: ถังจุน้ำได้กี่ลิตร\n1. มีน้ำ ' + a + '/' + b + ' ของถัง → ยังขาด ' + (b - a) + '/' + b + ' ของถัง\n2. ' + (b - a) + ' ส่วน = ' + X + ' ลิตร → 1 ส่วน = ' + (X / (b - a)) + ' ลิตร\n3. เต็มถัง ' + b + ' ส่วน = ' + (X / (b - a)) + ' × ' + b + ' = ' + Cap + ' ลิตร\nคำตอบ ' + Cap + ' ลิตร';
+  return Q('ถังใบหนึ่งมีน้ำอยู่ ' + a + '/' + b + ' ถัง ต้องเติมน้ำอีก ' + X + ' ลิตรจึงจะเต็มถัง ถังใบนี้จุน้ำได้กี่ลิตร', U(ns(Cap), 'ลิตร'),
+    [[U(ns(X / a * b), 'ลิตร'), 'คิดว่า ' + X + ' ลิตรคือ ' + a + ' ส่วน — ที่จริงคือส่วนที่ขาด ' + (b - a) + ' ส่วน'], [U(ns(X * b), 'ลิตร'), 'คูณ ' + b + ' โดยไม่หาร ' + (b - a) + ' ก่อน'], [U(ns(X + a), 'ลิตร'), 'บวกตัวเศษเข้าไปเฉย ๆ']],
+    padN(Cap, b - a, 'ลิตร'), w, { k: 'int', p: { v: X / (1 - a / b) } });
+}
+
+/* c3 ทศนิยมพลิกแพลง */
+function longDiv(a, d, n) { let r = a % d, s = ''; for (let i = 0; i < n; i++) { r *= 10; s += Math.floor(r / d); r %= d; } return s; }
+function cDec() {
+  const t = R(1, 3);
+  if (t === 1) {
+    const d = pick([7, 11, 13, 27, 37]), a = coN(d) % d || 1, digs = longDiv(a, d, 60);
+    let cyc = 1; while (digs.slice(0, cyc).repeat(Math.ceil(60 / cyc)).slice(0, 60) !== digs) cyc++;
+    const n = R(cyc + 10, 99), pos = ((n - 1) % cyc), A = digs[pos];
+    const show = '0.' + digs.slice(0, cyc * 2) + '…';
+    const w = 'โจทย์ถาม: ทศนิยมตำแหน่งที่ ' + n + ' ของ ' + a + '/' + d + '\n1. หาร ' + a + ' ÷ ' + d + ' = ' + show + ' → ชุด "' + digs.slice(0, cyc) + '" วนซ้ำ ชุดละ ' + cyc + ' ตัว' +
+      '\n2. ' + n + ' ÷ ' + cyc + ' = ' + Math.floor(n / cyc) + ' เศษ ' + (n % cyc) + '\n3. ' + (n % cyc === 0 ? 'เศษ 0 = ตัวสุดท้ายของชุด' : 'เศษ ' + (n % cyc) + ' = ตัวที่ ' + (n % cyc) + ' ของชุด') + ' → ' + A + '\nคำตอบ ' + A;
+    const cands = [[digs[(pos + 1) % cyc], 'นับเลยไป 1 ตำแหน่ง'], [digs[(pos - 1 + cyc) % cyc], 'นับขาดไป 1 ตำแหน่ง (ระวังกรณีเศษ 0 = ตัวสุดท้ายของชุด)'], [digs[(n % cyc) % cyc], 'ใช้เศษเป็นตำแหน่งแบบนับจาก 0']];
+    return Q('เศษส่วน ' + a + '/' + d + ' เขียนเป็นทศนิยมได้ ' + show + '\nทศนิยมตำแหน่งที่ ' + n + ' คือเลขโดดใด', A, cands, () => String(R(0, 9)), w, { k: 'rep', p: { a, d, n } });
+  }
+  if (t === 2) {
+    let items; do {
+      const f1d = pick([4, 5, 8, 20, 25]), f1 = F(coN(f1d), f1d), ip = R(0, 2);
+      const fr = fadd(F(ip, 1), f1), dec = Math.round((fv(fr) + pick([-0.04, -0.02, 0.01, 0.03, 0.05])) * 1000) / 1000;
+      const m = fadd(F(ip, 1), F(coN(9), 9 + 0));
+      items = shuffle([{ s: fs(fr), v: fv(fr) }, { s: ds(dec), v: dec }, { s: fs(m), v: fv(m) }]);
+    } while (items.some(x => !x.s) || new Set(items.map(x => x.v.toFixed(6))).size < 3 || Math.max(...items.map(x => x.v)) - Math.min(...items.map(x => x.v)) > 0.6);
+    const ord = items.slice().sort((x, y) => x.v - y.v), A = ord.map(x => x.s).join(' < ');
+    const perms = [[0, 2, 1], [1, 0, 2], [2, 1, 0], [1, 2, 0], [2, 0, 1]].map(p => p.map(i => ord[i].s).join(' < '));
+    const w = 'โจทย์ถาม: เรียงจากน้อยไปมาก\n1. แปลงทุกตัวเป็นทศนิยม: ' + items.map(x => x.s + ' ≈ ' + x.v.toFixed(3)).join(', ') + '\n2. เทียบทีละหลักจากซ้าย\nคำตอบ ' + A;
+    return Q('ข้อใดเรียงจากน้อยไปมากได้ถูกต้อง\n' + items.map(x => x.s).join(' , '), A, shuffle(perms).map(p => [p, 'ลองแปลงเป็นทศนิยมก่อนเทียบ อย่าดูแค่ขนาดตัวเลข']), () => null, w, { k: 'order', p: { items } });
+  }
+  let lo, hi; do { lo = F(coN(pick([4, 5, 8, 20, 25, 40])), pick([4, 5, 8, 20, 25, 40])); hi = F(coN(pick([4, 5, 8, 20, 25])), pick([4, 5, 8, 20, 25])); } while (!(fv(hi) - fv(lo) >= 0.03 && fv(hi) - fv(lo) <= 0.2) || ds(fv(lo)) == null || ds(fv(hi)) == null);
+  let mid; do { mid = Math.round((fv(lo) + Math.random() * (fv(hi) - fv(lo))) * 100) / 100; } while (!(mid > fv(lo) + 1e-9 && mid < fv(hi) - 1e-9));
+  const A = ds(mid);
+  const w = 'โจทย์ถาม: จำนวนไหนอยู่ระหว่าง ' + fs(lo) + ' กับ ' + fs(hi) + '\n1. แปลงเป็นทศนิยม: ' + fs(lo) + ' = ' + ds(fv(lo)) + ' และ ' + fs(hi) + ' = ' + ds(fv(hi)) +
+    '\n2. ต้องมากกว่า ' + ds(fv(lo)) + ' และน้อยกว่า ' + ds(fv(hi)) + ' ("ระหว่าง" ไม่นับตัวขอบ)\nคำตอบ ' + A;
+  return Q('จำนวนใดอยู่ระหว่าง ' + fs(lo) + ' กับ ' + fs(hi), A,
+    [[ds(fv(hi)), 'เท่ากับ ' + fs(hi) + ' พอดี — "ระหว่าง" ไม่นับตัวขอบ'], [ds(Math.round((fv(lo) - 0.01) * 1000) / 1000), 'น้อยกว่า ' + fs(lo) + ' ไปนิดเดียว — แปลงเป็นทศนิยมแล้วเทียบอีกครั้ง'], [ds(Math.round((fv(hi) + 0.02) * 1000) / 1000), 'มากกว่า ' + fs(hi) + ' แล้ว']],
+    () => ds(Math.round((fv(hi) + R(3, 9) / 100) * 100) / 100), w, { k: 'between', p: { lo: fv(lo), hi: fv(hi) } });
+}
+
+/* c4 ร้อยละพลิกแพลง */
+function cPct() {
+  const t = R(1, 4);
+  if (t === 1) {
+    const r1 = pick([10, 20, 30, 40]), r2 = pick([10, 20, 25, 50].filter(x => x !== r1)), A = r1 + r2 - r1 * r2 / 100;
+    if (!Number.isInteger(A)) return cPct();
+    const w = 'โจทย์ถาม: รวมแล้วลดไปกี่เปอร์เซ็นต์ของราคาเดิม\n1. ให้ราคาเดิม = 100 บาท\n2. ลด ' + r1 + '% → เหลือ ' + (100 - r1) + ' บาท\n3. ลดอีก ' + r2 + '% "ของ ' + (100 - r1) + '" = ' + ds((100 - r1) * r2 / 100) + ' บาท → เหลือ ' + ds(100 - A) + ' บาท' +
+      '\n4. ลดไปทั้งหมด 100 − ' + ds(100 - A) + ' = ' + A + ' บาท จาก 100 = ' + A + '%\nคำตอบ ' + A + '%';
+    return Q('ร้านค้าลดราคาสินค้าร้อยละ ' + r1 + ' แล้วลดซ้ำอีกร้อยละ ' + r2 + ' ของราคาที่ลดแล้ว รวมแล้วราคาลดลงร้อยละเท่าใดของราคาเดิม', A + '%',
+      [[(r1 + r2) + '%', 'บวกกันตรง ๆ ไม่ได้ — ครั้งที่สองลดจากราคาที่ลดแล้ว ซึ่งน้อยกว่า 100'], [(100 - A) + '%', 'นี่คือราคาที่ยังต้องจ่าย ไม่ใช่ส่วนที่ลด'], [(r1 + r2 + r1 * r2 / 100) + '%', 'ต้องลบส่วนที่ซ้อนกันออก ไม่ใช่บวกเพิ่ม']],
+      () => (A + pick([-5, 5, -10])) + '%', w, { k: 'pct', p: { v: 100 - (100 - r1) * (100 - r2) / 100 } });
+  }
+  if (t === 2) {
+    const r = pick([10, 20, 25, 40, 50]), P = R(3, 40) * 20, S = P * (100 - r) / 100;
+    if (!Number.isInteger(S)) return cPct();
+    const w = 'โจทย์ถาม: ราคาป้ายเดิม\n1. ลด ' + r + '% แปลว่าจ่าย ' + (100 - r) + '% ของราคาเดิม\n2. ' + (100 - r) + '% = ' + fmt(S) + ' บาท → 1% = ' + fmt(S) + ' ÷ ' + (100 - r) + ' = ' + ds(S / (100 - r)) + ' บาท\n3. 100% = ' + ds(S / (100 - r)) + ' × 100 = ' + fmt(P) + ' บาท\nคำตอบ ' + fmt(P) + ' บาท';
+    return Q('ซื้อรองเท้าลดราคาร้อยละ ' + r + ' จ่ายเงิน ' + fmt(S) + ' บาท ราคาป้ายเดิมเป็นกี่บาท', U(ns(P), 'บาท'),
+      [[U(ns(S + S * r / 100), 'บาท'), 'บวกกลับ ' + r + '% ของราคาที่จ่าย — ส่วนลดคิดจากราคาเดิม ไม่ใช่ราคาที่จ่าย'], [U(ns(S + r), 'บาท'), 'บวก ' + r + ' บาท — ' + r + '% ไม่ใช่ ' + r + ' บาท'], [U(ns(S * 100 / r), 'บาท'), 'คิดว่าเงินที่จ่ายคือ ' + r + '%']],
+      padN(P, 20, 'บาท'), w, { k: 'int', p: { v: S / (1 - r / 100) } });
+  }
+  if (t === 3) {
+    const a = pick([10, 20, 30, 50]), b = pick([10, 20, 30, 40]), ch = (100 + a) * (100 - b) / 100 - 100;
+    if (ch === 0 || !Number.isInteger(ch)) return cPct();
+    const say = v => v > 0 ? 'เพิ่มขึ้น ' + v + '%' : 'ลดลง ' + (-v) + '%', A = say(ch);
+    const w = 'โจทย์ถาม: พื้นที่เปลี่ยนไปกี่เปอร์เซ็นต์\n1. ให้ยาว 10 กว้าง 10 → พื้นที่เดิม 100\n2. ยาวเพิ่ม ' + a + '% → ' + ds(10 + a / 10) + ' · กว้างลด ' + b + '% → ' + ds(10 - b / 10) +
+      '\n3. พื้นที่ใหม่ = ' + ds(10 + a / 10) + ' × ' + ds(10 - b / 10) + ' = ' + ds(100 + ch) + '\n4. เทียบกับ 100 → ' + A + '\nคำตอบ ' + A;
+    return Q('รูปสี่เหลี่ยมผืนผ้ารูปหนึ่ง ถ้าเพิ่มความยาวร้อยละ ' + a + ' และลดความกว้างร้อยละ ' + b + ' พื้นที่จะเปลี่ยนไปอย่างไร', A,
+      [[a - b === 0 ? 'เท่าเดิม' : say(a - b), 'เอาเปอร์เซ็นต์มาบวกลบกันตรง ๆ ไม่ได้ ต้องคูณ'], [say(-ch), 'ทิศทางผิด ลองคิดด้วยตัวเลข 10 × 10'], [say(a + b), 'บวกทั้งสองค่า']],
+      () => say(ch + pick([-6, 6, 4, -4])), w, { k: 'pctchg', p: { a, b } });
+  }
+  const Cc = R(3, 30) * 100, a = pick([20, 25, 30, 40, 50]), b = pick([10, 20, 25, 30]), tag = Cc * (100 + a) / 100, S = tag * (100 - b) / 100, d = S - Cc;
+  if (!Number.isInteger(S) || d === 0) return cPct();
+  const say = v => v > 0 ? 'กำไร ' + fmt(v) + ' บาท' : 'ขาดทุน ' + fmt(-v) + ' บาท', A = say(d);
+  const w = 'โจทย์ถาม: กำไรหรือขาดทุนกี่บาท\n1. ราคาป้าย = ทุน + ' + a + '% = ' + fmt(Cc) + ' × ' + (100 + a) + '/100 = ' + fmt(tag) + ' บาท\n2. ลด ' + b + '% "ของราคาป้าย" → ขาย ' + fmt(tag) + ' × ' + (100 - b) + '/100 = ' + fmt(S) + ' บาท' +
+    '\n3. ' + fmt(S) + ' − ' + fmt(Cc) + ' = ' + (d > 0 ? '' : '−') + fmt(Math.abs(d)) + '\nคำตอบ ' + A;
+  return Q('ร้านซื้อจักรยานมา ' + fmt(Cc) + ' บาท ติดป้ายราคาให้ได้กำไรร้อยละ ' + a + ' แล้วลดราคาจากป้ายร้อยละ ' + b + ' ร้านได้กำไรหรือขาดทุนเท่าใด', A,
+    [[say(Cc * (a - b) / 100), 'เอา ' + a + '% − ' + b + '% ของทุน — ส่วนลดคิดจากราคาป้าย ไม่ใช่จากทุน'], [say(-d), 'ทิศทางผิด ลองเทียบราคาขายกับทุนอีกครั้ง'], [say(tag - Cc), 'นี่คือกำไรถ้าขายตามป้าย ยังไม่ได้ลดราคา']],
+    () => say(d + pick([-50, 50, 100, -100])), w, { k: 'pnl', p: { Cc, a, b } });
+}
+
+/* c5 "อย่างน้อย / มากที่สุด" + เวลา */
+function cCeil() {
+  const t = R(1, 4);
+  if (t === 1) {
+    let W, k, tot; do { W = R(11, 49) / 10; k = pick([40, 60, 75, 80, 90, 120]); tot = Math.round(W * 1000); } while (tot % k === 0);
+    const A = Math.ceil(tot / k);
+    const w = 'โจทย์ถาม: อย่างน้อยกี่เที่ยว\n1. แปลงหน่วยให้ตรงกัน: ' + ds(W) + ' ตัน = ' + fmt(tot) + ' กิโลกรัม\n2. ' + fmt(tot) + ' ÷ ' + k + ' = ' + Math.floor(tot / k) + ' เศษ ' + (tot % k) +
+      '\n3. ยังเหลือของ ' + (tot % k) + ' กก. ต้องขนอีก 1 เที่ยว → ' + Math.floor(tot / k) + ' + 1 = ' + A + '\nคำตอบ ' + A + ' เที่ยว';
+    return Q('ต้องขนปุ๋ย ' + ds(W) + ' เมตริกตัน ด้วยรถเข็นที่ขนได้มากที่สุดเที่ยวละ ' + k + ' กิโลกรัม ต้องขนอย่างน้อยที่สุดกี่เที่ยว', U(ns(A), 'เที่ยว'),
+      [[U(ns(A - 1), 'เที่ยว'), 'ตัดเศษทิ้ง — ของที่เหลือ ' + (tot % k) + ' กก. ก็ต้องขนด้วย จึงต้องปัดขึ้น'], [U(ns(Math.ceil(tot / 10 / k)), 'เที่ยว'), 'แปลงตันเป็นกิโลกรัมผิด (1 ตัน = 1,000 กก.)'], [U(ns(A + 1), 'เที่ยว'), 'ปัดขึ้นเกินไป 1 เที่ยว']],
+      padN(A, 1, 'เที่ยว'), w, { k: 'int', p: { v: Math.ceil(W * 1000 / k - 1e-9) } });
+  }
+  if (t === 2) {
+    const c = pick([15, 20, 25, 30, 40]), H = R(4, 12), cm = H * 100, exact = cm % c === 0, A = exact ? cm / c + 1 : Math.ceil(cm / c);
+    const w = 'โจทย์ถาม: อย่างน้อยกี่วันถึงจะสูง "มากกว่า" ' + H + ' เมตร\n1. ' + H + ' เมตร = ' + cm + ' ซม.\n2. ' + cm + ' ÷ ' + c + ' = ' + (exact ? cm / c + ' พอดี → วันที่ ' + cm / c + ' สูงเท่ากับ ' + H + ' ม. พอดี ยังไม่ "มากกว่า"' : Math.floor(cm / c) + ' เศษ ' + (cm % c) + ' → วันที่ ' + Math.floor(cm / c) + ' ยังไม่ถึง') +
+      '\n3. ต้องอีก 1 วัน → ' + A + ' วัน\nคำตอบ ' + A + ' วัน';
+    return Q('ต้นไผ่โตวันละ ' + c + ' เซนติเมตร (เริ่มจากต้นอ่อนที่สูง 0) ต้องใช้เวลาอย่างน้อยกี่วัน ต้นไผ่จึงจะสูงมากกว่า ' + H + ' เมตร', U(ns(A), 'วัน'),
+      [[U(ns(A - 1), 'วัน'), exact ? 'วันนั้นสูง ' + H + ' ม. พอดี — โจทย์ต้องการ "มากกว่า"' : 'ตัดเศษทิ้ง — วันนั้นยังสูงไม่ถึง'], [U(ns(Math.ceil(H * 10 / c) || null), 'วัน'), 'แปลงเมตรเป็นเซนติเมตรผิด (1 ม. = 100 ซม.)'], [U(ns(A + 1), 'วัน'), 'บวกเพิ่มเกิน']],
+      padN(A, 1, 'วัน'), w, { k: 'int', p: { v: Math.floor(cm / c) + 1 } });
+  }
+  if (t === 3) {
+    const up = Math.random() < 0.5;
+    if (up) {
+      let N, k; do { N = R(40, 250); k = pick([4, 6, 8, 9, 12]); } while (N % k === 0);
+      const A = Math.ceil(N / k);
+      const w = 'โจทย์ถาม: ต้องใช้รถตู้ "อย่างน้อย" กี่คัน\n1. ' + N + ' ÷ ' + k + ' = ' + Math.floor(N / k) + ' เศษ ' + (N % k) + '\n2. เหลือ ' + (N % k) + ' คน ไม่มีที่นั่ง ต้องเพิ่มอีก 1 คัน (ปัดขึ้น)\nคำตอบ ' + A + ' คัน';
+      return Q('นักเรียน ' + N + ' คน ไปทัศนศึกษาด้วยรถตู้ นั่งได้คันละ ' + k + ' คน ต้องใช้รถตู้อย่างน้อยกี่คัน', U(ns(A), 'คัน'),
+        [[U(ns(A - 1), 'คัน'), 'ตัดเศษทิ้ง — นักเรียน ' + (N % k) + ' คนที่เหลือก็ต้องไปด้วย'], [U(ns(N % k), 'คัน'), 'ตอบเป็นเศษ ไม่ใช่จำนวนคัน'], [U(ns(A + 1), 'คัน'), 'ปัดขึ้นเกิน']],
+        padN(A, 1, 'คัน'), w, { k: 'int', p: { v: Math.ceil(N / k) } });
+    }
+    let M, p; do { M = R(3, 20) * 50; p = pick([35, 45, 55, 65, 85, 95]); } while (M % p === 0 || M < p * 3);
+    const A = Math.floor(M / p);
+    const w = 'โจทย์ถาม: ซื้อได้ "มากที่สุด" กี่ชิ้น\n1. ' + fmt(M) + ' ÷ ' + p + ' = ' + A + ' เศษ ' + (M % p) + '\n2. เงินที่เหลือ ' + (M % p) + ' บาท ไม่พอซื้ออีกชิ้น → ตัดเศษทิ้ง (ปัดลง)\nคำตอบ ' + A + ' ชิ้น';
+    return Q('มีเงิน ' + fmt(M) + ' บาท ซื้อของเล่นราคาชิ้นละ ' + p + ' บาท ซื้อได้มากที่สุดกี่ชิ้น', U(ns(A), 'ชิ้น'),
+      [[U(ns(A + 1), 'ชิ้น'), 'ปัดขึ้น — แต่เงินไม่พอซื้อชิ้นสุดท้าย'], [U(ns(M % p), 'ชิ้น'), 'นี่คือเงินที่เหลือ ไม่ใช่จำนวนชิ้น'], [U(ns(A - 1), 'ชิ้น'), 'ปัดลงเกินไป']],
+      padN(A, 1, 'ชิ้น'), w, { k: 'int', p: { v: Math.floor(M / p) } });
+  }
+  const sh = R(6, 10), sm = pick([10, 15, 20, 25, 35, 40, 45, 50, 55]), dh = R(1, 3), dm = pick([20, 25, 30, 35, 40, 45, 50]);
+  const tot = sh * 60 + sm + dh * 60 + dm, eh = Math.floor(tot / 60), em = tot % 60, tf = (h, m) => h + '.' + String(m).padStart(2, '0') + ' น.';
+  const A = tf(eh, em), naiveM = sm + dm;
+  const w = 'โจทย์ถาม: ถึงกี่โมง\n1. บวกนาที: ' + sm + ' + ' + dm + ' = ' + naiveM + ' นาที' + (naiveM >= 60 ? ' = 1 ชั่วโมง ' + (naiveM - 60) + ' นาที (60 นาที = 1 ชั่วโมง ไม่ใช่ 100)' : '') +
+    '\n2. บวกชั่วโมง: ' + sh + ' + ' + dh + (naiveM >= 60 ? ' + 1' : '') + ' = ' + eh + '\nคำตอบ ' + A;
+  return Q('ออกจากบ้านเวลา ' + tf(sh, sm) + ' ใช้เวลาเดินทาง ' + dh + ' ชั่วโมง ' + dm + ' นาที จะถึงที่หมายเวลาใด', A,
+    [[naiveM >= 60 ? (sh + dh) + '.' + naiveM + ' น.' : tf(sh + dh + 1, naiveM), naiveM >= 60 ? 'นาทีเกิน 60 แล้วไม่ทดเป็นชั่วโมง — เวลาเป็นระบบ 60 ไม่ใช่ 100' : 'บวกชั่วโมงเกินมา 1'], [tf(eh, (em + 10) % 60), 'บวกนาทีผิด'], [tf(eh - 1, em), 'ลืมทด 1 ชั่วโมงจากนาทีที่เกิน 60']],
+    () => tf(eh + pick([-1, 1]), em), w, { k: 'time', p: { sh, sm, dh, dm } });
+}
+
+/* c6 ปริมาตรพลิกแพลง */
+function cVol() {
+  const t = R(1, 4);
+  if (t === 1) {
+    const l = R(2, 6) * 10, wd = R(2, 5) * 10, r = R(1, 6), A = l * wd * r, h0 = R(10, 25);
+    const w = 'โจทย์ถาม: ปริมาตรของก้อนหิน\n1. หินจมน้ำ ดันให้น้ำสูงขึ้น → ปริมาตรหิน = ปริมาตรน้ำที่สูงขึ้น\n2. น้ำสูงขึ้น ' + r + ' ซม. (ไม่ใช่ ' + (h0 + r) + ' ซม. ทั้งหมด)\n3. ' + l + ' × ' + wd + ' × ' + r + ' = ' + fmt(A) + '\nคำตอบ ' + fmt(A) + ' ลูกบาศก์เซนติเมตร';
+    return Q('ตู้ปลาทรงสี่เหลี่ยมมุมฉาก ก้นตู้ยาว ' + l + ' ซม. กว้าง ' + wd + ' ซม. มีน้ำสูง ' + h0 + ' ซม. ใส่ก้อนหินลงไปจนจมมิด น้ำสูงขึ้นเป็น ' + (h0 + r) + ' ซม. ก้อนหินมีปริมาตรกี่ลูกบาศก์เซนติเมตร', U(ns(A), 'ลบ.ซม.'),
+      [[U(ns(l * wd * (h0 + r)), 'ลบ.ซม.'), 'นี่คือปริมาตรน้ำ + หินทั้งหมด ต้องใช้แค่ส่วนที่สูงขึ้น ' + r + ' ซม.'], [U(ns(l * wd * h0), 'ลบ.ซม.'), 'นี่คือปริมาตรน้ำเดิม'], [U(ns(l * wd), 'ลบ.ซม.'), 'ลืมคูณความสูงที่เพิ่มขึ้น']],
+      padN(A, l * wd / 2, 'ลบ.ซม.'), w, { k: 'int', p: { v: l * wd * (h0 + r) - l * wd * h0 } });
+  }
+  if (t === 2) {
+    let l1, w1, h1, l2, w2, A; do { l1 = R(2, 6) * 10; w1 = R(2, 5) * 10; h1 = R(4, 20); l2 = R(2, 6) * 10; w2 = R(2, 5) * 10; A = l1 * w1 * h1 / (l2 * w2); } while (!Number.isInteger(A) || l1 * w1 === l2 * w2 || A < 2);
+    const V = l1 * w1 * h1;
+    const w = 'โจทย์ถาม: น้ำในตู้ข ใบใหม่สูงกี่ ซม.\n1. ปริมาตรน้ำ = ' + l1 + ' × ' + w1 + ' × ' + h1 + ' = ' + fmt(V) + ' ลบ.ซม. (เทแล้วน้ำเท่าเดิม)\n2. ก้นตู้ ข = ' + l2 + ' × ' + w2 + ' = ' + fmt(l2 * w2) + ' ตร.ซม.\n3. ความสูง = ' + fmt(V) + ' ÷ ' + fmt(l2 * w2) + ' = ' + A + '\nคำตอบ ' + A + ' เซนติเมตร';
+    return Q('ตู้ ก ก้นยาว ' + l1 + ' ซม. กว้าง ' + w1 + ' ซม. มีน้ำสูง ' + h1 + ' ซม. เทน้ำทั้งหมดลงตู้ ข ที่ก้นยาว ' + l2 + ' ซม. กว้าง ' + w2 + ' ซม. น้ำในตู้ ข จะสูงกี่เซนติเมตร', U(ns(A), 'ซม.'),
+      [[U(ns(h1), 'ซม.'), 'ก้นตู้ไม่เท่ากัน น้ำจึงไม่ได้สูงเท่าเดิม'], [U(ns(Math.round(l2 * w2 * h1 / (l1 * w1))), 'ซม.'), 'หารกลับด้าน — ต้องเอาปริมาตรน้ำหารด้วยก้นตู้ใบใหม่'], [U(ns(A + 2), 'ซม.'), 'หารผิด']],
+      padN(A, 1, 'ซม.'), w, { k: 'int', p: { v: V / (l2 * w2) } });
+  }
+  if (t === 3) {
+    const n = R(3, 6), kind = pick([0, 1, 2, 3]);
+    const cnt = [Math.pow(n - 2, 3), 6 * Math.pow(n - 2, 2), 12 * (n - 2), 8], nm = ['ไม่มีสีเลย', 'มีสี 1 ด้าน', 'มีสี 2 ด้าน', 'มีสี 3 ด้าน'];
+    const how = ['อยู่ข้างในทั้งหมด → ลอกเปลือกนอกออก 1 ชั้น เหลือก้อน ' + (n - 2) + '×' + (n - 2) + '×' + (n - 2) + ' = ' + cnt[0],
+      'อยู่กลางหน้า (ไม่ติดขอบ) หน้าละ ' + (n - 2) + '×' + (n - 2) + ' = ' + Math.pow(n - 2, 2) + ' ลูก มี 6 หน้า → ' + cnt[1],
+      'อยู่ตามขอบ (ไม่นับมุม) ขอบละ ' + (n - 2) + ' ลูก มี 12 ขอบ → ' + cnt[2], 'อยู่ที่มุม ลูกบาศก์มี 8 มุม → 8'];
+    const A = cnt[kind];
+    const w = 'โจทย์ถาม: ลูกเล็กที่' + nm[kind] + 'มีกี่ลูก\n1. ลูกที่' + nm[kind] + ' ' + how[kind] + '\nคำตอบ ' + A + ' ลูก';
+    return Q('ลูกบาศก์ไม้ขนาด ' + n + '×' + n + '×' + n + ' ซม. ทาสีทุกด้าน แล้วตัดเป็นลูกบาศก์เล็กขนาด 1×1×1 ซม. ทั้งหมด ลูกบาศก์เล็กที่' + nm[kind] + 'มีกี่ลูก', U(ns(A), 'ลูก'),
+      [0, 1, 2, 3].filter(k => k !== kind).map(k => [U(ns(cnt[k]), 'ลูก'), 'นี่คือจำนวนลูกที่' + nm[k]]).concat([[U(ns(n * n * n), 'ลูก'), 'นี่คือจำนวนลูกเล็กทั้งหมด']]),
+      padN(A, 2, 'ลูก'), w, { k: 'cube', p: { n, kind } });
+  }
+  let L, W, x; do { L = R(16, 40); W = R(12, 30); x = R(2, 5); } while (W - 2 * x < 4 || L === W);
+  const A = (L - 2 * x) * (W - 2 * x) * x;
+  const w = 'โจทย์ถาม: ปริมาตรของกล่อง\n1. ตัดมุมด้านละ ' + x + ' ซม. ทั้งสองข้าง → ยาวเหลือ ' + L + ' − ' + (2 * x) + ' = ' + (L - 2 * x) + ' และกว้างเหลือ ' + W + ' − ' + (2 * x) + ' = ' + (W - 2 * x) +
+    '\n2. พับขึ้นได้ความสูง = ' + x + ' ซม.\n3. ' + (L - 2 * x) + ' × ' + (W - 2 * x) + ' × ' + x + ' = ' + fmt(A) + '\nคำตอบ ' + fmt(A) + ' ลูกบาศก์เซนติเมตร';
+  return Q('กระดาษแข็งรูปสี่เหลี่ยมผืนผ้ายาว ' + L + ' ซม. กว้าง ' + W + ' ซม. ตัดมุมทั้งสี่ออกเป็นรูปสี่เหลี่ยมจัตุรัสด้านละ ' + x + ' ซม. แล้วพับขึ้นเป็นกล่องไม่มีฝา กล่องมีปริมาตรกี่ลูกบาศก์เซนติเมตร', U(ns(A), 'ลบ.ซม.'),
+    [[U(ns((L - x) * (W - x) * x), 'ลบ.ซม.'), 'ตัดออกแค่ข้างเดียว — มุมมีทั้งสองข้าง ต้องลบ 2 × ' + x], [U(ns(L * W * x), 'ลบ.ซม.'), 'ลืมหักส่วนที่ตัดออก'], [U(ns((L - 2 * x) * (W - 2 * x)), 'ลบ.ซม.'), 'นี่คือพื้นที่ก้นกล่อง ลืมคูณความสูง ' + x]],
+    padN(A, x * 2, 'ลบ.ซม.'), w, { k: 'int', p: { v: (L - 2 * x) * (W - 2 * x) * x } });
+}
+
+/* c7 มุมกับเส้นขนาน: รูปซิกแซก */
+function svgZig(al, be, labA, labB, labX, obtuse) {
+  const y1 = 40, y2 = 190, Ax = 70, Bx = 70;
+  /* หา P: จาก A ลงไปทางขวาทำมุม al กับแนวนอน, จาก B ขึ้นไปทางขวาทำมุม be */
+  const ta = Math.tan(rad(al)), tb = Math.tan(rad(be)), dx = (y2 - y1) / (ta + tb), Px = Ax + dx, Py = y1 + ta * dx;
+  let s = '<svg viewBox="0 0 330 230" role="img" aria-label="เส้นขนานกับมุมซิกแซก">';
+  s += '<line x1="20" y1="' + y1 + '" x2="315" y2="' + y1 + '" stroke="currentColor" stroke-width="2"/><line x1="20" y1="' + y2 + '" x2="315" y2="' + y2 + '" stroke="currentColor" stroke-width="2"/>' + arrowMark(296, y1) + arrowMark(296, y2);
+  s += '<polyline fill="none" stroke="currentColor" stroke-width="2" points="' + Ax + ',' + y1 + ' ' + Px.toFixed(1) + ',' + Py.toFixed(1) + ' ' + Bx + ',' + y2 + '"/>';
+  s += '<text x="' + (Ax - 6) + '" y="' + (y1 - 8) + '" font-size="13" text-anchor="end" style="fill:currentColor">A</text><text x="' + (Bx - 6) + '" y="' + (y2 + 18) + '" font-size="13" text-anchor="end" style="fill:currentColor">B</text><text x="' + (Px + 8).toFixed(1) + '" y="' + (Py + 5).toFixed(1) + '" font-size="13" style="fill:currentColor">P</text>';
+  if (obtuse) { s += arcLabel(Ax, y1, 180, 360 - al, labA) + arcLabel(Bx, y2, be, 180, labB); }
+  else { s += arcLabel(Ax, y1, 360 - al, 360, labA) + arcLabel(Bx, y2, 0, be, labB); }
+  s += arcLabel(Px, Py, 180 - be, 180 + al, labX, true);
+  return s + '</svg>';
+}
+function cAngle() {
+  const t = R(1, 3);
+  let al, be; do { al = R(5, 12) * 5; be = R(5, 12) * 5; } while (al + be >= 120 || al + be < 60 || al === be);
+  const X = al + be;
+  if (t === 1) {
+    const fig = svgZig(al, be, al + '°', be + '°', 'x', false);
+    const w = 'โจทย์ถาม: มุม x ที่จุด P\n1. ลากเส้นผ่าน P ขนานกับเส้นบนและเส้นล่าง\n2. มุม x ถูกแบ่งเป็น 2 ส่วน: ส่วนบนเป็นมุมแย้งกับ ' + al + '° → ' + al + '° และส่วนล่างเป็นมุมแย้งกับ ' + be + '° → ' + be + '°\n3. x = ' + al + ' + ' + be + ' = ' + X + '°\nคำตอบ ' + X + '°';
+    return Q('จากรูป เส้นบนขนานกับเส้นล่าง\nมุม x มีขนาดกี่องศา', X + '°',
+      [[(180 - X) + '°', 'เอา 180 ลบ — ไม่มีเส้นตรงตรงนี้ ให้ลากเส้นขนานผ่าน P แล้วใช้มุมแย้ง'], [(360 - X) + '°', 'นี่คือมุมรอบนอกของจุด P'], [Math.abs(al - be) + '°', 'ลบกัน — ต้องบวกสองส่วน']],
+      () => (X + pick([-10, 10, 20])) + '°', w, { fig, k: 'zig', p: { al, be, mode: 1 } });
+  }
+  if (t === 2) {
+    const fig = svgZig(al, be, al + '°', 'y', X + '°', false);
+    const w = 'โจทย์ถาม: มุม y ที่จุด B\n1. กฎซิกแซก: มุมที่ P = มุมที่ A + มุมที่ B\n2. ' + X + ' = ' + al + ' + y\n3. y = ' + X + ' − ' + al + ' = ' + be + '°\nคำตอบ ' + be + '°';
+    return Q('จากรูป เส้นบนขนานกับเส้นล่าง\nมุม y มีขนาดกี่องศา', be + '°',
+      [[(180 - be) + '°', 'ไม่ต้องเอา 180 ลบ — ใช้กฎซิกแซก มุมกลาง = มุมบน + มุมล่าง'], [X + al + '°', 'บวกแทนลบ'], [(180 - X) + '°', 'เอา 180 ลบมุมกลาง']],
+      () => (be + pick([-10, 10, 15])) + '°', w, { fig, k: 'zig', p: { al, be, mode: 2 } });
+  }
+  const oa = 180 - al, ob = 180 - be, fig = svgZig(al, be, oa + '°', ob + '°', 'x', true);
+  const w = 'โจทย์ถาม: มุม x ที่จุด P\n1. มุมที่ให้มาเป็นมุมป้านด้านซ้าย หาส่วนที่เหลือบนเส้นตรงก่อน: 180 − ' + oa + ' = ' + al + '° และ 180 − ' + ob + ' = ' + be + '°' +
+    '\n2. ใช้กฎซิกแซกกับมุมด้านขวา: x = ' + al + ' + ' + be + ' = ' + X + '°\nทางลัด: มุมทั้งสามรวมกันได้ 360° → x = 360 − ' + oa + ' − ' + ob + ' = ' + X + '°\nคำตอบ ' + X + '°';
+  return Q('จากรูป เส้นบนขนานกับเส้นล่าง\nมุม x มีขนาดกี่องศา', X + '°',
+    [[(oa + ob - 180) + '°', 'ลบ 180 — มุมรวมของรูปตัว U นี้คือ 360°'], [(360 - X) + '°', 'นี่คือมุมด้านนอกของจุด P'], [(180 - X) + '°', 'เอา 180 ลบผลบวกของมุมแหลม']],
+    () => (X + pick([-10, 10, 20])) + '°', w, { fig, k: 'zig', p: { al, be, mode: 3 } });
+}
+
+/* c8 คิดเป็นระบบ */
+function cLogic() {
+  const t = R(1, 6);
+  if (t === 1) {
+    const ch = R(5, 30), rb = R(5, 30), H = ch + rb, L = 2 * ch + 4 * rb;
+    const w = 'โจทย์ถาม: มีกระต่ายกี่ตัว\n1. สมมติว่าเป็นไก่ทั้งหมด ' + H + ' ตัว → มีขา ' + H + ' × 2 = ' + (2 * H) + ' ขา\n2. ขาจริงมี ' + L + ' ขา ขาดไป ' + L + ' − ' + (2 * H) + ' = ' + (L - 2 * H) + ' ขา' +
+      '\n3. เปลี่ยนไก่เป็นกระต่าย 1 ตัว ได้ขาเพิ่ม 2 ขา → ต้องเปลี่ยน ' + (L - 2 * H) + ' ÷ 2 = ' + rb + ' ตัว\nคำตอบ กระต่าย ' + rb + ' ตัว';
+    return Q('ในฟาร์มมีไก่และกระต่ายรวม ' + H + ' ตัว นับขารวมได้ ' + L + ' ขา มีกระต่ายกี่ตัว', U(ns(rb), 'ตัว'),
+      [[U(ns(ch), 'ตัว'), 'นี่คือจำนวนไก่'], [U(ns(Math.floor(L / 4)), 'ตัว'), 'เอาขาทั้งหมดหาร 4 — ไก่มี 2 ขา ไม่ใช่ 4'], [U(ns(L - 2 * H), 'ตัว'), 'ลืมหาร 2 (กระต่าย 1 ตัวเพิ่มขา 2 ขา)']],
+      padN(rb, 1, 'ตัว'), w, { k: 'int', p: { H, L } });
+  }
+  if (t === 2) {
+    const k = pick([2, 3, 4]), S = R(3, 12), tt = R(2, 15), F0 = k * (S + tt) - tt;
+    if (F0 - S < 18 || F0 > 60) return cLogic();
+    const diff = F0 - S, kid = diff / (k - 1);
+    const w = 'โจทย์ถาม: อีกกี่ปีพ่อจะอายุเป็น ' + k + ' เท่าของลูก\n1. อายุพ่อกับลูกต่างกันเท่าเดิมตลอด = ' + F0 + ' − ' + S + ' = ' + diff + ' ปี\n2. ตอนพ่อเป็น ' + k + ' เท่า: พ่อ ' + k + ' ส่วน ลูก 1 ส่วน → ต่างกัน ' + (k - 1) + ' ส่วน = ' + diff + ' ปี' +
+      '\n3. ลูกตอนนั้น 1 ส่วน = ' + diff + ' ÷ ' + (k - 1) + ' = ' + kid + ' ปี\n4. อีก ' + kid + ' − ' + S + ' = ' + tt + ' ปี\nคำตอบ ' + tt + ' ปี';
+    return Q('ปัจจุบันพ่ออายุ ' + F0 + ' ปี ลูกอายุ ' + S + ' ปี อีกกี่ปีพ่อจะมีอายุเป็น ' + k + ' เท่าของลูก', U(ns(tt), 'ปี'),
+      [[U(ns(kid), 'ปี'), 'นี่คืออายุลูกตอนนั้น ไม่ใช่จำนวนปีที่ผ่านไป'], [U(ns(F0 - k * S), 'ปี'), 'ลืมหารด้วย ' + (k - 1) + ' (อายุสองคนเพิ่มขึ้นพร้อมกัน)'], [U(ns(diff), 'ปี'), 'นี่คืออายุที่ต่างกัน']],
+      padN(tt, 1, 'ปี'), w, { k: 'age', p: { F0, S, k } });
+  }
+  if (t === 3) {
+    const N = R(110, 480), A = 9 + 180 + 3 * (N - 99);
+    const w = 'โจทย์ถาม: ใช้เลขโดดกี่ตัว\n1. หน้า 1–9: 9 หน้า × 1 ตัว = 9\n2. หน้า 10–99: 90 หน้า × 2 ตัว = 180\n3. หน้า 100–' + N + ': ' + (N - 99) + ' หน้า × 3 ตัว = ' + fmt(3 * (N - 99)) + '\n4. รวม 9 + 180 + ' + fmt(3 * (N - 99)) + ' = ' + fmt(A) + '\nคำตอบ ' + fmt(A) + ' ตัว';
+    return Q('พิมพ์เลขหน้าหนังสือตั้งแต่หน้า 1 ถึงหน้า ' + N + ' ต้องใช้เลขโดดทั้งหมดกี่ตัว', U(ns(A), 'ตัว'),
+      [[U(ns(3 * N), 'ตัว'), 'คิดว่าทุกหน้าใช้ 3 ตัว — หน้า 1–99 ใช้น้อยกว่า'], [U(ns(9 + 180 + 3 * (N - 100)), 'ตัว'), 'นับหน้า 100–' + N + ' ได้ ' + (N - 100) + ' หน้า — ต้องเป็น ' + (N - 99) + ' หน้า (นับหน้า 100 ด้วย)'], [U(ns(N), 'ตัว'), 'นี่คือจำนวนหน้า ไม่ใช่จำนวนเลขโดด']],
+      padN(A, 3, 'ตัว'), w, { k: 'pages', p: { N } });
+  }
+  if (t === 4) {
+    const b = pick([2, 3, 7, 8]), n = R(15, 60), cyc = { 2: [2, 4, 8, 6], 3: [3, 9, 7, 1], 7: [7, 9, 3, 1], 8: [8, 4, 2, 6] }[b], A = cyc[(n - 1) % 4];
+    const w = 'โจทย์ถาม: หลักหน่วยของผลคูณ\n1. ดูหลักหน่วยทีละครั้ง: ' + cyc.map((d, i) => (i + 1) + ' ตัว → ' + d).join(', ') + ' แล้ววนซ้ำทุก 4 ตัว' +
+      '\n2. ' + n + ' ÷ 4 = ' + Math.floor(n / 4) + ' เศษ ' + (n % 4) + '\n3. ' + (n % 4 === 0 ? 'เศษ 0 = ตัวสุดท้ายของชุด' : 'เศษ ' + (n % 4) + ' = ตัวที่ ' + (n % 4) + ' ของชุด') + ' → ' + A + '\nคำตอบ ' + A;
+    return Q('ถ้านำ ' + b + ' มาคูณกัน ' + n + ' ตัว (' + b + ' × ' + b + ' × ' + b + ' × … × ' + b + ') ผลคูณมีเลขโดดในหลักหน่วยเป็นเท่าใด', String(A),
+      cyc.filter(d => d !== A).map(d => [String(d), 'นับตำแหน่งในชุดวนผิด (ระวังกรณีเศษ 0 = ตัวสุดท้ายของชุด)']), () => String(R(0, 9)), w, { k: 'unit', p: { b, n } });
+  }
+  if (t === 5) {
+    const n = R(3, 6); let A = 0; for (let k = 1; k <= n; k++) A += k * k;
+    const w = 'โจทย์ถาม: สี่เหลี่ยมจัตุรัสทุกขนาดมีกี่รูป\n' + Array.from({ length: n }, (_, i) => (i + 1) + '. ขนาด ' + (i + 1) + '×' + (i + 1) + ' ช่อง: มี ' + (n - i) + ' × ' + (n - i) + ' = ' + ((n - i) * (n - i)) + ' รูป').join('\n') + '\nรวม = ' + A + '\nคำตอบ ' + A + ' รูป';
+    return Q('ตารางสี่เหลี่ยมจัตุรัสขนาด ' + n + '×' + n + ' ช่อง (เหมือนกระดานหมากรุกเล็ก ๆ) มีรูปสี่เหลี่ยมจัตุรัสทั้งหมดกี่รูป (นับทุกขนาด)', U(ns(A), 'รูป'),
+      [[U(ns(n * n), 'รูป'), 'นับแค่ช่องเล็ก ลืมสี่เหลี่ยมใหญ่ที่เกิดจากหลายช่องรวมกัน'], [U(ns(n * n + 1), 'รูป'), 'นับช่องเล็ก + กรอบใหญ่สุด แต่ลืมขนาดกลาง'], [U(ns(A - 1), 'รูป'), 'ลืมนับกรอบใหญ่สุด']],
+      padN(A, 2, 'รูป'), w, { k: 'squares', p: { n } });
+  }
+  const N = R(6, 25), A = N * (N - 1) / 2;
+  const w = 'โจทย์ถาม: จับมือกันทั้งหมดกี่ครั้ง\n1. แต่ละคนจับมือกับคนอื่น ' + (N - 1) + ' คน\n2. ' + N + ' × ' + (N - 1) + ' = ' + (N * (N - 1)) + ' แต่นับซ้ำ (ก จับ ข = ข จับ ก)\n3. หาร 2: ' + (N * (N - 1)) + ' ÷ 2 = ' + A + '\nคำตอบ ' + A + ' ครั้ง';
+  return Q('มีนักเรียน ' + N + ' คน ทุกคนจับมือทักทายกันคนละ 1 ครั้งกับทุกคน จะมีการจับมือทั้งหมดกี่ครั้ง', U(ns(A), 'ครั้ง'),
+    [[U(ns(N * (N - 1)), 'ครั้ง'), 'ลืมหาร 2 — ก จับมือ ข กับ ข จับมือ ก คือครั้งเดียวกัน'], [U(ns(N * N), 'ครั้ง'), 'นับคนจับมือกับตัวเองด้วย'], [U(ns(N - 1), 'ครั้ง'), 'นี่คือจำนวนครั้งที่คนเดียวจับ']],
+    padN(A, N, 'ครั้ง'), w, { k: 'hand', p: { N } });
+}
+
+const SUBJECTS = [
+  { id: 'base', name: '📘 พื้นฐาน ป.5', sub: 'ตามหนังสือ ป.5 · 12 หัวข้อ', color: 'var(--base)', topics: [
+    { id: 'b1', name: 'เศษส่วน: บวก ลบ', sub: 'ตัวส่วนไม่เท่ากัน · จำนวนคละ · ทด · ยืม', gen: gFracAS },
+    { id: 'b2', name: 'เศษส่วน: คูณ หาร', sub: '"ของ" = คูณ · หารให้กลับตัวหาร', gen: gFracMD },
+    { id: 'b3', name: 'โจทย์ปัญหาเศษส่วน', sub: '2 ขั้นตอน · เหลือ · แบ่งท่อน · เศษส่วนของเศษส่วน', gen: gFracWord },
+    { id: 'b4', name: 'ทศนิยม: หลัก แปลง เปรียบเทียบ', sub: 'ส่วนสิบ ส่วนร้อย ส่วนพัน · เศษส่วน ⇄ ทศนิยม', gen: gDecBasic },
+    { id: 'b5', name: 'ทศนิยม: คูณ หาร', sub: 'นับตำแหน่งจุด · หารให้ลงตัวเป็นทศนิยม', gen: gDecMD },
+    { id: 'b6', name: 'บัญญัติไตรยางศ์', sub: 'หาค่าของ 1 หน่วยก่อน แล้วค่อยคูณ', gen: gRule3 },
+    { id: 'b7', name: 'ร้อยละ', sub: 'เศษส่วน → ร้อยละ · ลดราคา · กำไร ขาดทุน', gen: gPct },
+    { id: 'b8', name: 'เปลี่ยนหน่วย ความยาว น้ำหนัก', sub: 'กม. ม. ซม. · ตัน กก. กรัม · เขียนเป็นทศนิยม', gen: gUnits },
+    { id: 'b9', name: 'เส้นขนานและมุม', sub: 'มุมแย้ง · มุมภายในรวม 180° · มีรูปประกอบ', gen: gParallel },
+    { id: 'b10', name: 'รูปสี่เหลี่ยม', sub: 'ชนิดและสมบัติ · พื้นที่ด้านขนาน ขนมเปียกปูน', gen: gQuad },
+    { id: 'b11', name: 'ปริมาตรและความจุ', sub: 'กว้าง × ยาว × สูง · 1 ลิตร = 1,000 ลบ.ซม.', gen: gVol },
+    { id: 'b12', name: 'กราฟเส้น', sub: 'อ่านค่า · ผลต่าง · ช่วงที่เพิ่มมากที่สุด', gen: gGraph }] },
+  { id: 'comp', name: '🏆 สนามแข่งขัน', sub: 'ความรู้ ป.5 แต่ต้องคิดหลายชั้น · 8 หัวข้อ', color: 'var(--comp)', topics: [
+    { id: 'c1', name: 'แบบรูปและผลบวก', sub: 'จำนวนที่ n · มีกี่จำนวน · 1+2+…+n · ไม้ขีด · ตัวดำเนินการ ◆', gen: cPattern },
+    { id: 'c2', name: 'เศษส่วนพลิกแพลง', sub: '"ของที่เหลือ" · ย้อนหาเงินเดิม · ผลบวกหักล้าง', gen: cFrac },
+    { id: 'c3', name: 'ทศนิยมพลิกแพลง', sub: 'ทศนิยมซ้ำตำแหน่งที่ n · เรียงลำดับ · อยู่ระหว่าง', gen: cDec },
+    { id: 'c4', name: 'ร้อยละพลิกแพลง', sub: 'ลดซ้อน · ย้อนหาราคาเดิม · พื้นที่เปลี่ยน · ตั้งป้ายแล้วลด', gen: cPct },
+    { id: 'c5', name: 'อย่างน้อย / มากที่สุด / เวลา', sub: 'ปัดขึ้นหรือปัดลง · "มากกว่า" · ทดนาที 60', gen: cCeil },
+    { id: 'c6', name: 'ปริมาตรพลิกแพลง', sub: 'ก้อนหินในตู้ · เทน้ำข้ามตู้ · ลูกบาศก์ทาสี · พับกล่อง', gen: cVol },
+    { id: 'c7', name: 'มุมซิกแซกกับเส้นขนาน', sub: 'ลากเส้นขนานช่วย · มุมกลาง = บน + ล่าง', gen: cAngle },
+    { id: 'c8', name: 'คิดเป็นระบบ', sub: 'ไก่กับกระต่าย · อายุ · เลขหน้า · หลักหน่วย · นับรูป · จับมือ', gen: cLogic }] },
+  { id: 'mix', name: '🎯 จำลองสนามสอบ', sub: '20 ข้อ จับเวลา · พื้นฐาน 12 + แข่งขัน 8', color: 'var(--mix)', topics: [
+    { id: 'm1', name: 'ชุดจำลอง 20 ข้อ', sub: 'ง่ายไปยาก · ดูเวลาเฉลี่ยต่อข้อตอนจบ (เป้า ไม่เกิน 1.5 นาที/ข้อ)', mix: true }] },
+];
+const ROUND = 10;
+function makeRound(topic) {
+  if (topic.mix) {
+    const b = shuffle(SUBJECTS[0].topics).map(t => Object.assign(t.gen(), { from: t.name, lvl: 'base' }));
+    const c = shuffle(SUBJECTS[1].topics).map(t => Object.assign(t.gen(), { from: t.name, lvl: 'comp' }));
+    return b.concat(c);
+  }
+  const out = [], seen = new Set(); let g = 0;
+  while (out.length < ROUND && g++ < 200) { const it = topic.gen(); if (seen.has(it.q)) continue; seen.add(it.q); out.push(it); }
+  return out;
+}
+if (typeof module !== 'undefined') module.exports = { SUBJECTS, makeRound, F, fs, ds, fv, longDiv };
+</script>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const KEY = 'p5math-';
+const best = k => { try { return +(localStorage.getItem(KEY + k) || 0); } catch (e) { return 0; } };
+const setBest = (k, v) => { try { localStorage.setItem(KEY + k, String(v)); } catch (e) { } };
+let SUBJ = null, TOP = null, QS = [], i = 0, ok = 0, streak = 0, miss = [], hints = 0, t0 = 0, timer = null, order = [];
+function show(id) { ['home', 'topics', 'play', 'done'].forEach(x => $(x).classList.toggle('hidden', x !== id)); window.scrollTo(0, 0); }
+function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function rich(t) { return esc(t).replace(/(\d+)\/(\d+)/g, '<span class="fr"><span>$1</span><span>$2</span></span>'); }
+function mmss(ms) { const s = Math.floor(ms / 1000); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+function paintHome() {
+  $('subjects').innerHTML = SUBJECTS.map((s, k) => '<button class="subj" style="border-color:' + s.color + '" data-k="' + k + '"><b>' + s.name + '</b><div class="d">' + s.sub + '</div></button>').join('');
+  document.querySelectorAll('.subj').forEach(b => b.onclick = () => openSubj(SUBJECTS[+b.dataset.k]));
+}
+function openSubj(s) {
+  SUBJ = s; $('sTitle').textContent = s.name; $('sSub').textContent = s.id === 'mix' ? 'ทำให้ครบ 20 ข้อ แล้วดูเวลา' : 'เลือกหัวข้อ · รอบละ ' + ROUND + ' ข้อ · ตัวเลขสุ่มใหม่ทุกรอบ';
+  $('topicList').innerHTML = s.topics.map((t, k) => { const b = best(t.id); const n = t.mix ? 20 : ROUND; return '<button class="t" data-k="' + k + '"><span class="best">' + (b ? '⭐ ' + b + '/' + n : '') + '</span><b>' + t.name + '</b><div class="d">' + t.sub + '</div></button>'; }).join('');
+  document.querySelectorAll('.t').forEach(b => b.onclick = () => start(s.topics[+b.dataset.k]));
+  show('topics');
+}
+function start(t) {
+  TOP = t; QS = makeRound(t); i = 0; ok = 0; streak = 0; miss = []; hints = 0; t0 = Date.now();
+  clearInterval(timer);
+  if (t.mix) { $('hStreakL').textContent = 'เวลา ⏱'; timer = setInterval(() => { $('hStreak').textContent = mmss(Date.now() - t0); }, 1000); }
+  else $('hStreakL').textContent = 'ถูกติดกัน 🔥';
+  show('play'); render();
+}
+function render() {
+  const it = QS[i];
+  $('hNo').textContent = i + 1; $('hOk').textContent = ok; if (!TOP.mix) $('hStreak').textContent = streak; else $('hStreak').textContent = mmss(Date.now() - t0);
+  $('tName').innerHTML = TOP.mix ? '<span class="tag" style="color:' + (it.lvl === 'base' ? 'var(--base)' : 'var(--comp)') + '">' + (it.lvl === 'base' ? 'พื้นฐาน' : 'แข่งขัน') + '</span>' + esc(it.from) : esc(SUBJ.name + ' · ' + TOP.name);
+  $('hOf').textContent = 'ข้อ / ' + QS.length;
+  $('fig').innerHTML = it.fig || ''; $('fig').classList.toggle('hidden', !it.fig);
+  $('q').innerHTML = rich(it.q); $('fb').innerHTML = ''; $('hintBox').innerHTML = ''; $('next').classList.add('hidden');
+  const hl = (it.w.split('\n').find(l => /^1\. /.test(l)) || '');
+  $('hint').classList.toggle('hidden', !hl); $('hint').disabled = false;
+  $('hint').onclick = () => { hints++; $('hint').disabled = true; $('hintBox').innerHTML = '<div class="fb hint">💡 ขั้นแรก: ' + rich(hl.replace(/^1\. /, '')) + '</div>'; };
+  window.scrollTo(0, 0);
+  const box = $('choices'); box.innerHTML = '';
+  order = shuffle(it.c.map((_, k) => k));
+  order.forEach(k => { const b = document.createElement('button'); b.className = 'ch'; b.innerHTML = rich(it.c[k]); b.dataset.k = k; b.onclick = () => choose(k, b); box.appendChild(b); });
+}
+function choose(k, btn) {
+  const it = QS[i], right = k === 0;
+  [...$('choices').children].forEach(b => { b.disabled = true; if (b.dataset.k === '0') b.classList.add('ok'); });
+  $('hint').classList.add('hidden');
+  const why = !right && it.why && it.why[it.c[k]] ? '🤔 ที่เลือก "' + it.c[k] + '" — ' + it.why[it.c[k]] + '\n\n' : '';
+  if (right) { ok++; streak++; } else { btn.classList.add('bad'); streak = 0; miss.push({ q: it.q, a: it.c[0], w: it.w, why }); }
+  $('fb').innerHTML = '<div class="fb ' + (right ? 'ok' : 'bad') + '">' + (right ? '✅ ถูกต้อง!\n' : '❌ คำตอบคือ <b>' + rich(it.c[0]) + '</b>\n') + rich(why) + rich(it.w) + '</div>';
+  $('hOk').textContent = ok; if (!TOP.mix) $('hStreak').textContent = streak;
+  $('next').textContent = i === QS.length - 1 ? 'ดูคะแนน 🎉' : 'ข้อต่อไป ➜'; $('next').classList.remove('hidden');
+  try { $('next').scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) { }
+  $('next').onclick = () => { i++; i < QS.length ? render() : finish(); };
+}
+function finish() {
+  clearInterval(timer);
+  const n = QS.length, b = best(TOP.id); if (ok > b) setBest(TOP.id, ok);
+  const el = Date.now() - t0, per = el / 60000 / n;
+  $('dTitle').textContent = TOP.name; $('dScore').textContent = ok + ' / ' + n;
+  const p = ok / n; $('dStars').textContent = p >= 0.9 ? '⭐⭐⭐' : p >= 0.7 ? '⭐⭐' : p >= 0.5 ? '⭐' : '💪';
+  let msg = (ok > b ? '🎉 สถิติใหม่! ' : '') + (p >= 0.8 ? 'เก่งมาก!' : p >= 0.5 ? 'ดีแล้ว เล่นอีกรอบให้ได้ 8 ขึ้นไปนะ' : 'ไม่เป็นไร อ่านคำอธิบายข้อที่ผิดแล้วลองใหม่');
+  if (TOP.mix) msg += '\n⏱ ใช้เวลา ' + mmss(el) + ' · เฉลี่ย ' + per.toFixed(1) + ' นาที/ข้อ' + (per <= 1.5 ? ' ✓ ทันเวลา' : ' (เป้าไม่เกิน 1.5)');
+  if (hints) msg += '\n💡 ขอใบ้ ' + hints + ' ครั้ง';
+  $('dMsg').textContent = msg; $('dMsg').style.whiteSpace = 'pre-line';
+  $('dMiss').innerHTML = miss.length ? '<p style="color:var(--muted);text-align:center">ข้อที่ผิด — อ่านอีกครั้ง</p>' + miss.map(m => '<div class="miss"><b>' + rich(m.q) + '</b>\nคำตอบ: ' + rich(m.a) + '\n' + rich(m.why) + rich(m.w) + '</div>').join('') : '';
+  show('done');
+}
+$('backHome').onclick = () => { paintHome(); show('home'); };
+$('quit').onclick = function () { if (i > 0 && this.dataset.arm !== '1') { this.dataset.arm = '1'; this.textContent = 'แตะอีกครั้งเพื่อออก'; setTimeout(() => { this.dataset.arm = ''; this.textContent = '← กลับ'; }, 2500); return; } this.dataset.arm = ''; this.textContent = '← กลับ'; clearInterval(timer); openSubj(SUBJ); };
+$('toTopics').onclick = () => openSubj(SUBJ);
+$('again').onclick = () => start(TOP);
+paintHome();
+</script>
+</body>
+</html>
