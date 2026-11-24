@@ -1107,7 +1107,7 @@ function choose(k, btn) {
   if (right) { ok++; streak++; } else { btn.classList.add('bad'); streak = 0; miss.push({ q: it.q, a: it.c[0], w: it.w, why }); }
   $('fb').innerHTML = '<div class="fb ' + (right ? 'ok' : 'bad') + '">' + (right ? '✅ ถูกต้อง!\n' : '❌ คำตอบคือ <b>' + rich(it.c[0]) + '</b>\n') + rich(why) + rich(it.w) + '</div>';
   const lq = !TOP.mix && labQuery(TOP.id, it);
-  if (lq) { const lb = document.createElement('button'); lb.className = 'labbtn'; lb.textContent = /&(q|d)=/.test(lq) ? '🔬 ดูข้อนี้เป็นภาพ' : '🔬 เปิดห้องทดลอง (เล่นอิสระ)'; lb.onclick = () => openLabOverlay(lq); $('fb').appendChild(lb); }
+  if (lq) { const lb = document.createElement('button'); lb.className = 'labbtn'; lb.textContent = /&(q|d|phi)=/.test(lq) ? '🔬 ดูข้อนี้เป็นภาพ' : '🔬 เปิดห้องทดลอง (เล่นอิสระ)'; lb.onclick = () => openLabOverlay(lq); $('fb').appendChild(lb); }
   $('hOk').textContent = ok; if (!TOP.mix) $('hStreak').textContent = streak;
   $('next').textContent = i === QS.length - 1 ? 'ดูคะแนน 🎉' : 'ข้อต่อไป ➜'; $('next').classList.remove('hidden');
   try { $('next').scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) { }
@@ -1127,12 +1127,13 @@ function finish() {
   show('done');
 }
 /* ปุ่ม "ดูเป็นภาพ": เปิด lab.html ซ้อนบนข้อเดิม (iframe) ปิดแล้วกลับมาทำข้อเดิมต่อ ความคืบหน้าไม่หาย */
-const LABMAP = { b1: 'frac', b2: 'frac', b3: 'frac', c2: 'frac', b4: 'zoom', b5: 'zoom', c3: 'zoom', b7: 'grid', c4: 'grid' };
+const LABMAP = { b1: 'frac', b2: 'frac', b3: 'frac', c2: 'frac', b4: 'zoom', b5: 'zoom', c3: 'zoom', b7: 'grid', c4: 'grid', b9: 'par', c7: 'par', b11: 'cube', c6: 'cube' };
 function labQuery(tid, it) {
   const lab = LABMAP[tid]; if (!lab) return null;
   const p = it.p || {}; let q = 'lab=' + lab;
   if (lab === 'frac' && (it.k === 'fadd' || it.k === 'fsub') && p.a && p.b && p.a.n < p.a.d && p.b.n < p.b.d) q += '&q=' + (it.k === 'fadd' ? 'add' : 'sub') + '&a=' + p.a.n + '/' + p.a.d + '&b=' + p.b.n + '/' + p.b.d;
   else if (lab === 'frac') { const ds = [p.a, p.b, p.x, p.y].filter(f => f && f.d >= 2 && f.d <= 12).map(f => f.d); if (ds.length) q += '&d=' + ds.slice(0, 2).join(','); }
+  else if (lab === 'par' && it.k === 'par' && p.phi) q += '&phi=' + p.phi;
   else if (lab === 'grid' && it.k === 'pct' && Math.abs(p.v - Math.round(p.v)) < 1e-9) q += '&q=pct&v=' + Math.round(p.v);
   else if (lab === 'zoom' && it.k === 'dec' && p.v > 0 && p.v < 10 && Math.abs(p.v * 100 - Math.round(p.v * 100)) < 1e-6) q += '&q=find&v=' + Math.round(p.v * 100);
   return 'lab.html?embed=1&' + q;
