@@ -61,6 +61,9 @@ button{font-family:inherit;font-size:1rem;cursor:pointer;touch-action:manipulati
 .fr>span:first-child{border-bottom:1.5px solid currentColor;padding:0 .2em}
 .fr>span:last-child{padding:0 .2em}
 footer{color:var(--muted);font-size:.8rem;text-align:center;margin-top:24px}
+.labbtn{display:block;width:100%;background:var(--soft);color:var(--ink);border:1px dashed var(--accent);border-radius:12px;padding:9px 12px;margin:0 0 12px;font-size:.95rem}
+#labOv{position:fixed;inset:0;z-index:50;background:var(--bg)}
+#labOv iframe{width:100%;height:100%;border:0;display:block}
 </style>
 </head>
 <body>
@@ -107,6 +110,7 @@ footer{color:var(--muted);font-size:.8rem;text-align:center;margin-top:24px}
 </section>
 <footer>เกมคณิต ป.5 · โจทย์สุ่มตัวเลขใหม่ทุกรอบ · สถิติเก็บในเครื่องนี้</footer>
 </main>
+<div id="labOv" class="hidden"><iframe id="labFrame" title="ห้องทดลองตัวเลข"></iframe></div>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
@@ -1102,6 +1106,8 @@ function choose(k, btn) {
   const why = !right && it.why && it.why[it.c[k]] ? '🤔 ที่เลือก "' + it.c[k] + '" — ' + it.why[it.c[k]] + '\n\n' : '';
   if (right) { ok++; streak++; } else { btn.classList.add('bad'); streak = 0; miss.push({ q: it.q, a: it.c[0], w: it.w, why }); }
   $('fb').innerHTML = '<div class="fb ' + (right ? 'ok' : 'bad') + '">' + (right ? '✅ ถูกต้อง!\n' : '❌ คำตอบคือ <b>' + rich(it.c[0]) + '</b>\n') + rich(why) + rich(it.w) + '</div>';
+  const lq = !TOP.mix && labQuery(TOP.id, it);
+  if (lq) { const lb = document.createElement('button'); lb.className = 'labbtn'; lb.textContent = /&(q|d)=/.test(lq) ? '🔬 ดูข้อนี้เป็นภาพ' : '🔬 เปิดห้องทดลอง (เล่นอิสระ)'; lb.onclick = () => openLabOverlay(lq); $('fb').appendChild(lb); }
   $('hOk').textContent = ok; if (!TOP.mix) $('hStreak').textContent = streak;
   $('next').textContent = i === QS.length - 1 ? 'ดูคะแนน 🎉' : 'ข้อต่อไป ➜'; $('next').classList.remove('hidden');
   try { $('next').scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) { }
@@ -1120,6 +1126,19 @@ function finish() {
   $('dMiss').innerHTML = miss.length ? '<p style="color:var(--muted);text-align:center">ข้อที่ผิด — อ่านอีกครั้ง</p>' + miss.map(m => '<div class="miss"><b>' + rich(m.q) + '</b>\nคำตอบ: ' + rich(m.a) + '\n' + rich(m.why) + rich(m.w) + '</div>').join('') : '';
   show('done');
 }
+/* ปุ่ม "ดูเป็นภาพ": เปิด lab.html ซ้อนบนข้อเดิม (iframe) ปิดแล้วกลับมาทำข้อเดิมต่อ ความคืบหน้าไม่หาย */
+const LABMAP = { b1: 'frac', b2: 'frac', b3: 'frac', c2: 'frac', b4: 'zoom', b5: 'zoom', c3: 'zoom', b7: 'grid', c4: 'grid' };
+function labQuery(tid, it) {
+  const lab = LABMAP[tid]; if (!lab) return null;
+  const p = it.p || {}; let q = 'lab=' + lab;
+  if (lab === 'frac' && (it.k === 'fadd' || it.k === 'fsub') && p.a && p.b && p.a.n < p.a.d && p.b.n < p.b.d) q += '&q=' + (it.k === 'fadd' ? 'add' : 'sub') + '&a=' + p.a.n + '/' + p.a.d + '&b=' + p.b.n + '/' + p.b.d;
+  else if (lab === 'frac') { const ds = [p.a, p.b, p.x, p.y].filter(f => f && f.d >= 2 && f.d <= 12).map(f => f.d); if (ds.length) q += '&d=' + ds.slice(0, 2).join(','); }
+  else if (lab === 'grid' && it.k === 'pct' && Math.abs(p.v - Math.round(p.v)) < 1e-9) q += '&q=pct&v=' + Math.round(p.v);
+  else if (lab === 'zoom' && it.k === 'dec' && p.v > 0 && p.v < 10 && Math.abs(p.v * 100 - Math.round(p.v * 100)) < 1e-6) q += '&q=find&v=' + Math.round(p.v * 100);
+  return 'lab.html?embed=1&' + q;
+}
+function openLabOverlay(url) { $('labFrame').src = url; $('labOv').classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+window.closeLabOverlay = () => { $('labOv').classList.add('hidden'); $('labFrame').src = 'about:blank'; document.body.style.overflow = ''; };
 $('backHome').onclick = () => { paintHome(); show('home'); };
 $('quit').onclick = function () { if (i > 0 && this.dataset.arm !== '1') { this.dataset.arm = '1'; this.textContent = 'แตะอีกครั้งเพื่อออก'; setTimeout(() => { this.dataset.arm = ''; this.textContent = '← กลับ'; }, 2500); return; } this.dataset.arm = ''; this.textContent = '← กลับ'; clearInterval(timer); openSubj(SUBJ); };
 $('toTopics').onclick = () => openSubj(SUBJ);

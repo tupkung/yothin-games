@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ห้องทดลองตัวเลข ป.5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;
+--ink:#1a1c1e;--muted:#5b6167;--line:#dfe3e8;--bg:#fbfbfa;--card:#fff;--soft:#eef1f4;
+--accent:#1f6feb;--ok:#136c39;--ok-bg:#e8f6ee;--bad:#b3261e;--bad-bg:#fdecea;
+--num:#1f6feb;--code:#0f7b6c;--on-accent:#fff;--tip:#fff7e0;--tip-line:#e6c565;
+--fill:#3d7ff0;--fill2:#f08a24;--lamp:#ffc21a;--lamp-glow:#ffe58a;--sig:#e8a100;--wall:#4a5059}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#3a414a;--bg:#16181b;--card:#1e2126;--soft:#2a2f36;
+--accent:#69a4ff;--ok:#6fd39a;--ok-bg:#13301f;--bad:#ff8a80;--bad-bg:#3a1a17;
+--num:#69a4ff;--code:#4fd1bd;--on-accent:#0b1a33;--tip:#2e2814;--tip-line:#7a6526;
+--fill:#5b95ff;--fill2:#f0a163;--lamp:#ffd24d;--lamp-glow:#6b5a1a;--sig:#ffc94d;--wall:#8a929c}}
+:root[data-theme="dark"]{
+--ink:#e6e8ea;--muted:#9aa2ab;--line:#3a414a;--bg:#16181b;--card:#1e2126;--soft:#2a2f36;
+--accent:#69a4ff;--ok:#6fd39a;--ok-bg:#13301f;--bad:#ff8a80;--bad-bg:#3a1a17;
+--num:#69a4ff;--code:#4fd1bd;--on-accent:#0b1a33;--tip:#2e2814;--tip-line:#7a6526;
+--fill:#5b95ff;--fill2:#f0a163;--lamp:#ffd24d;--lamp-glow:#6b5a1a;--sig:#ffc94d;--wall:#8a929c}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Sarabun","Noto Sans Thai",-apple-system,sans-serif;font-size:18px;line-height:1.65;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:680px;margin:0 auto;padding:18px 16px calc(60px + env(safe-area-inset-bottom))}
+h1{font-size:1.4rem;margin:0 0 4px}
+h2{font-size:1.05rem;margin:20px 0 8px}
+.sub{color:var(--muted);font-size:.9rem;margin:0 0 14px}
+.hidden{display:none !important}
+button{font-family:inherit;font-size:1rem;cursor:pointer;touch-action:manipulation;color:var(--ink)}
+.tipbox{background:var(--tip);border:1px solid var(--tip-line);border-radius:12px;padding:10px 14px;font-size:.9rem;margin:0 0 12px}
+.t{display:block;width:100%;text-align:left;border:1.5px solid var(--line);background:var(--card);border-radius:14px;padding:11px 15px;margin-bottom:9px}
+.t .best{float:right;font-size:.8rem;color:var(--ok);font-weight:700}
+.t .d{color:var(--muted);font-size:.84rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.top .p{font-size:.85rem;color:var(--muted);font-family:"IBM Plex Mono",monospace}
+.mtext{font-size:1.08rem;font-weight:600;white-space:pre-line;margin:2px 0 10px}
+.go{display:block;width:100%;background:var(--accent);color:var(--on-accent);border:0;border-radius:12px;padding:12px;font-weight:700;margin-top:10px}
+.go:disabled{opacity:.5}
+.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:.88rem}
+.hintbtn{background:transparent;border:1px dashed var(--tip-line);border-radius:10px;padding:5px 12px;font-size:.88rem;margin:0 0 8px}
+.fb{border-radius:12px;padding:10px 14px;margin:10px 0 0;font-size:.95rem;white-space:pre-line}
+.fb.ok{background:var(--ok-bg);border:1px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);border:1px solid var(--bad)}
+.fb.hint{background:var(--tip);border:1px solid var(--tip-line)}
+.ask{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line)}
+.ask .q{font-weight:700;white-space:pre-line;margin-bottom:8px}
+.ch{display:block;width:100%;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:8px;min-height:48px}
+.ch.ok{border-color:var(--ok);background:var(--ok-bg)}
+.ch.bad{border-color:var(--bad);background:var(--bad-bg)}
+.big{font-size:2.3rem;font-weight:700;text-align:center}
+.stars{font-size:2rem;text-align:center}
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;font-size:.82em;line-height:1.15;margin:0 .12em}
+.fr>span:first-child{border-bottom:1.5px solid currentColor;padding:0 .2em}
+.fr>span:last-child{padding:0 .2em}
+.mono{font-family:"IBM Plex Mono",monospace}
+.readout{background:var(--soft);border-radius:10px;padding:8px 12px;font-size:.95rem;margin-top:8px;white-space:pre-line}
+footer{color:var(--muted);font-size:.8rem;text-align:center;margin-top:22px}
+svg text{fill:currentColor;font-family:"Sarabun",sans-serif}
+/* แท่งเศษส่วน */
+.barrow{margin-bottom:10px}
+.bh{font-size:.9rem;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.bh .stp{margin-left:auto;display:inline-flex;align-items:center;gap:6px}
+.bh .stp button{width:38px;height:34px;border-radius:9px;border:1px solid var(--line);background:var(--soft);font-weight:700}
+.barrow svg{width:100%;height:auto;display:block}
+.seg{fill:var(--soft);stroke:var(--muted);stroke-width:1;cursor:pointer}
+.seg.on{fill:var(--fill)}
+.seg.lk.on{fill:var(--fill2)}
+.guide{stroke:var(--bad);stroke-width:2;stroke-dasharray:4 3;pointer-events:none}
+/* ตาราง */
+.g100{display:grid;gap:2px;touch-action:none;user-select:none;-webkit-user-select:none;max-width:400px;margin:0 auto}
+.cell{aspect-ratio:1;background:var(--soft);border:1px solid var(--line);border-radius:3px}
+.cell.on{background:var(--fill);border-color:var(--fill)}
+.rb{border:0;background:transparent;color:var(--muted);font-size:.7rem;padding:0}
+.pcode{font-family:"IBM Plex Mono",monospace;font-size:.6rem;display:flex;align-items:center;justify-content:center;color:var(--muted);letter-spacing:-.5px}
+.pcode.match{color:var(--ok);font-weight:600}
+.pcode.hl{color:var(--bad);font-weight:700}
+/* หลอดไฟ */
+.bits{display:grid;gap:6px 4px;align-items:center;max-width:420px;margin:0 auto}
+.bits .pv{text-align:center;font-family:"IBM Plex Mono",monospace;font-size:.85rem;color:var(--muted);font-weight:600}
+.bits .bl{font-size:.8rem;color:var(--muted);line-height:1.2}
+.bulb{width:42px;height:42px;border-radius:50%;border:2px solid var(--line);background:var(--soft);margin:0 auto;display:flex;align-items:center;justify-content:center;font-family:"IBM Plex Mono",monospace;font-weight:700;font-size:1rem;color:var(--muted);padding:0}
+.bulb.on{background:var(--lamp);border-color:var(--sig);color:#3b2a00;box-shadow:0 0 12px 3px var(--lamp-glow)}
+.bulb.lk{cursor:default}
+.bulb.help{width:30px;height:30px;font-size:.75rem;border-style:dashed}
+.rowro{grid-column:1/-1;font-size:.85rem;color:var(--muted);margin:-2px 0 4px;text-align:right}
+.abc{font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:2px 8px;margin:0 0 8px;justify-content:center}
+/* วงจร */
+.gate svg{width:100%;max-width:400px;display:block;margin:0 auto}
+.wire{fill:none;stroke:var(--line);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.wire.on{stroke:var(--sig)}
+.box{fill:var(--card);stroke:var(--muted);stroke-width:1.5}
+.swr{fill:var(--soft);stroke:var(--muted);stroke-width:1.5;cursor:pointer}
+.swr.on{fill:var(--lamp);stroke:var(--sig)}
+.lampc{fill:var(--soft);stroke:var(--muted);stroke-width:1.5}
+.lampc.on{fill:var(--lamp);stroke:var(--sig)}
+.tt{border-collapse:collapse;margin:8px auto 0;font-family:"IBM Plex Mono",monospace;font-size:.9rem}
+.tt td,.tt th{border:1px solid var(--line);padding:2px 10px;text-align:center}
+.tt th{font-family:"Sarabun",sans-serif;font-size:.8rem;color:var(--muted)}
+/* เส้นจำนวน */
+.zoom svg{width:100%;display:block}
+.gap{fill:transparent;cursor:zoom-in}
+.gap:hover,.gap:active{fill:var(--soft)}
+.gaphint{fill:none;stroke:var(--line);stroke-dasharray:3 3}
+.tk{fill:transparent;cursor:pointer}
+.zl{stroke:currentColor;stroke-width:2}
+.zp{fill:var(--bad)}
+.zg{fill:var(--tip);stroke:var(--tip-line)}
+.zrow{display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap}
+/* หุ่นยนต์ */
+.rob svg{width:100%;max-width:330px;display:block;margin:0 auto}
+.rc{fill:var(--soft);stroke:var(--line)}
+.rw{fill:var(--wall)}
+.rbody{fill:var(--accent)}
+.rnose{fill:var(--on-accent)}
+.prog{display:flex;flex-wrap:wrap;gap:5px;min-height:44px;border:1.5px dashed var(--line);border-radius:10px;padding:6px;margin:8px 0 6px}
+.chip{font-size:.85rem;border-radius:8px;padding:3px 8px;background:var(--soft);border:1px solid var(--line)}
+.chip.lp{background:var(--tip);border-color:var(--tip-line)}
+.chip.run{outline:2px solid var(--accent)}
+.pal{display:flex;flex-wrap:wrap;gap:6px}
+.pal button{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:6px 10px;font-size:.9rem}
+.pal button.lp{background:var(--tip);border-color:var(--tip-line)}
+#labOvClose{position:sticky;top:0}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section id="home">
+  <h1>🔬 ห้องทดลองตัวเลข + 💻 โค้ด 0 กับ 1</h1>
+  <p class="sub">ไม่ต้องท่องสูตร ลองแตะ ลาก เปิดไฟ สั่งหุ่นยนต์ แล้วดูว่าตัวเลขทำงานยังไง</p>
+  <div class="tipbox">ห้องละ 6 ภารกิจ (หุ่นยนต์มี 8 ด่าน) · ทำเสร็จกด <b>✓ ตรวจ</b> · ผิดได้ไม่เป็นไร จะบอกว่าขาดหรือเกินตรงไหน · ติดตรงไหนกด 💡</div>
+  <div id="labList"></div>
+</section>
+<section id="lab" class="hidden">
+  <div class="top"><b id="lTitle"></b><span class="p" id="lProg"></span></div>
+  <div class="card">
+    <div class="mtext" id="lText"></div>
+    <button class="hintbtn" id="lHintBtn">💡 ขอใบ้</button>
+    <div id="lHint"></div>
+    <div id="wbox"></div>
+    <button class="go" id="lCheck">✓ ตรวจ</button>
+    <div id="lFb"></div>
+    <div id="lAsk"></div>
+    <button class="go hidden" id="lNext">ภารกิจต่อไป ➜</button>
+  </div>
+  <p style="text-align:center;margin-top:12px"><button class="ghost" id="lQuit">← กลับ</button></p>
+</section>
+<section id="done" class="hidden">
+  <div class="card">
+    <h1 id="dTitle"></h1>
+    <div class="stars" id="dStars"></div>
+    <div class="big" id="dScore"></div>
+    <p style="text-align:center;color:var(--muted);white-space:pre-line" id="dMsg"></p>
+    <button class="go" id="dAgain">เล่นอีกรอบ (ภารกิจใหม่)</button>
+    <p style="text-align:center;margin-top:10px"><button class="ghost" id="dHome">← เลือกห้องอื่น</button></p>
+  </div>
+</section>
+<footer>ห้องทดลองตัวเลข ป.5 · ภารกิจสุ่มใหม่ทุกรอบ · สถิติเก็บในเครื่องนี้</footer>
+</main>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+try { if (window.Telegram && Telegram.WebApp && !/embed=1/.test(location.search)) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); if (Telegram.WebApp.disableVerticalSwipes) Telegram.WebApp.disableVerticalSwipes(); } } catch (e) { }
+</script>
+
+<script id="labgen">
+/* ส่วนคำนวณล้วน (ไม่แตะหน้าจอ) — ทดสอบด้วย Node ได้
+   ภารกิจหนึ่งข้อ = { kind, text, hint?, init: สถานะเริ่ม, check(สถานะ, ครั้งที่ตรวจ) → {ok, msg}, solve() → สถานะที่ถูก,
+                     why: [บรรทัดอธิบาย], ask?: {q, c:[ถูก, ลวง...], why:{ลวง: เหตุผล}}, noCheck?: ถามอย่างเดียว, level?: ด่านหุ่นยนต์ } */
+var LABGEN = (function () {
+"use strict";
+const R = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = a => a[Math.floor(Math.random() * a.length)];
+function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const gcd = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) { const t = a % b; a = b; b = t; } return a; };
+const lcm = (a, b) => a / gcd(a, b) * b;
+function frs(n, d) { if (n === 0) return '0'; const g = gcd(n, d); n /= g; d /= g; return d === 1 ? String(n) : n + '/' + d; }
+const bin = (v, n) => v.toString(2).padStart(n, '0');
+const toBits = (v, n) => bin(v, n).split('').map(Number);
+const bitsVal = b => b.reduce((s, x) => s * 2 + (x ? 1 : 0), 0);
+const clone = o => JSON.parse(JSON.stringify(o));
+const ok = () => ({ ok: true, msg: '' });
+const no = msg => ({ ok: false, msg });
+const ABC = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const dec100 = v => String(v / 100);              // 35 → "0.35" · 40 → "0.4"
+/* สร้างคำถามตัวเลือก: ds = [[ข้อความ, เหตุผล]] ตัดตัวซ้ำออก */
+function A(q, ans, ds, pad) {
+  const c = [String(ans)], why = {};
+  for (const [t, r] of ds) { const s = String(t); if (c.includes(s) || c.length >= 4) continue; c.push(s); if (r) why[s] = r; }
+  for (const [t, r] of (pad || [])) { const s = String(t); if (c.length >= 4) break; if (c.includes(s)) continue; c.push(s); if (r) why[s] = r; }
+  return { q, c, why };
+}
+function coprime(d) { const c = []; for (let n = 1; n < d; n++) if (gcd(n, d) === 1) c.push(n); return pick(c); }
+
+/* ================= 🍫 แท่งเศษส่วน ================= */
+/* สถานะ: { bars: [{ d: จำนวนช่อง, k: ระบายกี่ช่อง, lock: ห้ามแก้, fix: ห้ามเปลี่ยนจำนวนช่อง, label }] } */
+function barMsg(b, tn, td, name, t) {
+  const k = b.k, D = b.d;
+  if ((tn * D) % td !== 0) return name + 'แท่งนี้ตัดไว้ ' + D + ' ช่อง เส้นแบ่งไม่ตรงกับ ' + frs(tn, td) + ' พอดี\nลองเปลี่ยนจำนวนช่องเป็นเลขที่ ' + td + ' หารลงตัว';
+  const need = tn * D / td;
+  let m = name + 'ตอนนี้ระบาย ' + k + ' ช่อง = ' + (k ? frs(k, D) : '0') + (k < need ? ' — ยังสั้นไป ระบายเพิ่มอีก' : ' — ยาวเกินไป ลดลงหน่อย');
+  if (t >= 2) m += '\n(1/' + td + ' ของแท่ง = ' + D + ' ÷ ' + td + ' = ' + (D / td) + ' ช่อง)';
+  return m;
+}
+function fFill(two) {
+  const d = pick(two ? [2, 3, 4, 5, 6] : [3, 4, 5, 6, 8]), n = coprime(d), mult = two ? (d <= 4 ? pick([2, 3]) : 2) : 1, D = d * mult;
+  const bar = k => ({ bars: [{ d: D, k, fix: true, label: 'แท่งของเรา' }] });
+  return {
+    kind: 'frac', text: mult === 1 ? 'ระบายแท่งให้ได้ ' + n + '/' + d + ' ของแท่ง' : 'แท่งนี้ตัดไว้ ' + D + ' ช่อง\nระบายให้ได้ ' + n + '/' + d + ' ของแท่ง',
+    hint: mult === 1 ? 'แท่งแบ่งเป็น ' + d + ' ช่องเท่ากันแล้ว · ' + n + '/' + d + ' คือระบาย ' + n + ' ช่องจาก ' + d + ' ช่อง' : '1/' + d + ' ของแท่ง = ' + D + ' ÷ ' + d + ' = ' + mult + ' ช่อง',
+    init: bar(0),
+    check: (s, t) => { const b = s.bars[0]; return b.k * d === n * b.d ? ok() : no(barMsg(b, n, d, '', t)); },
+    solve: () => bar(n * mult),
+    why: mult === 1 ? ['แท่งแบ่งเป็น ' + d + ' ช่องเท่า ๆ กัน', 'ระบาย ' + n + ' ช่อง = ' + n + '/' + d + ' ของแท่ง'] :
+      ['แท่งมี ' + D + ' ช่อง · 1/' + d + ' ของแท่ง = ' + D + ' ÷ ' + d + ' = ' + mult + ' ช่อง', n + '/' + d + ' จึงระบาย ' + n + ' × ' + mult + ' = ' + (n * mult) + ' ช่อง',
+        (n * mult) + '/' + D + ' ยาวเท่ากับ ' + n + '/' + d + ' พอดี เรียกว่า "เศษส่วนที่เท่ากัน" (equivalent fractions)']
+  };
+}
+function fEquiv() {
+  const d = pick([2, 3, 4, 6]), n = coprime(d), m = pick([2, 3, 4].filter(x => d * x <= 12)), D = d * m;
+  const st = k => ({ bars: [{ d, k: n, lock: true, label: 'แท่งบน' }, { d: k === null ? 1 : D, k: k || 0, label: 'แท่งล่าง' }] });
+  return {
+    kind: 'frac', text: 'แท่งบนระบาย ' + n + '/' + d + ' ไว้แล้ว\nตัดแท่งล่างเป็น ' + D + ' ช่อง (กด + หรือ −)\nแล้วระบายให้ยาวเท่าแท่งบน',
+    hint: 'กด + จนแท่งล่างมี ' + D + ' ช่อง แล้วระบายจนถึงเส้นประสีแดง',
+    init: st(null),
+    check: (s, t) => { const b = s.bars[1]; if (b.d !== D) return no('แท่งล่างตอนนี้มี ' + b.d + ' ช่อง — โจทย์ให้ตัดเป็น ' + D + ' ช่อง'); return b.k * d === n * D ? ok() : no(barMsg(b, n, d, '', t)); },
+    solve: () => st(n * m),
+    ask: A(n + '/' + d + ' เท่ากับเศษส่วนไหน', (n * m) + '/' + D,
+      [[(n + D - d) + '/' + D, 'บวกเพิ่มเท่ากันทั้งบนล่าง ไม่ได้เศษส่วนที่เท่ากัน ต้องคูณ'], [n + '/' + D, 'เพิ่มแค่ตัวส่วน ลืมเพิ่มตัวเศษ — ช่องเล็กลงแต่ระบายจำนวนช่องเท่าเดิม แท่งจะสั้นลง'], [(n * m) + '/' + d, 'คูณแค่ตัวเศษ ลืมคูณตัวส่วน']]),
+    why: ['แท่งบน ' + d + ' ช่อง → แท่งล่าง ' + D + ' ช่อง = ผ่าแต่ละช่องออกเป็น ' + m + ' ส่วน', 'ช่องที่ระบายจึงเพิ่มเป็น ' + n + ' × ' + m + ' = ' + (n * m) + ' ช่อง',
+      n + '/' + d + ' = ' + (n * m) + '/' + D + ' (คูณทั้งตัวเศษและตัวส่วนด้วย ' + m + ')']
+  };
+}
+function fCompare() {
+  let a, b, c, d;
+  do { b = pick([3, 4, 5, 6, 8]); d = pick([3, 4, 5, 6, 8]); a = coprime(b); c = coprime(d); } while (b === d || a * d === c * b);
+  const st = (k1, k2) => ({ bars: [{ d: b, k: k1, fix: true, label: 'แท่งบน' }, { d, k: k2, fix: true, label: 'แท่งล่าง' }] });
+  const big = a * d > c * b ? a + '/' + b : c + '/' + d, small = a * d > c * b ? c + '/' + d : a + '/' + b, L = lcm(b, d);
+  return {
+    kind: 'frac', text: 'ระบายแท่งบน = ' + a + '/' + b + '\nระบายแท่งล่าง = ' + c + '/' + d + '\nแล้วดูว่าแท่งไหนยาวกว่า',
+    hint: 'แท่งบนมี ' + b + ' ช่อง ระบาย ' + a + ' ช่อง · แท่งล่างมี ' + d + ' ช่อง ระบาย ' + c + ' ช่อง',
+    init: st(0, 0),
+    check: (s, t) => { const x = s.bars[0], y = s.bars[1]; if (x.k * b !== a * x.d) return no(barMsg(x, a, b, 'แท่งบน: ', t)); if (y.k * d !== c * y.d) return no(barMsg(y, c, d, 'แท่งล่าง: ', t)); return ok(); },
+    solve: () => st(a, c),
+    ask: A(a + '/' + b + ' กับ ' + c + '/' + d + ' อันไหนมากกว่า', big, [[small, 'ดูความยาวที่ระบายอีกครั้ง แท่งของตัวนี้สั้นกว่า'], ['เท่ากัน', 'สองแท่งระบายยาวไม่เท่ากัน']]),
+    why: ['ทำตัวส่วนให้เท่ากัน (' + L + '): ' + a + '/' + b + ' = ' + (a * L / b) + '/' + L + ' · ' + c + '/' + d + ' = ' + (c * L / d) + '/' + L,
+      'ตัวส่วนเท่ากันแล้ว ดูตัวเศษ: ' + Math.max(a * L / b, c * L / d) + ' มากกว่า ' + Math.min(a * L / b, c * L / d), 'จึงได้ ' + big + ' มากกว่า ' + small + ' ตรงกับแท่งที่ยาวกว่า']
+  };
+}
+const PAIRS = [[2, 3], [2, 4], [2, 6], [3, 4], [3, 6], [4, 6], [2, 5], [2, 8], [4, 8], [3, 12], [4, 12], [6, 12], [2, 10], [5, 10], [2, 12]];
+function fOp(op, P) {
+  let a, b, c, d;
+  if (P) ({ a, b, c, d } = P);
+  else for (;;) { [b, d] = pick(PAIRS); if (Math.random() < 0.5) [b, d] = [d, b]; a = coprime(b); c = coprime(d); if (op === '+' ? a * d + c * b <= b * d : a * d > c * b) break; }
+  const L = lcm(b, d), tn = op === '+' ? a * d + c * b : a * d - c * b, td = b * d, k = tn * L / td, sym = op === '+' ? '+' : '−';
+  const st = (D, K) => ({ bars: [{ d: b, k: a, lock: true, label: a + '/' + b }, { d, k: c, lock: true, label: c + '/' + d }, { d: D, k: K, label: op === '+' ? 'ผลบวก' : 'ผลลบ' }] });
+  return {
+    kind: 'frac',
+    text: a + '/' + b + ' ' + sym + ' ' + c + '/' + d + ' = ?\nตัดแท่งล่างให้เส้นแบ่งตรงกับทั้งสองแท่งบน\n' + (op === '+' ? 'แล้วระบายให้ยาวเท่าสองแท่งบนต่อกัน' : 'แล้วระบายเท่ากับส่วนที่แท่งแรกยาวกว่าแท่งที่สอง'),
+    hint: 'หาจำนวนช่องที่ทั้ง ' + b + ' และ ' + d + ' หารลงตัว แล้วกด + จนแท่งล่างมีเท่านั้น',
+    init: st(1, 0),
+    check: (s, t) => { const x = s.bars[2]; if (x.k * td === tn * x.d) return ok(); if (x.d % b || x.d % d) return no('แท่งล่างตัดไว้ ' + x.d + ' ช่อง เส้นแบ่งยังไม่ตรงกับแท่ง ' + b + ' ช่องและแท่ง ' + d + ' ช่องพร้อมกัน\nลองเลขที่ ' + b + ' และ ' + d + ' หารลงตัวทั้งคู่'); const g = gcd(tn, td); return no(barMsg(x, tn / g, td / g, '', t)); },
+    solve: () => st(L, k),
+    why: ['ตัดเป็น ' + L + ' ช่อง เพราะ ' + b + ' และ ' + d + ' หาร ' + L + ' ลงตัวทั้งคู่', a + '/' + b + ' = ' + (a * L / b) + '/' + L + ' · ' + c + '/' + d + ' = ' + (c * L / d) + '/' + L,
+      (a * L / b) + ' ' + sym + ' ' + (c * L / d) + ' = ' + k + ' ช่อง → ' + k + '/' + L + (frs(k, L) !== k + '/' + L ? ' = ' + frs(k, L) : '')]
+  };
+}
+function fSandbox(ds) {
+  const own = Array.isArray(ds) && ds.length;
+  const list = own ? ds.slice(0, 2).concat(ds.length > 1 && lcm(ds[0], ds[1]) <= 12 && lcm(ds[0], ds[1]) !== ds[0] && lcm(ds[0], ds[1]) !== ds[1] ? [1] : []) : [4, 8, 6];
+  return { kind: 'frac', free: true, text: own ? 'แท่งตัดตามตัวส่วนของข้อนี้ (' + ds.slice(0, 2).join(' กับ ') + ')\nแตะช่องเพื่อระบาย · กด + − เปลี่ยนจำนวนช่อง\n' + (list.length > 2 ? 'แท่งล่างสุด: ลองหาจำนวนช่องที่เส้นแบ่งตรงกับทั้งสองแท่ง' : 'ลองดูว่าเศษส่วนไหนยาวกว่ากัน') : 'เล่นได้อิสระ\nกด + − เพื่อเปลี่ยนจำนวนช่อง แตะช่องเพื่อระบาย\nลองหาว่าเศษส่วนไหนยาวเท่ากัน',
+    init: { bars: list.map((d, i) => ({ d, k: 0, label: 'แท่ง ' + (i + 1) })) } };
+}
+
+/* ================= 🟩 ตาราง 100 ช่อง ================= */
+const cnt = a => a.reduce((s, x) => s + (x ? 1 : 0), 0);
+function g100(T, text, hint, why, ask) {
+  const cells = n => Array.from({ length: 100 }, (_, i) => i < n ? 1 : 0);
+  return {
+    kind: 'grid', text, hint, init: { cells: cells(0) }, why, ask,
+    check: (s, t) => { const n = cnt(s.cells); if (n === T) return ok(); return no('ตอนนี้ระบาย ' + n + ' ช่อง — ' + (n < T ? 'ยังน้อยไป' : 'มากไป') + (t >= 2 ? '\n(1 แถว = 10 ช่อง = 0.1 = 10%)' : '')); },
+    solve: () => ({ cells: cells(T) })
+  };
+}
+function gFrac() { const b = pick([2, 4, 5, 10, 20, 25, 50]), a = coprime(b), q = 100 / b, T = a * q;
+  return g100(T, 'ระบาย ' + a + '/' + b + ' ของตาราง', '1/' + b + ' ของ 100 ช่อง = 100 ÷ ' + b + ' = ' + q + ' ช่อง',
+    ['ตารางมี 100 ช่อง · 1/' + b + ' = 100 ÷ ' + b + ' = ' + q + ' ช่อง', a + '/' + b + ' = ' + a + ' × ' + q + ' = ' + T + ' ช่อง', T + ' ช่องจาก 100 = ' + T + '/100 = ' + dec100(T) + ' = ' + T + '% (ร้อยละ ' + T + ')']); }
+function gDec() { const T = R(5, 95);
+  return g100(T, 'ระบาย ' + dec100(T) + ' ของตาราง', dec100(T) + ' = ' + (T % 10 ? T + '/100' : (T / 10) + '/10') + (T % 10 ? '' : ' = ' + T + '/100'),
+    [dec100(T) + ' = ' + T + '/100 · ทั้งตารางมี 100 ช่อง', 'จึงระบาย ' + T + ' ช่อง' + (T % 10 ? '' : ' (' + (T / 10) + ' แถวเต็ม)'), T + ' ช่องจาก 100 = ' + T + '%']); }
+function gPct() { const T = R(3, 97);
+  return g100(T, 'ระบาย ' + T + '% ของตาราง', 'ร้อยละ ' + T + ' (' + T + '%) = ' + T + ' ช่องจาก 100 ช่อง',
+    [T + '% แปลว่า ' + T + ' ส่วนจาก 100 ส่วน', 'ตารางมี 100 ช่องพอดี จึงระบาย ' + T + ' ช่อง', T + '% = ' + T + '/100 = ' + dec100(T)]); }
+function gDisc() { const r = pick([10, 15, 20, 25, 30, 35, 40, 45, 50, 60]), T = 100 - r;
+  return g100(T, 'เสื้อราคา 100 บาท ลดราคา ' + r + '%\nตาราง 1 ช่อง = 1 บาท\nระบายเฉพาะส่วนที่ "ต้องจ่าย"', 'ลด ' + r + '% = ' + r + ' ช่องหายไป เหลือกี่ช่อง?',
+    ['ลด ' + r + '% = ' + r + ' บาท หายไป', 'ต้องจ่าย 100 − ' + r + ' = ' + T + ' ช่อง = ' + T + ' บาท', 'หรือคิดว่าจ่าย ' + T + '% ของราคาเต็ม'],
+    A('ต้องจ่ายเงินกี่บาท', T, [[r, 'นี่คือเงินที่ลด ไม่ใช่เงินที่จ่าย'], [100 + r, 'ลดราคาแล้วต้องจ่ายน้อยกว่า 100'], [100, 'ยังไม่ได้หักส่วนลด']])); }
+function gMoney() { const Tt = pick([200, 300, 400, 500]), u = Tt / 100, r = R(1, 9) * 5, v = r * u;
+  return g100(r, 'ตารางนี้แทนเงิน ' + Tt + ' บาท (1 ช่อง = ' + u + ' บาท)\nระบาย ' + r + '% ของเงินทั้งหมด', r + '% = ' + r + ' ช่อง ไม่ว่าทั้งตารางจะเป็นเงินเท่าไร',
+    [r + '% = ' + r + ' ช่องจาก 100 ช่อง', '1 ช่อง = ' + Tt + ' ÷ 100 = ' + u + ' บาท', r + ' ช่อง = ' + r + ' × ' + u + ' = ' + v + ' บาท'],
+    A(r + '% ของ ' + Tt + ' บาท = กี่บาท', v, [[r, 'นี่คือจำนวนช่อง ต้องคูณด้วยค่าของ 1 ช่อง (' + u + ' บาท)'], [Tt - v, 'นี่คือส่วนที่ไม่ได้ระบาย'], [r * 10, 'คิดว่า 1 ช่อง = 10 บาท']])); }
+function gTwo() { let a, b, x, y; do { b = pick([4, 5, 10, 20]); a = coprime(b); x = a * 100 / b; } while (x > 80); do { y = R(1, 9) * pick([1, 5]); } while (x + y > 95 || y === x);
+  const T = x + y;
+  return g100(T, 'ระบาย ' + a + '/' + b + ' ของตาราง\nแล้วระบายเพิ่มอีก ' + dec100(y), 'ทำทีละขั้น: ' + a + '/' + b + ' = ' + x + ' ช่อง ก่อน',
+    [a + '/' + b + ' = ' + x + ' ช่อง', dec100(y) + ' = ' + y + ' ช่อง', 'รวม ' + x + ' + ' + y + ' = ' + T + ' ช่อง = ' + T + '% = ' + dec100(T),
+      'เศษส่วนกับทศนิยมบวกกันได้ เมื่อเปลี่ยนเป็น "จำนวนช่องจาก 100" เหมือนกันก่อน']); }
+function gSandbox(T) { return { kind: 'grid', free: true, text: 'เล่นได้อิสระ\nลากนิ้วระบาย หรือแตะ ▸ หน้าแถวเพื่อระบายทั้งแถว\nดูตัวเลขด้านล่างเปลี่ยนตาม', init: { cells: Array(100).fill(0) } }; }
+
+/* ================= 🔍 เส้นจำนวนซูม ================= */
+/* สถานะ (หน่วยเป็น "ส่วนร้อย" จะได้ไม่มีทศนิยมเพี้ยน): { lo: ขอบซ้าย, step: 100 | 10 | 1, pick: ค่าที่แตะเลือก หรือ null } */
+const zs = v => (v % 100 === 0) ? String(v / 100) : (v % 10 === 0 ? (v / 100).toFixed(1) : (v / 100).toFixed(2));
+function zMsg(p, v) { return p === null ? 'ยังไม่ได้เลือกตัวเลข\nซูมเข้าไป (แตะช่องเหนือเส้น) แล้วแตะตัวเลขใต้เส้น' : 'ที่แตะคือ ' + zs(p) + ' — ' + (p < v ? 'ยังน้อยไป ต้องไปทางขวา' : 'มากไป ต้องไปทางซ้าย'); }
+function zAt(v) { return { lo: v % 10 === 0 && v % 100 !== 0 ? Math.floor(v / 100) * 100 : Math.floor(v / 10) * 10, step: v % 10 === 0 && v % 100 !== 0 ? 10 : 1, pick: v }; }
+const Z0 = () => ({ lo: 0, step: 100, pick: null });
+function zWhy(v) { const i = Math.floor(v / 100), t = Math.floor(v / 10) % 10, h = v % 10;
+  const w = [zs(v) + ' อยู่ระหว่าง ' + i + ' กับ ' + (i + 1) + ' → ซูมช่อง ' + i + '–' + (i + 1)];
+  if (h) w.push('ซูมแล้วช่องละ 0.1 · ' + zs(v) + ' อยู่ระหว่าง ' + zs(i * 100 + t * 10) + ' กับ ' + zs(i * 100 + t * 10 + 10) + ' → ซูมอีกครั้ง', 'ซูมครั้งที่ 2 ช่องละ 0.01 · นับไป ' + h + ' ขีด = ' + zs(v));
+  else w.push('ซูมแล้วช่องละ 0.1 · นับไป ' + t + ' ขีด = ' + zs(v));
+  return w; }
+function zFind(two, V) {
+  const v = V !== undefined ? V : (two ? R(0, 9) * 100 + R(0, 9) * 10 + R(1, 9) : R(0, 9) * 100 + R(1, 9) * 10);
+  return { kind: 'zoom', text: 'หา ' + zs(v) + ' บนเส้นจำนวน แล้วแตะเลือก', hint: zs(v) + ' อยู่ระหว่าง ' + Math.floor(v / 100) + ' กับ ' + (Math.floor(v / 100) + 1) + ' แตะช่องนั้นเพื่อซูม',
+    init: Z0(), check: s => s.pick === v ? ok() : no(zMsg(s.pick, v)), solve: () => zAt(v), why: zWhy(v) };
+}
+function zRound() { const v = R(0, 9) * 100 + R(0, 9) * 10 + pick([1, 2, 3, 4, 6, 7, 8, 9]), lo = Math.floor(v / 10) * 10, hi = lo + 10, near = (v % 10) >= 5 ? hi : lo, far = near === hi ? lo : hi, f1 = x => (x / 100).toFixed(1);
+  const m = zFind(true, v);
+  const ext = near === hi ? hi + 10 : lo - 10, extOk = ext > 0 && ext % 100 !== 0 && ext < 1000;
+  m.ask = A(zs(v) + ' อยู่ใกล้ ' + f1(lo) + ' หรือ ' + f1(hi) + ' มากกว่า\n(ปัดเป็นทศนิยม 1 ตำแหน่ง ได้เท่าไร)', f1(near),
+    [[f1(far), (v % 10) >= 5 ? 'หลักส่วนร้อยเป็น ' + (v % 10) + ' (ตั้งแต่ 5 ขึ้นไป) ต้องปัดขึ้น' : 'หลักส่วนร้อยเป็น ' + (v % 10) + ' (น้อยกว่า 5) ต้องปัดลง'], [zs(v), 'ยังไม่ได้ปัด']].concat(extOk ? [[f1(ext), 'นับขีดเลยไป 1 ช่อง']] : []));
+  m.why = m.why.concat(['บนเส้นจำนวน ' + zs(v) + ' ห่างจาก ' + f1(lo) + ' อยู่ ' + (v - lo) + ' ขีด และห่างจาก ' + f1(hi) + ' อยู่ ' + (hi - v) + ' ขีด', 'ใกล้ ' + f1(near) + ' มากกว่า จึงปัดเป็น ' + f1(near)]);
+  return m; }
+function zCompare() { const i = R(0, 9), t = R(2, 9), a = i * 100 + t * 10, b = i * 100 + (t - 1) * 10 + R(1, 9);
+  return { kind: 'zoom', text: zs(a) + ' กับ ' + zs(b) + '\nตัวไหนมากกว่า? หาตัวนั้นบนเส้นแล้วแตะเลือก', hint: 'ตัวที่อยู่ทางขวาบนเส้นจำนวนคือตัวที่มากกว่า ลองหาทั้งสองตัวก่อนก็ได้',
+    init: Z0(), check: s => s.pick === a ? ok() : no(s.pick === b ? zs(b) + ' คือตัวที่น้อยกว่า — มันอยู่ทางซ้ายของ ' + zs(a) : zMsg(s.pick, a)), solve: () => zAt(a),
+    why: [zs(a) + ' = ' + zs(a) + '0 (เติม 0 ท้ายทศนิยมได้ ค่าไม่เปลี่ยน)', 'เทียบหลักส่วนสิบ: ' + t + ' มากกว่า ' + (t - 1), 'จึงได้ ' + zs(a) + ' มากกว่า ' + zs(b) + ' แม้ ' + zs(b) + ' จะมีตัวเลขยาวกว่า'] }; }
+function zBetween() { const i = R(0, 9), t = R(0, 9), lo = i * 100 + t * 10, hi = lo + 10, ex = lo + R(1, 9);
+  return { kind: 'zoom', text: 'หาทศนิยม 2 ตำแหน่ง ที่อยู่ระหว่าง ' + zs(lo) + ' กับ ' + zs(hi) + '\nตัวไหนก็ได้ แล้วแตะเลือก', hint: 'ซูมเข้าไปในช่อง ' + zs(lo) + '–' + zs(hi) + ' จะเห็นขีดเล็ก ๆ อีก 9 ขีด',
+    init: Z0(), check: s => (s.pick !== null && s.pick > lo && s.pick < hi) ? ok() : no(s.pick === null ? zMsg(null) : 'ที่แตะคือ ' + zs(s.pick) + ' — ยังไม่อยู่ระหว่าง ' + zs(lo) + ' กับ ' + zs(hi)), solve: () => zAt(ex),
+    why: ['ระหว่าง ' + zs(lo) + ' กับ ' + zs(hi) + ' ซูมแล้วมีอีก 9 ขีด', 'คือ ' + zs(lo + 1) + ', ' + zs(lo + 2) + ', … , ' + zs(lo + 9) + ' ตอบตัวไหนก็ถูก', 'ระหว่างทศนิยมสองตัวยังมีทศนิยมแทรกได้อีกเสมอ แค่ซูมเข้าไปอีก'] }; }
+function zSandbox() { return { kind: 'zoom', free: true, text: 'เล่นได้อิสระ\nแตะช่องเหนือเส้นเพื่อซูมเข้า แตะตัวเลขใต้เส้นเพื่อเลือก', init: Z0() }; }
+
+/* ================= 💡 หลอดไฟตัวเลข ================= */
+/* สถานะ: { n: จำนวนคอลัมน์, rows: [{ bits, lock, label, hide: ซ่อนผลบวก, help: แถวช่วยจำ }], alpha?: โชว์ตาราง A–Z, q6?: ซ่อนค่าดวงซ้ายสุด } */
+const plTxt = bits => { const n = bits.length, on = []; bits.forEach((x, j) => { if (x) on.push(2 ** (n - 1 - j)); }); return on.length ? on.join(' + ') + (on.length > 1 ? ' = ' + bitsVal(bits) : '') : '0'; };
+function bMake(n, N) { n = n || 5; if (N === undefined) do { N = R(n === 6 ? 33 : 5, 2 ** n - 1); } while ((N & (N - 1)) === 0);
+  const st = v => ({ n, rows: [{ bits: toBits(v, n), label: 'ไฟ' }] });
+  return { kind: 'bits', text: 'เปิดไฟให้ได้เลข ' + N + (n === 6 ? '\n(มีหลอดดวงใหม่ทางซ้ายสุด ค่า 32 = 16 × 2)' : ''), hint: 'เริ่มจากดวงซ้ายสุด ถ้าค่าดวงนั้นไม่เกิน ' + N + ' เปิดเลย แล้วหักออก ทำต่อดวงถัดไป',
+    init: st(0), check: s => { const v = bitsVal(s.rows[0].bits); return v === N ? ok() : no('ตอนนี้ไฟแทนเลข ' + v + ' — ' + (v < N ? 'ยังน้อยไป' : 'มากไป')); }, solve: () => st(N),
+    why: [N + ' = ' + plTxt(toBits(N, n)).split(' = ')[0], 'จึงเปิดดวง ' + plTxt(toBits(N, n)).split(' = ')[0].split(' + ').join(', ') + ' · ดวงอื่นปิด', 'เขียนเป็นรหัสได้ ' + bin(N, n) + ' (ติด = 1 ดับ = 0)',
+      'ค่าของดวงเพิ่มทีละ 2 เท่า (1, 2, 4, 8, 16' + (n === 6 ? ', 32' : '') + ') เหมือนหลักหน่วย สิบ ร้อย ที่เพิ่มทีละ 10 เท่า'] }; }
+function bPlus1() { const k = R(2, 4), V = 2 ** k - 1, st = v => ({ n: 5, rows: [{ bits: toBits(v, 5), label: 'ไฟ' }] });
+  return { kind: 'bits', text: 'ตอนนี้ไฟเป็นเลข ' + V + ' (รหัส ' + bin(V, 5) + ')\nเพิ่มอีก 1 ทำให้เป็นเลข ' + (V + 1), hint: 'ดวงค่า 1 ติดอยู่แล้ว บวก 1 เข้าไปจะ "เต็ม" ต้องทดไปดวงถัดไป เหมือน 9 + 1',
+    init: st(V), check: s => { const v = bitsVal(s.rows[0].bits); return v === V + 1 ? ok() : no('ตอนนี้ไฟแทนเลข ' + v + ' ยังไม่ใช่ ' + (V + 1)); }, solve: () => st(V + 1),
+    why: [V + ' = ' + plTxt(toBits(V, 5)), (V + 1) + ' = ' + (V + 1) + ' ใช้ดวงเดียว: รหัส ' + bin(V + 1, 5), 'ไฟที่ติดเรียงกันดับหมด แล้วดวงถัดไปติด = การทดในเลข 0/1', 'เหมือน 999 + 1 = 1000 ในเลขปกติ'] }; }
+function bRead() { let v; do { v = R(5, 31); } while ((v & (v - 1)) === 0); const b = toBits(v, 5), rev = bitsVal(b.slice().reverse()), ones = b.filter(x => x).length;
+  const pos = b.reduce((s, x, j) => s + (x ? 5 - j : 0), 0);
+  return { kind: 'bits', noCheck: true, text: 'ไฟชุดนี้แทนเลขอะไร', init: { n: 5, rows: [{ bits: b, lock: true, hide: true, label: 'ไฟ' }] },
+    ask: A('รหัส ' + bin(v, 5) + ' = เลขอะไร', v, [[rev, 'อ่านกลับด้าน — ดวงขวาสุดมีค่า 1 ดวงซ้ายสุดมีค่า 16'], [ones, 'นี่คือจำนวนดวงที่ติด ต้องบวก "ค่า" ของดวงที่ติด'], [pos, 'ใช้ค่า 1, 2, 3, 4, 5 — แต่ค่าของดวงต้องเพิ่มทีละ 2 เท่า: 1, 2, 4, 8, 16']], [[v + 1, ''], [v - 1, '']]),
+    why: ['ดวงที่ติดมีค่า ' + plTxt(b).split(' = ')[0].split(' + ').join(', '), 'บวกกัน: ' + plTxt(b)] }; }
+function bMax() { const st = v => ({ n: 5, rows: [{ bits: toBits(v, 5), label: 'ไฟ' }] });
+  return { kind: 'bits', text: 'เปิดไฟให้ได้ "เลขมากที่สุด" ที่ไฟ 5 ดวงทำได้', hint: 'เลขจะมากที่สุดเมื่อ…ดวงไหนติดบ้าง?', init: st(0),
+    check: s => bitsVal(s.rows[0].bits) === 31 ? ok() : no('ยังเพิ่มได้อีก — ยังมีดวงที่ดับอยู่'), solve: () => st(31),
+    ask: A('เลขมากที่สุดที่ไฟ 5 ดวงทำได้คือ', 31, [[32, '32 ต้องใช้หลอดดวงที่ 6 (ค่า 32) ซึ่งยังไม่มี'], [5, 'นี่คือจำนวนหลอด ไม่ใช่ค่า'], [16, 'นี่คือค่าของดวงซ้ายสุดดวงเดียว ยังไม่ได้บวกดวงอื่น']]),
+    why: ['ติดทุกดวง: 16 + 8 + 4 + 2 + 1 = 31 (รหัส 11111)', '31 น้อยกว่าค่าดวงถัดไป (32) อยู่ 1 พอดี', 'เหมือนเลขปกติ 3 หลัก มากที่สุดคือ 999 น้อยกว่า 1000 อยู่ 1'] }; }
+function bEven() { const lo = R(8, 22), hi = lo + R(4, 6), st = v => ({ n: 5, rows: [{ bits: toBits(v, 5), label: 'ไฟ' }] }); let ex = lo + 1; if (ex % 2) ex++;
+  return { kind: 'bits', text: 'เปิดไฟให้ได้ "เลขคู่" ที่มากกว่า ' + lo + ' แต่น้อยกว่า ' + hi, hint: 'เลขคู่ ' + lo + ' ถึง ' + hi + ' มีตัวไหนบ้าง? เลือกมาหนึ่งตัวแล้วเปิดไฟ', init: st(0),
+    check: s => { const v = bitsVal(s.rows[0].bits); return (v > lo && v < hi && v % 2 === 0) ? ok() : no('ตอนนี้ไฟแทนเลข ' + v + (v % 2 ? ' เป็นเลขคี่' : (v <= lo || v >= hi) ? ' ไม่อยู่ในช่วง' : '')); }, solve: () => st(ex),
+    ask: A('เลขคู่ทุกตัว ไฟดวงไหน "ดับ" เสมอ', 'ดวงค่า 1 (ขวาสุด)', [['ดวงค่า 16 (ซ้ายสุด)', 'ดวง 16 ติดได้ เช่น 18 = 16 + 2 เป็นเลขคู่'], ['ดวงค่า 2', 'ดวง 2 ติดได้ เช่น 6 = 4 + 2 เป็นเลขคู่']]),
+    why: ['ดวง 2, 4, 8, 16 มีค่าเป็นเลขคู่ทั้งหมด บวกกันยังเป็นเลขคู่', 'มีดวงค่า 1 ดวงเดียวที่ทำให้กลายเป็นเลขคี่', 'ดูรหัสก็รู้: ตัวขวาสุดเป็น 0 = เลขคู่ · เป็น 1 = เลขคี่'] }; }
+function bSandbox() { return { kind: 'bits', free: true, text: 'เล่นได้อิสระ\nแตะหลอดเพื่อเปิดปิด แล้วดูว่าได้เลขอะไร', init: { n: 6, rows: [{ bits: [0, 0, 0, 0, 0, 0], label: 'ไฟ' }] } }; }
+
+/* ================= 🔐 ข้อความและภาพลับ ================= */
+const WORDS = ['HI', 'GO', 'UP', 'CAT', 'DOG', 'SUN', 'BEE', 'ZOO', 'FUN', 'MAP', 'RUN', 'YES', 'BOX', 'KEY', 'FOX', 'PIG', 'HAT', 'JAM', 'OWL', 'SKY'];
+const li = ch => ABC.indexOf(ch) + 1;
+function lRows(word, lock, hide) { return word.split('').map((ch, r) => ({ bits: toBits(lock ? li(ch) : 0, 5), lock: !!lock, hide: !!hide, label: 'ตัวที่ ' + (r + 1) })); }
+function lEnc() { const ch = ABC[R(1, 25)], i = li(ch);
+  const st = v => ({ n: 5, alpha: true, rows: [{ bits: toBits(v, 5), label: 'ตัว ' + ch }] });
+  return { kind: 'bits', text: 'ส่งตัว ' + ch + ' ให้เพื่อนด้วยไฟ\nรหัสลับ: A = 1, B = 2, C = 3, … Z = 26', hint: ch + ' เป็นตัวที่ ' + i + ' · เปิดไฟให้ได้เลข ' + i, init: st(0),
+    check: s => { const v = bitsVal(s.rows[0].bits); return v === i ? ok() : no('ตอนนี้ไฟแทนเลข ' + v + (v >= 1 && v <= 26 ? ' = ตัว ' + ABC[v - 1] : '') + ' ยังไม่ใช่ ' + ch); }, solve: () => st(i),
+    why: [ch + ' เป็นตัวที่ ' + i + ' ของ A–Z', i + ' = ' + plTxt(toBits(i, 5)).split(' = ')[0] + ' → รหัส ' + bin(i, 5), 'นี่คือการ "เข้ารหัส" (encode) = เปลี่ยนข้อมูลเป็น 0 กับ 1 ตามกติกาที่ตกลงกัน', 'คอมพิวเตอร์จริงใช้กติกาคล้ายกันแต่ยาวกว่านี้ เพื่อให้มีตัวพิมพ์เล็ก ตัวเลข และภาษาไทยด้วย'] }; }
+function lWord() { const w = pick(WORDS);
+  const st = full => ({ n: 5, alpha: true, rows: w.split('').map((ch, r) => ({ bits: toBits(full ? li(ch) : 0, 5), label: 'ตัวที่ ' + (r + 1) })) });
+  return { kind: 'bits', text: 'ส่งคำว่า ' + w + ' ให้เพื่อน\nแถวละ 1 ตัวอักษร (A = 1 … Z = 26)', hint: 'ทำทีละแถว: ' + w[0] + ' = ' + li(w[0]), init: st(false),
+    check: s => { for (let r = 0; r < w.length; r++) { const v = bitsVal(s.rows[r].bits); if (v !== li(w[r])) return no('แถวที่ ' + (r + 1) + ' ตอนนี้เป็นเลข ' + v + (v >= 1 && v <= 26 ? ' = ' + ABC[v - 1] : '') + ' — ต้องเป็น ' + w[r]); } return ok(); }, solve: () => st(true),
+    why: w.split('').map(ch => ch + ' = ' + li(ch) + ' → ' + bin(li(ch), 5)).concat(['คำว่า ' + w + ' จึงส่งเป็นไฟ ' + w.length + ' แถว รวม ' + (w.length * 5) + ' ดวง']) }; }
+function lDec() { const w = pick(WORDS), sh = w.split('').map(ch => ABC[li(ch) % 26]).join(''), other = pick(WORDS.filter(x => x !== w && x.length === w.length));
+  const rv = w.split('').map(ch => { const v = bitsVal(toBits(li(ch), 5).reverse()); return v >= 1 && v <= 26 ? ABC[v - 1] : '?'; }).join('');
+  return { kind: 'bits', noCheck: true, text: 'เพื่อนส่งไฟมาแบบนี้ แถวละ 1 ตัวอักษร\nถอดรหัสว่าเป็นคำว่าอะไร', init: { n: 5, alpha: true, rows: lRows(w, true, true) },
+    ask: A('คำที่เพื่อนส่งมาคือ', w, [[sh, 'นับ A เป็น 0 เลยได้ตัวถัดไปทุกตัว — กติกาคือ A = 1'], [rv.includes('?') ? sh.split('').reverse().join('') : rv, rv.includes('?') ? 'อ่านแถวกลับด้าน — เริ่มจากแถวบนสุด' : 'อ่านไฟกลับด้าน — ดวงขวาสุดมีค่า 1'], [other, 'ลองบวกค่าไฟทีละแถวอีกครั้ง']]),
+    why: w.split('').map((ch, r) => 'แถว ' + (r + 1) + ': ' + bin(li(ch), 5) + ' = ' + plTxt(toBits(li(ch), 5)) + ' → ' + ch).concat(['นี่คือการ "ถอดรหัส" (decode) = เปลี่ยน 0 กับ 1 กลับเป็นข้อมูล']) }; }
+const PICS = [
+  { name: 'หัวใจ ❤️', rows: ['01100110', '11111111', '11111111', '11111111', '01111110', '00111100', '00011000', '00000000'] },
+  { name: 'หน้ายิ้ม 🙂', rows: ['00111100', '01000010', '10100101', '10000001', '10100101', '10011001', '01000010', '00111100'] },
+  { name: 'บ้าน 🏠', rows: ['00011000', '00111100', '01111110', '11111111', '01000010', '01011010', '01011010', '01111110'] },
+  { name: 'ลูกศรขึ้น ⬆️', rows: ['00011000', '00111100', '01111110', '11011011', '00011000', '00011000', '00011000', '00011000'] },
+  { name: 'แมว 🐱', rows: ['10000001', '11000011', '11111111', '10111101', '11111111', '11011011', '11100111', '01111110'] },
+  { name: 'ต้นไม้ 🌲', rows: ['00011000', '00111100', '01111110', '00111100', '01111110', '11111111', '00011000', '00011000'] },
+  { name: 'ผี 👻', rows: ['00111100', '01111110', '11011011', '11011011', '11111111', '11111111', '11111111', '10101010'] },
+];
+const picCells = p => p.rows.join('').split('').map(Number);
+function pDraw(P) { const p = P || pick(PICS);
+  return { kind: 'pixel', text: 'วาดภาพตามรหัส แถวละ 8 ช่อง\n1 = ระบาย · 0 = เว้นว่าง\nวาดครบแล้วจะรู้ว่าเป็นภาพอะไร', hint: 'ทำทีละแถว อ่านรหัสทางซ้ายจากซ้ายไปขวา · ถ้าแถวถูกแล้ว รหัสทางขวาจะเป็นสีเขียว',
+    init: { cells: Array(64).fill(0), codes: p.rows }, check: s => { for (let r = 0; r < 8; r++) { const row = s.cells.slice(r * 8, r * 8 + 8).join(''); if (row !== p.rows[r]) return no('แถวที่ ' + (r + 1) + ' ยังไม่ตรงกับรหัส ' + p.rows[r]); } return ok(); },
+    solve: () => ({ cells: picCells(p), codes: p.rows }),
+    why: ['ได้ภาพ ' + p.name, 'ภาพนี้ใช้ 0 กับ 1 ทั้งหมด 8 × 8 = 64 ตัว', 'รูปในมือถือก็เก็บแบบนี้ แต่มีจุดเป็นล้านจุด และแต่ละจุดเก็บสีด้วยเลข 0/1 อีกหลายตัว'] }; }
+function pRead() { const p = pick(PICS); let r; do { r = R(0, 7); } while (p.rows[r] === p.rows[r].split('').reverse().join('') && Math.random() < 0.7);
+  const code = p.rows[r], inv = code.split('').map(x => x === '1' ? '0' : '1').join(''), rev = code.split('').reverse().join(''), nb = p.rows[r === 0 ? 1 : r - 1];
+  return { kind: 'pixel', noCheck: true, text: 'ภาพ ' + p.name + '\nแถวที่ ' + (r + 1) + ' (มีลูกศร 👉) เขียนเป็นรหัสอะไร', init: { cells: picCells(p), lock: true, hl: r },
+    ask: A('แถวที่ ' + (r + 1) + ' = ?', code, [[inv, 'สลับกัน — ช่องที่ระบายต้องเป็น 1 ช่องว่างเป็น 0'], [rev, 'อ่านจากขวาไปซ้าย — ต้องอ่านจากซ้ายไปขวา'], [nb, 'นั่นคือแถวข้าง ๆ ดูลูกศรอีกครั้ง']], [[code.slice(1) + '0', 'เลื่อนไป 1 ช่อง — นับให้ครบ 8 ช่อง เริ่มจากช่องซ้ายสุด'], ['0' + code.slice(0, 7), 'เลื่อนไป 1 ช่อง — นับให้ครบ 8 ช่อง เริ่มจากช่องซ้ายสุด'], [p.rows[(r + 3) % 8], 'นั่นคือแถวอื่น ดูลูกศรอีกครั้ง']]),
+    why: ['อ่านแถวที่ ' + (r + 1) + ' จากซ้ายไปขวา', 'ช่องระบาย = 1 · ช่องว่าง = 0', 'ได้ ' + code] }; }
+
+/* ================= ⚡ เครื่องบวกเลข 0/1 ================= */
+/* สถานะวงจร: { a, b, table?: โชว์ตาราง, tried: ['00','01',...] } */
+function hAnd() { return { kind: 'gate', text: 'เครื่องนี้มีสวิตช์ A กับ B\nแตะสวิตช์เพื่อเปิดปิด\nทำให้หลอด "ทด" ติด', hint: 'หลอด "ทด" ต่อกับกล่อง "และ" — กล่องนี้ปล่อยไฟเมื่อไหร่?',
+  init: { a: 0, b: 0, tried: [] }, check: s => (s.a && s.b) ? ok() : no('หลอด "ทด" ยังดับ — กล่อง "และ" (AND) ต้องได้ไฟจาก A และ B ทั้งคู่'), solve: () => ({ a: 1, b: 1, tried: ['11'] }),
+  why: ['กล่อง "และ" (AND) ปล่อยไฟเมื่อ A และ B ติดทั้งคู่', 'ถ้าดวงใดดวงหนึ่งดับ กล่องนี้ไม่ปล่อยไฟ', 'ในคอมพิวเตอร์มีกล่องแบบนี้เป็นล้าน ๆ กล่อง เรียกว่า "ประตูตรรกะ" (logic gate)'] }; }
+function hXor() { return { kind: 'gate', text: 'ทำให้หลอด "ผล" ติด แต่หลอด "ทด" ดับ', hint: 'กล่อง "ดวงเดียว" (XOR) ปล่อยไฟเมื่อมีสวิตช์ติดแค่ตัวเดียว',
+  init: { a: 0, b: 0, tried: [] }, check: s => (s.a ^ s.b) ? ok() : no(s.a && s.b ? 'เปิดทั้งคู่แล้ว "ทด" ติด "ผล" ดับ — ลองปิดตัวหนึ่ง' : 'ยังไม่มีไฟเข้าเลย ลองเปิดสวิตช์'), solve: () => ({ a: 1, b: 0, tried: ['10'] }),
+  ask: A('ทำให้ "ผล" ติดแต่ "ทด" ดับ ได้กี่แบบ', 2, [[1, 'ลองสลับ: เปิด B ปิด A ก็ได้เหมือนกัน'], [3, 'เปิดทั้งคู่จะได้ "ทด" ติด "ผล" ดับ'], [4, 'ทั้งหมดมี 4 แบบ แต่ใช้ได้แค่บางแบบ']]),
+  why: ['เปิด A ปิด B → 1 + 0 = 1', 'ปิด A เปิด B → 0 + 1 = 1', 'สองแบบนี้ได้ผล 1 ไม่มีทด'] }; }
+function hTable() { return { kind: 'gate', text: 'ลองเปิดสวิตช์ให้ครบทั้ง 4 แบบ\n(ดับ-ดับ · ดับ-ติด · ติด-ดับ · ติด-ติด)\nตารางด้านล่างจะเติมเอง', hint: 'แตะ A แล้วแตะ B สลับไปมา ดูตารางว่ายังขาดแบบไหน',
+  init: { a: 0, b: 0, table: true, tried: ['00'] }, check: s => s.tried.length >= 4 ? ok() : no('ลองไปแล้ว ' + s.tried.length + ' แบบ ยังขาดอีก ' + (4 - s.tried.length) + ' แบบ'), solve: () => ({ a: 1, b: 1, table: true, tried: ['00', '01', '10', '11'] }),
+  ask: A('A = 1 และ B = 1 เครื่องตอบ ทด 1 ผล 0 = "10"\n"10" ในเลข 0/1 คือเลขอะไร', 2, [[10, '"10" ในเลข 0/1 ไม่ใช่สิบ — ดวงค่า 2 ติด ดวงค่า 1 ดับ'], [0, 'ดูแค่หลอด "ผล" ลืมหลอด "ทด"'], [11, 'ทดแล้วต้องเหลือ 0 ในหลักขวา']]),
+  why: ['0 + 0 = 00 · 0 + 1 = 01 · 1 + 0 = 01 · 1 + 1 = 10', '1 + 1 = 2 แต่เลข 0/1 ไม่มีเลข 2', 'จึงเขียน 0 แล้ว "ทด 1" ไปหลักถัดไป เหมือน 5 + 5 = 10 ในเลขปกติ', 'เครื่องคิดเลขและคอมพิวเตอร์บวกเลขด้วยกล่อง "และ" กับ "ดวงเดียว" แบบนี้แหละ'] }; }
+function add4(A0, B0) { let a = A0, b = B0; if (a === undefined) do { a = R(3, 15); b = R(3, 15); } while ((a & b) === 0 || a === b);
+  const S = a + b, st = v => ({ n: 5, rows: [{ bits: [0, 0, 0, 0, 0], label: 'ทด (ช่วยจด)', help: true }, { bits: toBits(a, 4), lock: true, label: 'A (' + a + ')' }, { bits: toBits(b, 4), lock: true, label: 'B (' + b + ')' }, { bits: toBits(v, 5), label: 'ผลบวก' }] });
+  const ba = toBits(a, 5), bb = toBits(b, 5), bs = toBits(S, 5);
+  return { kind: 'bits', text: 'A = ' + bin(a, 4) + ' · B = ' + bin(b, 4) + '\nบวกทีละหลักจากขวา เหมือนบวกเลขปกติ\n• 0+0 = 0 · 1+0 = 1\n• 1+1 = 0 ทด 1\n• 1+1+1 = 1 ทด 1\nเปิดไฟแถว "ผลบวก" ให้ถูก',
+    hint: 'หลักขวาสุด: ' + ba[4] + ' + ' + bb[4] + ' = ? ถ้าทด ให้แตะแถว "ทด" ไว้กันลืม', init: st(0),
+    check: (s, t) => { const g = s.rows[3].bits; let c = 0; for (let j = 4; j >= 0; j--) { const sum = ba[j] + bb[j] + c, w = sum % 2; if (g[j] !== w) return no('หลักค่า ' + 2 ** (4 - j) + ' ยังไม่ถูก' + (t >= 2 ? '\nหลักนี้: A = ' + ba[j] + ', B = ' + bb[j] + ', ทดมา ' + c + ' → รวม ' + sum + ' = เขียน ' + w + (sum >= 2 ? ' ทด 1' : '') : '\nลองบวกหลักนี้ใหม่ อย่าลืมเลขที่ทดมา')); c = sum >= 2 ? 1 : 0; } return ok(); },
+    solve: () => st(S),
+    why: ['A = ' + bin(a, 4) + ' = ' + a + ' · B = ' + bin(b, 4) + ' = ' + b, 'บวกได้ ' + bin(S, 5) + ' = ' + plTxt(bs), 'ตรวจด้วยเลขปกติ: ' + a + ' + ' + b + ' = ' + S + ' ✓'] }; }
+
+/* ================= 🤖 หุ่นยนต์เดินตามคำสั่ง ================= */
+/* คำสั่ง: 'F' เดินหน้า · 'L' หมุนซ้าย · 'R' หมุนขวา · '(n' เริ่มทำซ้ำ n รอบ · ')' จบทำซ้ำ
+   ทิศ: 0 ขึ้น · 1 ขวา · 2 ลง · 3 ซ้าย */
+const LEVELS = [
+  { map: ['......', '......', '......', '......', '......', '....G.'], sx: 0, sy: 5, sd: 1, ref: ['F', 'F', 'F', 'F'],
+    text: 'พาหุ่นยนต์ 🤖 ไปที่ธง 🏁\nแตะคำสั่งเรียงต่อกัน แล้วกด ▶ รัน', why: ['เดินหน้า 4 ครั้ง = 4 ช่อง', 'คอมพิวเตอร์ทำตามคำสั่งทีละบรรทัดตามลำดับ เรียกว่า "โปรแกรม" (program)'] },
+  { map: ['......', '......', '...G..', '......', '......', '......'], sx: 0, sy: 5, sd: 1, ref: ['F', 'F', 'F', 'L', 'F', 'F', 'F'],
+    text: 'คราวนี้ต้องเลี้ยว\n↺ ซ้าย / ↻ ขวา = หมุนตัวอยู่กับที่ ไม่เดิน', hint: 'เดินไปทางขวา 3 ช่องก่อน แล้วหมุนซ้ายให้หน้าหันขึ้น', why: ['เดินหน้า 3 → หมุนซ้าย → เดินหน้า 3', 'การหมุนไม่ทำให้หุ่นขยับไปช่องอื่น'] },
+  { map: ['......', '......', '......', '......', '......', '.....G'], sx: 0, sy: 5, sd: 1, max: 3, ref: ['(5', 'F', ')'],
+    text: 'ไปที่ธง โดยใช้คำสั่งไม่เกิน 3 ช่อง\nใช้ 🔁 ทำซ้ำ (loop) แล้วปิดด้วย }', hint: '🔁 ทำซ้ำ 5 รอบ { เดิน }', why: ['ทำซ้ำ 5 รอบ { เดิน } = เดิน 5 ครั้ง', 'ใช้แค่ 3 ช่อง แทนที่จะเขียน "เดิน" 5 ครั้ง'],
+    ask: A('ถ้าเขียน "ทำซ้ำ 5 รอบ { เดิน เดิน }"\nหุ่นจะเดินกี่ช่อง', 10, [[7, '5 + 2 — ทำซ้ำต้องใช้การคูณ'], [5, 'นับแค่จำนวนรอบ'], [2, 'นับแค่คำสั่งข้างในรอบเดียว']]) },
+  { map: ['......', '......', '...G..', '..*.##', '.*.###', '..####'], sx: 0, sy: 5, sd: 1, max: 6, ref: ['(3', 'F', 'L', 'F', 'R', ')'],
+    text: 'ขึ้นบันไดไปที่ธง เก็บดาว ⭐ ให้ครบ\nใช้คำสั่งไม่เกิน 6 ช่อง', hint: 'บันได 1 ขั้น = เดิน · ซ้าย · เดิน · ขวา แล้วทำซ้ำกี่รอบ?', why: ['บันได 1 ขั้น = เดิน → ซ้าย → เดิน → ขวา (4 คำสั่ง)', 'ทำซ้ำ 3 รอบ = 3 ขั้น', 'หาส่วนที่ "ซ้ำกัน" แล้วใส่ในทำซ้ำ = คิดแบบนักเขียนโปรแกรม'] },
+  { map: ['......', '.*..*.', '......', '......', '.G..*.', '......'], sx: 1, sy: 4, sd: 0, max: 6, ref: ['(4', '(3', 'F', ')', 'R', ')'],
+    text: 'เดินรอบสี่เหลี่ยมจัตุรัส เก็บดาวที่มุม แล้วกลับมาที่ธง\nใช้คำสั่งไม่เกิน 6 ช่อง (ทำซ้ำซ้อนในทำซ้ำได้)', hint: 'ด้าน 1 ด้าน = เดิน 3 ช่อง แล้วหมุนขวา · สี่เหลี่ยมจัตุรัสมีกี่ด้าน?',
+    why: ['1 ด้าน = ทำซ้ำ 3 รอบ { เดิน } แล้วหมุนขวา', 'สี่เหลี่ยมจัตุรัสมี 4 ด้าน → ทำซ้ำ 4 รอบ', 'ทำซ้ำซ้อนกัน 2 ชั้น เรียกว่า loop ซ้อน (nested loop)'],
+    ask: A('หุ่นเดินรอบสี่เหลี่ยมด้านละ 3 ช่อง\nเดินทั้งหมดกี่ช่อง', 12, [[9, '3 × 3 = พื้นที่ ไม่ใช่ระยะทางรอบรูป'], [3, 'นี่คือด้านเดียว'], [16, 'สี่เหลี่ยมมี 4 ด้าน ด้านละ 3 ช่อง ไม่ใช่ 4 ช่อง']]) },
+  { map: ['..#...', '.##.#.', '...#..', '.#...#', '.#.#..', '...#.G'], sx: 0, sy: 0, sd: 2, ref: ['F', 'F', 'L', 'F', 'F', 'R', 'F', 'L', 'F', 'F', 'R', 'F', 'F', 'L', 'F'],
+    text: 'เขาวงกต! พาหุ่นยนต์ไปที่ธงโดยไม่ชนกำแพง', hint: 'หุ่นหันหน้าลง · ตอนหันหน้าลง "ซ้าย" ของหุ่นคือทางขวาของจอ', why: ['ลง 2 → ขวา 2 → ลง 1 → ขวา 2 → ลง 2 → ขวา 1', 'ถ้าชนกำแพง โปรแกรมหยุด — นักเขียนโปรแกรมเรียกว่า "บั๊ก" (bug) แล้วไล่แก้ทีละคำสั่ง'] },
+  { map: ['......', '......', '......', '.*.*..', '.....G', '......'], sx: 0, sy: 4, sd: 1, max: 11, ref: ['(2', 'F', 'L', 'F', 'R', 'F', 'R', 'F', 'L', ')', 'F'],
+    text: 'เดินซิกแซก เก็บดาว 2 ดวง แล้วไปที่ธง\nใช้คำสั่งไม่เกิน 11 ช่อง', hint: 'ดาว 1 ดวง = ขึ้น 1 · ขวา 1 · ลง 1 · ขวา 1 → ลองเขียนเป็นคำสั่ง แล้วทำซ้ำ',
+    why: ['ฟัน 1 ซี่: เดิน ซ้าย เดิน ขวา เดิน ขวา เดิน ซ้าย (8 คำสั่ง)', 'ทำซ้ำ 2 รอบ แล้วเดินอีก 1 ช่องไปที่ธง', 'ถ้าไม่ใช้ทำซ้ำต้องใช้ 17 ช่อง'] },
+  { map: ['......', '......', '......', 'G...*.', '......', '*...*.'], sx: 0, sy: 3, sd: 1, max: 10, ref: ['(2', '(4', 'F', ')', 'R', '(2', 'F', ')', 'R', ')'],
+    text: 'เดินรอบสี่เหลี่ยมผืนผ้า ยาว 4 กว้าง 2\nเก็บดาวที่มุม แล้วกลับมาที่ธง · ใช้คำสั่งไม่เกิน 10 ช่อง', hint: 'ด้านยาว + ด้านกว้าง = ครึ่งรอบ แล้วทำซ้ำ 2 รอบ',
+    why: ['ครึ่งรอบ = เดิน 4 → ขวา → เดิน 2 → ขวา', 'ทำซ้ำ 2 รอบ = ครบรอบ'],
+    ask: A('เส้นทางรอบสี่เหลี่ยมผืนผ้า ยาว 4 กว้าง 2\nเดินทั้งหมดกี่ช่อง', 12, [[6, '4 + 2 = ครึ่งรอบ ต้องคูณ 2'], [8, '4 × 2 = พื้นที่ ไม่ใช่ความยาวรอบรูป'], [10, 'นับด้านกว้างแค่ด้านเดียว']]) },
+];
+function parseProg(tokens) {
+  const root = [], stack = [root];
+  for (const t of tokens) {
+    if (t[0] === '(') { const node = { rep: +t.slice(1), body: [] }; stack[stack.length - 1].push(node); stack.push(node.body); }
+    else if (t === ')') { if (stack.length === 1) return { err: 'มีปีกกาปิด } เกินมา' }; stack.pop(); }
+    else stack[stack.length - 1].push(t);
+  }
+  if (stack.length > 1) return { err: 'ลืมปิดปีกกา } ของ "ทำซ้ำ"' };
+  return { prog: root };
+}
+const blocks = tokens => tokens.filter(t => t !== ')').length;
+function runRobot(lv, tokens) {
+  const H = lv.map.length, W = lv.map[0].length, DX = [0, 1, 0, -1], DY = [-1, 0, 1, 0];
+  const at = (x, y) => lv.map[y][x];
+  if (!tokens.length) return { ok: false, msg: 'ยังไม่มีคำสั่งเลย แตะปุ่มคำสั่งด้านล่างก่อน', path: [] };
+  const P = parseProg(tokens); if (P.err) return { ok: false, msg: P.err, path: [] };
+  let x = lv.sx, y = lv.sy, d = lv.sd, n = 0, crash = null; const path = [{ x, y, d }], got = new Set();
+  const stars = []; lv.map.forEach((row, yy) => row.split('').forEach((ch, xx) => { if (ch === '*') stars.push(xx + ',' + yy); }));
+  (function exec(list) {
+    for (const c of list) {
+      if (crash || n > 400) return;
+      if (typeof c === 'object') { for (let r = 0; r < c.rep && !crash; r++) exec(c.body); continue; }
+      n++;
+      if (c === 'L') d = (d + 3) % 4; else if (c === 'R') d = (d + 1) % 4;
+      else { const nx = x + DX[d], ny = y + DY[d]; if (nx < 0 || ny < 0 || nx >= W || ny >= H || at(nx, ny) === '#') { crash = { x: nx, y: ny, step: n }; return; } x = nx; y = ny; if (at(x, y) === '*') got.add(x + ',' + y); }
+      path.push({ x, y, d, got: Array.from(got) });
+    }
+  })(P.prog);
+  const res = { path, crash };
+  if (crash) return Object.assign(res, { ok: false, msg: 'หุ่นยนต์' + (crash.x < 0 || crash.y < 0 || crash.x >= W || crash.y >= H ? 'เดินตกขอบ' : 'ชนกำแพง') + ' ตอนคำสั่งที่ ' + crash.step + '\nลองไล่ดูทีละคำสั่งว่าหุ่นหันหน้าไปทางไหน' });
+  if (got.size < stars.length) return Object.assign(res, { ok: false, msg: 'ยังเก็บดาวไม่ครบ (ได้ ' + got.size + ' จาก ' + stars.length + ' ดวง)' });
+  if (at(x, y) !== 'G') return Object.assign(res, { ok: false, msg: 'หุ่นยนต์หยุดก่อนถึงธง 🏁' });
+  if (lv.max && blocks(tokens) > lv.max) return Object.assign(res, { ok: false, msg: 'ถึงธงแล้ว 👍 แต่ใช้คำสั่ง ' + blocks(tokens) + ' ช่อง เกินกำหนด ' + lv.max + ' ช่อง\nลองหาส่วนที่ซ้ำกันแล้วใช้ 🔁 ทำซ้ำ' });
+  return Object.assign(res, { ok: true, msg: '' });
+}
+function rMission(lv, i) {
+  return { kind: 'robot', level: lv, text: 'ด่าน ' + (i + 1) + ': ' + lv.text, hint: lv.hint, init: { prog: [] }, why: lv.why, ask: lv.ask,
+    check: s => runRobot(lv, s.prog), solve: () => ({ prog: lv.ref.slice() }) };
+}
+
+/* ================= 📝 แบบทดสอบ 0/1 ================= */
+function askOnly(text, ask, why, init) { return { kind: init ? 'bits' : 'none', noCheck: true, text, init: init || {}, ask, why }; }
+const QK = {
+  b2d() { const n = pick([5, 6]); let v; do { v = R(5, 2 ** n - 1); } while ((v & (v - 1)) === 0); const b = toBits(v, n), rev = bitsVal(b.slice().reverse()), ones = b.filter(x => x).length, pos = b.reduce((s, x, j) => s + (x ? n - j : 0), 0);
+    return askOnly('ไฟชุดนี้แทนเลขอะไร', A('รหัส ' + bin(v, n) + ' = ?', v, [[rev, 'อ่านกลับด้าน — ดวงขวาสุดมีค่า 1'], [ones, 'นับจำนวนดวงที่ติด ต้องบวก "ค่า" ของดวง'], [pos, 'ใช้ค่า 1, 2, 3, 4… — ค่าของดวงต้องเพิ่มทีละ 2 เท่า']], [[v + 1, ''], [v - 1, '']]), ['บวกค่าของดวงที่ติด: ' + plTxt(b)], { n, rows: [{ bits: b, lock: true, hide: true, label: 'ไฟ' }] }); },
+  d2b() { let N; do { N = R(5, 30); } while ((N & (N - 1)) === 0); const c = bin(N, 5), rv = c.split('').reverse().join('');
+    return askOnly('เลข ' + N + ' เขียนเป็นรหัส 0/1 (ไฟ 5 ดวง) ได้อย่างไร', A(N + ' = รหัสไหน', c, [[rv, 'เรียงกลับด้าน — ดวงซ้ายสุดคือค่า 16'], [bin(N - 1, 5), 'นี่คือรหัสของ ' + (N - 1)], [bin(N + 1, 5), 'นี่คือรหัสของ ' + (N + 1)]], [[bin(N ^ 16, 5), 'ลองบวกค่าของดวงที่ติดอีกครั้ง']]), [N + ' = ' + plTxt(toBits(N, 5)).split(' = ')[0], 'ดวงที่ใช้ติด (1) ที่เหลือดับ (0) → ' + c]); },
+  letter() { const i = R(2, 26), ch = ABC[i - 1], c = bin(i, 5), rv = c.split('').reverse().join('');
+    return askOnly('รหัสลับ A = 1, B = 2, … Z = 26\nตัว ' + ch + ' (ตัวที่ ' + i + ') เขียนเป็นไฟ 5 ดวงได้อย่างไร', A('ตัว ' + ch + ' = ?', c, [[bin(i - 1, 5), 'นับ A เป็น 0 — กติกานี้ A = 1'], [rv, 'เรียงกลับด้าน — ดวงซ้ายสุดคือค่า 16'], [bin((i % 31) + 1, 5), 'นี่คือรหัสของตัวถัดไป']]), [ch + ' = ' + i + ' = ' + plTxt(toBits(i, 5)).split(' = ')[0], 'รหัส ' + c]); },
+  add() { let a, b; do { a = R(3, 15); b = R(3, 15); } while ((a & b) === 0); const S = a + b, x = bin(a, 5).split('').map((d, j) => +d + +bin(b, 5)[j]).join('');
+    return askOnly('บวกเลข 0/1', A(bin(a, 4) + ' + ' + bin(b, 4) + ' = ?', bin(S, 5), [[bin(a ^ b, 5), 'ลืมทด — 1 + 1 ต้องเขียน 0 แล้วทด 1'], [x, 'เลข 0/1 ไม่มีเลข 2 — 1 + 1 = 10 ต้องทด'], [bin(S + 1, 5), 'ทดเกินมา 1 ครั้ง']], [[bin(S - 1, 5), '']]), [bin(a, 4) + ' = ' + a + ' · ' + bin(b, 4) + ' = ' + b, a + ' + ' + b + ' = ' + S + ' = ' + bin(S, 5)]); },
+  count() { const n = R(3, 6), v = 2 ** n;
+    return askOnly('หลอดไฟ ' + n + ' ดวง แต่ละดวงติดหรือดับ', A('เปิดปิดได้ทั้งหมดกี่แบบ', v, [[n * 2, 'บวกทีละ 2 — แต่ละดวงเพิ่มแบบเป็น 2 เท่า ต้องคูณ'], [v - 1, 'ลืมนับแบบที่ดับหมด (เลข 0)'], [n, 'นี่คือจำนวนหลอด']], [[n * n, '']]), ['1 ดวง = 2 แบบ · เพิ่มดวงละ 2 เท่า', Array(n).fill(2).join(' × ') + ' = ' + v + ' แบบ']); },
+  max() { const n = R(4, 7), v = 2 ** n - 1;
+    return askOnly('หลอดไฟ ' + n + ' ดวง (ค่า ' + Array.from({ length: n }, (_, j) => 2 ** (n - 1 - j)).join(', ') + ')', A('แทนเลขได้มากที่สุดเท่าไร', v, [[v + 1, 'นี่คือค่าของดวงถัดไป ซึ่งยังไม่มี'], [2 ** (n - 1), 'นี่คือค่าดวงซ้ายสุดดวงเดียว ยังไม่ได้บวกดวงอื่น'], [n, 'นี่คือจำนวนหลอด']]), ['ติดทุกดวง = ' + Array.from({ length: n }, (_, j) => 2 ** (n - 1 - j)).join(' + ') + ' = ' + v, 'น้อยกว่าค่าดวงถัดไป (' + (v + 1) + ') อยู่ 1']); },
+  next() { const k = R(2, 4), c = bin(2 ** k - 1, 5);
+    return askOnly('ไฟตอนนี้เป็นรหัส ' + c + ' (= ' + (2 ** k - 1) + ')', A('เพิ่มอีก 1 จะเป็นรหัสอะไร', bin(2 ** k, 5), [[c.replace(/1$/, '2'), 'เลข 0/1 ไม่มีเลข 2 ต้องทด'], [bin(2 ** (k + 1) - 1, 5), 'เปิดดวงใหม่แล้ว แต่ลืมดับดวงเดิมที่ทดไป'], [bin(2 ** k - 2, 5), 'นั่นคือลบ 1 ไม่ใช่บวก 1']]), [(2 ** k - 1) + ' + 1 = ' + 2 ** k, 'ไฟที่ติดเรียงกันดับหมด แล้วดวงถัดไปติด → ' + bin(2 ** k, 5), 'เหมือน 999 + 1 = 1000']); },
+  pixel() { const r = R(5, 10), c = R(5, 12);
+    return askOnly('ภาพขาวดำขนาด ' + c + ' จุด × ' + r + ' แถว\nแต่ละจุดเก็บเป็น 0 หรือ 1', A('ต้องใช้ 0/1 ทั้งหมดกี่ตัว', r * c, [[r + c, 'บวกแทนคูณ'], [2 * (r + c), 'นับแค่จุดรอบขอบภาพ'], [r * c * 2, 'แต่ละจุดใช้ 0/1 แค่ตัวเดียว']]), ['ทุกแถวมี ' + c + ' จุด มี ' + r + ' แถว', c + ' × ' + r + ' = ' + (r * c) + ' ตัว']); },
+  robot() { const n = R(2, 5), k = R(2, 5);
+    return askOnly('โปรแกรมหุ่นยนต์\n🔁 ทำซ้ำ ' + n + ' รอบ { เดิน ' + k + ' ช่อง · หมุนขวา }', A('หุ่นเดินทั้งหมดกี่ช่อง', n * k, [[n + k, 'บวกแทนคูณ — ทำซ้ำคือการคูณ'], [k, 'นับแค่รอบเดียว'], [n * (k + 1), 'นับการหมุนเป็นการเดินด้วย — หมุนคืออยู่กับที่']]), ['รอบละ ' + k + ' ช่อง ทำ ' + n + ' รอบ', n + ' × ' + k + ' = ' + (n * k) + ' ช่อง']); },
+};
+function quizRound() { const ks = shuffle(Object.keys(QK)); return ks.concat([pick(['b2d', 'add', 'd2b'])]).map(k => Object.assign(QK[k](), { qk: k })); }
+
+/* ================= ทะเบียนห้อง ================= */
+const LABS = [
+  { id: 'frac', group: 'num', icon: '🍫', name: 'แท่งเศษส่วน', sub: 'ตัดแท่ง ระบาย แล้วเทียบความยาว · เศษส่วนเท่ากัน · บวก ลบ', round: () => [fFill(false), fFill(true), fEquiv(), fCompare(), fOp('+'), fOp('-')], sandbox: fSandbox },
+  { id: 'grid', group: 'num', icon: '🟩', name: 'ตาราง 100 ช่อง', sub: 'ระบายแล้วเห็น เศษส่วน = ทศนิยม = ร้อยละ · ลดราคา', round: () => [gFrac(), gDec(), gPct(), gTwo(), gDisc(), gMoney()], sandbox: gSandbox },
+  { id: 'zoom', group: 'num', icon: '🔍', name: 'เส้นจำนวนซูมได้', sub: 'ซูมเข้าไประหว่างเลข · ทศนิยม 1–2 ตำแหน่ง · ปัดเศษ', round: () => [zFind(false), zFind(true), zCompare(), zRound(), zBetween(), zFind(true)], sandbox: zSandbox },
+  { id: 'bits', group: 'code', icon: '💡', name: 'หลอดไฟตัวเลข', sub: 'ไฟ 5 ดวงแทนเลข 0–31 · เลขฐานสอง (binary) · การทด', round: () => [bMake(5), bPlus1(), bRead(), bMax(), bEven(), bMake(6)], sandbox: bSandbox },
+  { id: 'secret', group: 'code', icon: '🔐', name: 'ข้อความและภาพลับ', sub: 'ตัวอักษรเป็นไฟ · วาดภาพจากรหัส 0 กับ 1', round: () => { const p = shuffle(PICS); return [lEnc(), lWord(), lDec(), pDraw(p[0]), pDraw(p[1]), pRead()]; } },
+  { id: 'adder', group: 'code', icon: '⚡', name: 'เครื่องบวกเลข 0/1', sub: 'สวิตช์ → กล่องสัญญาณ → หลอดไฟ · 1 + 1 = 10', round: () => [hAnd(), hXor(), hTable(), add4(), add4(), add4()] },
+  { id: 'robot', group: 'code', icon: '🤖', name: 'หุ่นยนต์เดินตามคำสั่ง', sub: 'เรียงคำสั่ง · ทำซ้ำ (loop) · 8 ด่าน', round: () => LEVELS.map(rMission) },
+  { id: 'quiz', group: 'code', icon: '📝', name: 'แบบทดสอบ 0/1', sub: '10 ข้อ 4 ตัวเลือก ทวนทุกห้องโค้ด', round: quizRound },
+];
+/* เปิดจากเกมข้อสอบ: ?lab=frac&q=add&a=1/4&b=2/3 · ?lab=grid&q=pct&v=35 · ?lab=zoom&q=find&v=237 (ส่วนร้อย) */
+function fromParams(p) {
+  const lab = LABS.find(l => l.id === p.lab); if (!lab) return null;
+  const fr = s => { const m = /^(\d+)\/(\d+)$/.exec(s || ''); return m ? [+m[1], +m[2]] : null; };
+  if (lab.id === 'frac' && (p.q === 'add' || p.q === 'sub')) { const x = fr(p.a), y = fr(p.b);
+    if (x && y && x[0] > 0 && y[0] > 0 && x[0] < x[1] && y[0] < y[1] && lcm(x[1], y[1]) <= 12) { const s = x[0] * y[1] + (p.q === 'add' ? 1 : -1) * y[0] * x[1];
+      if (s > 0 && s <= x[1] * y[1]) return { lab, missions: [fOp(p.q === 'add' ? '+' : '-', { a: x[0], b: x[1], c: y[0], d: y[1] })] }; } }
+  if (lab.id === 'grid' && p.q === 'pct') { const v = +p.v; if (Number.isInteger(v) && v > 0 && v < 100) return { lab, missions: [g100(v, 'ระบาย ' + v + '% ของตาราง', v + '% = ' + v + ' ช่องจาก 100', [v + '% = ' + v + '/100 = ' + dec100(v), 'ตาราง 100 ช่อง จึงระบาย ' + v + ' ช่อง'])] }; }
+  if (lab.id === 'zoom' && p.q === 'find') { const v = +p.v; if (Number.isInteger(v) && v > 0 && v < 1000 && v % 100 !== 0) return { lab, missions: [zFind(true, v)] }; }
+  if (lab.id === 'frac' && p.d) { const ds = String(p.d).split(',').map(Number).filter(x => Number.isInteger(x) && x >= 2 && x <= 12); if (ds.length) return { lab, missions: [fSandbox(ds)] }; }
+  return lab.sandbox ? { lab, missions: [lab.sandbox()] } : { lab, missions: lab.round() };
+}
+return { LABS, LEVELS, PICS, QK, fromParams, runRobot, parseProg, blocks, bitsVal, toBits, bin, frs, plTxt, zs, clone, ABC, cnt, add4, fOp, zFind, gPct, bMake };
+})();
+if (typeof module !== 'undefined') module.exports = LABGEN;
+</script>
+
+<script id="labui">
+(function () {
+"use strict";
+const G = LABGEN, $ = id => document.getElementById(id);
+const KEY = 'p5lab-';
+const best = k => { try { return +(localStorage.getItem(KEY + k) || 0); } catch (e) { return 0; } };
+const setBest = (k, v) => { try { localStorage.setItem(KEY + k, String(v)); } catch (e) { } };
+const esc = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const rich = t => esc(t).replace(/(\d+)\/(\d+)/g, (m, a, b) => (a === '0' && b === '1') ? m : '<span class="fr"><span>' + a + '</span><span>' + b + '</span></span>');
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const P = new URLSearchParams(location.search), EMBED = P.get('embed') === '1';
+let LAB = null, MS = [], mi = 0, M = null, ST = null, OPT = null, tries = 0, firstOk = 0, busy = false;
+function show(id) { ['home', 'lab', 'done'].forEach(x => $(x).classList.toggle('hidden', x !== id)); window.scrollTo(0, 0); }
+
+/* ---------- วิดเจ็ต: แต่ละตัวแก้ st เองแล้วเรียก o.onChange() ---------- */
+const W = {};
+W.none = el => { el.innerHTML = ''; };
+W.frac = (el, st, o) => {
+  function render() {
+    const guides = st.bars.filter(b => b.lock).map(b => b.k / b.d);
+    el.innerHTML = st.bars.map((b, i) => {
+      const w = 330 / b.d; let seg = '';
+      for (let j = 0; j < b.d; j++) seg += '<rect class="seg' + (j < b.k ? ' on' : '') + (b.lock ? ' lk' : '') + '" data-b="' + i + '" data-s="' + j + '" x="' + (5 + j * w).toFixed(2) + '" y="4" width="' + w.toFixed(2) + '" height="36" rx="2"/>';
+      const gl = guides.map(g => '<line class="guide" x1="' + (5 + g * 330).toFixed(2) + '" x2="' + (5 + g * 330).toFixed(2) + '" y1="0" y2="44"/>').join('');
+      const canD = !b.lock && !b.fix && !o.locked;
+      const ctrl = canD ? '<span class="stp"><button data-b="' + i + '" data-dd="-1" aria-label="ลดช่อง">−</button><b>' + b.d + '</b> ช่อง<button data-b="' + i + '" data-dd="1" aria-label="เพิ่มช่อง">+</button></span>' : '<span class="stp" style="color:var(--muted)">' + b.d + ' ช่อง</span>';
+      const sim = b.k ? G.frs(b.k, b.d) : '0', ro = b.k ? b.k + '/' + b.d + (sim !== b.k + '/' + b.d ? ' = ' + sim : '') : '0';
+      return '<div class="barrow"><div class="bh"><b>' + esc(b.label || '') + '</b><span>ระบาย ' + rich(ro) + '</span>' + ctrl + '</div><svg viewBox="0 0 340 44">' + seg + gl + '</svg></div>';
+    }).join('') + (st.bars.some(b => b.lock) ? '<div class="sub" style="margin:0">เส้นประแดง = ปลายของแท่งที่ระบายไว้แล้ว</div>' : '');
+  }
+  el.onclick = e => {
+    if (o.locked) return; const t = e.target.closest('[data-b]'); if (!t) return;
+    const b = st.bars[+t.dataset.b]; if (b.lock) return;
+    if (t.dataset.dd) { if (b.fix) return; const nd = Math.min(12, Math.max(1, b.d + +t.dataset.dd)); if (nd !== b.d) { b.d = nd; b.k = 0; } }
+    else if (t.dataset.s !== undefined) { const j = +t.dataset.s; b.k = b.k === j + 1 ? j : j + 1; }
+    render(); o.onChange();
+  };
+  render();
+};
+function painter(gridEl, cells, o, onCell) {
+  let mode = null;
+  const cellAt = (x, y) => { const t = document.elementFromPoint(x, y); return t && t.closest ? t.closest('[data-i]') : null; };
+  gridEl.addEventListener('pointerdown', e => {
+    if (o.locked) return;
+    const rb = e.target.closest('[data-r]');
+    if (rb) { const r = +rb.dataset.r, cols = +rb.dataset.c, full = cells.slice(r * cols, r * cols + cols).every(x => x); for (let k = 0; k < cols; k++) onCell(r * cols + k, full ? 0 : 1); return; }
+    const c = e.target.closest('[data-i]'); if (!c) return;
+    e.preventDefault(); mode = cells[+c.dataset.i] ? 0 : 1; onCell(+c.dataset.i, mode);
+    try { gridEl.setPointerCapture(e.pointerId); } catch (er) { }
+  });
+  gridEl.addEventListener('pointermove', e => { if (mode === null) return; const c = cellAt(e.clientX, e.clientY); if (c && gridEl.contains(c)) onCell(+c.dataset.i, mode); });
+  const end = () => { mode = null; };
+  gridEl.addEventListener('pointerup', end); gridEl.addEventListener('pointercancel', end); gridEl.addEventListener('lostpointercapture', end);
+}
+W.grid = (el, st, o) => {
+  let h = '<div class="g100" style="grid-template-columns:22px repeat(10,1fr)">';
+  for (let r = 0; r < 10; r++) { h += '<button class="rb" data-r="' + r + '" data-c="10" aria-label="ระบายทั้งแถว">▸</button>'; for (let k = 0; k < 10; k++) { const i = r * 10 + k; h += '<div class="cell' + (st.cells[i] ? ' on' : '') + '" data-i="' + i + '"></div>'; } }
+  el.innerHTML = h + '</div><div class="readout" id="gro"></div>';
+  const g = el.firstChild, cellEls = g.querySelectorAll('[data-i]');
+  function ro() { const n = G.cnt(st.cells), f = G.frs(n, 100); $('gro').innerHTML = 'ระบาย <b>' + n + '</b> ช่อง จาก 100\n= ' + rich(n + '/100') + (n && f !== n + '/100' ? ' = ' + rich(f) : '') + ' = ' + (n / 100) + ' = <b>' + n + '%</b>'; }
+  painter(g, st.cells, o, (i, v) => { if (st.cells[i] === v) return; st.cells[i] = v; cellEls[i].classList.toggle('on', !!v); ro(); o.onChange(); });
+  ro();
+};
+W.pixel = (el, st, o) => {
+  const codes = st.codes;
+  let h = '<div class="g100" style="grid-template-columns:' + (codes ? '50px' : '40px') + ' repeat(8,1fr) 50px;max-width:380px">';
+  for (let r = 0; r < 8; r++) {
+    h += '<div class="pcode' + (st.hl === r ? ' hl' : '') + '">' + (codes ? codes[r] : (st.hl === r ? '👉 ' : '') + 'แถว ' + (r + 1)) + '</div>';
+    for (let k = 0; k < 8; k++) { const i = r * 8 + k; h += '<div class="cell' + (st.cells[i] ? ' on' : '') + '" data-i="' + i + '"></div>'; }
+    h += '<div class="pcode" data-live="' + r + '"></div>';
+  }
+  el.innerHTML = h + '</div><div class="sub" style="margin:6px 0 0;text-align:center">' + (codes ? 'ซ้าย = รหัสที่ต้องวาด · ขวา = รหัสของที่วาดอยู่ (เขียว = ตรงแล้ว)' : 'ขวา = รหัสของแต่ละแถว (ซ่อนไว้ก่อน)') + '</div>';
+  const g = el.firstChild, cellEls = g.querySelectorAll('[data-i]'), live = g.querySelectorAll('[data-live]');
+  function ro() { for (let r = 0; r < 8; r++) { const s = st.cells.slice(r * 8, r * 8 + 8).join(''); live[r].textContent = (st.lock && !o.locked) ? '' : s; live[r].classList.toggle('match', !!codes && s === codes[r]); } }
+  if (!st.lock) painter(g, st.cells, o, (i, v) => { if (st.cells[i] === v) return; st.cells[i] = v; cellEls[i].classList.toggle('on', !!v); ro(); o.onChange(); });
+  o.reveal = ro; ro();
+};
+W.bits = (el, st, o) => {
+  function render() {
+    const n = st.n; let h = '';
+    if (st.alpha) h += '<div class="abc">' + G.ABC.split('').map((c, i) => '<span>' + c + '=' + (i + 1) + '</span>').join('') + '</div>';
+    h += '<div class="bits" style="grid-template-columns:78px repeat(' + n + ',1fr)"><div></div>';
+    for (let j = 0; j < n; j++) h += '<div class="pv">' + (2 ** (n - 1 - j)) + '</div>';
+    st.rows.forEach((row, r) => {
+      h += '<div class="bl">' + esc(row.label || '') + '</div>';
+      const off = n - row.bits.length;
+      for (let j = 0; j < off; j++) h += '<div></div>';
+      row.bits.forEach((x, j) => { h += '<button class="bulb' + (x ? ' on' : '') + (row.lock ? ' lk' : '') + (row.help ? ' help' : '') + '" data-r="' + r + '" data-j="' + j + '" aria-label="หลอด">' + x + '</button>'; });
+      if (!row.help && !(row.hide && !o.locked)) { const v = G.bitsVal(row.bits); h += '<div class="rowro">รหัส <span class="mono">' + row.bits.join('') + '</span> = ' + G.plTxt(row.bits) + (st.alpha ? (v >= 1 && v <= 26 ? ' → <b>' + G.ABC[v - 1] + '</b>' : ' → (ไม่มีตัวอักษร)') : '') + '</div>'; }
+      else if (row.hide) h += '<div class="rowro">รหัส <span class="mono">' + row.bits.join('') + '</span> = ?</div>';
+    });
+    el.innerHTML = h + '</div>';
+  }
+  el.onclick = e => { if (o.locked) return; const t = e.target.closest('[data-r]'); if (!t) return; const row = st.rows[+t.dataset.r]; if (row.lock) return; const j = +t.dataset.j; row.bits[j] = row.bits[j] ? 0 : 1; render(); o.onChange(); };
+  o.reveal = render; render();
+};
+W.gate = (el, st, o) => {
+  function render() {
+    const a = st.a, b = st.b, an = a & b, xo = a ^ b, on = v => v ? ' on' : '', dk = v => v ? ' style="fill:#3b2a00"' : '';
+    const k = '' + a + b; if (!st.tried.includes(k)) st.tried.push(k);
+    let s = '<svg viewBox="0 0 340 190" aria-label="วงจรบวกเลข">';
+    s += '<path class="wire' + on(a) + '" d="M72 52 H104 V40 H150"/><path class="wire' + on(a) + '" d="M104 52 V128 H150"/>';
+    s += '<path class="wire' + on(b) + '" d="M72 138 H118 V150 H150"/><path class="wire' + on(b) + '" d="M118 138 V62 H150"/>';
+    s += '<circle cx="104" cy="52" r="4" class="lampc' + on(a) + '"/><circle cx="118" cy="138" r="4" class="lampc' + on(b) + '"/>';
+    s += '<path class="wire' + on(an) + '" d="M250 51 H285"/><path class="wire' + on(xo) + '" d="M250 139 H285"/>';
+    s += '<g data-sw="a"><rect class="swr' + on(a) + '" x="8" y="30" width="64" height="44" rx="12"/><text x="40" y="58" text-anchor="middle" font-size="16" font-weight="700"' + dk(a) + '>A = ' + a + '</text></g>';
+    s += '<g data-sw="b"><rect class="swr' + on(b) + '" x="8" y="116" width="64" height="44" rx="12"/><text x="40" y="144" text-anchor="middle" font-size="16" font-weight="700"' + dk(b) + '>B = ' + b + '</text></g>';
+    s += '<rect class="box" x="150" y="24" width="100" height="54" rx="8"/><text x="200" y="47" text-anchor="middle" font-size="14" font-weight="700">และ (AND)</text><text x="200" y="66" text-anchor="middle" font-size="11">ติดทั้งคู่</text>';
+    s += '<rect class="box" x="150" y="112" width="100" height="54" rx="8"/><text x="200" y="135" text-anchor="middle" font-size="14" font-weight="700">ดวงเดียว (XOR)</text><text x="200" y="154" text-anchor="middle" font-size="11">ติดตัวเดียว</text>';
+    s += '<circle class="lampc' + on(an) + '" cx="305" cy="51" r="17"/><text x="305" y="56" text-anchor="middle" font-size="14" font-weight="700"' + dk(an) + '>' + an + '</text><text x="305" y="88" text-anchor="middle" font-size="12">ทด</text>';
+    s += '<circle class="lampc' + on(xo) + '" cx="305" cy="139" r="17"/><text x="305" y="144" text-anchor="middle" font-size="14" font-weight="700"' + dk(xo) + '>' + xo + '</text><text x="305" y="176" text-anchor="middle" font-size="12">ผล</text>';
+    s += '</svg>';
+    let h = '<div class="gate">' + s + '</div><div class="readout">A + B = ' + a + ' + ' + b + ' → ทด ' + an + ' ผล ' + xo + ' = รหัส <b class="mono">' + an + xo + '</b> = ' + (a + b) + '</div>';
+    if (st.table) { h += '<table class="tt"><tr><th>A</th><th>B</th><th>ทด</th><th>ผล</th></tr>'; ['00', '01', '10', '11'].forEach(c => { const x = +c[0], y = +c[1], t = st.tried.includes(c); h += '<tr><td>' + x + '</td><td>' + y + '</td><td>' + (t ? (x & y) : '?') + '</td><td>' + (t ? (x ^ y) : '?') + '</td></tr>'; }); h += '</table>'; }
+    el.innerHTML = h;
+  }
+  el.onclick = e => { if (o.locked) return; const g = e.target.closest('[data-sw]'); if (!g) return; st[g.dataset.sw] = st[g.dataset.sw] ? 0 : 1; render(); o.onChange(); };
+  render();
+};
+W.zoom = (el, st, o) => {
+  const X0 = 15, GW = 31, YL = 96;
+  function lab(v, step) { return step === 100 ? String(v / 100) : step === 10 ? (v / 100).toFixed(1) : (v / 100).toFixed(2); }
+  function render() {
+    const { lo, step } = st; let s = '<svg viewBox="0 0 340 150">';
+    if (step < 100) {
+      const ps = step * 10, plo = Math.floor(lo / (ps * 10)) * (ps * 10), gi = (lo - plo) / ps;
+      s += '<rect class="zg" x="' + (X0 + gi * GW) + '" y="12" width="' + GW + '" height="16" rx="3"/>';
+      s += '<line class="zl" x1="' + X0 + '" x2="' + (X0 + 310) + '" y1="20" y2="20" style="stroke-width:1.2"/>';
+      for (let t = 0; t <= 10; t++) s += '<line class="zl" style="stroke-width:1" x1="' + (X0 + t * GW) + '" x2="' + (X0 + t * GW) + '" y1="16" y2="24"/>';
+      s += '<text x="' + X0 + '" y="10" font-size="10" text-anchor="middle">' + lab(plo, ps) + '</text><text x="' + (X0 + 310) + '" y="10" font-size="10" text-anchor="middle">' + lab(plo + 10 * ps, ps) + '</text>';
+      s += '<path d="M' + (X0 + gi * GW) + ' 28 L' + X0 + ' 58 M' + (X0 + (gi + 1) * GW) + ' 28 L' + (X0 + 310) + ' 58" stroke="var(--tip-line)" stroke-dasharray="4 3" fill="none"/>';
+    } else s += '<text x="170" y="30" font-size="12" text-anchor="middle" fill="currentColor">แตะช่องเหนือเส้นเพื่อซูมเข้า 🔍</text>';
+    if (step > 1) for (let g = 0; g < 10; g++) s += '<rect class="gaphint" x="' + (X0 + g * GW + 2) + '" y="64" width="' + (GW - 4) + '" height="26" rx="5"/><rect class="gap" data-g="' + g + '" x="' + (X0 + g * GW) + '" y="60" width="' + GW + '" height="34"/>';
+    s += '<line class="zl" x1="' + (X0 - 8) + '" x2="' + (X0 + 318) + '" y1="' + YL + '" y2="' + YL + '"/>';
+    for (let t = 0; t <= 10; t++) {
+      const x = X0 + t * GW, big = t % 5 === 0;
+      s += '<line class="zl" x1="' + x + '" x2="' + x + '" y1="' + (YL - (big ? 9 : 6)) + '" y2="' + (YL + (big ? 9 : 6)) + '"/>';
+      s += '<text x="' + x + '" y="' + (YL + 24) + '" font-size="' + (step === 1 ? 10 : 11.5) + '" text-anchor="middle" font-weight="' + (big ? 700 : 400) + '">' + lab(lo + t * step, step) + '</text>';
+      s += '<rect class="tk" data-t="' + t + '" x="' + (x - GW / 2) + '" y="' + (YL + 4) + '" width="' + GW + '" height="30"/>';
+    }
+    if (st.pick !== null && st.pick >= lo && st.pick <= lo + 10 * step && (st.pick - lo) % step === 0) {
+      const x = X0 + (st.pick - lo) / step * GW;
+      s += '<path class="zp" d="M' + (x - 7) + ' ' + (YL - 22) + ' L' + (x + 7) + ' ' + (YL - 22) + ' L' + x + ' ' + (YL - 9) + 'Z" pointer-events="none"/>';
+      s += '<text x="' + x + '" y="' + (YL + 44) + '" font-size="12" text-anchor="middle" font-weight="700" fill="var(--bad)">▲ ' + G.zs(st.pick) + '</text>';
+    }
+    s += '</svg>';
+    const each = step === 100 ? '1' : step === 10 ? '0.1' : '0.01';
+    el.innerHTML = '<div class="zoom">' + s + '</div><div class="zrow"><button class="ghost" id="zOut"' + (step === 100 ? ' disabled' : '') + '>🔍− ซูมออก</button><span class="sub" style="margin:0">ช่วง ' + lab(lo, step) + ' ถึง ' + lab(lo + 10 * step, step) + ' · ช่องละ ' + each + '</span></div>' +
+      '<div class="readout">เลือกไว้: <b>' + (st.pick === null ? '—' : G.zs(st.pick)) + '</b></div>';
+  }
+  el.onclick = e => {
+    if (o.locked) return;
+    if (e.target.id === 'zOut') { if (st.step < 100) { const ps = st.step * 10; st.lo = Math.floor(st.lo / (ps * 10)) * (ps * 10); st.step = ps; } render(); o.onChange(); return; }
+    const g = e.target.closest('[data-g]'), t = e.target.closest('[data-t]');
+    if (g && st.step > 1) { st.lo = st.lo + (+g.dataset.g) * st.step; st.step /= 10; }
+    else if (t) st.pick = st.lo + (+t.dataset.t) * st.step;
+    else return;
+    render(); o.onChange();
+  };
+  render();
+};
+W.robot = (el, st, o) => {
+  const lv = o.m.level, H = lv.map.length, Wd = lv.map[0].length, C = 50, ARR = ['↑', '→', '↓', '←'];
+  const LBL = { F: '⬆ เดิน', L: '↺ ซ้าย', R: '↻ ขวา', ')': '}' };
+  const lblOf = t => t[0] === '(' ? '🔁 ทำซ้ำ ' + t.slice(1) + ' รอบ {' : LBL[t];
+  let pos = { x: lv.sx, y: lv.sy, d: lv.sd }, got = [], crash = null;
+  function board() {
+    let s = '<svg viewBox="0 0 ' + (Wd * C) + ' ' + (H * C) + '">';
+    for (let y = 0; y < H; y++) for (let x = 0; x < Wd; x++) {
+      const ch = lv.map[y][x];
+      s += '<rect class="' + (ch === '#' ? 'rw' : 'rc') + '" x="' + (x * C + 1) + '" y="' + (y * C + 1) + '" width="' + (C - 2) + '" height="' + (C - 2) + '" rx="6"/>';
+      if (ch === '*' && !got.includes(x + ',' + y)) s += '<text x="' + (x * C + C / 2) + '" y="' + (y * C + C / 2 + 9) + '" font-size="26" text-anchor="middle">⭐</text>';
+      if (ch === 'G') s += '<text x="' + (x * C + C / 2) + '" y="' + (y * C + C / 2 + 9) + '" font-size="26" text-anchor="middle">🏁</text>';
+    }
+    if (crash && crash.x >= 0 && crash.y >= 0 && crash.x < Wd && crash.y < H) s += '<text x="' + (crash.x * C + C / 2) + '" y="' + (crash.y * C + C / 2 + 10) + '" font-size="28" text-anchor="middle">💥</text>';
+    const cx = pos.x * C + C / 2, cy = pos.y * C + C / 2;
+    s += '<g transform="translate(' + cx + ' ' + cy + ') rotate(' + (pos.d * 90) + ')"><circle class="rbody" r="17"/><path class="rnose" d="M-8 2 L0 -12 L8 2 Z"/></g>';
+    return s + '</svg>';
+  }
+  function render() {
+    const used = G.blocks(st.prog);
+    let h = '<div class="rob">' + board() + '</div>';
+    h += '<div class="prog" aria-label="โปรแกรม">' + (st.prog.length ? st.prog.map(t => '<span class="chip' + (t[0] === '(' || t === ')' ? ' lp' : '') + '">' + lblOf(t) + '</span>').join('') : '<span class="sub" style="margin:0">ยังไม่มีคำสั่ง — แตะปุ่มด้านล่าง</span>') + '</div>';
+    h += '<div class="sub" style="margin:0 0 6px">ใช้ ' + used + ' ช่อง' + (lv.max ? ' / ไม่เกิน ' + lv.max : '') + ' · หุ่นหันหน้าตามลูกศรสีขาว</div>';
+    if (!o.locked) h += '<div class="pal"><button data-t="F">⬆ เดิน</button><button data-t="L">↺ ซ้าย</button><button data-t="R">↻ ขวา</button>' +
+      (lv.max ? [2, 3, 4, 5].map(n => '<button class="lp" data-t="(' + n + '">🔁 ×' + n + ' {</button>').join('') + '<button class="lp" data-t=")">}</button>' : '') +
+      '<button data-t="BK">⌫ ลบ</button><button data-t="CLR">🗑 ล้าง</button></div>';
+    el.innerHTML = h;
+  }
+  el.onclick = e => {
+    if (o.locked || o.busy()) return; const b = e.target.closest('[data-t]'); if (!b) return;
+    const t = b.dataset.t;
+    if (t === 'BK') st.prog.pop(); else if (t === 'CLR') st.prog.length = 0; else if (st.prog.length < 40) st.prog.push(t);
+    pos = { x: lv.sx, y: lv.sy, d: lv.sd }; got = []; crash = null; render(); o.onChange();
+  };
+  o.anim = (res, done) => {
+    const path = res.path || []; let k = 0; got = []; crash = null;
+    const speed = window.__LABFAST ? 0 : 260;
+    const stepFn = () => {
+      if (k < path.length) { pos = path[k]; got = path[k].got || []; k++; el.querySelector('.rob').innerHTML = board(); setTimeout(stepFn, speed); }
+      else { if (res.crash) { crash = res.crash; el.querySelector('.rob').innerHTML = board(); } done(); }
+    };
+    if (!path.length) return done();
+    stepFn();
+  };
+  o.reset = () => { pos = { x: lv.sx, y: lv.sy, d: lv.sd }; got = []; crash = null; };
+  render();
+  o.rerender = render;
+};
+
+/* ---------- เปลือกภารกิจ ---------- */
+function paintHome() {
+  const grp = (g, title) => '<h2>' + title + '</h2>' + G.LABS.filter(l => l.group === g).map(l => { const b = best(l.id), n = l.id === 'robot' ? 8 : l.id === 'quiz' ? 10 : 6;
+    return '<button class="t" style="border-color:' + (g === 'num' ? 'var(--num)' : 'var(--code)') + '" data-id="' + l.id + '"><span class="best">' + (b ? '⭐ ' + b + '/' + n : '') + '</span><b>' + l.icon + ' ' + l.name + '</b><div class="d">' + l.sub + '</div></button>'; }).join('');
+  $('labList').innerHTML = grp('num', '🔬 ห้องทดลองตัวเลข') + grp('code', '💻 โค้ด 0 กับ 1 (เลขฐานสอง · การเข้ารหัส · คำสั่ง)');
+  document.querySelectorAll('#labList .t').forEach(b => b.onclick = () => openLab(G.LABS.find(l => l.id === b.dataset.id)));
+}
+function openLab(lab, missions) { LAB = lab; MS = missions || lab.round(); mi = 0; firstOk = 0; load(); show('lab'); }
+function load() {
+  M = MS[mi]; ST = G.clone(M.init); tries = 0; busy = false;
+  $('lTitle').textContent = LAB.icon + ' ' + LAB.name;
+  $('lProg').textContent = M.free ? 'เล่นอิสระ' : 'ภารกิจ ' + (mi + 1) + ' / ' + MS.length;
+  $('lText').innerHTML = rich(M.text);
+  $('lHint').innerHTML = ''; $('lHintBtn').classList.toggle('hidden', !M.hint); $('lHintBtn').disabled = false;
+  $('lFb').innerHTML = ''; $('lAsk').innerHTML = ''; $('lNext').classList.add('hidden');
+  OPT = { m: M, locked: false, onChange: () => { if (!OPT.locked) $('lFb').innerHTML = ''; }, busy: () => busy };
+  W[M.kind]($('wbox'), ST, OPT);
+  $('lCheck').textContent = M.kind === 'robot' ? '▶ รัน' : '✓ ตรวจ';
+  $('lCheck').classList.toggle('hidden', !!(M.noCheck || M.free)); $('lCheck').disabled = false;
+  $('lQuit').textContent = EMBED ? '✕ ปิด กลับไปทำข้อเดิม' : '← กลับ';
+  if (M.noCheck) showAsk();
+  window.scrollTo(0, 0);
+}
+function doCheck() {
+  if (busy) return;
+  const res = M.check(ST, tries + 1);
+  if (M.kind === 'robot' && OPT.anim) { busy = true; $('lCheck').disabled = true; OPT.anim(res, () => { busy = false; $('lCheck').disabled = false; after(res); }); }
+  else after(res);
+}
+function after(res) {
+  if (!res.ok) { tries++; $('lFb').innerHTML = '<div class="fb bad">❌ ' + rich(res.msg) + '</div>'; return; }
+  OPT.locked = true; $('lCheck').classList.add('hidden'); $('lHintBtn').classList.add('hidden');
+  if (OPT.reveal) OPT.reveal(); if (OPT.rerender) OPT.rerender();
+  if (M.ask) { $('lFb').innerHTML = '<div class="fb ok">✅ ใช่แล้ว! ตอบคำถามต่ออีกข้อ</div>'; showAsk(); }
+  else success('');
+}
+function showAsk() {
+  const a = M.ask, order = shuffle(a.c.map((_, k) => k));
+  $('lAsk').innerHTML = '<div class="ask"><div class="q">' + rich(a.q) + '</div>' + order.map(k => '<button class="ch" data-k="' + k + '">' + rich(a.c[k]) + '</button>').join('') + '</div>';
+  $('lAsk').querySelectorAll('.ch').forEach(b => b.onclick = () => {
+    const k = +b.dataset.k, right = k === 0;
+    $('lAsk').querySelectorAll('.ch').forEach(x => { x.disabled = true; if (x.dataset.k === '0') x.classList.add('ok'); });
+    if (!right) { tries++; b.classList.add('bad'); }
+    OPT.locked = true; if (OPT.reveal) OPT.reveal();
+    success(right ? '' : '❌ คำตอบคือ ' + a.c[0] + (a.why[a.c[k]] ? '\n🤔 ที่เลือก "' + a.c[k] + '" — ' + a.why[a.c[k]] : ''));
+  });
+}
+function success(askMsg) {
+  const first = tries === 0; if (first) firstOk++;
+  const why = [].concat(...(M.why || []).map(l => l.split(' · '))).map((l, i) => (i + 1) + '. ' + l).join('\n');
+  $('lFb').innerHTML = '<div class="fb ' + (askMsg ? 'bad' : 'ok') + '">' + (askMsg ? rich(askMsg) : (first ? '✅ เยี่ยม! ผ่านตั้งแต่ครั้งแรก' : '✅ ผ่านแล้ว!')) + (why ? '\n\n<b>ทำไมถึงเป็นแบบนี้</b>\n' + rich(why) : '') + '</div>';
+  $('lNext').textContent = mi === MS.length - 1 ? (EMBED ? '✕ ปิด กลับไปทำข้อเดิม' : 'ดูผล 🎉') : 'ภารกิจต่อไป ➜';
+  $('lNext').classList.remove('hidden');
+  try { $('lNext').scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) { }
+}
+function next() { if (mi < MS.length - 1) { mi++; load(); } else if (EMBED) closeEmbed(); else finish(); }
+function finish() {
+  const n = MS.length, b = best(LAB.id); if (firstOk > b) setBest(LAB.id, firstOk);
+  const p = firstOk / n;
+  $('dTitle').textContent = LAB.icon + ' ' + LAB.name; $('dScore').textContent = firstOk + ' / ' + n;
+  $('dStars').textContent = p >= 0.9 ? '⭐⭐⭐' : p >= 0.6 ? '⭐⭐' : p >= 0.3 ? '⭐' : '💪';
+  $('dMsg').textContent = 'ผ่านตั้งแต่ครั้งแรก ' + firstOk + ' จาก ' + n + ' ภารกิจ' + (firstOk > b ? '\n🎉 สถิติใหม่!' : '') + '\n' + (p >= 0.8 ? 'เก่งมาก ลองห้องอื่นต่อเลย' : 'เล่นอีกรอบ ภารกิจจะสุ่มใหม่');
+  show('done');
+}
+function closeEmbed() { try { if (parent && parent !== window && parent.closeLabOverlay) { parent.closeLabOverlay(); return; } } catch (e) { } history.back(); }
+$('lCheck').onclick = doCheck;
+$('lNext').onclick = next;
+$('lHintBtn').onclick = () => { $('lHintBtn').disabled = true; $('lHint').innerHTML = '<div class="fb hint">💡 ' + rich(M.hint) + '</div>'; };
+$('lQuit').onclick = () => { if (EMBED) return closeEmbed(); paintHome(); show('home'); };
+$('dAgain').onclick = () => openLab(LAB);
+$('dHome').onclick = () => { paintHome(); show('home'); };
+/* ทางลัดสำหรับทดสอบอัตโนมัติ: ใส่สถานะที่ถูกแล้วกดตรวจ */
+window.__lab = { solve() { if (M.free) return; if (M.solve) { ST = G.clone(M.solve()); W[M.kind]($('wbox'), ST, OPT); } if (!M.noCheck) doCheck(); }, state: () => ({ lab: LAB && LAB.id, mi, n: MS.length, firstOk, kind: M && M.kind }), open: id => openLab(G.LABS.find(l => l.id === id)) };
+if (P.get('lab')) {
+  const o = {}; P.forEach((v, k) => o[k] = v);
+  const r = G.fromParams(o);
+  if (r) { if (EMBED) document.querySelector('footer').classList.add('hidden'); openLab(r.lab, r.missions); } else paintHome();
+} else paintHome();
+})();
+</script>
+</body>
+</html>
